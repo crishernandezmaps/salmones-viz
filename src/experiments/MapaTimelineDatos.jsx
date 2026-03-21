@@ -38,30 +38,38 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
     return years
   }, [allRegionCentros])
 
-  // Growth % from 1985
+  // Growth % from first year with concessions in this region
   const growthPct = useMemo(() => {
-    const base = chartData.find(d => d.year === YEAR_MIN)?.total || 0
+    const firstWithData = chartData.find(d => d.total > 0)
+    if (!firstWithData) return null
+    const base = firstWithData.total
     const current = chartData.find(d => d.year === currentYear)?.total || 0
-    if (base === 0) return current > 0 ? null : 0 // null = infinite (from zero)
+    if (current <= base) return 0
     return Math.round(((current - base) / base) * 100)
   }, [chartData, currentYear])
 
-  // Detect "elbow" — year with max acceleration (second derivative)
-  const elbowYear = useMemo(() => {
-    if (chartData.length < 3) return null
-    let maxAccel = 0
-    let elbowY = null
+  const firstYear = useMemo(() => {
+    const f = chartData.find(d => d.total > 0)
+    return f ? f.year : null
+  }, [chartData])
+
+  // Detect all "elbows" — years with significant acceleration (second derivative spikes)
+  const elbowYears = useMemo(() => {
+    if (chartData.length < 3) return []
+    const accels = []
     for (let i = 1; i < chartData.length - 1; i++) {
       const prev = chartData[i - 1].total
       const curr = chartData[i].total
       const next = chartData[i + 1].total
-      const accel = (next - curr) - (curr - prev) // second derivative
-      if (accel > maxAccel) {
-        maxAccel = accel
-        elbowY = chartData[i].year
-      }
+      const accel = (next - curr) - (curr - prev)
+      accels.push({ year: chartData[i].year, accel })
     }
-    return maxAccel > 0 ? elbowY : null
+    // Find the median absolute acceleration to set a threshold
+    const vals = accels.map(a => Math.abs(a.accel)).filter(v => v > 0).sort((a, b) => a - b)
+    if (vals.length === 0) return []
+    const median = vals[Math.floor(vals.length / 2)]
+    const threshold = median * 2.5 // significant = 2.5x the median
+    return accels.filter(a => a.accel > threshold).map(a => a.year)
   }, [chartData])
 
   const maxVal = globalMaxVal
@@ -185,9 +193,9 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
             <span className='text-[#1b3a4b]/60'>Concesión de Salmones</span>
           </div>
           <div className='flex items-center gap-2'>
-            {currentYear > YEAR_MIN && count > 0 && (
+            {firstYear && currentYear > firstYear && count > 0 && growthPct !== null && growthPct > 0 && (
               <span className='text-[10px] font-bold' style={{ color: '#3a9e9e' }}>
-                {growthPct === null ? '∞' : growthPct > 0 ? '+' + growthPct + '%' : growthPct + '%'}
+                +{growthPct}%
               </span>
             )}
             <span className='text-[#1b3a4b] font-bold text-xs'>{count}</span>
@@ -202,16 +210,16 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
               {Math.round(maxVal * f)}
             </text>
           ))}
-          {/* Elbow marker — red vertical line */}
-          {elbowYear && elbowYear <= currentYear && (() => {
-            const ex = cp.l + ((elbowYear - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
+          {/* Elbow markers — red vertical lines at each significant acceleration */}
+          {elbowYears.filter(y => y <= currentYear).map(ey => {
+            const ex = cp.l + ((ey - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
             return (
-              <>
+              <g key={ey}>
                 <line x1={ex} y1={cp.t} x2={ex} y2={cp.t + ph} stroke='#d94040' strokeWidth='0.8' strokeDasharray='2,2' />
-                <text x={ex} y={cp.t - 1} fill='#d94040' fontSize='6' textAnchor='middle'>{elbowYear}</text>
-              </>
+                <text x={ex} y={cp.t - 1} fill='#d94040' fontSize='6' textAnchor='middle'>{ey}</text>
+              </g>
             )
-          })()}
+          })}
           <polyline fill='none' stroke='#3a9e9e' strokeWidth='1.5' points={mkLine(slicedData)} />
           {slicedData.length > 0 && (() => {
             const last = slicedData[slicedData.length - 1]
