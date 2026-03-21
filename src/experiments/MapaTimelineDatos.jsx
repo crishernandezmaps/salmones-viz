@@ -207,16 +207,32 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
         </div>
       )}
 
-      {/* Mobile: mini sparkline — bottom 15%, no background */}
-      <div className='absolute bottom-0 left-0 right-0 z-10 md:hidden' style={{ height: '15%' }}>
-        <svg width='100%' height='100%' viewBox={`0 0 ${CW} 30`} preserveAspectRatio='none'>
+      {/* Mobile: sparkline — bottom 25%, no background */}
+      <div className='absolute bottom-0 left-0 right-0 z-10 md:hidden' style={{ height: '25%' }}>
+        <svg width='100%' height='100%' viewBox={`0 0 ${CW} 50`} preserveAspectRatio='none'>
           <polyline fill='none' stroke='rgba(217,64,64,0.6)' strokeWidth='2.5'
             points={slicedData.map(d => {
               const x = (d.year - YEAR_MIN) / (YEAR_MAX - YEAR_MIN) * CW
-              const y = 30 - (d.total / maxVal) * 28
+              const y = 50 - (d.total / maxVal) * 46
               return `${x},${y}`
             }).join(' ')}
           />
+          {/* Pulsing circles at elbow years */}
+          {visibleElbows.map(ey => {
+            const ed = slicedData.find(d => d.year === ey)
+            if (!ed) return null
+            const cx = (ey - YEAR_MIN) / (YEAR_MAX - YEAR_MIN) * CW
+            const cy = 50 - (ed.total / maxVal) * 46
+            return (
+              <g key={ey}>
+                <circle cx={cx} cy={cy} r='6' fill='none' stroke='rgba(217,64,64,0.4)' strokeWidth='1.5'>
+                  <animate attributeName='r' values='3;8;3' dur='2s' repeatCount='indefinite' />
+                  <animate attributeName='opacity' values='0.8;0.2;0.8' dur='2s' repeatCount='indefinite' />
+                </circle>
+                <circle cx={cx} cy={cy} r='2.5' fill='#d94040' />
+              </g>
+            )
+          })}
         </svg>
       </div>
 
