@@ -104,8 +104,21 @@ export default function ArticleView() {
           <h2 className='text-2xl sm:text-3xl font-bold text-[#1b3a4b] mb-2'>
             La expansión en el mapa
           </h2>
-          <p className='text-[#1b3a4b]/60 mb-0 text-base'>
+          <p className='text-[#1b3a4b]/60 mb-3 text-base'>
             Evolución de las concesiones salmoneras por región (1985–2025). Presiona play o arrastra el slider.
+          </p>
+          <p className='text-[#1b3a4b]/70 text-sm leading-relaxed mb-0'>
+            Los tres paneles muestran las regiones de Los Lagos, Aysén y Magallanes
+            — las únicas donde opera la salmonicultura en Chile. Las <strong>manchas oscuras</strong> sobre
+            el mapa representan la concentración geográfica de concesiones: mientras más
+            intensa la mancha, mayor es la densidad de centros de cultivo en esa zona.
+            La <strong>línea de crecimiento</strong> en la parte inferior de cada panel traza la
+            evolución acumulada de concesiones desde 1985. Las <strong>líneas rojas
+            verticales</strong> marcan los años en que se produjo un cambio brusco en la
+            velocidad de otorgamiento — los momentos en que la industria aceleró
+            su expansión. El <strong>multiplicador</strong> (×) indica cuántas veces se multiplicaron
+            las concesiones respecto al momento en que cada región alcanzó sus primeros
+            10 centros operativos.
           </p>
         </div>
         <div className='relative w-full' style={{ height: '90vh', minHeight: 600 }}>
