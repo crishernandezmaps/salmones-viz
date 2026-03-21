@@ -83,16 +83,29 @@ centros_salmoneros.geojson (1,346 puntos)
 
 #### Grafico de linea por region
 
-Cada panel tiene un mini grafico SVG (240×80 viewBox) superpuesto en la parte inferior del mapa:
+#### Desktop: grafico de linea
+
+Cada panel tiene un mini grafico SVG (240×80 viewBox) superpuesto en la parte inferior del mapa, sobre fondo blanco semitransparente con backdrop-blur:
 
 - **Eje Y**: Escala global consistente (el max de las 3 regiones) para comparabilidad
 - **Linea**: Concesiones acumuladas hasta `currentYear`, color `#3a9e9e`
 - **Punto**: Circulo en el ultimo dato visible
 - **Gridlines**: 0%, 50%, 100% del max
+- **Codos**: Lineas verticales rojas punteadas con el año en el eje X (ver deteccion abajo)
+- **Leyenda**: Dot teal + "Concesion de Salmones" + multiplicador + count
+
+#### Mobile: sparkline + circulos pulsantes
+
+En pantallas < 768px el grafico con fondo se reemplaza por una visualizacion minimalista que no tapa el mapa:
+
+- **Sparkline**: Linea roja semitransparente (`rgba(217,64,64,0.6)`, grosor 2.5px) en el 25% inferior de cada panel, sin fondo, sin ejes
+- **Circulos pulsantes**: En cada punto de codo, un circulo rojo solido (r=2.5) con un anillo animado que se expande y contrae (3→8→3px, ciclo 2s). Encima del circulo se muestra el año en rojo
+- **Multiplicador**: Esquina superior derecha, fuente grande (`text-base`), color teal
+- **Region + count**: Esquina superior izquierda
 
 #### Indicador de crecimiento (multiplicador)
 
-Junto al conteo total de concesiones se muestra un multiplicador (ej: `×49.7`):
+Se muestra un multiplicador (ej: `×49.7`) que indica cuantas veces se multiplicaron las concesiones:
 
 ```
 multiplicador = concesiones_actuales / concesiones_base
@@ -101,8 +114,10 @@ multiplicador = concesiones_actuales / concesiones_base
 - **Base**: Primer año en que la region alcanzo al menos 10 concesiones
 - Se usa 10 como umbral minimo para evitar multiplicadores inflados (pasar de 1 a 500 = ×500)
 - Solo se muestra cuando hay crecimiento real (current > base)
+- **Desktop**: Junto al count en la leyenda del grafico (texto pequeño)
+- **Mobile**: Esquina superior derecha del panel (fuente grande)
 
-#### Deteccion de codos (lineas rojas)
+#### Deteccion de codos (lineas rojas / circulos pulsantes)
 
 Se identifican automaticamente los años con cambios bruscos en la tasa de otorgamiento:
 
@@ -121,13 +136,15 @@ Se identifican automaticamente los años con cambios bruscos en la tasa de otorg
    Gap minimo de 4 años entre codos (se priorizan los mayores)
 ```
 
-Cada codo se marca con una linea vertical roja punteada y el año en el eje X.
+Representacion visual:
+- **Desktop**: Linea vertical roja punteada + año en el eje X. Labels estaticos del eje X se ocultan si estan a menos de 4 años de un codo
+- **Mobile**: Circulo rojo solido con anillo pulsante animado (SVG `<animate>`) + año encima del circulo
 
 #### Timeline global
 
 Barra inferior con:
 
-- **Mini histograma**: Barras por año (total nacional), clickeables
+- **Mini histograma**: Barras por año (total nacional), clickeables (solo desktop)
 - **Boton play/pause**: Animacion automatica a 400ms/año
 - **Slider**: Navegacion directa a cualquier año
 - **Display**: Año actual en bold
