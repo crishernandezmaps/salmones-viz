@@ -38,22 +38,18 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
     return years
   }, [allRegionCentros])
 
-  // Growth % from first year with concessions in this region
-  const growthPct = useMemo(() => {
-    const firstWithData = chartData.find(d => d.total > 0)
-    if (!firstWithData) return null
-    const base = firstWithData.total
+  // Growth as multiplier from first year with at least 10 concessions
+  const growthLabel = useMemo(() => {
+    const base = chartData.find(d => d.total >= 10)
+    if (!base) return null
     const current = chartData.find(d => d.year === currentYear)?.total || 0
-    if (current <= base) return 0
-    return Math.round(((current - base) / base) * 100)
+    if (current <= base.total) return null
+    const mult = current / base.total
+    return { mult: Math.round(mult * 10) / 10, fromYear: base.year }
   }, [chartData, currentYear])
 
-  const firstYear = useMemo(() => {
-    const f = chartData.find(d => d.total > 0)
-    return f ? f.year : null
-  }, [chartData])
-
   // Detect all "elbows" — years with significant acceleration (second derivative spikes)
+  // Filter to keep min 3-year gap between elbows to avoid clutter
   const elbowYears = useMemo(() => {
     if (chartData.length < 3) return []
     const accels = []
@@ -64,12 +60,19 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
       const accel = (next - curr) - (curr - prev)
       accels.push({ year: chartData[i].year, accel })
     }
-    // Find the median absolute acceleration to set a threshold
     const vals = accels.map(a => Math.abs(a.accel)).filter(v => v > 0).sort((a, b) => a - b)
     if (vals.length === 0) return []
-    const median = vals[Math.floor(vals.length / 2)]
-    const threshold = median * 2.5 // significant = 2.5x the median
-    return accels.filter(a => a.accel > threshold).map(a => a.year)
+    const p75 = vals[Math.floor(vals.length * 0.75)]
+    const threshold = p75 * 2
+    const candidates = accels.filter(a => a.accel > threshold).sort((a, b) => b.accel - a.accel)
+    // Keep only elbows with at least 3-year gap
+    const result = []
+    for (const c of candidates) {
+      if (result.every(r => Math.abs(r - c.year) >= 3)) {
+        result.push(c.year)
+      }
+    }
+    return result.sort((a, b) => a - b)
   }, [chartData])
 
   const maxVal = globalMaxVal
@@ -193,9 +196,9 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
             <span className='text-[#1b3a4b]/60'>Concesión de Salmones</span>
           </div>
           <div className='flex items-center gap-2'>
-            {firstYear && currentYear > firstYear && count > 0 && growthPct !== null && growthPct > 0 && (
+            {growthLabel && (
               <span className='text-[10px] font-bold' style={{ color: '#3a9e9e' }}>
-                +{growthPct}%
+                ×{growthLabel.mult}
               </span>
             )}
             <span className='text-[#1b3a4b] font-bold text-xs'>{count}</span>
@@ -216,7 +219,7 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
             return (
               <g key={ey}>
                 <line x1={ex} y1={cp.t} x2={ex} y2={cp.t + ph} stroke='#d94040' strokeWidth='0.8' strokeDasharray='2,2' />
-                <text x={ex} y={cp.t - 1} fill='#d94040' fontSize='6' textAnchor='middle'>{ey}</text>
+                <text x={ex} y={CH - 2} fill='#d94040' fontSize='6' fontWeight='700' textAnchor='middle'>{ey}</text>
               </g>
             )
           })}
