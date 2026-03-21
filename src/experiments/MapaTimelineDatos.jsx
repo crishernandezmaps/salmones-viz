@@ -192,15 +192,32 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
     <div style={{ flex: '1 1 0', minHeight: 0, position: 'relative', overflow: 'hidden' }} className='border-b md:border-b-0 md:border-r border-[#1b3a4b]/10'>
       <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
 
-      {/* Region label + count — top left */}
+      {/* Region label — top left */}
       <div className='absolute top-2 left-2 bg-white/70 backdrop-blur-sm rounded px-2 py-1 z-10'>
-        <div className='flex items-center gap-2'>
+        <div className='flex items-center gap-1.5'>
           <p className='text-[#1b3a4b] font-bold text-xs'>{region.label}</p>
           <span className='text-[#1b3a4b] font-bold text-xs md:hidden'>{count}</span>
-          {growthLabel && (
-            <span className='text-[9px] font-bold md:hidden' style={{ color: '#3a9e9e' }}>×{growthLabel.mult}</span>
-          )}
         </div>
+      </div>
+
+      {/* Mobile: multiplier — top right, large */}
+      {growthLabel && (
+        <div className='absolute top-2 right-2 bg-white/70 backdrop-blur-sm rounded px-2 py-1 z-10 md:hidden'>
+          <span className='text-base font-bold' style={{ color: '#3a9e9e' }}>×{growthLabel.mult}</span>
+        </div>
+      )}
+
+      {/* Mobile: mini sparkline — bottom 15%, no background */}
+      <div className='absolute bottom-0 left-0 right-0 z-10 md:hidden' style={{ height: '15%' }}>
+        <svg width='100%' height='100%' viewBox={`0 0 ${CW} 30`} preserveAspectRatio='none'>
+          <polyline fill='none' stroke='rgba(58,158,158,0.4)' strokeWidth='1.5'
+            points={slicedData.map(d => {
+              const x = (d.year - YEAR_MIN) / (YEAR_MAX - YEAR_MIN) * CW
+              const y = 30 - (d.total / maxVal) * 28
+              return `${x},${y}`
+            }).join(' ')}
+          />
+        </svg>
       </div>
 
       {/* Desktop: Line chart + count — bottom overlay */}
