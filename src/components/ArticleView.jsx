@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 
 const MapaTimelineDatos = lazy(() => import('../experiments/MapaTimelineDatos'))
+const MapaConflicto = lazy(() => import('./MapaConflicto'))
 
 const Loading = () => (
   <div className='flex items-center justify-center h-[70vh] text-[#1b3a4b]/40'>Cargando mapa...</div>
@@ -168,24 +169,29 @@ export default function ArticleView() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════
-          SECTION 7: TEXT — Continued narrative
+          SECTION 7: INTERACTIVE MAP 2 — Concesiones vs Áreas Protegidas
           ═══════════════════════════════════════════════════════ */}
-      <section className='py-16 sm:py-20'>
-        <div className='max-w-3xl mx-auto px-6 sm:px-12'>
-          <h2 className='text-2xl sm:text-3xl font-bold text-[#1b3a4b] mb-8'>
-            La crisis del virus ISA
+      <section className='bg-[#f0f4f3]'>
+        <div className='max-w-5xl mx-auto px-6 sm:px-12 pt-10 pb-4'>
+          <h2 className='text-2xl sm:text-3xl font-bold text-[#1b3a4b] mb-2'>
+            Concesiones y zonas protegidas: la tensión territorial
           </h2>
-          <p className='text-[#1b3a4b]/80 text-lg leading-[1.8] mb-6'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in ligula at mi
-            consequat tincidunt. Phasellus blandit, nulla at vehicula pharetra, sapien risus
-            tristique leo, id laoreet lacus nisl eget velit. Quisque volutpat auctor elit,
-            at molestie enim imperdiet at.
+          <p className='text-[#1b3a4b]/60 mb-3 text-base'>
+            Activa y desactiva las capas para explorar la relación entre ambas.
           </p>
-          <p className='text-[#1b3a4b]/80 text-lg leading-[1.8]'>
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-            deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus
-            error sit voluptatem accusantium doloremque laudantium.
+          <p className='text-[#1b3a4b]/70 text-sm leading-relaxed mb-0'>
+            El mapa superpone los <strong>1.351 polígonos de concesiones salmoneras</strong> (en rojo)
+            con las <strong>32 Áreas Marinas y Costeras Protegidas</strong> (en teal) declaradas por el
+            Ministerio del Medio Ambiente. La proximidad — y en algunos casos la superposición — entre
+            ambas capas evidencia una de las tensiones centrales de la industria: la actividad
+            productiva convive con ecosistemas que el Estado ha definido como prioritarios para
+            la conservación. Haz click sobre cualquier polígono para ver su detalle.
           </p>
+        </div>
+        <div className='relative w-full' style={{ height: '75vh', minHeight: 500 }}>
+          <Suspense fallback={<Loading />}>
+            <MapaConflicto />
+          </Suspense>
         </div>
       </section>
 
