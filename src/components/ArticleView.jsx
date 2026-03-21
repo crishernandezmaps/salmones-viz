@@ -108,7 +108,7 @@ export default function ArticleView() {
             Evolución de las concesiones salmoneras por región (1985–2025). Presiona play o arrastra el slider.
           </p>
         </div>
-        <div className='relative w-full' style={{ height: '70vh', minHeight: 500 }}>
+        <div className='relative w-full' style={{ height: '90vh', minHeight: 600 }}>
           <Suspense fallback={<Loading />}>
             <MapaTimelineDatos />
           </Suspense>
