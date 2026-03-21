@@ -210,7 +210,7 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
       {/* Mobile: mini sparkline — bottom 15%, no background */}
       <div className='absolute bottom-0 left-0 right-0 z-10 md:hidden' style={{ height: '15%' }}>
         <svg width='100%' height='100%' viewBox={`0 0 ${CW} 30`} preserveAspectRatio='none'>
-          <polyline fill='none' stroke='rgba(58,158,158,0.4)' strokeWidth='1.5'
+          <polyline fill='none' stroke='rgba(217,64,64,0.6)' strokeWidth='2.5'
             points={slicedData.map(d => {
               const x = (d.year - YEAR_MIN) / (YEAR_MAX - YEAR_MIN) * CW
               const y = 30 - (d.total / maxVal) * 28
