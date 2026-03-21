@@ -48,27 +48,30 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
     return { mult: Math.round(mult * 10) / 10, fromYear: base.year }
   }, [chartData, currentYear])
 
-  // Detect all "elbows" — years with significant acceleration (second derivative spikes)
-  // Filter to keep min 3-year gap between elbows to avoid clutter
+  // Detect all "elbows" — years where new concessions per year jump significantly
+  // Uses year-over-year new concessions and finds spikes
   const elbowYears = useMemo(() => {
     if (chartData.length < 3) return []
+    // Calculate new concessions per year
+    const newPerYear = chartData.map((d, i) => ({
+      year: d.year,
+      added: i === 0 ? d.total : d.total - chartData[i - 1].total,
+    }))
+    // Calculate acceleration (change in additions)
     const accels = []
-    for (let i = 1; i < chartData.length - 1; i++) {
-      const prev = chartData[i - 1].total
-      const curr = chartData[i].total
-      const next = chartData[i + 1].total
-      const accel = (next - curr) - (curr - prev)
-      accels.push({ year: chartData[i].year, accel })
+    for (let i = 1; i < newPerYear.length; i++) {
+      const jump = newPerYear[i].added - newPerYear[i - 1].added
+      if (jump > 0) accels.push({ year: newPerYear[i].year, jump })
     }
-    const vals = accels.map(a => Math.abs(a.accel)).filter(v => v > 0).sort((a, b) => a - b)
-    if (vals.length === 0) return []
-    const p75 = vals[Math.floor(vals.length * 0.75)]
-    const threshold = p75 * 2
-    const candidates = accels.filter(a => a.accel > threshold).sort((a, b) => b.accel - a.accel)
-    // Keep only elbows with at least 3-year gap
+    if (accels.length === 0) return []
+    // Find mean of positive jumps, threshold at 2x mean
+    const mean = accels.reduce((s, a) => s + a.jump, 0) / accels.length
+    const threshold = Math.max(mean * 1.5, 3) // at least 3 to avoid noise
+    const candidates = accels.filter(a => a.jump >= threshold).sort((a, b) => b.jump - a.jump)
+    // Keep only elbows with at least 4-year gap
     const result = []
     for (const c of candidates) {
-      if (result.every(r => Math.abs(r - c.year) >= 3)) {
+      if (result.every(r => Math.abs(r - c.year) >= 4)) {
         result.push(c.year)
       }
     }
