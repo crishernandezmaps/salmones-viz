@@ -38,6 +38,32 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
     return years
   }, [allRegionCentros])
 
+  // Growth % from 1985
+  const growthPct = useMemo(() => {
+    const base = chartData.find(d => d.year === YEAR_MIN)?.total || 0
+    const current = chartData.find(d => d.year === currentYear)?.total || 0
+    if (base === 0) return current > 0 ? null : 0 // null = infinite (from zero)
+    return Math.round(((current - base) / base) * 100)
+  }, [chartData, currentYear])
+
+  // Detect "elbow" — year with max acceleration (second derivative)
+  const elbowYear = useMemo(() => {
+    if (chartData.length < 3) return null
+    let maxAccel = 0
+    let elbowY = null
+    for (let i = 1; i < chartData.length - 1; i++) {
+      const prev = chartData[i - 1].total
+      const curr = chartData[i].total
+      const next = chartData[i + 1].total
+      const accel = (next - curr) - (curr - prev) // second derivative
+      if (accel > maxAccel) {
+        maxAccel = accel
+        elbowY = chartData[i].year
+      }
+    }
+    return maxAccel > 0 ? elbowY : null
+  }, [chartData])
+
   const maxVal = globalMaxVal
   const slicedData = useMemo(() => chartData.filter(d => d.year <= currentYear), [chartData, currentYear])
 
@@ -158,7 +184,14 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
             <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#3a9e9e' }} />
             <span className='text-[#1b3a4b]/60'>Concesión de Salmones</span>
           </div>
-          <span className='text-[#1b3a4b] font-bold text-xs'>{count}</span>
+          <div className='flex items-center gap-2'>
+            {currentYear > YEAR_MIN && count > 0 && (
+              <span className='text-[10px] font-bold' style={{ color: '#3a9e9e' }}>
+                {growthPct === null ? '∞' : growthPct > 0 ? '+' + growthPct + '%' : growthPct + '%'}
+              </span>
+            )}
+            <span className='text-[#1b3a4b] font-bold text-xs'>{count}</span>
+          </div>
         </div>
         <svg width='100%' viewBox={`0 0 ${CW} ${CH}`} preserveAspectRatio='xMidYMid meet'>
           {[0, 0.5, 1].map(f => (
@@ -169,6 +202,16 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
               {Math.round(maxVal * f)}
             </text>
           ))}
+          {/* Elbow marker — red vertical line */}
+          {elbowYear && elbowYear <= currentYear && (() => {
+            const ex = cp.l + ((elbowYear - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
+            return (
+              <>
+                <line x1={ex} y1={cp.t} x2={ex} y2={cp.t + ph} stroke='#d94040' strokeWidth='0.8' strokeDasharray='2,2' />
+                <text x={ex} y={cp.t - 1} fill='#d94040' fontSize='6' textAnchor='middle'>{elbowYear}</text>
+              </>
+            )
+          })()}
           <polyline fill='none' stroke='#3a9e9e' strokeWidth='1.5' points={mkLine(slicedData)} />
           {slicedData.length > 0 && (() => {
             const last = slicedData[slicedData.length - 1]
