@@ -12,7 +12,7 @@ const REGIONS = [
   { id: 'magallanes', label: 'Magallanes', center: [-73.0, -52.0], zoom: 6, filter: 'MAGALLANES' },
 ]
 
-function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, globalMaxVal }) {
+function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globalMaxVal }) {
   const containerRef = useRef(null)
   const mapRef = useRef(null)
   const sourcesReady = useRef(false)
@@ -22,27 +22,17 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
   }, [visibleCentros, region.filter])
 
   const allRegionCentros = useMemo(() => {
-    return classifiedCentros.filter(f => (f.properties.REGION || '').toUpperCase().includes(region.filter))
-  }, [classifiedCentros, region.filter])
+    return centrosWithYear.filter(f => (f.properties.REGION || '').toUpperCase().includes(region.filter))
+  }, [centrosWithYear, region.filter])
 
-  const counts = useMemo(() => {
-    let salmonOtros = 0, soloSalmon = 0
-    regionCentros.forEach(f => {
-      if (f.tipo === 'salmon_y_otros') salmonOtros++
-      else soloSalmon++
-    })
-    return { salmonOtros, soloSalmon, total: salmonOtros + soloSalmon }
-  }, [regionCentros])
+  const count = regionCentros.length
 
-  // Line chart data for this region
   const chartData = useMemo(() => {
     const years = []
     for (let y = YEAR_MIN; y <= YEAR_MAX; y++) {
-      const filtered = allRegionCentros.filter(f => f.year <= y)
       years.push({
         year: y,
-        salmonOtros: filtered.filter(f => f.tipo === 'salmon_y_otros').length,
-        soloSalmon: filtered.filter(f => f.tipo === 'solo_salmon').length,
+        total: allRegionCentros.filter(f => f.year <= y).length,
       })
     }
     return years
@@ -62,14 +52,12 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
       maxPitch: 75,
       attributionControl: false,
     })
-    // No zoom controls
     mapRef.current.scrollZoom.disable()
     if (window.innerWidth < 768) {
       mapRef.current.dragPan.disable()
       mapRef.current.touchZoomRotate.disable()
     }
     mapRef.current.on('load', () => {
-      // Hide region/state labels from base map
       const style = mapRef.current.getStyle()
       style.layers.forEach(layer => {
         if (layer.id.includes('place') && (layer.id.includes('state') || layer.id.includes('region') || layer.id.includes('province'))) {
@@ -88,29 +76,22 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
       type: 'FeatureCollection',
       features: feats.map(f => ({
         type: 'Feature', geometry: f.geometry,
-        properties: { ...f.properties, tipo: f.tipo, weight: f.tipo === 'salmon_y_otros' ? 1.5 : 1 },
+        properties: f.properties,
       })),
     })
 
     const allData = mkGJ(regionCentros)
-    const otrosData = mkGJ(regionCentros.filter(f => f.tipo === 'salmon_y_otros'))
-    const soloData = mkGJ(regionCentros.filter(f => f.tipo === 'solo_salmon'))
 
     if (sourcesReady.current) {
       mapRef.current.getSource('all').setData(allData)
-      mapRef.current.getSource('otros').setData(otrosData)
-      mapRef.current.getSource('solo').setData(soloData)
       return
     }
 
     mapRef.current.addSource('all', { type: 'geojson', data: allData })
-    mapRef.current.addSource('otros', { type: 'geojson', data: otrosData })
-    mapRef.current.addSource('solo', { type: 'geojson', data: soloData })
 
     mapRef.current.addLayer({
       id: 'heat', type: 'heatmap', source: 'all',
       paint: {
-        'heatmap-weight': ['get', 'weight'],
         'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 4, 0.6, 8, 1.5, 12, 2],
         'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 14, 8, 22, 12, 30],
         'heatmap-color': [
@@ -124,39 +105,25 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
     })
 
     mapRef.current.addLayer({
-      id: 'pts-solo', type: 'circle', source: 'solo',
+      id: 'pts', type: 'circle', source: 'all',
       paint: {
         'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 2.5, 10, 5, 14, 8],
-        'circle-color': '#7ec8c8',
+        'circle-color': '#3a9e9e',
         'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.8],
         'circle-stroke-width': 0,
       },
     })
 
-    mapRef.current.addLayer({
-      id: 'pts-otros', type: 'circle', source: 'otros',
-      paint: {
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 3, 10, 6, 14, 10],
-        'circle-color': '#c4a1d4',
-        'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.9],
-        'circle-stroke-width': 0,
-      },
-    })
-
     const popup = new maplibregl.Popup({ closeButton: true, closeOnClick: true, maxWidth: '220px' })
-    const handleClick = (e) => {
+    mapRef.current.on('click', 'pts', (e) => {
       const p = e.features[0].properties
       popup.setLngLat(e.lngLat).setHTML(
         '<div style="font-size:12px;line-height:1.5;color:#1a202c"><b>Centro ' + (p.N_CODIGOCE || '') +
         '</b><br>Comuna: ' + (p.COMUNA || '') + '<br>Fecha: ' + (p.F_RESOLSSF || '') + '</div>'
       ).addTo(mapRef.current)
-    }
-    mapRef.current.on('click', 'pts-otros', handleClick)
-    mapRef.current.on('click', 'pts-solo', handleClick)
-    ;['pts-otros', 'pts-solo'].forEach(id => {
-      mapRef.current.on('mouseenter', id, () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
-      mapRef.current.on('mouseleave', id, () => { mapRef.current.getCanvas().style.cursor = '' })
     })
+    mapRef.current.on('mouseenter', 'pts', () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
+    mapRef.current.on('mouseleave', 'pts', () => { mapRef.current.getCanvas().style.cursor = '' })
 
     sourcesReady.current = true
   }, [regionCentros])
@@ -168,10 +135,10 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
   const pw = CW - cp.l - cp.r
   const ph = CH - cp.t - cp.b
 
-  const mkLine = (data, key) =>
+  const mkLine = (data) =>
     data.map(d => {
       const x = cp.l + ((d.year - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
-      const y = cp.t + ph - (d[key] / maxVal) * ph
+      const y = cp.t + ph - (d.total / maxVal) * ph
       return `${x},${y}`
     }).join(' ')
 
@@ -184,23 +151,14 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
         <p className='text-[#1b3a4b] font-bold text-xs'>{region.label}</p>
       </div>
 
-      {/* Line chart + counts — bottom overlay */}
+      {/* Line chart + count — bottom overlay */}
       <div className='absolute bottom-2 left-2 right-2 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1.5 z-10'>
         <div className='flex items-center justify-between mb-1'>
-          <div className='flex gap-3 text-[10px]'>
-            <span className='text-[#1b3a4b]/50'>Concesiones</span>
-            <div className='flex items-center gap-1'>
-              <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#9b6bb0' }} />
-              <span className='text-[#1b3a4b]/60'>Salmón + Otros</span>
-              <span style={{ color: '#9b6bb0' }} className='font-bold'>{counts.salmonOtros}</span>
-            </div>
-            <div className='flex items-center gap-1'>
-              <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#3a9e9e' }} />
-              <span className='text-[#1b3a4b]/60'>Salmón</span>
-              <span style={{ color: '#3a9e9e' }} className='font-bold'>{counts.soloSalmon}</span>
-            </div>
+          <div className='flex gap-2 text-[10px] items-center'>
+            <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#3a9e9e' }} />
+            <span className='text-[#1b3a4b]/60'>Concesión de Salmones</span>
           </div>
-          <span className='text-[#1b3a4b] font-bold text-xs'>{counts.total}</span>
+          <span className='text-[#1b3a4b] font-bold text-xs'>{count}</span>
         </div>
         <svg width='100%' viewBox={`0 0 ${CW} ${CH}`} preserveAspectRatio='xMidYMid meet'>
           {[0, 0.5, 1].map(f => (
@@ -211,14 +169,12 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
               {Math.round(maxVal * f)}
             </text>
           ))}
-          <polyline fill='none' stroke='#3a9e9e' strokeWidth='1.5' points={mkLine(slicedData, 'soloSalmon')} />
-          <polyline fill='none' stroke='#9b6bb0' strokeWidth='1.5' points={mkLine(slicedData, 'salmonOtros')} />
+          <polyline fill='none' stroke='#3a9e9e' strokeWidth='1.5' points={mkLine(slicedData)} />
           {slicedData.length > 0 && (() => {
             const last = slicedData[slicedData.length - 1]
             const x = cp.l + ((last.year - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
-            const ys = cp.t + ph - (last.soloSalmon / maxVal) * ph
-            const yo = cp.t + ph - (last.salmonOtros / maxVal) * ph
-            return (<><circle cx={x} cy={ys} r='2.5' fill='#3a9e9e' /><circle cx={x} cy={yo} r='2.5' fill='#9b6bb0' /></>)
+            const y = cp.t + ph - (last.total / maxVal) * ph
+            return <circle cx={x} cy={y} r='2.5' fill='#3a9e9e' />
           })()}
           {[1985, 2005, 2025].map(y => (
             <text key={y} x={cp.l + ((y - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw} y={CH - 2} fill='rgba(27,58,75,0.35)' fontSize='7' textAnchor='middle'>{y}</text>
@@ -231,19 +187,14 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
 
 export default function MapaTimelineDatos() {
   const [centros, setCentros] = useState([])
-  const [concesionesData, setConcesionesData] = useState([])
   const [currentYear, setCurrentYear] = useState(YEAR_MIN)
   const [playing, setPlaying] = useState(false)
   const animRef = useRef(null)
 
   useEffect(() => {
-    Promise.all([
-      fetch(import.meta.env.BASE_URL + 'data/centros_salmoneros.geojson').then(r => r.json()),
-      fetch(import.meta.env.BASE_URL + 'data/concesiones_excel.json').then(r => r.json()),
-    ]).then(([centrosGeo, concExcel]) => {
-      setCentros(centrosGeo.features)
-      setConcesionesData(concExcel)
-    })
+    fetch(import.meta.env.BASE_URL + 'data/centros_salmoneros.geojson')
+      .then(r => r.json())
+      .then(data => setCentros(data.features))
   }, [])
 
   const centrosWithYear = useMemo(() => {
@@ -261,25 +212,7 @@ export default function MapaTimelineDatos() {
     }).filter(f => f.year !== null)
   }, [centros])
 
-  const classifiedCentros = useMemo(() => {
-    const concMap = {}
-    concesionesData.forEach(c => {
-      const code = c['Codigo Centro'] || c['Código Centro']
-      if (code) concMap[String(parseInt(code))] = c
-    })
-    return centrosWithYear.map(f => {
-      const code = String(parseInt(f.properties.N_CODIGOCE))
-      const conc = concMap[code]
-      let tipo = 'solo_salmon'
-      if (conc) {
-        const grupo = (conc['Grupo Especie'] || '').toUpperCase()
-        if (grupo.includes(',')) tipo = 'salmon_y_otros'
-      }
-      return { ...f, tipo }
-    })
-  }, [centrosWithYear, concesionesData])
-
-  const visibleCentros = useMemo(() => classifiedCentros.filter(f => f.year <= currentYear), [classifiedCentros, currentYear])
+  const visibleCentros = useMemo(() => centrosWithYear.filter(f => f.year <= currentYear), [centrosWithYear, currentYear])
 
   // Animation
   useEffect(() => {
@@ -298,28 +231,24 @@ export default function MapaTimelineDatos() {
   const chartData = useMemo(() => {
     const years = []
     for (let y = YEAR_MIN; y <= YEAR_MAX; y++) {
-      const filtered = classifiedCentros.filter(f => f.year <= y)
-      years.push({ year: y, total: filtered.length })
+      years.push({ year: y, total: centrosWithYear.filter(f => f.year <= y).length })
     }
     return years
-  }, [classifiedCentros])
+  }, [centrosWithYear])
   const maxCount = useMemo(() => Math.max(...chartData.map(d => d.total), 1), [chartData])
 
   // Global max across all regions for consistent Y scale
   const globalMaxVal = useMemo(() => {
     let max = 1
     REGIONS.forEach(region => {
-      const regionCentros = classifiedCentros.filter(f => (f.properties.REGION || '').toUpperCase().includes(region.filter))
+      const rc = centrosWithYear.filter(f => (f.properties.REGION || '').toUpperCase().includes(region.filter))
       for (let y = YEAR_MIN; y <= YEAR_MAX; y++) {
-        const filtered = regionCentros.filter(f => f.year <= y)
-        const so = filtered.filter(f => f.tipo === 'salmon_y_otros').length
-        const ss = filtered.filter(f => f.tipo === 'solo_salmon').length
-        if (so > max) max = so
-        if (ss > max) max = ss
+        const count = rc.filter(f => f.year <= y).length
+        if (count > max) max = count
       }
     })
     return max
-  }, [classifiedCentros])
+  }, [centrosWithYear])
 
   return (
     <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', background: '#f0f4f3' }}>
@@ -330,7 +259,7 @@ export default function MapaTimelineDatos() {
             key={region.id}
             region={region}
             visibleCentros={visibleCentros}
-            classifiedCentros={classifiedCentros}
+            centrosWithYear={centrosWithYear}
             currentYear={currentYear}
             globalMaxVal={globalMaxVal}
           />
