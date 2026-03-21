@@ -9,7 +9,7 @@ const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
 const REGIONS = [
   { id: 'los-lagos', label: 'Los Lagos', center: [-72.8, -42.8], zoom: 6.5, filter: 'LOS LAGOS' },
   { id: 'aysen', label: 'Aysén', center: [-73.5, -45.5], zoom: 6, filter: 'AYSÉN' },
-  { id: 'magallanes', label: 'Magallanes', center: [-73.0, -50.5], zoom: 6, filter: 'MAGALLANES' },
+  { id: 'magallanes', label: 'Magallanes', center: [-73.0, -53.0], zoom: 6, filter: 'MAGALLANES' },
 ]
 
 function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globalMaxVal }) {
