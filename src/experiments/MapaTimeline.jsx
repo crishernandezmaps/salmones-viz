@@ -75,7 +75,7 @@ export default function MapaTimeline() {
     if (map.current) return
     map.current = new maplibregl.Map({
       container: mapContainer.current,
-      style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+      style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',
       center: [-72.0, -43.0],
       zoom: 5,
       pitch: 0,

@@ -4,7 +4,7 @@ import maplibregl from 'maplibre-gl'
 const YEAR_MIN = 1985
 const YEAR_MAX = 2025
 
-const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
+const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
 
 const REGIONS = [
   { id: 'los-lagos', label: 'Los Lagos', center: [-72.8, -42.8], zoom: 6.5, filter: 'LOS LAGOS' },
@@ -176,52 +176,52 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
     }).join(' ')
 
   return (
-    <div style={{ flex: '1 1 0', minHeight: 0, position: 'relative', overflow: 'hidden' }} className='border-b md:border-b-0 md:border-r border-white/5'>
+    <div style={{ flex: '1 1 0', minHeight: 0, position: 'relative', overflow: 'hidden' }} className='border-b md:border-b-0 md:border-r border-[#1b3a4b]/10'>
       <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
 
       {/* Region label — top left */}
-      <div className='absolute top-2 left-2 bg-black/20 rounded px-2 py-1 z-10'>
-        <p className='text-white font-bold text-xs'>{region.label}</p>
+      <div className='absolute top-2 left-2 bg-white/70 backdrop-blur-sm rounded px-2 py-1 z-10'>
+        <p className='text-[#1b3a4b] font-bold text-xs'>{region.label}</p>
       </div>
 
       {/* Line chart + counts — bottom overlay */}
-      <div className='absolute bottom-2 left-2 right-2 bg-black/20 rounded-lg px-2 py-1.5 z-10'>
+      <div className='absolute bottom-2 left-2 right-2 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1.5 z-10'>
         <div className='flex items-center justify-between mb-1'>
           <div className='flex gap-3 text-[10px]'>
-            <span className='text-white/40'>Concesiones</span>
+            <span className='text-[#1b3a4b]/50'>Concesiones</span>
             <div className='flex items-center gap-1'>
-              <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#c4a1d4' }} />
-              <span className='text-white/50'>Salmón + Otros</span>
-              <span style={{ color: '#c4a1d4' }} className='font-bold'>{counts.salmonOtros}</span>
+              <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#9b6bb0' }} />
+              <span className='text-[#1b3a4b]/60'>Salmón + Otros</span>
+              <span style={{ color: '#9b6bb0' }} className='font-bold'>{counts.salmonOtros}</span>
             </div>
             <div className='flex items-center gap-1'>
-              <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#7ec8c8' }} />
-              <span className='text-white/50'>Salmón</span>
-              <span style={{ color: '#7ec8c8' }} className='font-bold'>{counts.soloSalmon}</span>
+              <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#3a9e9e' }} />
+              <span className='text-[#1b3a4b]/60'>Salmón</span>
+              <span style={{ color: '#3a9e9e' }} className='font-bold'>{counts.soloSalmon}</span>
             </div>
           </div>
-          <span className='text-white font-bold text-xs'>{counts.total}</span>
+          <span className='text-[#1b3a4b] font-bold text-xs'>{counts.total}</span>
         </div>
         <svg width='100%' viewBox={`0 0 ${CW} ${CH}`} preserveAspectRatio='xMidYMid meet'>
           {[0, 0.5, 1].map(f => (
-            <line key={f} x1={cp.l} y1={cp.t + (1 - f) * ph} x2={CW - cp.r} y2={cp.t + (1 - f) * ph} stroke='rgba(255,255,255,0.08)' strokeWidth='0.5' />
+            <line key={f} x1={cp.l} y1={cp.t + (1 - f) * ph} x2={CW - cp.r} y2={cp.t + (1 - f) * ph} stroke='rgba(27,58,75,0.12)' strokeWidth='0.5' />
           ))}
           {[0, 1].map(f => (
-            <text key={f} x={cp.l - 3} y={cp.t + (1 - f) * ph + 3} fill='rgba(255,255,255,0.3)' fontSize='8' textAnchor='end'>
+            <text key={f} x={cp.l - 3} y={cp.t + (1 - f) * ph + 3} fill='rgba(27,58,75,0.4)' fontSize='8' textAnchor='end'>
               {Math.round(maxVal * f)}
             </text>
           ))}
-          <polyline fill='none' stroke='#7ec8c8' strokeWidth='1.5' points={mkLine(slicedData, 'soloSalmon')} />
-          <polyline fill='none' stroke='#c4a1d4' strokeWidth='1.5' points={mkLine(slicedData, 'salmonOtros')} />
+          <polyline fill='none' stroke='#3a9e9e' strokeWidth='1.5' points={mkLine(slicedData, 'soloSalmon')} />
+          <polyline fill='none' stroke='#9b6bb0' strokeWidth='1.5' points={mkLine(slicedData, 'salmonOtros')} />
           {slicedData.length > 0 && (() => {
             const last = slicedData[slicedData.length - 1]
             const x = cp.l + ((last.year - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
             const ys = cp.t + ph - (last.soloSalmon / maxVal) * ph
             const yo = cp.t + ph - (last.salmonOtros / maxVal) * ph
-            return (<><circle cx={x} cy={ys} r='2.5' fill='#7ec8c8' /><circle cx={x} cy={yo} r='2.5' fill='#c4a1d4' /></>)
+            return (<><circle cx={x} cy={ys} r='2.5' fill='#3a9e9e' /><circle cx={x} cy={yo} r='2.5' fill='#9b6bb0' /></>)
           })()}
           {[1985, 2005, 2025].map(y => (
-            <text key={y} x={cp.l + ((y - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw} y={CH - 2} fill='rgba(255,255,255,0.25)' fontSize='7' textAnchor='middle'>{y}</text>
+            <text key={y} x={cp.l + ((y - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw} y={CH - 2} fill='rgba(27,58,75,0.35)' fontSize='7' textAnchor='middle'>{y}</text>
           ))}
         </svg>
       </div>
@@ -322,7 +322,7 @@ export default function MapaTimelineDatos() {
   }, [classifiedCentros])
 
   return (
-    <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', background: '#0d1b2a' }}>
+    <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', background: '#f0f4f3' }}>
       {/* Three region columns — horizontal on desktop, vertical on mobile */}
       <div style={{ flex: '1 1 0', minHeight: 0, display: 'flex', overflow: 'hidden' }} className='flex-col md:flex-row'>
         {REGIONS.map(region => (
@@ -338,7 +338,7 @@ export default function MapaTimelineDatos() {
       </div>
 
       {/* Timeline — full width */}
-      <div className='border-t border-[#1b3a4b]/50 px-3 sm:px-4 py-2 sm:py-1' style={{ background: '#0d1b2a', flexShrink: 0 }}>
+      <div className='border-t border-[#5b9ea6]/20 px-3 sm:px-4 py-2 sm:py-1' style={{ background: '#f0f4f3', flexShrink: 0 }}>
         <div className='max-w-5xl mx-auto'>
           <div className='h-6 flex items-end gap-px mb-1 hidden sm:flex'>
             {chartData.map(d => {
@@ -349,7 +349,7 @@ export default function MapaTimelineDatos() {
                 <div key={d.year} className='flex-1 flex flex-col justify-end cursor-pointer' onClick={() => { setCurrentYear(d.year); setPlaying(false) }}>
                   <div
                     style={{ height: h + '%' }}
-                    className={'w-full rounded-t-sm transition-all duration-150 ' + (isCurrent ? 'ring-1 ring-white/60 ' : '') + (isActive ? 'bg-gradient-to-t from-[#2a6a6e] to-[#7ec8c8]' : 'bg-white/10')}
+                    className={'w-full rounded-t-sm transition-all duration-150 ' + (isCurrent ? 'ring-1 ring-[#1b3a4b]/40 ' : '') + (isActive ? 'bg-gradient-to-t from-[#3a9e9e] to-[#7ec8c8]' : 'bg-[#1b3a4b]/10')}
                   />
                 </div>
               )
@@ -358,18 +358,18 @@ export default function MapaTimelineDatos() {
           <div className='flex items-center gap-2 sm:gap-3'>
             <button
               onClick={() => { if (currentYear >= YEAR_MAX) setCurrentYear(YEAR_MIN); setPlaying(!playing) }}
-              className='w-7 h-7 shrink-0 flex items-center justify-center rounded-full text-white transition-colors text-sm'
-              style={{ background: '#5b9ea6' }}
+              className='w-7 h-7 shrink-0 flex items-center justify-center rounded-full text-white transition-colors text-sm hover:opacity-80'
+              style={{ background: '#3a9e9e' }}
             >
               {playing ? '\u23F8' : '\u25B6'}
             </button>
             <input type='range' min={YEAR_MIN} max={YEAR_MAX} value={currentYear}
               onChange={e => { setCurrentYear(parseInt(e.target.value)); setPlaying(false) }}
-              className='flex-1 accent-[#5b9ea6]'
+              className='flex-1 accent-[#3a9e9e]'
             />
-            <span className='text-lg font-bold text-white w-12 text-right'>{currentYear}</span>
+            <span className='text-lg font-bold text-[#1b3a4b] w-12 text-right'>{currentYear}</span>
           </div>
-          <div className='flex justify-between text-[10px] text-white/30 mt-0 px-10 hidden sm:flex'>
+          <div className='flex justify-between text-[10px] text-[#1b3a4b]/35 mt-0 px-10 hidden sm:flex'>
             {[1985, 1990, 1995, 2000, 2005, 2010, 2015, 2020, 2025].map(y => (
               <span key={y}>{y}</span>
             ))}

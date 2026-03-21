@@ -3,7 +3,7 @@ import maplibregl from 'maplibre-gl'
 
 const YEAR_MIN = 1985
 const YEAR_MAX = 2025
-const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json'
+const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
 
 const REGIONS = [
   { id: 'los-lagos', label: 'Los Lagos', center: [-72.8, -42.8], zoom: 6.5, filter: 'LOS LAGOS' },
@@ -153,38 +153,38 @@ function ExportRegionMap({ region, visibleCentros, classifiedCentros, currentYea
     <div style={{ flex: 1, position: 'relative', overflow: 'hidden', borderRight: isHorizontal ? '1px solid rgba(255,255,255,0.05)' : 'none', borderBottom: !isHorizontal ? '1px solid rgba(255,255,255,0.05)' : 'none' }}>
       <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
 
-      <div style={{ position: 'absolute', top: 4, left: 4, background: 'rgba(0,0,0,0.3)', borderRadius: 4, padding: '2px 6px', zIndex: 10 }}>
-        <span style={{ color: '#fff', fontWeight: 700, fontSize: isHorizontal ? 10 : 12 }}>{region.label}</span>
+      <div style={{ position: 'absolute', top: 4, left: 4, background: 'rgba(255,255,255,0.7)', borderRadius: 4, padding: '2px 6px', zIndex: 10 }}>
+        <span style={{ color: '#1b3a4b', fontWeight: 700, fontSize: isHorizontal ? 10 : 12 }}>{region.label}</span>
       </div>
 
-      <div style={{ position: 'absolute', bottom: 4, left: 4, right: 4, background: 'rgba(0,0,0,0.25)', borderRadius: 6, padding: '4px 6px', zIndex: 10 }}>
+      <div style={{ position: 'absolute', bottom: 4, left: 4, right: 4, background: 'rgba(255,255,255,0.7)', borderRadius: 6, padding: '4px 6px', zIndex: 10 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 2, fontSize: isHorizontal ? 8 : 10 }}>
           <div style={{ display: 'flex', gap: 6 }}>
-            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Concesiones</span>
+            <span style={{ color: 'rgba(27,58,75,0.5)' }}>Concesiones</span>
             <span><span style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: '#c4a1d4', marginRight: 2, verticalAlign: 'middle' }} />
-            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Salmón + Otros</span>{' '}
+            <span style={{ color: 'rgba(27,58,75,0.5)' }}>Salmón + Otros</span>{' '}
             <span style={{ color: '#c4a1d4', fontWeight: 700 }}>{counts.salmonOtros}</span></span>
             <span><span style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: '#7ec8c8', marginRight: 2, verticalAlign: 'middle' }} />
-            <span style={{ color: 'rgba(255,255,255,0.4)' }}>Salmón</span>{' '}
+            <span style={{ color: 'rgba(27,58,75,0.5)' }}>Salmón</span>{' '}
             <span style={{ color: '#7ec8c8', fontWeight: 700 }}>{counts.soloSalmon}</span></span>
           </div>
-          <span style={{ color: '#fff', fontWeight: 700, fontSize: isHorizontal ? 10 : 12 }}>{counts.total}</span>
+          <span style={{ color: '#1b3a4b', fontWeight: 700, fontSize: isHorizontal ? 10 : 12 }}>{counts.total}</span>
         </div>
         <svg width='100%' viewBox={`0 0 ${CW} ${CH}`} preserveAspectRatio='xMidYMid meet'>
           {[0, 1].map(f => (
-            <text key={f} x={cp.l - 3} y={cp.t + (1 - f) * ph + 3} fill='rgba(255,255,255,0.25)' fontSize='7' textAnchor='end'>{Math.round(globalMaxVal * f)}</text>
+            <text key={f} x={cp.l - 3} y={cp.t + (1 - f) * ph + 3} fill='rgba(27,58,75,0.35)' fontSize='7' textAnchor='end'>{Math.round(globalMaxVal * f)}</text>
           ))}
-          <polyline fill='none' stroke='#7ec8c8' strokeWidth='1.5' points={mkLine(slicedData, 'soloSalmon')} />
-          <polyline fill='none' stroke='#c4a1d4' strokeWidth='1.5' points={mkLine(slicedData, 'salmonOtros')} />
+          <polyline fill='none' stroke='#3a9e9e' strokeWidth='1.5' points={mkLine(slicedData, 'soloSalmon')} />
+          <polyline fill='none' stroke='#9b6bb0' strokeWidth='1.5' points={mkLine(slicedData, 'salmonOtros')} />
           {slicedData.length > 0 && (() => {
             const last = slicedData[slicedData.length - 1]
             const x = cp.l + ((last.year - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
             const ys = cp.t + ph - (last.soloSalmon / globalMaxVal) * ph
             const yo = cp.t + ph - (last.salmonOtros / globalMaxVal) * ph
-            return (<><circle cx={x} cy={ys} r='2.5' fill='#7ec8c8' /><circle cx={x} cy={yo} r='2.5' fill='#c4a1d4' /></>)
+            return (<><circle cx={x} cy={ys} r='2.5' fill='#3a9e9e' /><circle cx={x} cy={yo} r='2.5' fill='#9b6bb0' /></>)
           })()}
           {[1985, 2005, 2025].map(y => (
-            <text key={y} x={cp.l + ((y - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw} y={CH - 2} fill='rgba(255,255,255,0.2)' fontSize='6' textAnchor='middle'>{y}</text>
+            <text key={y} x={cp.l + ((y - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw} y={CH - 2} fill='rgba(27,58,75,0.3)' fontSize='6' textAnchor='middle'>{y}</text>
           ))}
         </svg>
       </div>
@@ -270,7 +270,7 @@ export default function ExportView({ layout }) {
   const yearSize = layout === 'scroll-desktop' ? 48 : layout === 'bg-desktop' ? 64 : 32
 
   return (
-    <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: isHorizontal ? 'row' : 'column', background: '#0d1b2a', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+    <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: isHorizontal ? 'row' : 'column', background: '#f0f4f3', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       {REGIONS.map(region => (
         <ExportRegionMap
           key={region.id}
@@ -289,7 +289,7 @@ export default function ExportView({ layout }) {
         top: layout === 'scroll-desktop' ? 'auto' : 8,
         bottom: layout === 'scroll-desktop' ? 8 : 'auto',
         right: 8,
-        background: 'rgba(0,0,0,0.5)',
+        background: 'rgba(255,255,255,0.75)',
         borderRadius: 8,
         padding: '4px 12px',
         zIndex: 20,
