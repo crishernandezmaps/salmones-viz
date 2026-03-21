@@ -107,9 +107,9 @@ function ExportRegionMap({ region, visibleCentros, classifiedCentros, currentYea
         'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 4, 0.6, 8, 1.5, 12, 2],
         'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 14, 8, 22, 12, 30],
         'heatmap-color': ['interpolate', ['linear'], ['heatmap-density'],
-          0, 'rgba(0,0,0,0)', 0.1, 'rgba(255,255,255,0.15)', 0.25, 'rgba(255,50,10,0.35)',
-          0.4, 'rgba(255,100,20,0.5)', 0.55, 'rgba(255,160,30,0.6)', 0.7, 'rgba(255,200,50,0.65)',
-          0.85, 'rgba(0,200,220,0.75)', 1, 'rgba(0,255,255,0.9)'],
+          0, 'rgba(0,0,0,0)', 0.1, 'rgba(91,158,166,0.15)', 0.25, 'rgba(86,145,165,0.3)',
+          0.4, 'rgba(126,200,200,0.45)', 0.55, 'rgba(160,210,200,0.55)', 0.7, 'rgba(196,161,212,0.6)',
+          0.85, 'rgba(180,220,210,0.75)', 1, 'rgba(126,200,200,0.9)'],
         'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0.85, 10, 0.45, 13, 0],
       },
     })
@@ -118,7 +118,7 @@ function ExportRegionMap({ region, visibleCentros, classifiedCentros, currentYea
       id: 'pts-solo', type: 'circle', source: 'solo',
       paint: {
         'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 2.5, 10, 5, 14, 8],
-        'circle-color': '#67e8f9', 'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.8],
+        'circle-color': '#7ec8c8', 'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.8],
         'circle-stroke-width': 0,
       },
     })
@@ -127,7 +127,7 @@ function ExportRegionMap({ region, visibleCentros, classifiedCentros, currentYea
       id: 'pts-otros', type: 'circle', source: 'otros',
       paint: {
         'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 3, 10, 6, 14, 10],
-        'circle-color': '#f97316', 'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.9],
+        'circle-color': '#c4a1d4', 'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.9],
         'circle-stroke-width': 0,
       },
     })
@@ -161,12 +161,12 @@ function ExportRegionMap({ region, visibleCentros, classifiedCentros, currentYea
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 2, fontSize: isHorizontal ? 8 : 10 }}>
           <div style={{ display: 'flex', gap: 6 }}>
             <span style={{ color: 'rgba(255,255,255,0.4)' }}>Concesiones</span>
-            <span><span style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: '#f97316', marginRight: 2, verticalAlign: 'middle' }} />
+            <span><span style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: '#c4a1d4', marginRight: 2, verticalAlign: 'middle' }} />
             <span style={{ color: 'rgba(255,255,255,0.4)' }}>Salmón + Otros</span>{' '}
-            <span style={{ color: '#fb923c', fontWeight: 700 }}>{counts.salmonOtros}</span></span>
-            <span><span style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: '#67e8f9', marginRight: 2, verticalAlign: 'middle' }} />
+            <span style={{ color: '#c4a1d4', fontWeight: 700 }}>{counts.salmonOtros}</span></span>
+            <span><span style={{ display: 'inline-block', width: 5, height: 5, borderRadius: '50%', background: '#7ec8c8', marginRight: 2, verticalAlign: 'middle' }} />
             <span style={{ color: 'rgba(255,255,255,0.4)' }}>Salmón</span>{' '}
-            <span style={{ color: '#67e8f9', fontWeight: 700 }}>{counts.soloSalmon}</span></span>
+            <span style={{ color: '#7ec8c8', fontWeight: 700 }}>{counts.soloSalmon}</span></span>
           </div>
           <span style={{ color: '#fff', fontWeight: 700, fontSize: isHorizontal ? 10 : 12 }}>{counts.total}</span>
         </div>
@@ -174,14 +174,14 @@ function ExportRegionMap({ region, visibleCentros, classifiedCentros, currentYea
           {[0, 1].map(f => (
             <text key={f} x={cp.l - 3} y={cp.t + (1 - f) * ph + 3} fill='rgba(255,255,255,0.25)' fontSize='7' textAnchor='end'>{Math.round(globalMaxVal * f)}</text>
           ))}
-          <polyline fill='none' stroke='#67e8f9' strokeWidth='1.5' points={mkLine(slicedData, 'soloSalmon')} />
-          <polyline fill='none' stroke='#f97316' strokeWidth='1.5' points={mkLine(slicedData, 'salmonOtros')} />
+          <polyline fill='none' stroke='#7ec8c8' strokeWidth='1.5' points={mkLine(slicedData, 'soloSalmon')} />
+          <polyline fill='none' stroke='#c4a1d4' strokeWidth='1.5' points={mkLine(slicedData, 'salmonOtros')} />
           {slicedData.length > 0 && (() => {
             const last = slicedData[slicedData.length - 1]
             const x = cp.l + ((last.year - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
             const ys = cp.t + ph - (last.soloSalmon / globalMaxVal) * ph
             const yo = cp.t + ph - (last.salmonOtros / globalMaxVal) * ph
-            return (<><circle cx={x} cy={ys} r='2.5' fill='#67e8f9' /><circle cx={x} cy={yo} r='2.5' fill='#f97316' /></>)
+            return (<><circle cx={x} cy={ys} r='2.5' fill='#7ec8c8' /><circle cx={x} cy={yo} r='2.5' fill='#c4a1d4' /></>)
           })()}
           {[1985, 2005, 2025].map(y => (
             <text key={y} x={cp.l + ((y - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw} y={CH - 2} fill='rgba(255,255,255,0.2)' fontSize='6' textAnchor='middle'>{y}</text>
@@ -270,7 +270,7 @@ export default function ExportView({ layout }) {
   const yearSize = layout === 'scroll-desktop' ? 48 : layout === 'bg-desktop' ? 64 : 32
 
   return (
-    <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: isHorizontal ? 'row' : 'column', background: '#111', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+    <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: isHorizontal ? 'row' : 'column', background: '#0d1b2a', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       {REGIONS.map(region => (
         <ExportRegionMap
           key={region.id}

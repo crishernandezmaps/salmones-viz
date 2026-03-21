@@ -115,9 +115,9 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
         'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 14, 8, 22, 12, 30],
         'heatmap-color': [
           'interpolate', ['linear'], ['heatmap-density'],
-          0, 'rgba(0,0,0,0)', 0.1, 'rgba(255,255,255,0.15)', 0.25, 'rgba(255,50,10,0.35)',
-          0.4, 'rgba(255,100,20,0.5)', 0.55, 'rgba(255,160,30,0.6)', 0.7, 'rgba(255,200,50,0.65)',
-          0.85, 'rgba(0,200,220,0.75)', 1, 'rgba(0,255,255,0.9)',
+          0, 'rgba(0,0,0,0)', 0.1, 'rgba(91,158,166,0.15)', 0.25, 'rgba(86,145,165,0.3)',
+          0.4, 'rgba(126,200,200,0.45)', 0.55, 'rgba(160,210,200,0.55)', 0.7, 'rgba(196,161,212,0.6)',
+          0.85, 'rgba(180,220,210,0.75)', 1, 'rgba(126,200,200,0.9)',
         ],
         'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0.85, 10, 0.45, 13, 0],
       },
@@ -127,7 +127,7 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
       id: 'pts-solo', type: 'circle', source: 'solo',
       paint: {
         'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 2.5, 10, 5, 14, 8],
-        'circle-color': '#67e8f9',
+        'circle-color': '#7ec8c8',
         'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.8],
         'circle-stroke-width': 0,
       },
@@ -137,7 +137,7 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
       id: 'pts-otros', type: 'circle', source: 'otros',
       paint: {
         'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 3, 10, 6, 14, 10],
-        'circle-color': '#f97316',
+        'circle-color': '#c4a1d4',
         'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.9],
         'circle-stroke-width': 0,
       },
@@ -190,14 +190,14 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
           <div className='flex gap-3 text-[10px]'>
             <span className='text-white/40'>Concesiones</span>
             <div className='flex items-center gap-1'>
-              <span className='w-1.5 h-1.5 rounded-full bg-orange-500' />
+              <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#c4a1d4' }} />
               <span className='text-white/50'>Salmón + Otros</span>
-              <span className='text-orange-400 font-bold'>{counts.salmonOtros}</span>
+              <span style={{ color: '#c4a1d4' }} className='font-bold'>{counts.salmonOtros}</span>
             </div>
             <div className='flex items-center gap-1'>
-              <span className='w-1.5 h-1.5 rounded-full bg-cyan-400' />
+              <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#7ec8c8' }} />
               <span className='text-white/50'>Salmón</span>
-              <span className='text-cyan-300 font-bold'>{counts.soloSalmon}</span>
+              <span style={{ color: '#7ec8c8' }} className='font-bold'>{counts.soloSalmon}</span>
             </div>
           </div>
           <span className='text-white font-bold text-xs'>{counts.total}</span>
@@ -211,14 +211,14 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
               {Math.round(maxVal * f)}
             </text>
           ))}
-          <polyline fill='none' stroke='#67e8f9' strokeWidth='1.5' points={mkLine(slicedData, 'soloSalmon')} />
-          <polyline fill='none' stroke='#f97316' strokeWidth='1.5' points={mkLine(slicedData, 'salmonOtros')} />
+          <polyline fill='none' stroke='#7ec8c8' strokeWidth='1.5' points={mkLine(slicedData, 'soloSalmon')} />
+          <polyline fill='none' stroke='#c4a1d4' strokeWidth='1.5' points={mkLine(slicedData, 'salmonOtros')} />
           {slicedData.length > 0 && (() => {
             const last = slicedData[slicedData.length - 1]
             const x = cp.l + ((last.year - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
             const ys = cp.t + ph - (last.soloSalmon / maxVal) * ph
             const yo = cp.t + ph - (last.salmonOtros / maxVal) * ph
-            return (<><circle cx={x} cy={ys} r='2.5' fill='#67e8f9' /><circle cx={x} cy={yo} r='2.5' fill='#f97316' /></>)
+            return (<><circle cx={x} cy={ys} r='2.5' fill='#7ec8c8' /><circle cx={x} cy={yo} r='2.5' fill='#c4a1d4' /></>)
           })()}
           {[1985, 2005, 2025].map(y => (
             <text key={y} x={cp.l + ((y - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw} y={CH - 2} fill='rgba(255,255,255,0.25)' fontSize='7' textAnchor='middle'>{y}</text>
@@ -322,7 +322,7 @@ export default function MapaTimelineDatos() {
   }, [classifiedCentros])
 
   return (
-    <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', background: '#111' }}>
+    <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', background: '#0d1b2a' }}>
       {/* Three region columns — horizontal on desktop, vertical on mobile */}
       <div style={{ flex: '1 1 0', minHeight: 0, display: 'flex', overflow: 'hidden' }} className='flex-col md:flex-row'>
         {REGIONS.map(region => (
@@ -338,7 +338,7 @@ export default function MapaTimelineDatos() {
       </div>
 
       {/* Timeline — full width */}
-      <div className='border-t border-cyan-900/30 px-3 sm:px-4 py-2 sm:py-1' style={{ background: '#111', flexShrink: 0 }}>
+      <div className='border-t border-[#1b3a4b]/50 px-3 sm:px-4 py-2 sm:py-1' style={{ background: '#0d1b2a', flexShrink: 0 }}>
         <div className='max-w-5xl mx-auto'>
           <div className='h-6 flex items-end gap-px mb-1 hidden sm:flex'>
             {chartData.map(d => {
@@ -349,7 +349,7 @@ export default function MapaTimelineDatos() {
                 <div key={d.year} className='flex-1 flex flex-col justify-end cursor-pointer' onClick={() => { setCurrentYear(d.year); setPlaying(false) }}>
                   <div
                     style={{ height: h + '%' }}
-                    className={'w-full rounded-t-sm transition-all duration-150 ' + (isCurrent ? 'ring-1 ring-white ' : '') + (isActive ? 'bg-gradient-to-t from-cyan-700 to-cyan-400' : 'bg-white/10')}
+                    className={'w-full rounded-t-sm transition-all duration-150 ' + (isCurrent ? 'ring-1 ring-white/60 ' : '') + (isActive ? 'bg-gradient-to-t from-[#2a6a6e] to-[#7ec8c8]' : 'bg-white/10')}
                   />
                 </div>
               )
@@ -358,13 +358,14 @@ export default function MapaTimelineDatos() {
           <div className='flex items-center gap-2 sm:gap-3'>
             <button
               onClick={() => { if (currentYear >= YEAR_MAX) setCurrentYear(YEAR_MIN); setPlaying(!playing) }}
-              className='w-7 h-7 shrink-0 flex items-center justify-center rounded-full bg-cyan-600 text-white hover:bg-cyan-500 transition-colors text-sm'
+              className='w-7 h-7 shrink-0 flex items-center justify-center rounded-full text-white transition-colors text-sm'
+              style={{ background: '#5b9ea6' }}
             >
               {playing ? '\u23F8' : '\u25B6'}
             </button>
             <input type='range' min={YEAR_MIN} max={YEAR_MAX} value={currentYear}
               onChange={e => { setCurrentYear(parseInt(e.target.value)); setPlaying(false) }}
-              className='flex-1 accent-cyan-500'
+              className='flex-1 accent-[#5b9ea6]'
             />
             <span className='text-lg font-bold text-white w-12 text-right'>{currentYear}</span>
           </div>

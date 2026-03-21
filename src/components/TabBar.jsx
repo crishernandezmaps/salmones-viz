@@ -1,6 +1,6 @@
 export default function TabBar({ tabs, activeTab, onTabChange }) {
   return (
-    <div className='flex items-center px-2 h-10 shrink-0' style={{ background: '#111' }}>
+    <div className='flex items-center px-2 h-10 shrink-0' style={{ background: '#0d1b2a' }}>
       <span className='text-white/40 text-xs font-mono mr-4 hidden sm:block'>salmones_viz</span>
       <div className='flex gap-0.5'>
         {tabs.map(tab => (
