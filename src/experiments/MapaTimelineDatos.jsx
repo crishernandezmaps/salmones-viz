@@ -115,9 +115,9 @@ function RegionMap({ region, visibleCentros, classifiedCentros, currentYear, glo
         'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 14, 8, 22, 12, 30],
         'heatmap-color': [
           'interpolate', ['linear'], ['heatmap-density'],
-          0, 'rgba(0,0,0,0)', 0.1, 'rgba(91,158,166,0.15)', 0.25, 'rgba(86,145,165,0.3)',
-          0.4, 'rgba(126,200,200,0.45)', 0.55, 'rgba(160,210,200,0.55)', 0.7, 'rgba(196,161,212,0.6)',
-          0.85, 'rgba(180,220,210,0.75)', 1, 'rgba(126,200,200,0.9)',
+          0, 'rgba(0,0,0,0)', 0.1, 'rgba(58,120,130,0.2)', 0.25, 'rgba(40,100,120,0.4)',
+          0.4, 'rgba(30,90,110,0.55)', 0.55, 'rgba(80,140,140,0.65)', 0.7, 'rgba(120,80,150,0.7)',
+          0.85, 'rgba(40,110,120,0.8)', 1, 'rgba(25,80,100,0.9)',
         ],
         'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0.85, 10, 0.45, 13, 0],
       },
