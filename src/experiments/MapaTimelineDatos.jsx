@@ -203,10 +203,9 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
         </div>
       </div>
 
-      {/* Line chart + count — bottom overlay */}
-      <div className='absolute bottom-1 left-1 right-1 md:bottom-2 md:left-2 md:right-2 bg-white/70 backdrop-blur-sm rounded-lg px-1.5 py-1 md:px-2 md:py-1.5 z-10'>
-        {/* Desktop legend */}
-        <div className='hidden md:flex items-center justify-between mb-1'>
+      {/* Desktop: Line chart + count — bottom overlay */}
+      <div className='absolute bottom-2 left-2 right-2 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1.5 z-10 hidden md:block'>
+        <div className='flex items-center justify-between mb-1'>
           <div className='flex gap-2 text-[10px] items-center'>
             <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#3a9e9e' }} />
             <span className='text-[#1b3a4b]/60'>Concesión de Salmones</span>
@@ -224,13 +223,11 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
           {[0, 0.5, 1].map(f => (
             <line key={f} x1={cp.l} y1={cp.t + (1 - f) * ph} x2={CW - cp.r} y2={cp.t + (1 - f) * ph} stroke='rgba(27,58,75,0.12)' strokeWidth='0.5' />
           ))}
-          {/* Y-axis labels */}
           {[0, 1].map(f => (
             <text key={f} x={cp.l - 3} y={cp.t + (1 - f) * ph + 3} fill='rgba(27,58,75,0.4)' fontSize='8' textAnchor='end'>
               {Math.round(maxVal * f)}
             </text>
           ))}
-          {/* Elbow markers — red vertical lines */}
           {visibleElbows.map(ey => {
             const ex = cp.l + ((ey - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
             return (
@@ -247,7 +244,6 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
             const y = cp.t + ph - (last.total / maxVal) * ph
             return <circle cx={x} cy={y} r='2.5' fill='#3a9e9e' />
           })()}
-          {/* X-axis static labels — skip if near an elbow */}
           {staticLabels.map(y => (
             <text key={y} x={cp.l + ((y - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw} y={CH - 2} fill='rgba(27,58,75,0.35)' fontSize='7' textAnchor='middle'>{y}</text>
           ))}
