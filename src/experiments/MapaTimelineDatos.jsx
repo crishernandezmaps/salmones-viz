@@ -189,7 +189,7 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
   )
 
   return (
-    <div style={{ flex: '1 1 0', minHeight: 0, position: 'relative', overflow: 'hidden' }} className='border-b md:border-b-0 md:border-r border-[#1b3a4b]/10'>
+    <div style={{ flex: '1 1 0', minHeight: 0, position: 'relative', overflow: 'hidden' }} className='border-b-2 md:border-b-0 md:border-r border-[#3a9e9e]/20'>
       <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
 
       {/* Region label — top left */}

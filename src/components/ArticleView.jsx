@@ -100,11 +100,11 @@ export default function ArticleView() {
           SECTION 4: INTERACTIVE MAP — Scrollpoints / Main viz
           ═══════════════════════════════════════════════════════ */}
       <section className='bg-[#f0f4f3]'>
-        <div className='max-w-5xl mx-auto px-6 sm:px-12 py-12'>
+        <div className='max-w-5xl mx-auto px-6 sm:px-12 pt-10 pb-4'>
           <h2 className='text-2xl sm:text-3xl font-bold text-[#1b3a4b] mb-2'>
             La expansión en el mapa
           </h2>
-          <p className='text-[#1b3a4b]/60 mb-6 text-base'>
+          <p className='text-[#1b3a4b]/60 mb-0 text-base'>
             Evolución de las concesiones salmoneras por región (1985–2025). Presiona play o arrastra el slider.
           </p>
         </div>
