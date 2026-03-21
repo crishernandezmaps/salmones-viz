@@ -213,7 +213,7 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
           <polyline fill='none' stroke='rgba(217,64,64,0.6)' strokeWidth='2.5'
             points={slicedData.map(d => {
               const x = (d.year - YEAR_MIN) / (YEAR_MAX - YEAR_MIN) * CW
-              const y = 50 - (d.total / maxVal) * 46
+              const y = 44 - (d.total / maxVal) * 38
               return `${x},${y}`
             }).join(' ')}
           />
@@ -222,7 +222,7 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
             const ed = slicedData.find(d => d.year === ey)
             if (!ed) return null
             const cx = (ey - YEAR_MIN) / (YEAR_MAX - YEAR_MIN) * CW
-            const cy = 50 - (ed.total / maxVal) * 46
+            const cy = 44 - (ed.total / maxVal) * 38
             return (
               <g key={ey}>
                 <circle cx={cx} cy={cy} r='6' fill='none' stroke='rgba(217,64,64,0.4)' strokeWidth='1.5'>
@@ -230,6 +230,7 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
                   <animate attributeName='opacity' values='0.8;0.2;0.8' dur='2s' repeatCount='indefinite' />
                 </circle>
                 <circle cx={cx} cy={cy} r='2.5' fill='#d94040' />
+                <text x={cx} y={cy - 8} fill='#d94040' fontSize='5' fontWeight='700' textAnchor='middle'>{ey}</text>
               </g>
             )
           })}
