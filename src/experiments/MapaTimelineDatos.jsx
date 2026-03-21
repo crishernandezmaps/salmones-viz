@@ -182,18 +182,31 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
       return `${x},${y}`
     }).join(' ')
 
+  // X-axis labels: skip static labels that are too close to an elbow
+  const visibleElbows = elbowYears.filter(y => y <= currentYear)
+  const staticLabels = [1985, 2005, 2025].filter(y =>
+    visibleElbows.every(ey => Math.abs(ey - y) >= 4)
+  )
+
   return (
     <div style={{ flex: '1 1 0', minHeight: 0, position: 'relative', overflow: 'hidden' }} className='border-b md:border-b-0 md:border-r border-[#1b3a4b]/10'>
       <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
 
-      {/* Region label — top left */}
+      {/* Region label + count — top left */}
       <div className='absolute top-2 left-2 bg-white/70 backdrop-blur-sm rounded px-2 py-1 z-10'>
-        <p className='text-[#1b3a4b] font-bold text-xs'>{region.label}</p>
+        <div className='flex items-center gap-2'>
+          <p className='text-[#1b3a4b] font-bold text-xs'>{region.label}</p>
+          <span className='text-[#1b3a4b] font-bold text-xs md:hidden'>{count}</span>
+          {growthLabel && (
+            <span className='text-[9px] font-bold md:hidden' style={{ color: '#3a9e9e' }}>×{growthLabel.mult}</span>
+          )}
+        </div>
       </div>
 
       {/* Line chart + count — bottom overlay */}
-      <div className='absolute bottom-2 left-2 right-2 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1.5 z-10'>
-        <div className='flex items-center justify-between mb-1'>
+      <div className='absolute bottom-1 left-1 right-1 md:bottom-2 md:left-2 md:right-2 bg-white/70 backdrop-blur-sm rounded-lg px-1.5 py-1 md:px-2 md:py-1.5 z-10'>
+        {/* Desktop legend */}
+        <div className='hidden md:flex items-center justify-between mb-1'>
           <div className='flex gap-2 text-[10px] items-center'>
             <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#3a9e9e' }} />
             <span className='text-[#1b3a4b]/60'>Concesión de Salmones</span>
@@ -211,13 +224,14 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
           {[0, 0.5, 1].map(f => (
             <line key={f} x1={cp.l} y1={cp.t + (1 - f) * ph} x2={CW - cp.r} y2={cp.t + (1 - f) * ph} stroke='rgba(27,58,75,0.12)' strokeWidth='0.5' />
           ))}
+          {/* Y-axis labels */}
           {[0, 1].map(f => (
             <text key={f} x={cp.l - 3} y={cp.t + (1 - f) * ph + 3} fill='rgba(27,58,75,0.4)' fontSize='8' textAnchor='end'>
               {Math.round(maxVal * f)}
             </text>
           ))}
-          {/* Elbow markers — red vertical lines at each significant acceleration */}
-          {elbowYears.filter(y => y <= currentYear).map(ey => {
+          {/* Elbow markers — red vertical lines */}
+          {visibleElbows.map(ey => {
             const ex = cp.l + ((ey - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
             return (
               <g key={ey}>
@@ -233,7 +247,8 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
             const y = cp.t + ph - (last.total / maxVal) * ph
             return <circle cx={x} cy={y} r='2.5' fill='#3a9e9e' />
           })()}
-          {[1985, 2005, 2025].map(y => (
+          {/* X-axis static labels — skip if near an elbow */}
+          {staticLabels.map(y => (
             <text key={y} x={cp.l + ((y - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw} y={CH - 2} fill='rgba(27,58,75,0.35)' fontSize='7' textAnchor='middle'>{y}</text>
           ))}
         </svg>
@@ -324,7 +339,7 @@ export default function MapaTimelineDatos() {
       </div>
 
       {/* Timeline — full width */}
-      <div className='border-t border-[#5b9ea6]/20 px-3 sm:px-4 py-2 sm:py-1' style={{ background: '#f0f4f3', flexShrink: 0 }}>
+      <div className='border-t border-[#5b9ea6]/20 px-2 sm:px-4 py-1.5 sm:py-1' style={{ background: '#f0f4f3', flexShrink: 0 }}>
         <div className='max-w-5xl mx-auto'>
           <div className='h-6 flex items-end gap-px mb-1 hidden sm:flex'>
             {chartData.map(d => {
