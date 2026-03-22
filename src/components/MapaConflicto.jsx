@@ -39,10 +39,11 @@ function InsetWithConnector({ mapRef, lng, lat }) {
   const containerRef = useRef(null)
   const [pointPos, setPointPos] = useState(null)
 
-  // Inset position (bottom-right corner)
+  // Inset position (bottom-center-right)
   const INSET_W = 220
   const INSET_H = 170
-  const INSET_MARGIN = 12
+  const INSET_MARGIN_BOTTOM = 12
+  const INSET_MARGIN_RIGHT = 60
 
   useEffect(() => {
     const updatePos = () => {
@@ -80,22 +81,22 @@ function InsetWithConnector({ mapRef, lng, lat }) {
           <polygon
             points={`
               ${pointPos.x},${pointPos.y}
-              ${pointPos.cw - insetRight - INSET_W},${pointPos.ch - insetBottom - INSET_H}
-              ${pointPos.cw - insetRight},${pointPos.ch - insetBottom - INSET_H}
-              ${pointPos.cw - insetRight},${pointPos.ch - insetBottom}
-              ${pointPos.cw - insetRight - INSET_W},${pointPos.ch - insetBottom}
+              ${pointPos.cw - INSET_MARGIN_RIGHT - INSET_W},${pointPos.ch - insetBottom - INSET_H}
+              ${pointPos.cw - INSET_MARGIN_RIGHT},${pointPos.ch - insetBottom - INSET_H}
+              ${pointPos.cw - INSET_MARGIN_RIGHT},${pointPos.ch - INSET_MARGIN_BOTTOM}
+              ${pointPos.cw - INSET_MARGIN_RIGHT - INSET_W},${pointPos.ch - INSET_MARGIN_BOTTOM}
             `}
             fill='url(#connGrad)'
           />
           {/* Lines from point to inset corners */}
           <line
             x1={pointPos.x} y1={pointPos.y}
-            x2={pointPos.cw - insetRight - INSET_W} y2={pointPos.ch - insetBottom - INSET_H}
+            x2={pointPos.cw - INSET_MARGIN_RIGHT - INSET_W} y2={pointPos.ch - insetBottom - INSET_H}
             stroke='rgba(217,64,64,0.35)' strokeWidth='1' strokeDasharray='4,3'
           />
           <line
             x1={pointPos.x} y1={pointPos.y}
-            x2={pointPos.cw - insetRight} y2={pointPos.ch - insetBottom}
+            x2={pointPos.cw - INSET_MARGIN_RIGHT} y2={pointPos.ch - INSET_MARGIN_BOTTOM}
             stroke='rgba(217,64,64,0.35)' strokeWidth='1' strokeDasharray='4,3'
           />
           {/* Point marker */}
@@ -112,7 +113,7 @@ function InsetWithConnector({ mapRef, lng, lat }) {
         className='absolute pointer-events-auto rounded-lg overflow-hidden shadow-lg'
         style={{
           width: INSET_W, height: INSET_H,
-          right: INSET_MARGIN, bottom: INSET_MARGIN,
+          right: INSET_MARGIN_RIGHT, bottom: INSET_MARGIN_BOTTOM,
           border: '2px solid rgba(217,64,64,0.4)',
           zIndex: 6,
         }}
@@ -328,10 +329,12 @@ export default function MapaConflicto() {
     }
     setSelected({ centro: props, concesion, denuncias, ampName, isConflict, hasDenuncia })
 
-    // Fly map to center the point
+    // Fly map — offset center so point lands upper-left, leaving space for inset bottom-right
     if (mapRef.current && props._lng && props._lat) {
+      const lng = parseFloat(props._lng)
+      const lat = parseFloat(props._lat)
       mapRef.current.flyTo({
-        center: [parseFloat(props._lng), parseFloat(props._lat)],
+        center: [lng + 0.15, lat - 0.12],
         zoom: 9,
         duration: 1200,
       })
