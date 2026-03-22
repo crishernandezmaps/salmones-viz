@@ -42,8 +42,8 @@ function InsetWithConnector({ mapRef, lng, lat }) {
   // Inset position (bottom-center-right)
   const INSET_W = 220
   const INSET_H = 170
-  const INSET_MARGIN_BOTTOM = 12
-  const INSET_MARGIN_RIGHT = 60
+  const INSET_MARGIN_TOP = 12
+  const INSET_MARGIN_RIGHT = 12
 
   useEffect(() => {
     const updatePos = () => {
@@ -64,7 +64,7 @@ function InsetWithConnector({ mapRef, lng, lat }) {
 
   // Inset box coordinates (relative to container)
   const insetRight = INSET_MARGIN_RIGHT
-  const insetBottom = INSET_MARGIN_BOTTOM
+  const insetTop = INSET_MARGIN_TOP
 
   return (
     <div ref={containerRef} className='absolute inset-0 z-10 pointer-events-none'>
@@ -81,22 +81,22 @@ function InsetWithConnector({ mapRef, lng, lat }) {
           <polygon
             points={`
               ${pointPos.x},${pointPos.y}
-              ${pointPos.cw - INSET_MARGIN_RIGHT - INSET_W},${pointPos.ch - insetBottom - INSET_H}
-              ${pointPos.cw - INSET_MARGIN_RIGHT},${pointPos.ch - insetBottom - INSET_H}
-              ${pointPos.cw - INSET_MARGIN_RIGHT},${pointPos.ch - INSET_MARGIN_BOTTOM}
-              ${pointPos.cw - INSET_MARGIN_RIGHT - INSET_W},${pointPos.ch - INSET_MARGIN_BOTTOM}
+              ${pointPos.cw - insetRight - INSET_W},${insetTop}
+              ${pointPos.cw - insetRight},${insetTop}
+              ${pointPos.cw - insetRight},${insetTop + INSET_H}
+              ${pointPos.cw - insetRight - INSET_W},${insetTop + INSET_H}
             `}
             fill='url(#connGrad)'
           />
           {/* Lines from point to inset corners */}
           <line
             x1={pointPos.x} y1={pointPos.y}
-            x2={pointPos.cw - INSET_MARGIN_RIGHT - INSET_W} y2={pointPos.ch - insetBottom - INSET_H}
+            x2={pointPos.cw - insetRight - INSET_W} y2={insetTop}
             stroke='rgba(217,64,64,0.35)' strokeWidth='1' strokeDasharray='4,3'
           />
           <line
             x1={pointPos.x} y1={pointPos.y}
-            x2={pointPos.cw - INSET_MARGIN_RIGHT} y2={pointPos.ch - INSET_MARGIN_BOTTOM}
+            x2={pointPos.cw - insetRight} y2={insetTop + INSET_H}
             stroke='rgba(217,64,64,0.35)' strokeWidth='1' strokeDasharray='4,3'
           />
           {/* Point marker */}
@@ -113,7 +113,7 @@ function InsetWithConnector({ mapRef, lng, lat }) {
         className='absolute pointer-events-auto rounded-lg overflow-hidden shadow-lg'
         style={{
           width: INSET_W, height: INSET_H,
-          right: INSET_MARGIN_RIGHT, bottom: INSET_MARGIN_BOTTOM,
+          right: INSET_MARGIN_RIGHT, top: INSET_MARGIN_TOP,
           border: '2px solid rgba(217,64,64,0.4)',
           zIndex: 6,
         }}
@@ -334,7 +334,7 @@ export default function MapaConflicto() {
       const lng = parseFloat(props._lng)
       const lat = parseFloat(props._lat)
       mapRef.current.flyTo({
-        center: [lng + 0.15, lat - 0.12],
+        center: [lng + 0.15, lat + 0.1],
         zoom: 9,
         duration: 1200,
       })
