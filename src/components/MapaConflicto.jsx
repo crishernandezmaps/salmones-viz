@@ -101,8 +101,7 @@ export default function MapaConflicto() {
           'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 2, 8, 4, 12, 7],
           'circle-color': '#d94040',
           'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.8],
-          'circle-stroke-width': 0.5,
-          'circle-stroke-color': '#fff',
+          'circle-stroke-width': 0,
         },
       })
 
