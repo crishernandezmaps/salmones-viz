@@ -12,8 +12,8 @@ const LAYERS_CONFIG = [
     file: 'data/concesiones_salmones.topojson',
     topoKey: 'concesiones',
     color: '#d94040',
-    opacity: 0.5,
-    outlineColor: '#d94040',
+    opacity: 0.7,
+    outlineColor: '#b03030',
   },
   {
     id: 'amp',
@@ -37,8 +37,8 @@ export default function MapaConflicto() {
     mapRef.current = new maplibregl.Map({
       container: containerRef.current,
       style: MAP_STYLE,
-      center: [-73.2, -44.5],
-      zoom: 5.5,
+      center: [-73.2, -43.5],
+      zoom: 7,
       attributionControl: false,
     })
     mapRef.current.addControl(new maplibregl.NavigationControl(), 'top-right')
@@ -67,7 +67,7 @@ export default function MapaConflicto() {
           source: layer.id,
           paint: {
             'line-color': layer.outlineColor,
-            'line-width': 1,
+            'line-width': ['interpolate', ['linear'], ['zoom'], 5, 0.5, 8, 1.5, 12, 3],
           },
         })
       }
