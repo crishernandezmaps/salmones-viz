@@ -17,8 +17,8 @@ export default function ArticleView() {
       <section className='relative h-screen flex items-end justify-start overflow-hidden'>
         <div className='absolute inset-0 bg-[#0d1b2a]'>
           <img
-            src='https://images.unsplash.com/photo-1574781330855-d0db8cc6a228?w=1920&q=80'
-            alt='Balsas-jaula de cultivo de salmón en fiordos del sur de Chile'
+            src='https://images.unsplash.com/photo-1509475826633-fed577a2c71b?w=1920&q=80'
+            alt='Fiordos y canales del sur de Chile'
             className='w-full h-full object-cover opacity-40'
           />
         </div>

@@ -42,7 +42,6 @@ function InsetWithConnector({ mapRef, lng, lat }) {
   // Inset position (bottom-center-right)
   const INSET_W = 220
   const INSET_H = 170
-  const INSET_MARGIN_TOP = 12
   const INSET_MARGIN_RIGHT = 12
 
   useEffect(() => {
@@ -64,7 +63,6 @@ function InsetWithConnector({ mapRef, lng, lat }) {
 
   // Inset box coordinates (relative to container)
   const insetRight = INSET_MARGIN_RIGHT
-  const insetTop = INSET_MARGIN_TOP
 
   return (
     <div ref={containerRef} className='absolute inset-0 z-10 pointer-events-none'>
@@ -78,27 +76,33 @@ function InsetWithConnector({ mapRef, lng, lat }) {
             </linearGradient>
           </defs>
           {/* Trapezoid fill */}
-          <polygon
-            points={`
-              ${pointPos.x},${pointPos.y}
-              ${pointPos.cw - insetRight - INSET_W},${insetTop}
-              ${pointPos.cw - insetRight},${insetTop}
-              ${pointPos.cw - insetRight},${insetTop + INSET_H}
-              ${pointPos.cw - insetRight - INSET_W},${insetTop + INSET_H}
-            `}
-            fill='url(#connGrad)'
-          />
-          {/* Lines from point to inset corners */}
-          <line
-            x1={pointPos.x} y1={pointPos.y}
-            x2={pointPos.cw - insetRight - INSET_W} y2={insetTop}
-            stroke='rgba(217,64,64,0.35)' strokeWidth='1' strokeDasharray='4,3'
-          />
-          <line
-            x1={pointPos.x} y1={pointPos.y}
-            x2={pointPos.cw - insetRight} y2={insetTop + INSET_H}
-            stroke='rgba(217,64,64,0.35)' strokeWidth='1' strokeDasharray='4,3'
-          />
+          {(() => {
+            const insetY = (pointPos.ch - INSET_H) / 2
+            return (
+              <>
+                <polygon
+                  points={`
+                    ${pointPos.x},${pointPos.y}
+                    ${pointPos.cw - insetRight - INSET_W},${insetY}
+                    ${pointPos.cw - insetRight},${insetY}
+                    ${pointPos.cw - insetRight},${insetY + INSET_H}
+                    ${pointPos.cw - insetRight - INSET_W},${insetY + INSET_H}
+                  `}
+                  fill='url(#connGrad)'
+                />
+                <line
+                  x1={pointPos.x} y1={pointPos.y}
+                  x2={pointPos.cw - insetRight - INSET_W} y2={insetY}
+                  stroke='rgba(217,64,64,0.35)' strokeWidth='1' strokeDasharray='4,3'
+                />
+                <line
+                  x1={pointPos.x} y1={pointPos.y}
+                  x2={pointPos.cw - insetRight - INSET_W} y2={insetY + INSET_H}
+                  stroke='rgba(217,64,64,0.35)' strokeWidth='1' strokeDasharray='4,3'
+                />
+              </>
+            )
+          })()}
           {/* Point marker */}
           <circle cx={pointPos.x} cy={pointPos.y} r='4' fill='#d94040' />
           <circle cx={pointPos.x} cy={pointPos.y} r='10' fill='none' stroke='rgba(217,64,64,0.4)' strokeWidth='1.5'>
@@ -113,7 +117,7 @@ function InsetWithConnector({ mapRef, lng, lat }) {
         className='absolute pointer-events-auto rounded-lg overflow-hidden shadow-lg'
         style={{
           width: INSET_W, height: INSET_H,
-          right: INSET_MARGIN_RIGHT, top: INSET_MARGIN_TOP,
+          right: INSET_MARGIN_RIGHT, top: '50%', transform: 'translateY(-50%)',
           border: '2px solid rgba(217,64,64,0.4)',
           zIndex: 6,
         }}
