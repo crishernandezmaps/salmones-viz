@@ -536,6 +536,7 @@ export default function MapaConflicto() {
         {/* Mini map inset with connector lines */}
         {selected && selected.centro._lng && (
           <InsetWithConnector
+            key={selected.centro.N_CODIGOCE}
             mapRef={mapRef}
             lng={parseFloat(selected.centro._lng)}
             lat={parseFloat(selected.centro._lat)}
