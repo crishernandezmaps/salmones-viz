@@ -117,11 +117,6 @@ function FichaPanel({ selected, onClose }) {
         <button onClick={onClose} className='w-7 h-7 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white text-sm'>✕</button>
       </div>
 
-      {/* Mini map */}
-      {centro._lng && centro._lat && (
-        <MiniMap lng={parseFloat(centro._lng)} lat={parseFloat(centro._lat)} />
-      )}
-
       {/* Alerts */}
       {isConflict && (
         <div className='px-4 py-2 flex items-center gap-2' style={{ background: '#ffe0b2' }}>
@@ -408,6 +403,13 @@ export default function MapaConflicto() {
             </div>
           </div>
         </div>
+
+        {/* Mini map inset — zoomed to selected point */}
+        {selected && selected.centro._lng && (
+          <div className='absolute bottom-3 right-3 z-10 rounded-lg overflow-hidden shadow-lg border-2 border-white/80' style={{ width: 200, height: 160 }}>
+            <MiniMap lng={parseFloat(selected.centro._lng)} lat={parseFloat(selected.centro._lat)} />
+          </div>
+        )}
 
         {!loaded && (
           <div className='absolute inset-0 flex items-center justify-center bg-[#f0f4f3] z-20'>
