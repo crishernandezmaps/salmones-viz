@@ -34,6 +34,95 @@ function getCategory(isConflict, hasDenuncia) {
   return 'normal'
 }
 
+// Inset map with trapezoid connector lines from point to inset
+function InsetWithConnector({ mapRef, lng, lat }) {
+  const containerRef = useRef(null)
+  const [pointPos, setPointPos] = useState(null)
+
+  // Inset position (bottom-right corner)
+  const INSET_W = 220
+  const INSET_H = 170
+  const INSET_MARGIN = 12
+
+  useEffect(() => {
+    const updatePos = () => {
+      if (!mapRef.current || !containerRef.current) return
+      const px = mapRef.current.project([lng, lat])
+      const rect = containerRef.current.getBoundingClientRect()
+      // Clamp to container
+      if (px.x >= 0 && px.x <= rect.width && px.y >= 0 && px.y <= rect.height) {
+        setPointPos({ x: px.x, y: px.y, cw: rect.width, ch: rect.height })
+      } else {
+        setPointPos(null)
+      }
+    }
+    updatePos()
+    mapRef.current?.on('move', updatePos)
+    return () => { mapRef.current?.off('move', updatePos) }
+  }, [mapRef, lng, lat])
+
+  // Inset box coordinates (relative to container)
+  const insetRight = INSET_MARGIN
+  const insetBottom = INSET_MARGIN
+
+  return (
+    <div ref={containerRef} className='absolute inset-0 z-10 pointer-events-none'>
+      {/* SVG connector lines */}
+      {pointPos && (
+        <svg className='absolute inset-0 w-full h-full' style={{ zIndex: 5 }}>
+          <defs>
+            <linearGradient id='connGrad' x1='0' y1='0' x2='1' y2='1'>
+              <stop offset='0%' stopColor='rgba(217,64,64,0.15)' />
+              <stop offset='100%' stopColor='rgba(217,64,64,0.08)' />
+            </linearGradient>
+          </defs>
+          {/* Trapezoid fill */}
+          <polygon
+            points={`
+              ${pointPos.x},${pointPos.y}
+              ${pointPos.cw - insetRight - INSET_W},${pointPos.ch - insetBottom - INSET_H}
+              ${pointPos.cw - insetRight},${pointPos.ch - insetBottom - INSET_H}
+              ${pointPos.cw - insetRight},${pointPos.ch - insetBottom}
+              ${pointPos.cw - insetRight - INSET_W},${pointPos.ch - insetBottom}
+            `}
+            fill='url(#connGrad)'
+          />
+          {/* Lines from point to inset corners */}
+          <line
+            x1={pointPos.x} y1={pointPos.y}
+            x2={pointPos.cw - insetRight - INSET_W} y2={pointPos.ch - insetBottom - INSET_H}
+            stroke='rgba(217,64,64,0.35)' strokeWidth='1' strokeDasharray='4,3'
+          />
+          <line
+            x1={pointPos.x} y1={pointPos.y}
+            x2={pointPos.cw - insetRight} y2={pointPos.ch - insetBottom}
+            stroke='rgba(217,64,64,0.35)' strokeWidth='1' strokeDasharray='4,3'
+          />
+          {/* Point marker */}
+          <circle cx={pointPos.x} cy={pointPos.y} r='4' fill='#d94040' />
+          <circle cx={pointPos.x} cy={pointPos.y} r='10' fill='none' stroke='rgba(217,64,64,0.4)' strokeWidth='1.5'>
+            <animate attributeName='r' values='6;14;6' dur='2s' repeatCount='indefinite' />
+            <animate attributeName='opacity' values='0.6;0.1;0.6' dur='2s' repeatCount='indefinite' />
+          </circle>
+        </svg>
+      )}
+
+      {/* Inset map */}
+      <div
+        className='absolute pointer-events-auto rounded-lg overflow-hidden shadow-lg'
+        style={{
+          width: INSET_W, height: INSET_H,
+          right: INSET_MARGIN, bottom: INSET_MARGIN,
+          border: '2px solid rgba(217,64,64,0.4)',
+          zIndex: 6,
+        }}
+      >
+        <MiniMap lng={lng} lat={lat} />
+      </div>
+    </div>
+  )
+}
+
 function FichaRow({ label, value }) {
   if (!value) return null
   return (
@@ -444,11 +533,13 @@ export default function MapaConflicto() {
           </div>
         </div>
 
-        {/* Mini map inset */}
+        {/* Mini map inset with connector lines */}
         {selected && selected.centro._lng && (
-          <div className='absolute bottom-3 right-3 z-10 rounded-lg overflow-hidden shadow-lg border-2 border-white/80' style={{ width: 200, height: 160 }}>
-            <MiniMap lng={parseFloat(selected.centro._lng)} lat={parseFloat(selected.centro._lat)} />
-          </div>
+          <InsetWithConnector
+            mapRef={mapRef}
+            lng={parseFloat(selected.centro._lng)}
+            lat={parseFloat(selected.centro._lat)}
+          />
         )}
 
         {!loaded && (
