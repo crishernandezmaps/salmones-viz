@@ -218,10 +218,12 @@ export default function MapaConflicto() {
   const [ranking, setRanking] = useState([])
   const [rankIndex, setRankIndex] = useState(0)
 
-  const buildSelected = useCallback((code) => {
+  const rankingRef = useRef([])
+
+  const selectByCode = useCallback((code) => {
     const { concMap, denMap, ampPolygons, centrosByCode } = dataRef.current
     const props = centrosByCode[code]
-    if (!props) return null
+    if (!props) return
     const concesion = concMap[code] || null
     const denuncias = denMap[code] || []
     const isConflict = props._conflict === true || props._conflict === 'true'
@@ -235,27 +237,22 @@ export default function MapaConflicto() {
         try { if (booleanPointInPolygon(pt, amp)) { ampName = amp.properties.NOMBRE; break } } catch (e) {}
       }
     }
-    return { centro: props, concesion, denuncias, ampName, isConflict, hasDenuncia }
+    setSelected({ centro: props, concesion, denuncias, ampName, isConflict, hasDenuncia })
   }, [])
 
-  const selectByCode = useCallback((code) => {
-    const sel = buildSelected(code)
-    if (sel) setSelected(sel)
-  }, [buildSelected])
-
   const handleNavigate = useCallback((idx) => {
-    if (idx < 0 || idx >= ranking.length) return
+    const r = rankingRef.current
+    if (idx < 0 || idx >= r.length) return
     setRankIndex(idx)
-    selectByCode(ranking[idx].code)
-  }, [ranking, selectByCode])
+    selectByCode(r[idx].code)
+  }, [selectByCode])
 
   const handleCentroClick = useCallback((props) => {
     const code = String(parseInt(props.N_CODIGOCE))
     selectByCode(code)
-    // Update rankIndex if this code is in ranking
-    const ri = ranking.findIndex(r => r.code === code)
+    const ri = rankingRef.current.findIndex(r => r.code === code)
     setRankIndex(ri >= 0 ? ri : -1)
-  }, [ranking, selectByCode])
+  }, [selectByCode])
 
   useEffect(() => {
     if (mapRef.current) return
@@ -301,6 +298,7 @@ export default function MapaConflicto() {
         }
       })
       const sortedRanking = Object.values(rankMap).sort((a, b) => b.maxPct - a.maxPct)
+      rankingRef.current = sortedRanking
       setRanking(sortedRanking)
 
       // Classify centros
@@ -382,7 +380,8 @@ export default function MapaConflicto() {
     })
 
     return () => { if (mapRef.current) { mapRef.current.remove(); mapRef.current = null } }
-  }, [handleCentroClick, selectByCode])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const toggleLayer = (id) => {
     const next = !visible[id]
