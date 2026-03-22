@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import maplibregl from 'maplibre-gl'
 import { feature } from 'topojson-client'
 import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
@@ -6,9 +6,6 @@ import { point } from '@turf/helpers'
 
 const BASE = import.meta.env.BASE_URL
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
-
-// Default case: highest overproduction denuncia (1574% exceso)
-const DEFAULT_CODE = '110059'
 
 function makeSVG(fill, stroke, symbol) {
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
@@ -47,47 +44,34 @@ function FichaRow({ label, value }) {
   )
 }
 
-// Mini map zoomed to the selected point
 function MiniMap({ lng, lat }) {
   const ref = useRef(null)
   const mapRef = useRef(null)
-
   useEffect(() => {
     if (mapRef.current) { mapRef.current.remove(); mapRef.current = null }
     mapRef.current = new maplibregl.Map({
-      container: ref.current,
-      style: MAP_STYLE,
-      center: [lng, lat],
-      zoom: 12,
-      attributionControl: false,
-      interactive: false,
+      container: ref.current, style: MAP_STYLE,
+      center: [lng, lat], zoom: 12, attributionControl: false, interactive: false,
     })
     mapRef.current.on('load', () => {
       mapRef.current.addSource('pin', {
         type: 'geojson',
         data: { type: 'Feature', geometry: { type: 'Point', coordinates: [lng, lat] }, properties: {} },
       })
-      mapRef.current.addLayer({
-        id: 'pin-pulse', type: 'circle', source: 'pin',
-        paint: { 'circle-radius': 18, 'circle-color': '#d94040', 'circle-opacity': 0.2 },
-      })
-      mapRef.current.addLayer({
-        id: 'pin-dot', type: 'circle', source: 'pin',
-        paint: { 'circle-radius': 6, 'circle-color': '#d94040', 'circle-stroke-width': 2, 'circle-stroke-color': '#fff' },
-      })
+      mapRef.current.addLayer({ id: 'pin-pulse', type: 'circle', source: 'pin', paint: { 'circle-radius': 18, 'circle-color': '#d94040', 'circle-opacity': 0.2 } })
+      mapRef.current.addLayer({ id: 'pin-dot', type: 'circle', source: 'pin', paint: { 'circle-radius': 6, 'circle-color': '#d94040', 'circle-stroke-width': 2, 'circle-stroke-color': '#fff' } })
     })
     return () => { if (mapRef.current) { mapRef.current.remove(); mapRef.current = null } }
   }, [lng, lat])
-
-  return <div ref={ref} className='w-full' style={{ height: 180 }} />
+  return <div ref={ref} className='w-full h-full' />
 }
 
-function FichaPanel({ selected, onClose }) {
+function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
   if (!selected) {
     return (
       <div className='h-full flex items-center justify-center p-6'>
         <p className='text-[#1b3a4b]/30 text-sm text-center'>
-          Haz click en un punto del mapa para ver la ficha completa del centro
+          Haz click en un punto del mapa para ver la ficha completa
         </p>
       </div>
     )
@@ -99,6 +83,9 @@ function FichaPanel({ selected, onClose }) {
     : isConflict ? '#ff8c00'
     : hasDenuncia ? '#d94040'
     : '#3a9e9e'
+
+  // Is this point in the ranking?
+  const inRanking = rankIndex >= 0
 
   return (
     <div
@@ -114,8 +101,33 @@ function FichaPanel({ selected, onClose }) {
           <p className='text-xs opacity-80'>Centro de cultivo</p>
           <p className='text-lg font-bold'>{centro.N_CODIGOCE?.replace('.0', '')}</p>
         </div>
-        <button onClick={onClose} className='w-7 h-7 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white text-sm'>✕</button>
+        {inRanking && (
+          <span className='text-xs bg-white/20 rounded px-2 py-0.5'>#{rankIndex + 1} de {ranking.length}</span>
+        )}
       </div>
+
+      {/* Pagination — ranking navigation */}
+      {ranking.length > 0 && (
+        <div className='flex items-center justify-between px-4 py-2 border-b border-current/10' style={{ background: inRanking ? 'rgba(217,64,64,0.08)' : 'rgba(27,58,75,0.04)' }}>
+          <button
+            onClick={() => onNavigate(Math.max(0, rankIndex - 1))}
+            disabled={rankIndex <= 0}
+            className='px-2 py-1 rounded text-xs font-bold disabled:opacity-20'
+            style={{ color: headerBg }}
+          >
+            ← Anterior
+          </button>
+          <span className='text-[10px] opacity-50 uppercase tracking-wider'>Ranking denuncias</span>
+          <button
+            onClick={() => onNavigate(Math.min(ranking.length - 1, rankIndex + 1))}
+            disabled={rankIndex >= ranking.length - 1}
+            className='px-2 py-1 rounded text-xs font-bold disabled:opacity-20'
+            style={{ color: headerBg }}
+          >
+            Siguiente →
+          </button>
+        </div>
+      )}
 
       {/* Alerts */}
       {isConflict && (
@@ -138,41 +150,10 @@ function FichaPanel({ selected, onClose }) {
       )}
 
       <div className='px-4 py-2'>
-        <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-2'>Ubicación</p>
-        <FichaRow label='Comuna' value={centro.COMUNA} />
-        <FichaRow label='Región' value={centro.REGION} />
-        <FichaRow label='Fecha resolución' value={centro.F_RESOLSSF} />
-        <FichaRow label='Fecha fin' value={centro['FECHA FIN']} />
-
-        {concesion && (
-          <>
-            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Concesionario</p>
-            <FichaRow label='Titular' value={concesion['nombre titular'] || concesion.Titular} />
-            <FichaRow label='RUT' value={concesion['rut titular']} />
-            <FichaRow label='Holding' value={concesion.Holding || concesion['Holding (columna manual)']} />
-
-            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Concesión</p>
-            <FichaRow label='Toponimio' value={concesion.Toponimio} />
-            <FichaRow label='Especies' value={concesion.Especies} />
-            <FichaRow label='Grupo especie' value={concesion['Grupo Especie']} />
-            <FichaRow label='Superficie' value={concesion.superficieTotal ? concesion.superficieTotal + ' ha' : null} />
-            <FichaRow label='Tipo porción' value={concesion['Tipo Porcion']} />
-            <FichaRow label='Barrio' value={concesion.barrio} />
-            <FichaRow label='Tipo barrio' value={concesion['Tipo Barrio']} />
-
-            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Resoluciones</p>
-            <FichaRow label='N° Resolución SSP' value={concesion['Numero\nResSSP']?.replace('.0', '')} />
-            <FichaRow label='Fecha SSP' value={concesion['Fecha ResSSP']?.split('T')[0]} />
-            <FichaRow label='Estado' value={concesion['Estado Resolucion SSP']} />
-            <FichaRow label='N° Resolución SSFFAA' value={concesion['Numero\nResSSFFAA']?.replace('.0', '')} />
-            <FichaRow label='Fecha SSFFAA' value={concesion['Fecha ResSSFFAA']?.split('T')[0]} />
-            <FichaRow label='Resultado SSFFAA' value={concesion['Resultado\nResolucion\nSSFFAA']} />
-          </>
-        )}
-
+        {/* Denuncias first if they exist — the main story */}
         {denuncias && denuncias.length > 0 && (
           <>
-            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Denuncias por sobreproducción</p>
+            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-2'>Sobreproducción</p>
             {denuncias.map((d, i) => {
               const auth = parseFloat(d['Producción autorizada (Ton)']) || 0
               const real = parseFloat(d['Producción ciclo (Ton)']) || 0
@@ -193,6 +174,34 @@ function FichaPanel({ selected, onClose }) {
             })}
           </>
         )}
+
+        <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Ubicación</p>
+        <FichaRow label='Comuna' value={centro.COMUNA} />
+        <FichaRow label='Región' value={centro.REGION} />
+        <FichaRow label='Fecha resolución' value={centro.F_RESOLSSF} />
+        <FichaRow label='Fecha fin' value={centro['FECHA FIN']} />
+
+        {concesion && (
+          <>
+            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Concesionario</p>
+            <FichaRow label='Titular' value={concesion['nombre titular'] || concesion.Titular} />
+            <FichaRow label='RUT' value={concesion['rut titular']} />
+            <FichaRow label='Holding' value={concesion.Holding || concesion['Holding (columna manual)']} />
+
+            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Concesión</p>
+            <FichaRow label='Toponimio' value={concesion.Toponimio} />
+            <FichaRow label='Especies' value={concesion.Especies} />
+            <FichaRow label='Grupo especie' value={concesion['Grupo Especie']} />
+            <FichaRow label='Superficie' value={concesion.superficieTotal ? concesion.superficieTotal + ' ha' : null} />
+            <FichaRow label='Tipo porción' value={concesion['Tipo Porcion']} />
+            <FichaRow label='Barrio' value={concesion.barrio} />
+
+            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Resoluciones</p>
+            <FichaRow label='N° Resolución SSP' value={concesion['Numero\nResSSP']?.replace('.0', '')} />
+            <FichaRow label='Fecha SSP' value={concesion['Fecha ResSSP']?.split('T')[0]} />
+            <FichaRow label='Estado' value={concesion['Estado Resolucion SSP']} />
+          </>
+        )}
       </div>
     </div>
   )
@@ -201,15 +210,18 @@ function FichaPanel({ selected, onClose }) {
 export default function MapaConflicto() {
   const containerRef = useRef(null)
   const mapRef = useRef(null)
-  const dataRef = useRef({ concMap: {}, denMap: {}, ampPolygons: [] })
+  const dataRef = useRef({ concMap: {}, denMap: {}, ampPolygons: [], centrosByCode: {} })
   const [loaded, setLoaded] = useState(false)
   const [visible, setVisible] = useState({ centros: true, amp: true })
   const [stats, setStats] = useState({ conflict: 0, denuncia: 0, both: 0 })
   const [selected, setSelected] = useState(null)
+  const [ranking, setRanking] = useState([])
+  const [rankIndex, setRankIndex] = useState(0)
 
-  const selectCentro = useCallback((props) => {
-    const code = String(parseInt(props.N_CODIGOCE))
-    const { concMap, denMap, ampPolygons } = dataRef.current
+  const buildSelected = useCallback((code) => {
+    const { concMap, denMap, ampPolygons, centrosByCode } = dataRef.current
+    const props = centrosByCode[code]
+    if (!props) return null
     const concesion = concMap[code] || null
     const denuncias = denMap[code] || []
     const isConflict = props._conflict === true || props._conflict === 'true'
@@ -223,18 +235,33 @@ export default function MapaConflicto() {
         try { if (booleanPointInPolygon(pt, amp)) { ampName = amp.properties.NOMBRE; break } } catch (e) {}
       }
     }
-
-    setSelected({ centro: props, concesion, denuncias, ampName, isConflict, hasDenuncia })
+    return { centro: props, concesion, denuncias, ampName, isConflict, hasDenuncia }
   }, [])
+
+  const selectByCode = useCallback((code) => {
+    const sel = buildSelected(code)
+    if (sel) setSelected(sel)
+  }, [buildSelected])
+
+  const handleNavigate = useCallback((idx) => {
+    if (idx < 0 || idx >= ranking.length) return
+    setRankIndex(idx)
+    selectByCode(ranking[idx].code)
+  }, [ranking, selectByCode])
+
+  const handleCentroClick = useCallback((props) => {
+    const code = String(parseInt(props.N_CODIGOCE))
+    selectByCode(code)
+    // Update rankIndex if this code is in ranking
+    const ri = ranking.findIndex(r => r.code === code)
+    setRankIndex(ri >= 0 ? ri : -1)
+  }, [ranking, selectByCode])
 
   useEffect(() => {
     if (mapRef.current) return
     mapRef.current = new maplibregl.Map({
-      container: containerRef.current,
-      style: MAP_STYLE,
-      center: [-73.2, -43.5],
-      zoom: 7,
-      attributionControl: false,
+      container: containerRef.current, style: MAP_STYLE,
+      center: [-73.2, -43.5], zoom: 7, attributionControl: false,
     })
     mapRef.current.addControl(new maplibregl.NavigationControl(), 'top-right')
     mapRef.current.scrollZoom.disable()
@@ -261,16 +288,31 @@ export default function MapaConflicto() {
         if (!denMap[code]) denMap[code] = []
         denMap[code].push(d)
       })
-      dataRef.current = { concMap, denMap, ampPolygons }
 
+      // Build ranking by max exceso
+      const rankMap = {}
+      denResp.forEach(d => {
+        const code = String(parseInt(d['Código de Centro']))
+        const auth = parseFloat(d['Producción autorizada (Ton)']) || 0
+        const real = parseFloat(d['Producción ciclo (Ton)']) || 0
+        const pct = auth > 0 ? Math.round(((real - auth) / auth) * 100) : 0
+        if (!rankMap[code] || pct > rankMap[code].maxPct) {
+          rankMap[code] = { code, name: d['Nombre Centro'], maxPct: pct }
+        }
+      })
+      const sortedRanking = Object.values(rankMap).sort((a, b) => b.maxPct - a.maxPct)
+      setRanking(sortedRanking)
+
+      // Classify centros
       let sConflict = 0, sDenuncia = 0, sBoth = 0
       const buckets = { normal: [], denuncia: [], conflict: [], conflict_denuncia: [] }
-      let defaultFeatureProps = null
+      const centrosByCode = {}
 
       for (const centro of centrosResp.features) {
         centro.properties._lng = centro.geometry.coordinates[0]
         centro.properties._lat = centro.geometry.coordinates[1]
         const code = String(parseInt(centro.properties.N_CODIGOCE))
+        centrosByCode[code] = centro.properties
 
         const pt = point(centro.geometry.coordinates)
         let inside = false
@@ -278,19 +320,14 @@ export default function MapaConflicto() {
           try { if (booleanPointInPolygon(pt, amp)) { inside = true; break } } catch (e) {}
         }
         centro.properties._conflict = inside
-
         const hasDen = !!denMap[code]
-        const cat = getCategory(inside, hasDen)
-        buckets[cat].push(centro)
-
+        buckets[getCategory(inside, hasDen)].push(centro)
         if (inside && hasDen) sBoth++
         else if (inside) sConflict++
         else if (hasDen) sDenuncia++
-
-        // Capture default point
-        if (code === DEFAULT_CODE) defaultFeatureProps = centro.properties
       }
       setStats({ conflict: sConflict, denuncia: sDenuncia, both: sBoth })
+      dataRef.current = { concMap, denMap, ampPolygons, centrosByCode }
 
       // AMP layers
       mapRef.current.addSource('amp', { type: 'geojson', data: ampGeo })
@@ -312,7 +349,7 @@ export default function MapaConflicto() {
         },
       })
 
-      // Load icons then add layers
+      // Icon layers
       const iconEntries = Object.entries(ICONS)
       let loadedIcons = 0
       for (const [key, { svg }] of iconEntries) {
@@ -325,32 +362,27 @@ export default function MapaConflicto() {
               mapRef.current.addSource('src-' + cat, { type: 'geojson', data: { type: 'FeatureCollection', features: feats } })
               mapRef.current.addLayer({
                 id: 'layer-' + cat, type: 'symbol', source: 'src-' + cat,
-                layout: {
-                  'icon-image': 'icon-' + cat,
-                  'icon-size': ['interpolate', ['linear'], ['zoom'], 5, 0.35, 8, 0.6, 12, 0.9],
-                  'icon-allow-overlap': true,
-                },
+                layout: { 'icon-image': 'icon-' + cat, 'icon-size': ['interpolate', ['linear'], ['zoom'], 5, 0.35, 8, 0.6, 12, 0.9], 'icon-allow-overlap': true },
               })
-              mapRef.current.on('click', 'layer-' + cat, (e) => selectCentro(e.features[0].properties))
+              mapRef.current.on('click', 'layer-' + cat, (e) => handleCentroClick(e.features[0].properties))
               mapRef.current.on('mouseenter', 'layer-' + cat, () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
               mapRef.current.on('mouseleave', 'layer-' + cat, () => { mapRef.current.getCanvas().style.cursor = '' })
             }
-
-            // Auto-select default point after icons loaded
-            if (defaultFeatureProps) selectCentro(defaultFeatureProps)
+            // Select first in ranking by default
+            if (sortedRanking.length > 0) {
+              selectByCode(sortedRanking[0].code)
+              setRankIndex(0)
+            }
           }
         }
         img.src = svg
       }
 
-      mapRef.current.on('mouseenter', 'amp-fill', () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
-      mapRef.current.on('mouseleave', 'amp-fill', () => { mapRef.current.getCanvas().style.cursor = '' })
-
       setLoaded(true)
     })
 
     return () => { if (mapRef.current) { mapRef.current.remove(); mapRef.current = null } }
-  }, [selectCentro])
+  }, [handleCentroClick, selectByCode])
 
   const toggleLayer = (id) => {
     const next = !visible[id]
@@ -368,6 +400,13 @@ export default function MapaConflicto() {
       }
     }
   }
+
+  // Current rank index for ficha
+  const currentRankIndex = useMemo(() => {
+    if (!selected) return -1
+    const code = String(parseInt(selected.centro.N_CODIGOCE))
+    return ranking.findIndex(r => r.code === code)
+  }, [selected, ranking])
 
   return (
     <div className='flex h-full w-full' style={{ position: 'relative' }}>
@@ -397,14 +436,16 @@ export default function MapaConflicto() {
               <span className='text-[10px]'>🔶</span>
               <span className='text-[#1b3a4b]/60 text-[10px]'>En zona protegida ({stats.conflict})</span>
             </div>
-            <div className='flex items-center gap-1.5'>
-              <span className='text-[10px]'>🔶</span>
-              <span className='text-[10px]' style={{ color: '#c62828', fontWeight: 700 }}>Zona protegida + denuncia ({stats.both})</span>
-            </div>
+            {stats.both > 0 && (
+              <div className='flex items-center gap-1.5'>
+                <span className='text-[10px]'>🔶</span>
+                <span className='text-[10px]' style={{ color: '#c62828', fontWeight: 700 }}>Zona proteg. + denuncia ({stats.both})</span>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Mini map inset — zoomed to selected point */}
+        {/* Mini map inset */}
         {selected && selected.centro._lng && (
           <div className='absolute bottom-3 right-3 z-10 rounded-lg overflow-hidden shadow-lg border-2 border-white/80' style={{ width: 200, height: 160 }}>
             <MiniMap lng={parseFloat(selected.centro._lng)} lat={parseFloat(selected.centro._lat)} />
@@ -418,13 +459,18 @@ export default function MapaConflicto() {
         )}
       </div>
 
-      {/* Ficha panel with mini map */}
+      {/* Ficha panel */}
       <div className={
         selected
           ? 'absolute bottom-0 left-0 right-0 h-[50%] md:relative md:h-auto md:w-2/5 z-20 shadow-lg md:shadow-none border-t md:border-t-0 md:border-l border-[#1b3a4b]/10'
           : 'hidden md:block md:relative md:w-2/5 border-l border-[#1b3a4b]/10'
       }>
-        <FichaPanel selected={selected} onClose={() => setSelected(null)} />
+        <FichaPanel
+          selected={selected}
+          ranking={ranking}
+          rankIndex={currentRankIndex}
+          onNavigate={handleNavigate}
+        />
       </div>
     </div>
   )
