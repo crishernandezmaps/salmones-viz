@@ -28,6 +28,7 @@ export default function MapaConflicto() {
       attributionControl: false,
     })
     mapRef.current.addControl(new maplibregl.NavigationControl(), 'top-right')
+    mapRef.current.scrollZoom.disable()
 
     mapRef.current.on('load', async () => {
       // Load AMP (TopoJSON)
