@@ -327,6 +327,15 @@ export default function MapaConflicto() {
       }
     }
     setSelected({ centro: props, concesion, denuncias, ampName, isConflict, hasDenuncia })
+
+    // Fly map to center the point
+    if (mapRef.current && props._lng && props._lat) {
+      mapRef.current.flyTo({
+        center: [parseFloat(props._lng), parseFloat(props._lat)],
+        zoom: 9,
+        duration: 1200,
+      })
+    }
   }, [])
 
   const handleNavigate = useCallback((idx) => {
