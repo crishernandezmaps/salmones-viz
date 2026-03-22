@@ -7,8 +7,34 @@ import { point } from '@turf/helpers'
 const BASE = import.meta.env.BASE_URL
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
 
-const WARNING_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><polygon points="12,2 22,22 2,22" fill="%23ff8c00" stroke="%23fff" stroke-width="1.5"/><text x="12" y="19" text-anchor="middle" font-size="14" font-weight="bold" fill="%23fff">!</text></svg>`
-const WARNING_IMG = 'data:image/svg+xml;charset=utf-8,' + WARNING_SVG
+// 4 icon types as SVG data URLs
+function makeSVG(fill, stroke, symbol) {
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">` +
+    (symbol === 'triangle'
+      ? `<polygon points="14,2 26,26 2,26" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`
+      : `<circle cx="14" cy="14" r="11" fill="${fill}" stroke="${stroke}" stroke-width="2"/>`) +
+    (symbol === 'triangle'
+      ? `<text x="14" y="22" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">!</text>`
+      : '') +
+    `</svg>`
+  )
+}
+
+const ICONS = {
+  normal:           { svg: makeSVG('#d94040', '#fff', 'circle'),   label: 'Sin denuncia' },
+  denuncia:         { svg: makeSVG('#d94040', '#ffd600', 'circle'), label: 'Con denuncia' },
+  conflict:         { svg: makeSVG('#ff8c00', '#fff', 'triangle'), label: 'En zona protegida' },
+  conflict_denuncia:{ svg: makeSVG('#ff8c00', '#ffd600', 'triangle'), label: 'Zona protegida + denuncia' },
+}
+
+// Category for each centro
+function getCategory(isConflict, hasDenuncia) {
+  if (isConflict && hasDenuncia) return 'conflict_denuncia'
+  if (isConflict) return 'conflict'
+  if (hasDenuncia) return 'denuncia'
+  return 'normal'
+}
 
 function FichaRow({ label, value }) {
   if (!value) return null
@@ -31,24 +57,24 @@ function FichaPanel({ selected, onClose }) {
     )
   }
 
-  const { centro, concesion, ampName, isConflict } = selected
+  const { centro, concesion, denuncias, ampName, isConflict, hasDenuncia } = selected
+  const isCritical = isConflict || hasDenuncia
+
+  const headerBg = isConflict && hasDenuncia ? '#c62828'
+    : isConflict ? '#ff8c00'
+    : hasDenuncia ? '#d94040'
+    : '#3a9e9e'
 
   return (
     <div
       className='h-full overflow-y-auto'
       style={{
-        background: isConflict ? '#fff3e0' : '#fff',
-        color: isConflict ? '#4a2800' : '#1b3a4b',
+        background: isConflict ? '#fff3e0' : hasDenuncia ? '#fff5f5' : '#fff',
+        color: isConflict ? '#4a2800' : hasDenuncia ? '#4a1010' : '#1b3a4b',
       }}
     >
       {/* Header */}
-      <div
-        className='sticky top-0 z-10 px-4 py-3 flex items-center justify-between'
-        style={{
-          background: isConflict ? '#ff8c00' : '#3a9e9e',
-          color: '#fff',
-        }}
-      >
+      <div className='sticky top-0 z-10 px-4 py-3 flex items-center justify-between' style={{ background: headerBg, color: '#fff' }}>
         <div>
           <p className='text-xs opacity-80'>Centro de cultivo</p>
           <p className='text-lg font-bold'>{centro.N_CODIGOCE?.replace('.0', '')}</p>
@@ -56,7 +82,7 @@ function FichaPanel({ selected, onClose }) {
         <button onClick={onClose} className='w-7 h-7 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white text-sm'>✕</button>
       </div>
 
-      {/* Conflict warning */}
+      {/* Alerts */}
       {isConflict && (
         <div className='px-4 py-2 flex items-center gap-2' style={{ background: '#ffe0b2' }}>
           <span className='text-lg'>⚠</span>
@@ -66,15 +92,25 @@ function FichaPanel({ selected, onClose }) {
           </div>
         </div>
       )}
+      {hasDenuncia && (
+        <div className='px-4 py-2 flex items-center gap-2' style={{ background: isConflict ? '#ffccbc' : '#ffcdd2' }}>
+          <span className='text-lg'>🔴</span>
+          <div>
+            <p className='text-xs font-bold' style={{ color: '#b71c1c' }}>DENUNCIA POR SOBREPRODUCCIÓN</p>
+            <p className='text-xs opacity-70'>{denuncias.length} denuncia{denuncias.length > 1 ? 's' : ''} registrada{denuncias.length > 1 ? 's' : ''}</p>
+          </div>
+        </div>
+      )}
 
-      {/* Centro info */}
-      <div className='px-4 py-2' style={{ color: isConflict ? '#4a2800' : '#1b3a4b' }}>
+      <div className='px-4 py-2'>
+        {/* Ubicación */}
         <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-2'>Ubicación</p>
         <FichaRow label='Comuna' value={centro.COMUNA} />
         <FichaRow label='Región' value={centro.REGION} />
         <FichaRow label='Fecha resolución' value={centro.F_RESOLSSF} />
         <FichaRow label='Fecha fin' value={centro['FECHA FIN']} />
 
+        {/* Concesionario */}
         {concesion && (
           <>
             <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Concesionario</p>
@@ -100,6 +136,31 @@ function FichaPanel({ selected, onClose }) {
             <FichaRow label='Resultado SSFFAA' value={concesion['Resultado\nResolucion\nSSFFAA']} />
           </>
         )}
+
+        {/* Denuncias */}
+        {denuncias && denuncias.length > 0 && (
+          <>
+            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Denuncias por sobreproducción</p>
+            {denuncias.map((d, i) => {
+              const auth = parseFloat(d['Producción autorizada (Ton)']) || 0
+              const real = parseFloat(d['Producción ciclo (Ton)']) || 0
+              const pct = auth > 0 ? Math.round(((real - auth) / auth) * 100) : 0
+              return (
+                <div key={i} className='py-2 border-b border-current/10'>
+                  <div className='flex items-center justify-between mb-1'>
+                    <span className='text-xs font-bold'>Denuncia {i + 1}</span>
+                    <span className='text-[10px] font-bold px-1.5 py-0.5 rounded' style={{ background: '#d94040', color: '#fff' }}>+{pct}% exceso</span>
+                  </div>
+                  <FichaRow label='Fecha denuncia' value={d['Fecha Denuncia']?.split('T')[0]} />
+                  <FichaRow label='Producción autorizada' value={auth.toLocaleString() + ' ton'} />
+                  <FichaRow label='Producción real' value={real.toLocaleString() + ' ton'} />
+                  <FichaRow label='Exceso' value={(real - auth).toLocaleString() + ' ton'} />
+                  <FichaRow label='Ciclo' value={(d['Inicio Ciclo Productivo']?.split('T')[0] || '') + ' → ' + (d['Término de Ciclo Productivo']?.split('T')[0] || '')} />
+                </div>
+              )
+            })}
+          </>
+        )}
       </div>
     </div>
   )
@@ -108,35 +169,30 @@ function FichaPanel({ selected, onClose }) {
 export default function MapaConflicto() {
   const containerRef = useRef(null)
   const mapRef = useRef(null)
-  const concesionesRef = useRef([])
-  const ampGeoRef = useRef(null)
+  const dataRef = useRef({ concMap: {}, denMap: {}, ampPolygons: [] })
   const [loaded, setLoaded] = useState(false)
   const [visible, setVisible] = useState({ centros: true, amp: true })
-  const [conflictCount, setConflictCount] = useState(0)
+  const [stats, setStats] = useState({ conflict: 0, denuncia: 0, both: 0 })
   const [selected, setSelected] = useState(null)
 
   const handleCentroClick = useCallback((props) => {
     const code = String(parseInt(props.N_CODIGOCE))
-    const concMap = concesionesRef.current
+    const { concMap, denMap, ampPolygons } = dataRef.current
     const concesion = concMap[code] || null
+    const denuncias = denMap[code] || []
     const isConflict = props._conflict === true || props._conflict === 'true'
+    const hasDenuncia = denuncias.length > 0
 
-    // Find which AMP it's in
     let ampName = null
-    if (isConflict && ampGeoRef.current) {
+    if (isConflict) {
       const coords = [parseFloat(props._lng), parseFloat(props._lat)]
       const pt = point(coords)
-      for (const amp of ampGeoRef.current) {
-        try {
-          if (booleanPointInPolygon(pt, amp)) {
-            ampName = amp.properties.NOMBRE
-            break
-          }
-        } catch (e) {}
+      for (const amp of ampPolygons) {
+        try { if (booleanPointInPolygon(pt, amp)) { ampName = amp.properties.NOMBRE; break } } catch (e) {}
       }
     }
 
-    setSelected({ centro: props, concesion, ampName, isConflict })
+    setSelected({ centro: props, concesion, denuncias, ampName, isConflict, hasDenuncia })
   }, [])
 
   useEffect(() => {
@@ -152,55 +208,66 @@ export default function MapaConflicto() {
     mapRef.current.scrollZoom.disable()
 
     mapRef.current.on('load', async () => {
-      // Load all data
-      const [ampResp, centrosResp, concResp] = await Promise.all([
+      const [ampResp, centrosResp, concResp, denResp] = await Promise.all([
         fetch(BASE + 'data/amp_nacional.topojson').then(r => r.json()),
         fetch(BASE + 'data/centros_salmoneros.geojson').then(r => r.json()),
         fetch(BASE + 'data/concesiones_excel.json').then(r => r.json()),
+        fetch(BASE + 'data/denuncias.json').then(r => r.json()),
       ])
 
       const ampGeo = feature(ampResp, ampResp.objects.amp)
-      ampGeoRef.current = ampGeo.features.filter(f =>
-        f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'
-      )
+      const ampPolygons = ampGeo.features.filter(f => f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon')
 
-      // Build concesiones lookup
+      // Build lookups
       const concMap = {}
       concResp.forEach(c => {
         const code = c['Codigo Centro'] || c['Código Centro']
         if (code) concMap[String(parseInt(code))] = c
       })
-      concesionesRef.current = concMap
+      const denMap = {}
+      denResp.forEach(d => {
+        const code = String(parseInt(d['Código de Centro']))
+        if (!denMap[code]) denMap[code] = []
+        denMap[code].push(d)
+      })
+      dataRef.current = { concMap, denMap, ampPolygons }
 
-      // Detect conflicts + store coords in properties for later lookup
-      let conflicts = 0
+      // Classify each centro
+      let sConflict = 0, sDenuncia = 0, sBoth = 0
+      const buckets = { normal: [], denuncia: [], conflict: [], conflict_denuncia: [] }
+
       for (const centro of centrosResp.features) {
         centro.properties._lng = centro.geometry.coordinates[0]
         centro.properties._lat = centro.geometry.coordinates[1]
+        const code = String(parseInt(centro.properties.N_CODIGOCE))
+
+        // Check AMP
         const pt = point(centro.geometry.coordinates)
         let inside = false
-        for (const amp of ampGeoRef.current) {
-          try {
-            if (booleanPointInPolygon(pt, amp)) { inside = true; break }
-          } catch (e) {}
+        for (const amp of ampPolygons) {
+          try { if (booleanPointInPolygon(pt, amp)) { inside = true; break } } catch (e) {}
         }
         centro.properties._conflict = inside
-        if (inside) conflicts++
-      }
-      setConflictCount(conflicts)
 
-      const normalFeatures = centrosResp.features.filter(f => !f.properties._conflict)
-      const conflictFeatures = centrosResp.features.filter(f => f.properties._conflict)
+        const hasDen = !!denMap[code]
+        const cat = getCategory(inside, hasDen)
+        buckets[cat].push(centro)
+
+        if (inside && hasDen) sBoth++
+        else if (inside) sConflict++
+        else if (hasDen) sDenuncia++
+      }
+      setStats({ conflict: sConflict, denuncia: sDenuncia, both: sBoth })
 
       // AMP layers
       mapRef.current.addSource('amp', { type: 'geojson', data: ampGeo })
       mapRef.current.addLayer({ id: 'amp-fill', type: 'fill', source: 'amp', paint: { 'fill-color': '#3a9e9e', 'fill-opacity': 0.3 } })
       mapRef.current.addLayer({ id: 'amp-outline', type: 'line', source: 'amp', paint: { 'line-color': '#2a7a7a', 'line-width': 1.5 } })
 
-      // Normal centros
-      mapRef.current.addSource('centros', { type: 'geojson', data: { type: 'FeatureCollection', features: normalFeatures } })
+      // Heatmap for all centros
+      mapRef.current.addSource('all-centros', { type: 'geojson', data: centrosResp })
       mapRef.current.addLayer({
-        id: 'centros-heat', type: 'heatmap', source: 'centros',
+        id: 'centros-heat', type: 'heatmap', source: 'all-centros',
         paint: {
           'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 4, 0.6, 8, 1.5, 12, 2],
           'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 14, 8, 22, 12, 30],
@@ -211,36 +278,38 @@ export default function MapaConflicto() {
           'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0.85, 10, 0.4, 13, 0],
         },
       })
-      mapRef.current.addLayer({
-        id: 'centros-pts', type: 'circle', source: 'centros',
-        paint: {
-          'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 2, 8, 4, 12, 7],
-          'circle-color': '#d94040',
-          'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.8],
-          'circle-stroke-width': 0,
-        },
-      })
 
-      // Conflict icons
-      const img = new Image(24, 24)
-      img.onload = () => {
-        mapRef.current.addImage('warning-icon', img)
-        mapRef.current.addSource('conflicts', { type: 'geojson', data: { type: 'FeatureCollection', features: conflictFeatures } })
-        mapRef.current.addLayer({
-          id: 'conflicts-icon', type: 'symbol', source: 'conflicts',
-          layout: { 'icon-image': 'warning-icon', 'icon-size': ['interpolate', ['linear'], ['zoom'], 5, 0.4, 8, 0.7, 12, 1], 'icon-allow-overlap': true },
-        })
+      // Load 4 icon images then add symbol layers
+      const iconEntries = Object.entries(ICONS)
+      let loadedIcons = 0
+      for (const [key, { svg }] of iconEntries) {
+        const img = new Image(28, 28)
+        img.onload = () => {
+          mapRef.current.addImage('icon-' + key, img)
+          loadedIcons++
+          if (loadedIcons === iconEntries.length) {
+            // Add all 4 symbol layers
+            for (const [cat, feats] of Object.entries(buckets)) {
+              mapRef.current.addSource('src-' + cat, { type: 'geojson', data: { type: 'FeatureCollection', features: feats } })
+              mapRef.current.addLayer({
+                id: 'layer-' + cat, type: 'symbol', source: 'src-' + cat,
+                layout: {
+                  'icon-image': 'icon-' + cat,
+                  'icon-size': ['interpolate', ['linear'], ['zoom'], 5, 0.35, 8, 0.6, 12, 0.9],
+                  'icon-allow-overlap': true,
+                },
+              })
+              mapRef.current.on('click', 'layer-' + cat, (e) => handleCentroClick(e.features[0].properties))
+              mapRef.current.on('mouseenter', 'layer-' + cat, () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
+              mapRef.current.on('mouseleave', 'layer-' + cat, () => { mapRef.current.getCanvas().style.cursor = '' })
+            }
+          }
+        }
+        img.src = svg
       }
-      img.src = WARNING_IMG
 
-      // Click → ficha panel (no popup)
-      mapRef.current.on('click', 'centros-pts', (e) => handleCentroClick(e.features[0].properties))
-      mapRef.current.on('click', 'conflicts-icon', (e) => handleCentroClick(e.features[0].properties))
-
-      ;['centros-pts', 'conflicts-icon', 'amp-fill'].forEach(id => {
-        mapRef.current.on('mouseenter', id, () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
-        mapRef.current.on('mouseleave', id, () => { mapRef.current.getCanvas().style.cursor = '' })
-      })
+      mapRef.current.on('mouseenter', 'amp-fill', () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
+      mapRef.current.on('mouseleave', 'amp-fill', () => { mapRef.current.getCanvas().style.cursor = '' })
 
       setLoaded(true)
     })
@@ -255,8 +324,9 @@ export default function MapaConflicto() {
       const vis = next ? 'visible' : 'none'
       if (id === 'centros') {
         mapRef.current.setLayoutProperty('centros-heat', 'visibility', vis)
-        mapRef.current.setLayoutProperty('centros-pts', 'visibility', vis)
-        if (mapRef.current.getLayer('conflicts-icon')) mapRef.current.setLayoutProperty('conflicts-icon', 'visibility', vis)
+        for (const cat of ['normal', 'denuncia', 'conflict', 'conflict_denuncia']) {
+          if (mapRef.current.getLayer('layer-' + cat)) mapRef.current.setLayoutProperty('layer-' + cat, 'visibility', vis)
+        }
       } else {
         mapRef.current.setLayoutProperty(id + '-fill', 'visibility', vis)
         mapRef.current.setLayoutProperty(id + '-outline', 'visibility', vis)
@@ -264,34 +334,40 @@ export default function MapaConflicto() {
     }
   }
 
-  const layersDef = [
-    { id: 'centros', label: 'Centros Salmoneros (1.346)', color: '#d94040' },
-    { id: 'amp', label: 'Áreas Marinas Protegidas (32)', color: '#3a9e9e' },
-  ]
-
   return (
     <div className='flex h-full w-full' style={{ position: 'relative' }}>
-      {/* Map — left side on desktop, full on mobile */}
       <div className={selected ? 'w-full md:w-3/5 relative' : 'w-full relative'}>
         <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
 
-        {/* Layer toggle */}
-        <div className='absolute top-3 left-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-3 z-10 text-sm space-y-2'>
-          {layersDef.map(layer => (
-            <label key={layer.id} className='flex items-center gap-2 cursor-pointer'>
-              <input type='checkbox' checked={visible[layer.id]} onChange={() => toggleLayer(layer.id)} className='rounded accent-[#3a9e9e]' />
-              <span className='w-3 h-3 rounded-full inline-block' style={{ backgroundColor: layer.color }} />
-              <span className='text-[#1b3a4b]/80 text-xs sm:text-sm'>{layer.label}</span>
-            </label>
-          ))}
-          {conflictCount > 0 && (
-            <div className='pt-1.5 border-t border-[#1b3a4b]/10 flex items-center gap-1.5'>
-              <span style={{ color: '#ff8c00', fontSize: 14 }}>⚠</span>
-              <span className='text-[#1b3a4b]/70 text-xs'>
-                <strong style={{ color: '#ff8c00' }}>{conflictCount}</strong> en áreas protegidas
-              </span>
+        {/* Legend */}
+        <div className='absolute top-3 left-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-3 z-10 text-sm space-y-1.5'>
+          <label className='flex items-center gap-2 cursor-pointer'>
+            <input type='checkbox' checked={visible.centros} onChange={() => toggleLayer('centros')} className='rounded accent-[#3a9e9e]' />
+            <span className='text-[#1b3a4b]/80 text-xs sm:text-sm font-medium'>Centros Salmoneros</span>
+          </label>
+          <label className='flex items-center gap-2 cursor-pointer'>
+            <input type='checkbox' checked={visible.amp} onChange={() => toggleLayer('amp')} className='rounded accent-[#3a9e9e]' />
+            <span className='text-[#1b3a4b]/80 text-xs sm:text-sm font-medium'>Áreas Marinas Protegidas</span>
+          </label>
+
+          <div className='pt-1.5 border-t border-[#1b3a4b]/10 space-y-1'>
+            <div className='flex items-center gap-1.5'>
+              <span className='w-3 h-3 rounded-full inline-block' style={{ background: '#d94040' }} />
+              <span className='text-[#1b3a4b]/60 text-[10px]'>Sin denuncia</span>
             </div>
-          )}
+            <div className='flex items-center gap-1.5'>
+              <span className='w-3 h-3 rounded-full inline-block border-2' style={{ background: '#d94040', borderColor: '#ffd600' }} />
+              <span className='text-[#1b3a4b]/60 text-[10px]'>Con denuncia ({stats.denuncia})</span>
+            </div>
+            <div className='flex items-center gap-1.5'>
+              <span className='text-[10px]'>🔶</span>
+              <span className='text-[#1b3a4b]/60 text-[10px]'>En zona protegida ({stats.conflict})</span>
+            </div>
+            <div className='flex items-center gap-1.5'>
+              <span className='text-[10px]'>🔶</span>
+              <span className='text-[10px]' style={{ color: '#c62828', fontWeight: 700 }}>Zona protegida + denuncia ({stats.both})</span>
+            </div>
+          </div>
         </div>
 
         {!loaded && (
@@ -301,7 +377,6 @@ export default function MapaConflicto() {
         )}
       </div>
 
-      {/* Ficha panel — right side on desktop, bottom sheet on mobile */}
       {selected && (
         <div className='absolute bottom-0 left-0 right-0 h-[45%] md:relative md:h-auto md:w-2/5 z-20 shadow-lg md:shadow-none border-t md:border-t-0 md:border-l border-[#1b3a4b]/10'>
           <FichaPanel selected={selected} onClose={() => setSelected(null)} />
