@@ -63,8 +63,8 @@ function InsetWithConnector({ mapRef, lng, lat }) {
   }, [mapRef, lng, lat])
 
   // Inset box coordinates (relative to container)
-  const insetRight = INSET_MARGIN
-  const insetBottom = INSET_MARGIN
+  const insetRight = INSET_MARGIN_RIGHT
+  const insetBottom = INSET_MARGIN_BOTTOM
 
   return (
     <div ref={containerRef} className='absolute inset-0 z-10 pointer-events-none'>
