@@ -7,7 +7,9 @@ import { point } from '@turf/helpers'
 const BASE = import.meta.env.BASE_URL
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
 
-// 4 icon types as SVG data URLs
+// Default case: highest overproduction denuncia (1574% exceso)
+const DEFAULT_CODE = '110059'
+
 function makeSVG(fill, stroke, symbol) {
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28">` +
@@ -22,13 +24,12 @@ function makeSVG(fill, stroke, symbol) {
 }
 
 const ICONS = {
-  normal:           { svg: makeSVG('#d94040', '#fff', 'circle'),   label: 'Sin denuncia' },
-  denuncia:         { svg: makeSVG('#d94040', '#ffd600', 'circle'), label: 'Con denuncia' },
-  conflict:         { svg: makeSVG('#ff8c00', '#fff', 'triangle'), label: 'En zona protegida' },
-  conflict_denuncia:{ svg: makeSVG('#ff8c00', '#ffd600', 'triangle'), label: 'Zona protegida + denuncia' },
+  normal:            { svg: makeSVG('#d94040', '#fff', 'circle') },
+  denuncia:          { svg: makeSVG('#d94040', '#ffd600', 'circle') },
+  conflict:          { svg: makeSVG('#ff8c00', '#fff', 'triangle') },
+  conflict_denuncia: { svg: makeSVG('#ff8c00', '#ffd600', 'triangle') },
 }
 
-// Category for each centro
 function getCategory(isConflict, hasDenuncia) {
   if (isConflict && hasDenuncia) return 'conflict_denuncia'
   if (isConflict) return 'conflict'
@@ -46,6 +47,41 @@ function FichaRow({ label, value }) {
   )
 }
 
+// Mini map zoomed to the selected point
+function MiniMap({ lng, lat }) {
+  const ref = useRef(null)
+  const mapRef = useRef(null)
+
+  useEffect(() => {
+    if (mapRef.current) { mapRef.current.remove(); mapRef.current = null }
+    mapRef.current = new maplibregl.Map({
+      container: ref.current,
+      style: MAP_STYLE,
+      center: [lng, lat],
+      zoom: 12,
+      attributionControl: false,
+      interactive: false,
+    })
+    mapRef.current.on('load', () => {
+      mapRef.current.addSource('pin', {
+        type: 'geojson',
+        data: { type: 'Feature', geometry: { type: 'Point', coordinates: [lng, lat] }, properties: {} },
+      })
+      mapRef.current.addLayer({
+        id: 'pin-pulse', type: 'circle', source: 'pin',
+        paint: { 'circle-radius': 18, 'circle-color': '#d94040', 'circle-opacity': 0.2 },
+      })
+      mapRef.current.addLayer({
+        id: 'pin-dot', type: 'circle', source: 'pin',
+        paint: { 'circle-radius': 6, 'circle-color': '#d94040', 'circle-stroke-width': 2, 'circle-stroke-color': '#fff' },
+      })
+    })
+    return () => { if (mapRef.current) { mapRef.current.remove(); mapRef.current = null } }
+  }, [lng, lat])
+
+  return <div ref={ref} className='w-full' style={{ height: 180 }} />
+}
+
 function FichaPanel({ selected, onClose }) {
   if (!selected) {
     return (
@@ -58,7 +94,6 @@ function FichaPanel({ selected, onClose }) {
   }
 
   const { centro, concesion, denuncias, ampName, isConflict, hasDenuncia } = selected
-  const isCritical = isConflict || hasDenuncia
 
   const headerBg = isConflict && hasDenuncia ? '#c62828'
     : isConflict ? '#ff8c00'
@@ -82,6 +117,11 @@ function FichaPanel({ selected, onClose }) {
         <button onClick={onClose} className='w-7 h-7 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 text-white text-sm'>✕</button>
       </div>
 
+      {/* Mini map */}
+      {centro._lng && centro._lat && (
+        <MiniMap lng={parseFloat(centro._lng)} lat={parseFloat(centro._lat)} />
+      )}
+
       {/* Alerts */}
       {isConflict && (
         <div className='px-4 py-2 flex items-center gap-2' style={{ background: '#ffe0b2' }}>
@@ -97,20 +137,18 @@ function FichaPanel({ selected, onClose }) {
           <span className='text-lg'>🔴</span>
           <div>
             <p className='text-xs font-bold' style={{ color: '#b71c1c' }}>DENUNCIA POR SOBREPRODUCCIÓN</p>
-            <p className='text-xs opacity-70'>{denuncias.length} denuncia{denuncias.length > 1 ? 's' : ''} registrada{denuncias.length > 1 ? 's' : ''}</p>
+            <p className='text-xs opacity-70'>{denuncias.length} denuncia{denuncias.length > 1 ? 's' : ''}</p>
           </div>
         </div>
       )}
 
       <div className='px-4 py-2'>
-        {/* Ubicación */}
         <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-2'>Ubicación</p>
         <FichaRow label='Comuna' value={centro.COMUNA} />
         <FichaRow label='Región' value={centro.REGION} />
         <FichaRow label='Fecha resolución' value={centro.F_RESOLSSF} />
         <FichaRow label='Fecha fin' value={centro['FECHA FIN']} />
 
-        {/* Concesionario */}
         {concesion && (
           <>
             <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Concesionario</p>
@@ -137,7 +175,6 @@ function FichaPanel({ selected, onClose }) {
           </>
         )}
 
-        {/* Denuncias */}
         {denuncias && denuncias.length > 0 && (
           <>
             <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Denuncias por sobreproducción</p>
@@ -175,7 +212,7 @@ export default function MapaConflicto() {
   const [stats, setStats] = useState({ conflict: 0, denuncia: 0, both: 0 })
   const [selected, setSelected] = useState(null)
 
-  const handleCentroClick = useCallback((props) => {
+  const selectCentro = useCallback((props) => {
     const code = String(parseInt(props.N_CODIGOCE))
     const { concMap, denMap, ampPolygons } = dataRef.current
     const concesion = concMap[code] || null
@@ -218,7 +255,6 @@ export default function MapaConflicto() {
       const ampGeo = feature(ampResp, ampResp.objects.amp)
       const ampPolygons = ampGeo.features.filter(f => f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon')
 
-      // Build lookups
       const concMap = {}
       concResp.forEach(c => {
         const code = c['Codigo Centro'] || c['Código Centro']
@@ -232,16 +268,15 @@ export default function MapaConflicto() {
       })
       dataRef.current = { concMap, denMap, ampPolygons }
 
-      // Classify each centro
       let sConflict = 0, sDenuncia = 0, sBoth = 0
       const buckets = { normal: [], denuncia: [], conflict: [], conflict_denuncia: [] }
+      let defaultFeatureProps = null
 
       for (const centro of centrosResp.features) {
         centro.properties._lng = centro.geometry.coordinates[0]
         centro.properties._lat = centro.geometry.coordinates[1]
         const code = String(parseInt(centro.properties.N_CODIGOCE))
 
-        // Check AMP
         const pt = point(centro.geometry.coordinates)
         let inside = false
         for (const amp of ampPolygons) {
@@ -256,6 +291,9 @@ export default function MapaConflicto() {
         if (inside && hasDen) sBoth++
         else if (inside) sConflict++
         else if (hasDen) sDenuncia++
+
+        // Capture default point
+        if (code === DEFAULT_CODE) defaultFeatureProps = centro.properties
       }
       setStats({ conflict: sConflict, denuncia: sDenuncia, both: sBoth })
 
@@ -264,7 +302,7 @@ export default function MapaConflicto() {
       mapRef.current.addLayer({ id: 'amp-fill', type: 'fill', source: 'amp', paint: { 'fill-color': '#3a9e9e', 'fill-opacity': 0.3 } })
       mapRef.current.addLayer({ id: 'amp-outline', type: 'line', source: 'amp', paint: { 'line-color': '#2a7a7a', 'line-width': 1.5 } })
 
-      // Heatmap for all centros
+      // Heatmap
       mapRef.current.addSource('all-centros', { type: 'geojson', data: centrosResp })
       mapRef.current.addLayer({
         id: 'centros-heat', type: 'heatmap', source: 'all-centros',
@@ -279,7 +317,7 @@ export default function MapaConflicto() {
         },
       })
 
-      // Load 4 icon images then add symbol layers
+      // Load icons then add layers
       const iconEntries = Object.entries(ICONS)
       let loadedIcons = 0
       for (const [key, { svg }] of iconEntries) {
@@ -288,7 +326,6 @@ export default function MapaConflicto() {
           mapRef.current.addImage('icon-' + key, img)
           loadedIcons++
           if (loadedIcons === iconEntries.length) {
-            // Add all 4 symbol layers
             for (const [cat, feats] of Object.entries(buckets)) {
               mapRef.current.addSource('src-' + cat, { type: 'geojson', data: { type: 'FeatureCollection', features: feats } })
               mapRef.current.addLayer({
@@ -299,10 +336,13 @@ export default function MapaConflicto() {
                   'icon-allow-overlap': true,
                 },
               })
-              mapRef.current.on('click', 'layer-' + cat, (e) => handleCentroClick(e.features[0].properties))
+              mapRef.current.on('click', 'layer-' + cat, (e) => selectCentro(e.features[0].properties))
               mapRef.current.on('mouseenter', 'layer-' + cat, () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
               mapRef.current.on('mouseleave', 'layer-' + cat, () => { mapRef.current.getCanvas().style.cursor = '' })
             }
+
+            // Auto-select default point after icons loaded
+            if (defaultFeatureProps) selectCentro(defaultFeatureProps)
           }
         }
         img.src = svg
@@ -315,7 +355,7 @@ export default function MapaConflicto() {
     })
 
     return () => { if (mapRef.current) { mapRef.current.remove(); mapRef.current = null } }
-  }, [handleCentroClick])
+  }, [selectCentro])
 
   const toggleLayer = (id) => {
     const next = !visible[id]
@@ -349,7 +389,6 @@ export default function MapaConflicto() {
             <input type='checkbox' checked={visible.amp} onChange={() => toggleLayer('amp')} className='rounded accent-[#3a9e9e]' />
             <span className='text-[#1b3a4b]/80 text-xs sm:text-sm font-medium'>Áreas Marinas Protegidas</span>
           </label>
-
           <div className='pt-1.5 border-t border-[#1b3a4b]/10 space-y-1'>
             <div className='flex items-center gap-1.5'>
               <span className='w-3 h-3 rounded-full inline-block' style={{ background: '#d94040' }} />
@@ -377,11 +416,14 @@ export default function MapaConflicto() {
         )}
       </div>
 
-      {selected && (
-        <div className='absolute bottom-0 left-0 right-0 h-[45%] md:relative md:h-auto md:w-2/5 z-20 shadow-lg md:shadow-none border-t md:border-t-0 md:border-l border-[#1b3a4b]/10'>
-          <FichaPanel selected={selected} onClose={() => setSelected(null)} />
-        </div>
-      )}
+      {/* Ficha panel with mini map */}
+      <div className={
+        selected
+          ? 'absolute bottom-0 left-0 right-0 h-[50%] md:relative md:h-auto md:w-2/5 z-20 shadow-lg md:shadow-none border-t md:border-t-0 md:border-l border-[#1b3a4b]/10'
+          : 'hidden md:block md:relative md:w-2/5 border-l border-[#1b3a4b]/10'
+      }>
+        <FichaPanel selected={selected} onClose={() => setSelected(null)} />
+      </div>
     </div>
   )
 }
