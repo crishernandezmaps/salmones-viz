@@ -20,7 +20,9 @@
         if (p) {
           q.delete('p');
           var rest = q.toString();
-          window.history.replaceState(null, '', p + (rest ? '?' + rest : ''));
+          var base = '/salmones-viz';
+          var full = p.indexOf(base) === 0 ? p : base + p;
+          window.history.replaceState(null, '', full + (rest ? '?' + rest : ''));
         }
       })();
     </script>
