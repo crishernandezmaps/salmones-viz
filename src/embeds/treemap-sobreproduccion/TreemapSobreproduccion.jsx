@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react'
+import { useEffect, useState, useMemo, useRef, useCallback } from 'react'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -89,6 +89,7 @@ export default function TreemapSobreproduccion() {
   const [data, setData] = useState(null)
   const [hovered, setHovered] = useState(null)
   const [selected, setSelected] = useState(null)
+  const hoveredRef = useRef(null)
 
   useEffect(() => {
     fetch(BASE + 'data/sobreproduccion.json')
@@ -153,52 +154,58 @@ export default function TreemapSobreproduccion() {
       <div style={{ flex: 1, display: 'flex', minHeight: 0, padding: '8px 16px 16px', gap: 16 }}>
         {/* Treemap */}
         <div style={{ flex: 1, position: 'relative', minWidth: 0 }}>
+          <style>{`
+            .tm-cell { transition: opacity 0.15s; }
+            .tm-group:hover .tm-cell { opacity: 0.35; }
+            .tm-group .tm-cell:hover { opacity: 1; }
+            .tm-cell:hover rect.tm-bg { stroke: #1b3a4b; stroke-width: 0.4; }
+            .tm-selected rect.tm-bg { stroke: #1b3a4b; stroke-width: 0.4; opacity: 1; }
+          `}</style>
           <svg
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
             style={{ width: '100%', height: '100%', display: 'block' }}
+            className="tm-group"
           >
-            {rects.map((r, i) => {
-              const isActive = active && active.name === r.name
-              return (
-                <g key={r.name}
-                  onMouseEnter={() => setHovered(r)}
-                  onMouseLeave={() => setHovered(null)}
-                  onClick={() => setSelected(selected?.name === r.name ? null : r)}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <rect
-                    x={r.x + 0.15} y={r.y + 0.15}
-                    width={Math.max(r.w - 0.3, 0)} height={Math.max(r.h - 0.3, 0)}
-                    fill={getColor(r.value, maxCount)}
-                    stroke={isActive ? '#1b3a4b' : '#f0f4f3'}
-                    strokeWidth={isActive ? 0.4 : 0.2}
-                    rx={0.3}
-                    opacity={active && !isActive ? 0.4 : 1}
-                  />
-                  {r.w > 8 && r.h > 6 && (
-                    <text
-                      x={r.x + r.w / 2} y={r.y + r.h / 2 - 1}
-                      textAnchor="middle" dominantBaseline="middle"
-                      fill="white" fontSize={r.w > 20 ? 2.2 : 1.6} fontWeight="700"
-                      style={{ pointerEvents: 'none' }}
-                    >
-                      {r.name.length > 18 ? r.name.slice(0, 16) + '...' : r.name}
-                    </text>
-                  )}
-                  {r.w > 8 && r.h > 10 && (
-                    <text
-                      x={r.x + r.w / 2} y={r.y + r.h / 2 + 2.5}
-                      textAnchor="middle" dominantBaseline="middle"
-                      fill="rgba(255,255,255,0.8)" fontSize={r.w > 20 ? 1.8 : 1.3}
-                      style={{ pointerEvents: 'none' }}
-                    >
-                      {r.value} proceso{r.value !== 1 ? 's' : ''}
-                    </text>
-                  )}
-                </g>
-              )
-            })}
+            {rects.map((r) => (
+              <g key={r.name}
+                className={'tm-cell' + (selected?.name === r.name ? ' tm-selected' : '')}
+                onMouseEnter={() => { hoveredRef.current = r; setHovered(r) }}
+                onMouseLeave={() => { if (hoveredRef.current?.name === r.name) { hoveredRef.current = null; setHovered(null) } }}
+                onClick={() => setSelected(selected?.name === r.name ? null : r)}
+                style={{ cursor: 'pointer' }}
+              >
+                <rect
+                  className="tm-bg"
+                  x={r.x + 0.15} y={r.y + 0.15}
+                  width={Math.max(r.w - 0.3, 0)} height={Math.max(r.h - 0.3, 0)}
+                  fill={getColor(r.value, maxCount)}
+                  stroke="#f0f4f3"
+                  strokeWidth={0.2}
+                  rx={0.3}
+                />
+                {r.w > 8 && r.h > 6 && (
+                  <text
+                    x={r.x + r.w / 2} y={r.y + r.h / 2 - 1}
+                    textAnchor="middle" dominantBaseline="middle"
+                    fill="white" fontSize={r.w > 20 ? 2.2 : 1.6} fontWeight="700"
+                    style={{ pointerEvents: 'none' }}
+                  >
+                    {r.name.length > 18 ? r.name.slice(0, 16) + '...' : r.name}
+                  </text>
+                )}
+                {r.w > 8 && r.h > 10 && (
+                  <text
+                    x={r.x + r.w / 2} y={r.y + r.h / 2 + 2.5}
+                    textAnchor="middle" dominantBaseline="middle"
+                    fill="rgba(255,255,255,0.8)" fontSize={r.w > 20 ? 1.8 : 1.3}
+                    style={{ pointerEvents: 'none' }}
+                  >
+                    {r.value} proceso{r.value !== 1 ? 's' : ''}
+                  </text>
+                )}
+              </g>
+            ))}
           </svg>
         </div>
 
