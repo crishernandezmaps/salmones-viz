@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Redirecting…</title>
+    <script>
+      // SPA redirect for GitHub Pages
+      // Converts path into query string so index.html can restore it
+      var path = window.location.pathname;
+      var search = window.location.search;
+      var hash = window.location.hash;
+      window.location.replace(
+        window.location.origin + '/salmones-viz/?p=' +
+        encodeURIComponent(path.replace('/salmones-viz/', '/') + search + hash)
+      );
+    </script>
+  </head>
+  <body></body>
+</html>
