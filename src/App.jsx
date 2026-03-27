@@ -10,12 +10,21 @@ const Loading = () => (
 )
 
 function App() {
+  // Query param ?embed=timeline bypasses router for iframe embedding
+  const params = new URLSearchParams(window.location.search)
+  if (params.get('embed') === 'timeline') {
+    return (
+      <Suspense fallback={<Loading />}>
+        <EmbedTimeline />
+      </Suspense>
+    )
+  }
+
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path='/' element={<ArticleView />} />
-          <Route path='/embed/timeline' element={<EmbedTimeline />} />
           <Route path='/export/scroll-desktop' element={<ExportView layout='scroll-desktop' />} />
           <Route path='/export/scroll-mobile' element={<ExportView layout='scroll-mobile' />} />
           <Route path='/export/bg-desktop' element={<ExportView layout='bg-desktop' />} />
