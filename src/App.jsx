@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 const ArticleView = lazy(() => import('./components/ArticleView'))
 const ExportView = lazy(() => import('./experiments/ExportView'))
+const EmbedTimeline = lazy(() => import('./components/EmbedTimeline'))
 
 const Loading = () => (
   <div className='flex items-center justify-center h-screen text-[#1b3a4b]/40'>Cargando...</div>
@@ -14,6 +15,7 @@ function App() {
       <Suspense fallback={<Loading />}>
         <Routes>
           <Route path='/' element={<ArticleView />} />
+          <Route path='/embed/timeline' element={<EmbedTimeline />} />
           <Route path='/export/scroll-desktop' element={<ExportView layout='scroll-desktop' />} />
           <Route path='/export/scroll-mobile' element={<ExportView layout='scroll-mobile' />} />
           <Route path='/export/bg-desktop' element={<ExportView layout='bg-desktop' />} />
