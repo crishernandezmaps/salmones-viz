@@ -1,6 +1,6 @@
-import MapaTimelineDatos from '../experiments/MapaTimelineDatos'
+import MapaConflicto from './MapaConflicto'
 
-export default function EmbedTimeline() {
+export default function EmbedConflicto() {
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
       <style>{`
@@ -8,15 +8,13 @@ export default function EmbedTimeline() {
         .md\\:flex-row { flex-direction: row !important; }
         .md\\:hidden { display: none !important; }
         .hidden.md\\:block { display: block !important; }
-        .md\\:border-b-0 { border-bottom-width: 0 !important; }
-        .md\\:border-r { border-right-width: 1px !important; }
+        .hidden.md\\:flex { display: flex !important; }
         .sm\\:flex { display: flex !important; }
         .sm\\:px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
-        .sm\\:py-1 { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; }
-        .sm\\:gap-3 { gap: 0.75rem !important; }
-        .hidden.sm\\:flex { display: flex !important; }
+        .lg\\:block { display: block !important; }
+        .hidden.lg\\:block { display: block !important; }
       `}</style>
-      <MapaTimelineDatos />
+      <MapaConflicto />
     </div>
   )
 }

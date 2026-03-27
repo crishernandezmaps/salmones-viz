@@ -1,38 +1,50 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-const ArticleView = lazy(() => import('./components/ArticleView'))
-const ExportView = lazy(() => import('./experiments/ExportView'))
-const EmbedTimeline = lazy(() => import('./components/EmbedTimeline'))
+const EmbedTimeline = lazy(() => import('./embeds/timeline/EmbedTimeline'))
+const EmbedConflicto = lazy(() => import('./embeds/conflicto/EmbedConflicto'))
+
+const EMBEDS = {
+  timeline: EmbedTimeline,
+  conflicto: EmbedConflicto,
+}
 
 const Loading = () => (
   <div className='flex items-center justify-center h-screen text-[#1b3a4b]/40'>Cargando...</div>
 )
 
+function Index() {
+  return (
+    <div className='flex items-center justify-center h-screen bg-[#f0f4f3] p-8'>
+      <div className='max-w-xl text-center'>
+        <h1 className='text-2xl font-bold text-[#1b3a4b] mb-4'>Salmones en Chile — Visualizaciones</h1>
+        <p className='text-[#1b3a4b]/60 mb-6'>Biblioteca de visualizaciones interactivas sobre la industria salmonera en Chile. Cada pieza se incrusta como iframe en WordPress.</p>
+        <div className='space-y-3 text-left'>
+          {Object.keys(EMBEDS).map(key => (
+            <a key={key} href={`?embed=${key}`}
+              className='block p-3 bg-white rounded-lg border border-[#1b3a4b]/10 hover:border-[#3a9e9e] transition-colors'>
+              <span className='font-mono text-sm text-[#3a9e9e]'>?embed={key}</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function App() {
-  // Query param ?embed=timeline bypasses router for iframe embedding
   const params = new URLSearchParams(window.location.search)
-  if (params.get('embed') === 'timeline') {
+  const embedKey = params.get('embed')
+  const EmbedComponent = embedKey ? EMBEDS[embedKey] : null
+
+  if (EmbedComponent) {
     return (
       <Suspense fallback={<Loading />}>
-        <EmbedTimeline />
+        <EmbedComponent />
       </Suspense>
     )
   }
 
-  return (
-    <BrowserRouter basename={import.meta.env.BASE_URL}>
-      <Suspense fallback={<Loading />}>
-        <Routes>
-          <Route path='/' element={<ArticleView />} />
-          <Route path='/export/scroll-desktop' element={<ExportView layout='scroll-desktop' />} />
-          <Route path='/export/scroll-mobile' element={<ExportView layout='scroll-mobile' />} />
-          <Route path='/export/bg-desktop' element={<ExportView layout='bg-desktop' />} />
-          <Route path='/export/bg-mobile' element={<ExportView layout='bg-mobile' />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
-  )
+  return <Index />
 }
 
 export default App
