@@ -1,0 +1,2163 @@
+[
+  {
+    "expediente": "P-011-2024",
+    "codigo_centro": 110679,
+    "nombre_centro": "HUMOS 4",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-24",
+    "excesos": [
+      {
+        "exceso_pct": 35.7,
+        "fecha_inicio": "2020-01-10",
+        "fecha_fin": "2021-03-21"
+      }
+    ],
+    "lat": -52.820824,
+    "lng": -73.415796
+  },
+  {
+    "expediente": "P-010-2024",
+    "codigo_centro": 110778,
+    "nombre_centro": "MATILDE 2",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-24",
+    "excesos": [
+      {
+        "exceso_pct": 31.4,
+        "fecha_inicio": "2020-05-01",
+        "fecha_fin": "2021-05-01"
+      }
+    ],
+    "lat": -52.677525,
+    "lng": -71.914939
+  },
+  {
+    "expediente": "P-009-2024",
+    "codigo_centro": 120195,
+    "nombre_centro": "MUÑOZ GAMERO 2",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-17",
+    "excesos": [
+      {
+        "exceso_pct": 35.3,
+        "fecha_inicio": "2019-05-22",
+        "fecha_fin": "2020-10-18"
+      },
+      {
+        "exceso_pct": 51.0,
+        "fecha_inicio": "2021-05-22",
+        "fecha_fin": "2022-11-06"
+      }
+    ],
+    "lat": -45.42498778,
+    "lng": -72.89947835
+  },
+  {
+    "expediente": "P-008-2024",
+    "codigo_centro": 120137,
+    "nombre_centro": "CALETA FOG",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-04-10",
+    "excesos": [
+      {
+        "exceso_pct": 48.4,
+        "fecha_inicio": "2019-04-22",
+        "fecha_fin": "2021-02-28"
+      }
+    ],
+    "lat": -54.14,
+    "lng": -71.210417
+  },
+  {
+    "expediente": "P-007-2024",
+    "codigo_centro": 110830,
+    "nombre_centro": "MELCHOR 1",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-03",
+    "excesos": [
+      {
+        "exceso_pct": 22.0,
+        "fecha_inicio": "2019-03-03",
+        "fecha_fin": "2020-05-19"
+      }
+    ],
+    "lat": -54.079556,
+    "lng": -71.10775
+  },
+  {
+    "expediente": "P-006-2024",
+    "codigo_centro": 120162,
+    "nombre_centro": "PUNTA LAUCA",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-03",
+    "excesos": [
+      {
+        "exceso_pct": 12.2,
+        "fecha_inicio": "2018-09-29",
+        "fecha_fin": "2020-03-21"
+      },
+      {
+        "exceso_pct": 34.0,
+        "fecha_inicio": "2020-07-07",
+        "fecha_fin": "2022-04-07"
+      }
+    ],
+    "lat": -54.464211,
+    "lng": -71.66878
+  },
+  {
+    "expediente": "P-005-2024",
+    "codigo_centro": 120190,
+    "nombre_centro": "PUERTO BROWN",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-03",
+    "excesos": [
+      {
+        "exceso_pct": 10.3,
+        "fecha_inicio": "2018-06-08",
+        "fecha_fin": "2020-01-01"
+      },
+      {
+        "exceso_pct": 68.0,
+        "fecha_inicio": "2020-08-23",
+        "fecha_fin": "2022-04-09"
+      }
+    ],
+    "lat": -54.4839,
+    "lng": -71.4724
+  },
+  {
+    "expediente": "P-004-2024",
+    "codigo_centro": 110639,
+    "nombre_centro": "HUMOS 6",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-03-27",
+    "excesos": [
+      {
+        "exceso_pct": 26.9,
+        "fecha_inicio": "2019-12-13",
+        "fecha_fin": "2021-01-24"
+      }
+    ],
+    "lat": -44.75045,
+    "lng": -72.852483
+  },
+  {
+    "expediente": "P-004-2024",
+    "codigo_centro": 110639,
+    "nombre_centro": "HUMOS 6",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-03-27",
+    "excesos": [
+      {
+        "exceso_pct": 53.0,
+        "fecha_inicio": "2019-12-13",
+        "fecha_fin": "2021-01-24"
+      },
+      {
+        "exceso_pct": 27.0,
+        "fecha_inicio": "2021-10-28",
+        "fecha_fin": "2022-10-18"
+      }
+    ],
+    "lat": -45.458821,
+    "lng": -73.842906
+  },
+  {
+    "expediente": "P-003-2024",
+    "codigo_centro": 110811,
+    "nombre_centro": "LUZ 2",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-03-27",
+    "excesos": [
+      {
+        "exceso_pct": 34.9,
+        "fecha_inicio": "2020-11-01",
+        "fecha_fin": "2022-01-01"
+      }
+    ],
+    "lat": -44.246944,
+    "lng": -73.729167
+  },
+  {
+    "expediente": "P-002-2024",
+    "codigo_centro": 110698,
+    "nombre_centro": "LUZ 1",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-03-27",
+    "excesos": [
+      {
+        "exceso_pct": 30.7,
+        "fecha_inicio": "2020-10-01",
+        "fecha_fin": "2022-01-01"
+      }
+    ],
+    "lat": -45.713385,
+    "lng": -73.899557
+  },
+  {
+    "expediente": "P-001-2025",
+    "codigo_centro": 120108,
+    "nombre_centro": "CES MARTA",
+    "titular": "SALMONES BLUMAR MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-09-11",
+    "excesos": [
+      {
+        "exceso_pct": 71.5,
+        "fecha_inicio": "2018-12-10",
+        "fecha_fin": "2020-09-13"
+      }
+    ],
+    "lat": -45.417476,
+    "lng": -72.84369
+  },
+  {
+    "expediente": "F-085-2023",
+    "codigo_centro": 110731,
+    "nombre_centro": "CES ELEFANTE",
+    "titular": "EXPORTADORA LOS FIORDOS LTDA.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-12-13",
+    "excesos": [
+      {
+        "exceso_pct": 9.6,
+        "fecha_inicio": "2019-08-12",
+        "fecha_fin": "2020-12-14"
+      }
+    ],
+    "lat": -44.861875,
+    "lng": -74.137265
+  },
+  {
+    "expediente": "F-082-2023",
+    "codigo_centro": 100223,
+    "nombre_centro": "CES QUIQUEL II",
+    "titular": "AQUACHILE MAULLIN LIMITADA",
+    "estado_procedimiento": "Terminado - PDC",
+    "fecha_inicio_proceso": "2023-12-13",
+    "excesos": [
+      {
+        "exceso_pct": 18.1,
+        "fecha_inicio": "2020-06-08",
+        "fecha_fin": "2020-12-14"
+      }
+    ],
+    "lat": -44.117248,
+    "lng": -73.660439
+  },
+  {
+    "expediente": "F-057-2023",
+    "codigo_centro": 102424,
+    "nombre_centro": "CES BAHÍA EDWARDS",
+    "titular": "SALMONES CAMANCHACA S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-11-03",
+    "excesos": [
+      {
+        "exceso_pct": 13.5,
+        "fecha_inicio": "2019-10-07",
+        "fecha_fin": "2020-11-06"
+      }
+    ],
+    "lat": -44.176851,
+    "lng": -74.289566
+  },
+  {
+    "expediente": "F-052-2023",
+    "codigo_centro": 102039,
+    "nombre_centro": "CES ENSENADA QUETEN",
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-10-24",
+    "excesos": [
+      {
+        "exceso_pct": 29.2,
+        "fecha_inicio": "2019-04-29",
+        "fecha_fin": "2020-10-30"
+      }
+    ],
+    "lat": -45.03239444,
+    "lng": -74.03743264
+  },
+  {
+    "expediente": "F-048-2023",
+    "codigo_centro": 103536,
+    "nombre_centro": "CES QUILLAIPE",
+    "titular": "GRANJA MARINA TORNAGALEONES S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-10-17",
+    "excesos": [
+      {
+        "exceso_pct": 5.1,
+        "fecha_inicio": "2019-05-06",
+        "fecha_fin": "2020-10-19"
+      },
+      {
+        "exceso_pct": 1.3,
+        "fecha_inicio": "2021-05-24",
+        "fecha_fin": "2022-11-12"
+      }
+    ],
+    "lat": -42.2944,
+    "lng": -73.3535
+  },
+  {
+    "expediente": "F-041-2023",
+    "codigo_centro": 102682,
+    "nombre_centro": "CES MAÑIHUEICO",
+    "titular": "SALMONES CAMANCHACA S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-10-03",
+    "excesos": [
+      {
+        "exceso_pct": 24.5,
+        "fecha_inicio": "2019-05-20",
+        "fecha_fin": "2020-10-09"
+      }
+    ],
+    "lat": -44.313297,
+    "lng": -74.3193675
+  },
+  {
+    "expediente": "F-038-2024",
+    "codigo_centro": 110452,
+    "nombre_centro": "CES CHURRECUE",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2024-09-23",
+    "excesos": [
+      {
+        "exceso_pct": 24.5,
+        "fecha_inicio": "2020-05-25",
+        "fecha_fin": "2021-10-17"
+      }
+    ],
+    "lat": -52.6481,
+    "lng": -72.4049
+  },
+  {
+    "expediente": "F-022-2025",
+    "codigo_centro": 100219,
+    "nombre_centro": "CES CHIDGUAPI",
+    "titular": "AQUACHILE MAULLIN LIMITADA",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2025-07-11",
+    "excesos": [
+      {
+        "exceso_pct": 1.1,
+        "fecha_inicio": "2023-01-16",
+        "fecha_fin": "2023-09-03"
+      }
+    ],
+    "lat": -53.13631498,
+    "lng": -72.80264794
+  },
+  {
+    "expediente": "F-012-2025",
+    "codigo_centro": 102925,
+    "nombre_centro": "CES ISLOTE ABEL",
+    "titular": "MOWI CHILE S.A.",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2025-05-19",
+    "excesos": [
+      {
+        "exceso_pct": 18.4,
+        "fecha_inicio": "2021-05-03",
+        "fecha_fin": "2022-07-03"
+      }
+    ],
+    "lat": -52.6481,
+    "lng": -72.4049
+  },
+  {
+    "expediente": "F-003-2025",
+    "codigo_centro": 110832,
+    "nombre_centro": "LEUCAYEC",
+    "titular": "CULTIVOS YADRAN S.A.",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2025-03-10",
+    "excesos": [
+      {
+        "exceso_pct": 6.6,
+        "fecha_inicio": "2020-10-19",
+        "fecha_fin": "2022-05-01"
+      }
+    ],
+    "lat": -42.355433,
+    "lng": -72.784658
+  },
+  {
+    "expediente": "F-002-2025",
+    "codigo_centro": 102139,
+    "nombre_centro": "CES CAPEAHUAPI",
+    "titular": "GRANJA MARINA TORNAGALEONES S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2025-02-11",
+    "excesos": [
+      {
+        "exceso_pct": 5.0,
+        "fecha_inicio": "2021-05-03",
+        "fecha_fin": "2022-02-27"
+      }
+    ],
+    "lat": -42.355433,
+    "lng": -72.784658
+  },
+  {
+    "expediente": "F-001-2025",
+    "codigo_centro": 120139,
+    "nombre_centro": "CES PUNTA ENTRADA",
+    "titular": "AQUACHILE MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2025-01-09",
+    "excesos": [
+      {
+        "exceso_pct": 0.5,
+        "fecha_inicio": "2020-08-24",
+        "fecha_fin": "2022-02-06"
+      }
+    ],
+    "lat": -52.677525,
+    "lng": -71.914939
+  },
+  {
+    "expediente": "F-001-2024",
+    "codigo_centro": 102582,
+    "nombre_centro": "CES PALVITAD",
+    "titular": "CULTIVOS YADRAN S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2024-02-23",
+    "excesos": [
+      {
+        "exceso_pct": 18.2,
+        "fecha_inicio": "2019-09-02",
+        "fecha_fin": "2021-03-14"
+      }
+    ],
+    "lat": -54.3001707,
+    "lng": -71.6025404
+  },
+  {
+    "expediente": "D-300-2024",
+    "codigo_centro": 110513,
+    "nombre_centro": "CES MAY",
+    "titular": "MULTI X",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2024-12-19",
+    "excesos": [
+      {
+        "exceso_pct": 0.5,
+        "fecha_inicio": "2020-11-02",
+        "fecha_fin": "2021-12-26"
+      }
+    ],
+    "lat": -44.249083,
+    "lng": -74.241361
+  },
+  {
+    "expediente": "D-268-2024",
+    "codigo_centro": 110648,
+    "nombre_centro": "JAMES 730",
+    "titular": "SALMONES HUMBOLDT SPA, SALMONES HUMBOLDT SPA.",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2024-11-29",
+    "excesos": [
+      {
+        "exceso_pct": 28.2,
+        "fecha_inicio": "2020-05-31",
+        "fecha_fin": "2021-12-02"
+      }
+    ],
+    "lat": -44.518653,
+    "lng": -73.8902005
+  },
+  {
+    "expediente": "D-267-2023",
+    "codigo_centro": 110730,
+    "nombre_centro": "PUNTA ROUSSE",
+    "titular": "SALMONES BLUMAR S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-11-29",
+    "excesos": [
+      {
+        "exceso_pct": 21.9,
+        "fecha_inicio": "2019-08-19",
+        "fecha_fin": "2020-11-29"
+      }
+    ],
+    "lat": -52.341009,
+    "lng": -72.040394
+  },
+  {
+    "expediente": "D-261-2024",
+    "codigo_centro": 110900,
+    "nombre_centro": "CES WALKER III",
+    "titular": "INVERMAR S.A.",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2024-11-07",
+    "excesos": [
+      {
+        "exceso_pct": 12.2,
+        "fecha_inicio": "2018-02-05",
+        "fecha_fin": "2019-11-17"
+      },
+      {
+        "exceso_pct": 1.5,
+        "fecha_inicio": "2020-05-11",
+        "fecha_fin": "2021-11-07"
+      }
+    ],
+    "lat": -51.8963,
+    "lng": -73.5116
+  },
+  {
+    "expediente": "D-259-2023",
+    "codigo_centro": 110384,
+    "nombre_centro": "SOLEDAD",
+    "titular": "MULTI X",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2023-11-08",
+    "excesos": [
+      {
+        "exceso_pct": 4.3,
+        "fecha_inicio": "2019-09-09",
+        "fecha_fin": "2020-11-15"
+      }
+    ],
+    "lat": -45.693676,
+    "lng": -73.361411
+  },
+  {
+    "expediente": "D-245-2023",
+    "codigo_centro": 120094,
+    "nombre_centro": "CES PASO VATTUONE",
+    "titular": "AQUACHILE MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2023-10-30",
+    "excesos": [
+      {
+        "exceso_pct": 16.4,
+        "fecha_inicio": "2018-07-09",
+        "fecha_fin": "2020-11-01"
+      }
+    ],
+    "lat": -44.152336,
+    "lng": -73.860333
+  },
+  {
+    "expediente": "D-243-2024",
+    "codigo_centro": 110950,
+    "nombre_centro": "Puyuhuapi 2",
+    "titular": "MULTI X",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2024-10-25",
+    "excesos": [
+      {
+        "exceso_pct": 3.2,
+        "fecha_inicio": "2020-07-17",
+        "fecha_fin": "2021-11-02"
+      }
+    ],
+    "lat": -53.228431,
+    "lng": -73.501944
+  },
+  {
+    "expediente": "D-232-2024",
+    "codigo_centro": 120150,
+    "nombre_centro": "DESEMBOCADURA",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2024-10-15",
+    "excesos": [
+      {
+        "exceso_pct": 8.2,
+        "fecha_inicio": "2020-07-13",
+        "fecha_fin": "2022-03-27"
+      },
+      {
+        "exceso_pct": 8.6,
+        "fecha_inicio": "2017-02-13",
+        "fecha_fin": "2019-04-28"
+      }
+    ],
+    "lat": -51.77483333,
+    "lng": -72.95705567
+  },
+  {
+    "expediente": "D-217-2024",
+    "codigo_centro": 120165,
+    "nombre_centro": "ESTERO RIQUELME",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2024-09-25",
+    "excesos": [
+      {
+        "exceso_pct": 5.9,
+        "fecha_inicio": "2020-02-17",
+        "fecha_fin": "2021-09-30"
+      }
+    ],
+    "lat": -45.941356,
+    "lng": -74.415349
+  },
+  {
+    "expediente": "D-214-2023",
+    "codigo_centro": 110397,
+    "nombre_centro": "ISLA VALVERDE",
+    "titular": "AQUACHILE SPA",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-09-01",
+    "excesos": [
+      {
+        "exceso_pct": 25.0,
+        "fecha_inicio": "2019-02-20",
+        "fecha_fin": "2020-09-04"
+      }
+    ],
+    "lat": -45.101894,
+    "lng": -73.500172
+  },
+  {
+    "expediente": "D-209-2023",
+    "codigo_centro": 120112,
+    "nombre_centro": "PUNTA LAURA",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-08-31",
+    "excesos": [
+      {
+        "exceso_pct": 14.1,
+        "fecha_inicio": "2018-12-31",
+        "fecha_fin": "2020-09-06"
+      }
+    ],
+    "lat": -44.249083,
+    "lng": -74.241361
+  },
+  {
+    "expediente": "D-201-2023",
+    "codigo_centro": 120074,
+    "nombre_centro": "PUNTA VERGARA",
+    "titular": "ACUICOLA PUNTA VERGARA S.A., SALMONES BLUMAR MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-08-16",
+    "excesos": [
+      {
+        "exceso_pct": 48.7,
+        "fecha_inicio": "2018-10-29",
+        "fecha_fin": "2020-08-09"
+      }
+    ],
+    "lat": -42.5405475,
+    "lng": -72.706981
+  },
+  {
+    "expediente": "D-199-2023",
+    "codigo_centro": 120108,
+    "nombre_centro": "ISLA MARTA",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-09-11",
+    "excesos": [
+      {
+        "exceso_pct": 137.2,
+        "fecha_inicio": "2018-12-10",
+        "fecha_fin": "2020-09-13"
+      }
+    ],
+    "lat": -52.773069,
+    "lng": -72.362536
+  },
+  {
+    "expediente": "D-193-2021",
+    "codigo_centro": 110729,
+    "nombre_centro": "MELCHOR 721",
+    "titular": "CULTIVOS YADRAN S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2021-09-09",
+    "excesos": [
+      {
+        "exceso_pct": 43.0,
+        "fecha_inicio": "2019-03-08",
+        "fecha_fin": "2020-07-05"
+      }
+    ],
+    "lat": -52.078347,
+    "lng": -73.001686
+  },
+  {
+    "expediente": "D-193-2021",
+    "codigo_centro": 110729,
+    "nombre_centro": "MELCHOR 721",
+    "titular": "CULTIVOS YADRAN S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2021-09-09",
+    "excesos": [
+      {
+        "exceso_pct": 38.8,
+        "fecha_inicio": "2017-03-29",
+        "fecha_fin": "2018-10-04"
+      },
+      {
+        "exceso_pct": 53.8,
+        "fecha_inicio": "2019-03-08",
+        "fecha_fin": "2020-07-05"
+      }
+    ],
+    "lat": -41.60473112,
+    "lng": -72.99022673
+  },
+  {
+    "expediente": "D-170-2024",
+    "codigo_centro": 102784,
+    "nombre_centro": "ISLA ICA",
+    "titular": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2024-07-31",
+    "excesos": [
+      {
+        "exceso_pct": 45.9,
+        "fecha_inicio": "2020-03-02",
+        "fecha_fin": "2021-08-01"
+      }
+    ],
+    "lat": -42.098493,
+    "lng": -72.588965
+  },
+  {
+    "expediente": "D-170-2024",
+    "codigo_centro": 102784,
+    "nombre_centro": "ISLA ICA",
+    "titular": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2024-07-31",
+    "excesos": [
+      {
+        "exceso_pct": 45.9,
+        "fecha_inicio": "2020-03-02",
+        "fecha_fin": "2021-08-01"
+      }
+    ],
+    "lat": -41.82311957,
+    "lng": -73.09725083
+  },
+  {
+    "expediente": "D-168-2022",
+    "codigo_centro": 120164,
+    "nombre_centro": "PUNTA LOBOS",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2022-08-25",
+    "excesos": [
+      {
+        "exceso_pct": 80.0,
+        "fecha_inicio": "2017-11-27",
+        "fecha_fin": "2019-08-25"
+      },
+      {
+        "exceso_pct": 3.0,
+        "fecha_inicio": "2021-10-11",
+        "fecha_fin": "En"
+      }
+    ],
+    "lat": -45.35644375,
+    "lng": -73.53572014
+  },
+  {
+    "expediente": "D-166-2024",
+    "codigo_centro": 110590,
+    "nombre_centro": "PUNTA VICTORIA",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2024-07-30",
+    "excesos": [
+      {
+        "exceso_pct": 15.6,
+        "fecha_inicio": "2020-06-26",
+        "fecha_fin": "2021-09-18"
+      }
+    ],
+    "lat": -41.781189,
+    "lng": -72.73
+  },
+  {
+    "expediente": "D-161-2021",
+    "codigo_centro": 120152,
+    "nombre_centro": "CES CÓRDOVA 3 ISLA",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2021-07-14",
+    "excesos": [
+      {
+        "exceso_pct": 58.8,
+        "fecha_inicio": "2016-09-12",
+        "fecha_fin": "2018-07-22"
+      }
+    ],
+    "lat": -52.538342,
+    "lng": -72.271492
+  },
+  {
+    "expediente": "D-158-2023",
+    "codigo_centro": 110523,
+    "nombre_centro": "CES CANAL PEREZ NORTE",
+    "titular": "AQUACHILE MAULLIN LIMITADA",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-07-06",
+    "excesos": [
+      {
+        "exceso_pct": 15.2,
+        "fecha_inicio": "2019-02-04",
+        "fecha_fin": "2020-07-08"
+      }
+    ],
+    "lat": -52.84843872,
+    "lng": -72.45251024
+  },
+  {
+    "expediente": "D-157-2020",
+    "codigo_centro": 110147,
+    "nombre_centro": "CES QUITRALCO 7",
+    "titular": "MOWI CHILE S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2020-12-02",
+    "excesos": [
+      {
+        "exceso_pct": 81.6,
+        "fecha_inicio": "2016-05-27",
+        "fecha_fin": "2017-12-13"
+      }
+    ],
+    "lat": -41.58966709,
+    "lng": -72.74992706
+  },
+  {
+    "expediente": "D-152-2023",
+    "codigo_centro": 120153,
+    "nombre_centro": "CES TARABA 3",
+    "titular": "MULTIEXPORT PATAGONIA S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-07-04",
+    "excesos": [
+      {
+        "exceso_pct": 13.9,
+        "fecha_inicio": "2018-10-29",
+        "fecha_fin": "2020-07-12"
+      }
+    ],
+    "lat": -41.954163,
+    "lng": -72.837228
+  },
+  {
+    "expediente": "D-145-2023",
+    "codigo_centro": 120169,
+    "nombre_centro": "CES ISLA JUAN",
+    "titular": "SALMONES PORVENIR SPA., TRUSAL S.A.",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-06-13",
+    "excesos": [
+      {
+        "exceso_pct": 21.0,
+        "fecha_inicio": "2018-07-23",
+        "fecha_fin": "2020-06-28"
+      }
+    ],
+    "lat": -42.737106,
+    "lng": -73.010856
+  },
+  {
+    "expediente": "D-143-2025",
+    "codigo_centro": 110507,
+    "nombre_centro": "SERRANO",
+    "titular": "EXPORTADORA LOS FIORDOS LTDA.",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2025-05-30",
+    "excesos": [
+      {
+        "exceso_pct": 3.2,
+        "fecha_inicio": "2021-07-01",
+        "fecha_fin": "2022-08-01"
+      }
+    ],
+    "lat": -42.308327,
+    "lng": -73.843998
+  },
+  {
+    "expediente": "D-143-2023",
+    "codigo_centro": 110860,
+    "nombre_centro": "LEUCAYEC",
+    "titular": "SALMONES CAMANCHACA S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-06-12",
+    "excesos": [
+      {
+        "exceso_pct": 14.6,
+        "fecha_inicio": "2019-03-13",
+        "fecha_fin": "2020-07-04"
+      }
+    ],
+    "lat": -45.653022,
+    "lng": -73.609523
+  },
+  {
+    "expediente": "D-135-2024",
+    "codigo_centro": 120158,
+    "nombre_centro": "CANAL BERTRAND",
+    "titular": "SALMONES BLUMAR MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2024-06-28",
+    "excesos": [
+      {
+        "exceso_pct": 8.2,
+        "fecha_inicio": "2020-03-16",
+        "fecha_fin": "2021-06-11"
+      }
+    ],
+    "lat": -52.538342,
+    "lng": -72.271492
+  },
+  {
+    "expediente": "D-130-2024",
+    "codigo_centro": 110393,
+    "nombre_centro": "CES CHOLGA",
+    "titular": "MULTI X",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2024-06-27",
+    "excesos": [
+      {
+        "exceso_pct": 14.3,
+        "fecha_inicio": "2014-01-01",
+        "fecha_fin": "2015-08-09"
+      },
+      {
+        "exceso_pct": 23.5,
+        "fecha_inicio": "2016-05-13",
+        "fecha_fin": "2017-09-29"
+      },
+      {
+        "exceso_pct": 102.9,
+        "fecha_inicio": "2018-01-31",
+        "fecha_fin": "2019-07-31"
+      },
+      {
+        "exceso_pct": 91.0,
+        "fecha_inicio": "2020-01-20",
+        "fecha_fin": "2021-07-04"
+      },
+      {
+        "exceso_pct": 59.9,
+        "fecha_inicio": "2022-01-10",
+        "fecha_fin": "2023-03-05"
+      }
+    ],
+    "lat": -51.7622545,
+    "lng": -72.8900715
+  },
+  {
+    "expediente": "D-129-2023",
+    "codigo_centro": 120127,
+    "nombre_centro": "CES CANAL COCKBURN 13",
+    "titular": "NOVA AUSTRAL S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-06-01",
+    "excesos": [
+      {
+        "exceso_pct": 46.0,
+        "fecha_inicio": "2015-10-19",
+        "fecha_fin": "2017-08-07"
+      },
+      {
+        "exceso_pct": 15.7,
+        "fecha_inicio": "2018-08-13",
+        "fecha_fin": "2020-06-01"
+      }
+    ],
+    "lat": -44.100195,
+    "lng": -73.576291
+  },
+  {
+    "expediente": "D-125-2023",
+    "codigo_centro": 120130,
+    "nombre_centro": "CES MINA ELENA",
+    "titular": "SALMONES BLUMAR MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2023-05-30",
+    "excesos": [
+      {
+        "exceso_pct": 68.9,
+        "fecha_inicio": "2018-08-06",
+        "fecha_fin": "2020-05-31"
+      }
+    ],
+    "lat": -44.992429,
+    "lng": -73.895412
+  },
+  {
+    "expediente": "D-124-2024",
+    "codigo_centro": 120142,
+    "nombre_centro": "GUARDRAMIRO",
+    "titular": "AQUACHILE MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2024-06-06",
+    "excesos": [
+      {
+        "exceso_pct": 17.4,
+        "fecha_inicio": "2019-10-14",
+        "fecha_fin": "2021-06-13"
+      }
+    ],
+    "lat": -44.992429,
+    "lng": -73.895412
+  },
+  {
+    "expediente": "D-119-2023",
+    "codigo_centro": 110315,
+    "nombre_centro": "ISLA GARCIA I / CES GARCÍA 1",
+    "titular": "MOWI CHILE S.A.",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2023-05-29",
+    "excesos": [
+      {
+        "exceso_pct": 13.9,
+        "fecha_inicio": "2019-02-18",
+        "fecha_fin": "2020-05-12"
+      }
+    ],
+    "lat": -44.100195,
+    "lng": -73.576291
+  },
+  {
+    "expediente": "D-117-2021",
+    "codigo_centro": 120111,
+    "nombre_centro": "CES PUNTA LAURA NORTE ",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "Terminado - PDC",
+    "fecha_inicio_proceso": "2021-05-18",
+    "excesos": [
+      {
+        "exceso_pct": 12.8,
+        "fecha_inicio": "2016-05-09",
+        "fecha_fin": "2018-06-03"
+      }
+    ],
+    "lat": -44.455005,
+    "lng": -73.992853
+  },
+  {
+    "expediente": "D-117-2021",
+    "codigo_centro": 120115,
+    "nombre_centro": "CES UNICORNIO SUR",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "Terminado - PDC",
+    "fecha_inicio_proceso": "2021-05-18",
+    "excesos": [
+      {
+        "exceso_pct": 27.8,
+        "fecha_inicio": "2016-02-08",
+        "fecha_fin": "2018-05-22"
+      }
+    ],
+    "lat": -44.17995,
+    "lng": -73.625285
+  },
+  {
+    "expediente": "D-104-2022",
+    "codigo_centro": 120192,
+    "nombre_centro": "ESTERO RETROCESO",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2022-06-16",
+    "excesos": [
+      {
+        "exceso_pct": 76.4,
+        "fecha_inicio": "2018-01-22",
+        "fecha_fin": "2019-12-22"
+      }
+    ],
+    "lat": -45.169088,
+    "lng": -74.0669
+  },
+  {
+    "expediente": "D-102-2024",
+    "codigo_centro": 120210,
+    "nombre_centro": "CORDOVA 1",
+    "titular": "SALMONES BLUMAR MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2024-05-24",
+    "excesos": [
+      {
+        "exceso_pct": 11.3,
+        "fecha_inicio": "2019-09-30",
+        "fecha_fin": "2021-05-30"
+      }
+    ],
+    "lat": -44.28655471,
+    "lng": -73.90467914
+  },
+  {
+    "expediente": "D-100-2022",
+    "codigo_centro": 120145,
+    "nombre_centro": "ESTERO NAVARRO",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2022-05-27",
+    "excesos": [
+      {
+        "exceso_pct": 10.5,
+        "fecha_inicio": "2017-05-15",
+        "fecha_fin": "2019-06-02"
+      }
+    ],
+    "lat": -45.026655,
+    "lng": -74.001044
+  },
+  {
+    "expediente": "D-097-2024",
+    "codigo_centro": 120110,
+    "nombre_centro": "UNICORNIO",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2024-05-06",
+    "excesos": [
+      {
+        "exceso_pct": 10.7,
+        "fecha_inicio": "2019-10-21",
+        "fecha_fin": "2021-06-06"
+      }
+    ],
+    "lat": -45.028103,
+    "lng": -74.146705
+  },
+  {
+    "expediente": "D-096-2024",
+    "codigo_centro": 120136,
+    "nombre_centro": "MORGAN",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2024-05-06",
+    "excesos": [
+      {
+        "exceso_pct": 43.5,
+        "fecha_inicio": "2019-10-14",
+        "fecha_fin": "2021-05-16"
+      }
+    ],
+    "lat": -44.804469,
+    "lng": -74.117419
+  },
+  {
+    "expediente": "D-096-2021",
+    "codigo_centro": 110897,
+    "nombre_centro": "CES PUNTA GARRAO",
+    "titular": "COOKE AQUACULTURE CHILE SA",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2021-04-16",
+    "excesos": [
+      {
+        "exceso_pct": 13.0,
+        "fecha_inicio": "2017-09-25",
+        "fecha_fin": "2019-02-03"
+      }
+    ],
+    "lat": -44.804469,
+    "lng": -74.117419
+  },
+  {
+    "expediente": "D-094-2023",
+    "codigo_centro": 120174,
+    "nombre_centro": "MUÑOZ GAMERO 1",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-17",
+    "excesos": [
+      {
+        "exceso_pct": 59.8,
+        "fecha_inicio": "2018-11-27",
+        "fecha_fin": "2020-08-07"
+      },
+      {
+        "exceso_pct": 5.9,
+        "fecha_inicio": "2021-08-16",
+        "fecha_fin": "2023-01-21"
+      }
+    ],
+    "lat": -45.030833,
+    "lng": -74.108889
+  },
+  {
+    "expediente": "D-094-2019",
+    "codigo_centro": 120123,
+    "nombre_centro": "CES CANAL COCKBURN 23",
+    "titular": "NOVA AUSTRAL S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2019-08-19",
+    "excesos": [
+      {
+        "exceso_pct": 39.0,
+        "fecha_inicio": "2016-01-01",
+        "fecha_fin": "2017-11-01"
+      }
+    ],
+    "lat": -46.308,
+    "lng": -73.58
+  },
+  {
+    "expediente": "D-093-2019",
+    "codigo_centro": 120124,
+    "nombre_centro": "CES CANAL COCKBURN 14",
+    "titular": "NOVA AUSTRAL S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2019-08-19",
+    "excesos": [
+      {
+        "exceso_pct": 22.0,
+        "fecha_inicio": "2015-10-01",
+        "fecha_fin": "2017-05-01"
+      }
+    ],
+    "lat": -45.3519025,
+    "lng": -73.465739
+  },
+  {
+    "expediente": "D-092-2023",
+    "codigo_centro": 120191,
+    "nombre_centro": "CÓRDOVA 4",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-17",
+    "excesos": [
+      {
+        "exceso_pct": 3.1,
+        "fecha_inicio": "2019-08-12",
+        "fecha_fin": "2021-03-23"
+      }
+    ],
+    "lat": -52.635232,
+    "lng": -72.394266
+  },
+  {
+    "expediente": "D-083-2021",
+    "codigo_centro": 110650,
+    "nombre_centro": "CES FORSYTH",
+    "titular": "SALMONES BLUMAR S.A.",
+    "estado_procedimiento": "Terminado - PDC",
+    "fecha_inicio_proceso": "2021-03-15",
+    "excesos": [
+      {
+        "exceso_pct": 4.0,
+        "fecha_inicio": "2016-12-09",
+        "fecha_fin": "2018-04-07"
+      }
+    ],
+    "lat": -52.611353,
+    "lng": -72.348986
+  },
+  {
+    "expediente": "D-072-2024",
+    "codigo_centro": 120115,
+    "nombre_centro": "SW ISLA UNICORNIO / CES UNICORNIO SUR",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2024-04-05",
+    "excesos": [
+      {
+        "exceso_pct": 15.5,
+        "fecha_inicio": "2019-07-01",
+        "fecha_fin": "2021-04-05"
+      }
+    ],
+    "lat": -52.88465139,
+    "lng": -72.70409722
+  },
+  {
+    "expediente": "D-066-2025",
+    "codigo_centro": 102041,
+    "nombre_centro": "CES QUICAVI",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2025-03-21",
+    "excesos": [
+      {
+        "exceso_pct": 7.3,
+        "fecha_inicio": "2018-08-02",
+        "fecha_fin": "2019-08-25"
+      },
+      {
+        "exceso_pct": 44.6,
+        "fecha_inicio": "2021-03-15",
+        "fecha_fin": "2022-05-20"
+      }
+    ],
+    "lat": -52.665097,
+    "lng": -72.412514
+  },
+  {
+    "expediente": "D-064-2025",
+    "codigo_centro": 120146,
+    "nombre_centro": "PUNTA ISLAS",
+    "titular": "CERMAQ CHILE S.A.",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2025-03-17",
+    "excesos": [
+      {
+        "exceso_pct": 21.8,
+        "fecha_inicio": "2020-09-27",
+        "fecha_fin": "2022-05-01"
+      }
+    ],
+    "lat": -52.74954583,
+    "lng": -72.61529514
+  },
+  {
+    "expediente": "D-063-2021",
+    "codigo_centro": 110444,
+    "nombre_centro": "NINUALAC 2 ",
+    "titular": "SALMONES BLUMAR S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2021-02-18",
+    "excesos": [
+      {
+        "exceso_pct": 30.1,
+        "fecha_inicio": "2017-04-12",
+        "fecha_fin": "2018-10-29"
+      }
+    ],
+    "lat": -53.17483264,
+    "lng": -73.52826042
+  },
+  {
+    "expediente": "D-062-2021",
+    "codigo_centro": 110627,
+    "nombre_centro": "CES MIDHURTS",
+    "titular": "SALMONES BLUMAR S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2021-02-18",
+    "excesos": [
+      {
+        "exceso_pct": 19.1,
+        "fecha_inicio": "2017-01-17",
+        "fecha_fin": "2018-05-18"
+      }
+    ],
+    "lat": -53.11846458,
+    "lng": -73.54499236
+  },
+  {
+    "expediente": "D-058-2022",
+    "codigo_centro": 120136,
+    "nombre_centro": "MORGAN / CES SUR PUNTA LAVAPIÉ, PENÍNSULA MORGAN",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2022-03-31",
+    "excesos": [
+      {
+        "exceso_pct": 25.1,
+        "fecha_inicio": "2017-07-10",
+        "fecha_fin": "2019-03-31"
+      }
+    ],
+    "lat": -52.76550303,
+    "lng": -72.39742139
+  },
+  {
+    "expediente": "D-047-2023",
+    "codigo_centro": 110513,
+    "nombre_centro": "MAY",
+    "titular": "MULTI X",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-02-24",
+    "excesos": [
+      {
+        "exceso_pct": 13.3,
+        "fecha_inicio": "2018-11-06",
+        "fecha_fin": "2020-02-25"
+      }
+    ],
+    "lat": -45.629987,
+    "lng": -73.857925
+  },
+  {
+    "expediente": "D-043-2022",
+    "codigo_centro": 110277,
+    "nombre_centro": "CES ISLA PARTIDA",
+    "titular": "GRANJA MARINA TORNAGALEONES S.A., PISCICULTURA PALQUI LIMITADA",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2022-03-16",
+    "excesos": [
+      {
+        "exceso_pct": 17.5,
+        "fecha_inicio": "2018-06-21",
+        "fecha_fin": "2019-04-13"
+      }
+    ],
+    "lat": -45.677241,
+    "lng": -73.867657
+  },
+  {
+    "expediente": "D-041-2024",
+    "codigo_centro": 120211,
+    "nombre_centro": "CORDOVA 2",
+    "titular": "SALMONES BLUMAR MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2024-03-01",
+    "excesos": [
+      {
+        "exceso_pct": 35.7,
+        "fecha_inicio": "2019-07-29",
+        "fecha_fin": "2021-03-28"
+      }
+    ],
+    "lat": -52.68747863,
+    "lng": -72.20512283
+  },
+  {
+    "expediente": "D-026-2025",
+    "codigo_centro": 120186,
+    "nombre_centro": "GOMEZ CARREÑO",
+    "titular": "SALMONES BLUMAR MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2025-01-31",
+    "excesos": [
+      {
+        "exceso_pct": 27.1,
+        "fecha_inicio": "2020-07-13",
+        "fecha_fin": "2022-02-27"
+      }
+    ],
+    "lat": -45.481,
+    "lng": -73.728417
+  },
+  {
+    "expediente": "D-024-2023",
+    "codigo_centro": 120067,
+    "nombre_centro": "ARACENA 1",
+    "titular": "NOVA AUSTRAL S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-02-23",
+    "excesos": [
+      {
+        "exceso_pct": 11.6,
+        "fecha_inicio": "2019-10-07",
+        "fecha_fin": "2021-03-21"
+      }
+    ],
+    "lat": -45.67037778,
+    "lng": -74.06489583
+  },
+  {
+    "expediente": "D-023-2024",
+    "codigo_centro": 120122,
+    "nombre_centro": "CES WAGNER I",
+    "titular": "AQUACHILE MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2024-02-14",
+    "excesos": [
+      {
+        "exceso_pct": 10.9,
+        "fecha_inicio": "2019-04-29",
+        "fecha_fin": "2020-02-21"
+      }
+    ],
+    "lat": -45.67037778,
+    "lng": -74.06489583
+  },
+  {
+    "expediente": "D-019-2023",
+    "codigo_centro": 120092,
+    "nombre_centro": "ARACENA 13",
+    "titular": "ACUINOVACHILE S.A , NOVA AUSTRAL S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-02-24",
+    "excesos": [
+      {
+        "exceso_pct": 24.4,
+        "fecha_inicio": "2019-09-23",
+        "fecha_fin": "2021-02-14"
+      }
+    ],
+    "lat": -52.794408,
+    "lng": -73.512683
+  },
+  {
+    "expediente": "D-009-2021",
+    "codigo_centro": 110741,
+    "nombre_centro": "CES MELCHOR 717",
+    "titular": "CULTIVOS YADRAN S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2021-02-03",
+    "excesos": [
+      {
+        "exceso_pct": 35.5,
+        "fecha_inicio": "2016-12-06",
+        "fecha_fin": "2018-05-10"
+      }
+    ],
+    "lat": -45.518694,
+    "lng": -74.171712
+  },
+  {
+    "expediente": "D-008-2021",
+    "codigo_centro": 110857,
+    "nombre_centro": "CES COSTA",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2021-01-22",
+    "excesos": [
+      {
+        "exceso_pct": 18.7,
+        "fecha_inicio": "2017-05-19",
+        "fecha_fin": "2018-08-24"
+      }
+    ],
+    "lat": -53.044817,
+    "lng": -72.883333
+  },
+  {
+    "expediente": "D-006-2024",
+    "codigo_centro": 110511,
+    "nombre_centro": "NORESTE ISLA TAHUENAHUE / CES TAHUENAHUEC",
+    "titular": "EXPORTADORA LOS FIORDOS LTDA.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2024-01-19",
+    "excesos": [
+      {
+        "exceso_pct": 9.8,
+        "fecha_inicio": "2020-07-17",
+        "fecha_fin": "2021-01-20"
+      }
+    ],
+    "lat": -45.043418,
+    "lng": -73.746822
+  },
+  {
+    "expediente": "D-005-2024",
+    "codigo_centro": 110916,
+    "nombre_centro": "CES CANALAD 3",
+    "titular": "AQUACHILE SPA",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2024-01-22",
+    "excesos": [
+      {
+        "exceso_pct": 65.6,
+        "fecha_inicio": "2020-04-08",
+        "fecha_fin": "2021-01-23"
+      }
+    ],
+    "lat": -52.72002114,
+    "lng": -72.39692884
+  },
+  {
+    "expediente": "D-002-2025",
+    "codigo_centro": 110437,
+    "nombre_centro": "CALETA ENTRADA / CES MELCHOR 5",
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2025-01-03",
+    "excesos": [
+      {
+        "exceso_pct": 10.2,
+        "fecha_inicio": "2021-04-26",
+        "fecha_fin": "2022-01-31"
+      }
+    ],
+    "lat": -52.638633,
+    "lng": -71.942311
+  },
+  {
+    "expediente": "D-001-2025",
+    "codigo_centro": 120192,
+    "nombre_centro": "ESTERO RETROCESO",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2025-01-10",
+    "excesos": [
+      {
+        "exceso_pct": 51.8,
+        "fecha_inicio": "2020-06-01",
+        "fecha_fin": "2022-01-01"
+      }
+    ],
+    "lat": -51.949018,
+    "lng": -72.777848
+  },
+  {
+    "expediente": "A-019-2023",
+    "codigo_centro": 110739,
+    "nombre_centro": "HUMOS 3",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-04-24",
+    "excesos": [
+      {
+        "exceso_pct": 49.4,
+        "fecha_inicio": "2019-11-18",
+        "fecha_fin": "2021-01-31"
+      },
+      {
+        "exceso_pct": 36.0,
+        "fecha_inicio": "2021-11-28",
+        "fecha_fin": "2022-12-06"
+      }
+    ],
+    "lat": -45.406091,
+    "lng": -73.070554
+  },
+  {
+    "expediente": "A-018-2023",
+    "codigo_centro": 110722,
+    "nombre_centro": "MATILDE",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-04-24",
+    "excesos": [
+      {
+        "exceso_pct": 39.3,
+        "fecha_inicio": "2020-10-20",
+        "fecha_fin": "2021-10-31"
+      },
+      {
+        "exceso_pct": 34.3,
+        "fecha_inicio": "2015-11-15",
+        "fecha_fin": "2017-03-20"
+      }
+    ],
+    "lat": -45.2178745,
+    "lng": -73.680944
+  },
+  {
+    "expediente": "A-017-2023",
+    "codigo_centro": 120189,
+    "nombre_centro": "PUNTA RAMÓN",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-04-17",
+    "excesos": [
+      {
+        "exceso_pct": 89.6,
+        "fecha_inicio": "2018-12-24",
+        "fecha_fin": "2020-09-03"
+      },
+      {
+        "exceso_pct": 30.0,
+        "fecha_inicio": "2021-10-10",
+        "fecha_fin": "2022-07-14"
+      }
+    ],
+    "lat": -52.105647,
+    "lng": -73.012697
+  },
+  {
+    "expediente": "A-016-2023",
+    "codigo_centro": 120217,
+    "nombre_centro": "CORDOVA 5",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-04-17",
+    "excesos": [
+      {
+        "exceso_pct": 49.5,
+        "fecha_inicio": "2019-12-13",
+        "fecha_fin": "2021-07-04"
+      }
+    ],
+    "lat": -53.19823056,
+    "lng": -73.49772917
+  },
+  {
+    "expediente": "A-015-2023",
+    "codigo_centro": 120223,
+    "nombre_centro": "CES MUÑOZ GAMERO 3",
+    "titular": "SALMONES ISLAS DEL SUR LTDA.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-17",
+    "excesos": [
+      {
+        "exceso_pct": 7.5,
+        "fecha_inicio": "2021-08-23",
+        "fecha_fin": "2023-01-28"
+      }
+    ],
+    "lat": -52.85301523,
+    "lng": -73.4956332
+  },
+  {
+    "expediente": "A-014-2023",
+    "codigo_centro": 120135,
+    "nombre_centro": "PUNTA GOODARD",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-04-10",
+    "excesos": [
+      {
+        "exceso_pct": 24.7,
+        "fecha_inicio": "2017-10-09",
+        "fecha_fin": "2019-05-12"
+      },
+      {
+        "exceso_pct": 34.8,
+        "fecha_inicio": "2019-10-19",
+        "fecha_fin": "2021-05-25"
+      }
+    ],
+    "lat": -45.575397,
+    "lng": -74.164188
+  },
+  {
+    "expediente": "A-013-2023",
+    "codigo_centro": 110783,
+    "nombre_centro": "MORALEDA",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-04-10",
+    "excesos": [
+      {
+        "exceso_pct": 70.3,
+        "fecha_inicio": "2019-08-26",
+        "fecha_fin": "2020-12-05"
+      },
+      {
+        "exceso_pct": 51.9,
+        "fecha_inicio": "2017-09-01",
+        "fecha_fin": "2019-01-01"
+      }
+    ],
+    "lat": -53.192275,
+    "lng": -72.745764
+  },
+  {
+    "expediente": "A-012-2023",
+    "codigo_centro": 110803,
+    "nombre_centro": "RABUDO",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-10",
+    "excesos": [
+      {
+        "exceso_pct": 26.9,
+        "fecha_inicio": "2020-06-08",
+        "fecha_fin": "2021-10-01"
+      },
+      {
+        "exceso_pct": 55.0,
+        "fecha_inicio": "2018-08-06",
+        "fecha_fin": "2019-12-01"
+      }
+    ],
+    "lat": -45.475498,
+    "lng": -73.493081
+  },
+  {
+    "expediente": "A-011-2023",
+    "codigo_centro": 120147,
+    "nombre_centro": "CES OBSTRUCCIÓN",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-10",
+    "excesos": [
+      {
+        "exceso_pct": 55.0,
+        "fecha_inicio": "2019-03-12",
+        "fecha_fin": "2021-01-19"
+      }
+    ],
+    "lat": -52.036147,
+    "lng": -72.929964
+  },
+  {
+    "expediente": "A-010-2023",
+    "codigo_centro": 120167,
+    "nombre_centro": "CES SKYRING",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-10",
+    "excesos": [
+      {
+        "exceso_pct": 70.2,
+        "fecha_inicio": "2020-11-12",
+        "fecha_fin": "2022-07-23"
+      }
+    ],
+    "lat": -53.20305556,
+    "lng": -73.55507778
+  },
+  {
+    "expediente": "A-009-2023",
+    "codigo_centro": 120175,
+    "nombre_centro": "ISLA GRANDE",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-03",
+    "excesos": [
+      {
+        "exceso_pct": 46.3,
+        "fecha_inicio": "2020-02-25",
+        "fecha_fin": "2021-11-30"
+      }
+    ],
+    "lat": -52.81468994,
+    "lng": -73.32142747
+  },
+  {
+    "expediente": "A-008-2023",
+    "codigo_centro": 110807,
+    "nombre_centro": "MELCHOR 4",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-04-03",
+    "excesos": [
+      {
+        "exceso_pct": 11.8,
+        "fecha_inicio": "2022-01-09",
+        "fecha_fin": "2022-12-23"
+      },
+      {
+        "exceso_pct": 61.3,
+        "fecha_inicio": "2019-06-15",
+        "fecha_fin": "2020-10-13"
+      },
+      {
+        "exceso_pct": 9.6,
+        "fecha_inicio": "2012-06-01",
+        "fecha_fin": "2014-05-01"
+      }
+    ],
+    "lat": -52.036147,
+    "lng": -72.929964
+  },
+  {
+    "expediente": "A-007-2023",
+    "codigo_centro": 120183,
+    "nombre_centro": "BAHIA BUCKLE",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-04-03",
+    "excesos": [
+      {
+        "exceso_pct": 95.1,
+        "fecha_inicio": "2018-04-16",
+        "fecha_fin": "2020-03-08"
+      },
+      {
+        "exceso_pct": 50.8,
+        "fecha_inicio": "2020-07-22",
+        "fecha_fin": "2022-01-08"
+      }
+    ],
+    "lat": -53.192275,
+    "lng": -72.745764
+  },
+  {
+    "expediente": "A-007-2022",
+    "codigo_centro": 110641,
+    "nombre_centro": "CES JORGE 741",
+    "titular": "CULTIVOS YADRAN S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2022-11-15",
+    "excesos": [
+      {
+        "exceso_pct": 19.4,
+        "fecha_inicio": "2019-12-01",
+        "fecha_fin": "2021-05-01"
+      }
+    ],
+    "lat": -53.069,
+    "lng": -72.916422
+  },
+  {
+    "expediente": "A-007-2022",
+    "codigo_centro": 110675,
+    "nombre_centro": "CES BENJAMIN 745",
+    "titular": "CULTIVOS YADRAN S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2022-11-15",
+    "excesos": [
+      {
+        "exceso_pct": 8.0,
+        "fecha_inicio": "noviemnre",
+        "fecha_fin": "2019-04-01"
+      }
+    ],
+    "lat": -45.569083,
+    "lng": -73.833567
+  },
+  {
+    "expediente": "A-006-2023",
+    "codigo_centro": 120163,
+    "nombre_centro": "CES PUNTA SUR",
+    "titular": "ACUICOLA CORDILLERA LTDA.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-04-03",
+    "excesos": [
+      {
+        "exceso_pct": 49.0,
+        "fecha_inicio": "2021-05-06",
+        "fecha_fin": "2022-08-31"
+      }
+    ],
+    "lat": -45.548771,
+    "lng": -73.823815
+  },
+  {
+    "expediente": "A-006-2022",
+    "codigo_centro": 10733,
+    "nombre_centro": "CES MELCHOR 716",
+    "titular": "CULTIVOS YADRAN S.A.",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2022-11-14",
+    "excesos": [
+      {
+        "exceso_pct": 5.6,
+        "fecha_inicio": "2019-11-01",
+        "fecha_fin": "2021-02-01"
+      }
+    ],
+    "lat": -45.69983194,
+    "lng": -74.05413403
+  },
+  {
+    "expediente": "A-005-2023",
+    "codigo_centro": 110818,
+    "nombre_centro": "MATILDE 3",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-03-27",
+    "excesos": [
+      {
+        "exceso_pct": 16.4,
+        "fecha_inicio": "2020-03-08",
+        "fecha_fin": "2021-04-05"
+      }
+    ],
+    "lat": -45.69983194,
+    "lng": -74.05413403
+  },
+  {
+    "expediente": "A-005-2022",
+    "codigo_centro": 110931,
+    "nombre_centro": "CES MELCHOR 719",
+    "titular": "CULTIVOS YADRAN S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2022-11-14",
+    "excesos": [
+      {
+        "exceso_pct": 39.6,
+        "fecha_inicio": "2019-05-27",
+        "fecha_fin": "2020-11-10"
+      }
+    ],
+    "lat": -53.20819243,
+    "lng": -72.83119634
+  },
+  {
+    "expediente": "A-004-2024",
+    "codigo_centro": 120170,
+    "nombre_centro": "PAN DE AZUCAR",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-04-17",
+    "excesos": [
+      {
+        "exceso_pct": 73.1,
+        "fecha_inicio": "2019-01-30",
+        "fecha_fin": "2020-11-14"
+      },
+      {
+        "exceso_pct": 23.0,
+        "fecha_inicio": "2021-06-21",
+        "fecha_fin": "2022-11-20"
+      }
+    ],
+    "lat": -53.168064,
+    "lng": -72.779219
+  },
+  {
+    "expediente": "A-004-2023",
+    "codigo_centro": 110636,
+    "nombre_centro": "CES HUMOS 5",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-03-27",
+    "excesos": [
+      {
+        "exceso_pct": 47.0,
+        "fecha_inicio": "2019-08-10",
+        "fecha_fin": "2020-08-19"
+      },
+      {
+        "exceso_pct": 16.0,
+        "fecha_inicio": "2021-07-04",
+        "fecha_fin": "2022-06-08"
+      }
+    ],
+    "lat": -45.067832,
+    "lng": -74.219197
+  },
+  {
+    "expediente": "A-004-2023",
+    "codigo_centro": 110639,
+    "nombre_centro": "CES HUMOS 6 ",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-03-27",
+    "excesos": [
+      {
+        "exceso_pct": 53.0,
+        "fecha_inicio": "2019-12-13",
+        "fecha_fin": "2021-01-24"
+      },
+      {
+        "exceso_pct": 27.0,
+        "fecha_inicio": "2021-10-28",
+        "fecha_fin": "2022-10-18"
+      }
+    ],
+    "lat": -51.974792,
+    "lng": -72.9489
+  },
+  {
+    "expediente": "A-004-2022",
+    "codigo_centro": 110832,
+    "nombre_centro": "LEUCAYEC",
+    "titular": "CULTIVOS YADRAN S.A.",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2022-11-14",
+    "excesos": [
+      {
+        "exceso_pct": 23.3,
+        "fecha_inicio": "2018-10-20",
+        "fecha_fin": "2020-04-06"
+      }
+    ],
+    "lat": -52.797397,
+    "lng": -73.378403
+  },
+  {
+    "expediente": "A-003-2024",
+    "codigo_centro": 110809,
+    "nombre_centro": "TRAIGUEN 1",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "En Curso",
+    "fecha_inicio_proceso": "2023-03-27",
+    "excesos": [
+      {
+        "exceso_pct": 20.6,
+        "fecha_inicio": "2019-01-22",
+        "fecha_fin": "2020-06-21"
+      }
+    ],
+    "lat": -45.568689,
+    "lng": -74.151294
+  },
+  {
+    "expediente": "A-003-2023",
+    "codigo_centro": 120176,
+    "nombre_centro": "BAHIA LEON",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2023-03-27",
+    "excesos": [
+      {
+        "exceso_pct": 50.3,
+        "fecha_inicio": "2018-08-27",
+        "fecha_fin": "2020-06-14"
+      },
+      {
+        "exceso_pct": 30.8,
+        "fecha_inicio": "2021-01-05",
+        "fecha_fin": null
+      }
+    ],
+    "lat": -45.63941944,
+    "lng": -74.08249861
+  },
+  {
+    "expediente": "A-002-2025",
+    "codigo_centro": 120130,
+    "nombre_centro": "CES MINA ELENA",
+    "titular": "SALMONES BLUMAR MAGALLANES SPA",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2025-06-19",
+    "excesos": [
+      {
+        "exceso_pct": 11.4,
+        "fecha_inicio": "2022-10-19",
+        "fecha_fin": "2022-06-26"
+      }
+    ],
+    "lat": -44.58205,
+    "lng": -73.293375
+  },
+  {
+    "expediente": "A-002-2023",
+    "codigo_centro": 110717,
+    "nombre_centro": "CES Humos 1",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Análisis",
+    "fecha_inicio_proceso": "2023-03-27",
+    "excesos": [
+      {
+        "exceso_pct": 50.0,
+        "fecha_inicio": "2018-07-13",
+        "fecha_fin": "2019-11-16"
+      },
+      {
+        "exceso_pct": 82.0,
+        "fecha_inicio": "2020-12-22",
+        "fecha_fin": "2022-03-23"
+      }
+    ],
+    "lat": -52.26999425,
+    "lng": -72.92222775
+  },
+  {
+    "expediente": "A-001-2024",
+    "codigo_centro": 110579,
+    "nombre_centro": "PUNTA MANO",
+    "titular": "SALMONES ANTARTICA S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2024-06-28",
+    "excesos": [
+      {
+        "exceso_pct": 11.0,
+        "fecha_inicio": "2022-08-10",
+        "fecha_fin": "2023-09-23"
+      }
+    ],
+    "lat": -52.175019,
+    "lng": -73.078983
+  },
+  {
+    "expediente": "A-001-2023",
+    "codigo_centro": 110727,
+    "nombre_centro": "HUMOS 2",
+    "titular": "AUSTRALIS MAR S.A",
+    "estado_procedimiento": "PDC en Ejecución",
+    "fecha_inicio_proceso": "2023-03-27",
+    "excesos": [
+      {
+        "exceso_pct": 36.8,
+        "fecha_inicio": "2018-10-12",
+        "fecha_fin": "2020-01-23"
+      },
+      {
+        "exceso_pct": 21.0,
+        "fecha_inicio": "2021-09-09",
+        "fecha_fin": "2022-09-18"
+      }
+    ],
+    "lat": -53.178831,
+    "lng": -72.827639
+  }
+]

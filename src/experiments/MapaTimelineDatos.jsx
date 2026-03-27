@@ -98,12 +98,8 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
       mapRef.current.touchZoomRotate.disable()
     }
     mapRef.current.on('load', () => {
-      const style = mapRef.current.getStyle()
-      style.layers.forEach(layer => {
-        if (layer.id.includes('place') && (layer.id.includes('state') || layer.id.includes('region') || layer.id.includes('province'))) {
-          mapRef.current.setLayoutProperty(layer.id, 'visibility', 'none')
-        }
-      })
+      const firstSym = mapRef.current.getStyle().layers.find(l => l.type === 'symbol')
+      containerRef.current._beforeId = firstSym ? firstSym.id : undefined
       containerRef.current._mapLoaded = true
     })
     return () => { if (mapRef.current) { mapRef.current.remove(); mapRef.current = null } }
@@ -127,6 +123,8 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
       return
     }
 
+    const BEFORE = containerRef.current._beforeId
+
     mapRef.current.addSource('all', { type: 'geojson', data: allData })
 
     mapRef.current.addLayer({
@@ -142,7 +140,7 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
         ],
         'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0.85, 10, 0.45, 13, 0],
       },
-    })
+    }, BEFORE)
 
     mapRef.current.addLayer({
       id: 'pts', type: 'circle', source: 'all',
@@ -152,7 +150,32 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
         'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.8],
         'circle-stroke-width': 0,
       },
-    })
+    }, BEFORE)
+
+    // Labels using 'name' (not 'name_en' which is empty for Chile)
+    if (!mapRef.current.getLayer('labels-regions')) {
+      mapRef.current.addLayer({
+        id: 'labels-regions', type: 'symbol', source: 'carto', 'source-layer': 'place',
+        filter: ['in', ['get', 'class'], ['literal', ['state', 'province']]],
+        minzoom: 4, maxzoom: 10,
+        layout: { 'text-field': ['get', 'name'], 'text-size': 12, 'text-font': ['Open Sans Bold'], 'text-transform': 'uppercase', 'text-letter-spacing': 0.15, 'text-padding': 8 },
+        paint: { 'text-color': '#1b3a4b', 'text-opacity': 0.4, 'text-halo-color': '#ffffff', 'text-halo-width': 1.5 },
+      })
+      mapRef.current.addLayer({
+        id: 'labels-cities', type: 'symbol', source: 'carto', 'source-layer': 'place',
+        filter: ['in', ['get', 'class'], ['literal', ['city', 'town']]],
+        minzoom: 6,
+        layout: { 'text-field': ['get', 'name'], 'text-size': ['interpolate', ['linear'], ['zoom'], 6, 10, 10, 13], 'text-font': ['Open Sans Bold'], 'text-padding': 4 },
+        paint: { 'text-color': '#1b3a4b', 'text-halo-color': '#ffffff', 'text-halo-width': 1.5 },
+      })
+      mapRef.current.addLayer({
+        id: 'labels-places', type: 'symbol', source: 'carto', 'source-layer': 'place',
+        filter: ['in', ['get', 'class'], ['literal', ['village', 'hamlet', 'suburb', 'island']]],
+        minzoom: 9,
+        layout: { 'text-field': ['get', 'name'], 'text-size': 10, 'text-font': ['Open Sans Regular'], 'text-padding': 4 },
+        paint: { 'text-color': '#1b3a4b', 'text-opacity': 0.7, 'text-halo-color': '#ffffff', 'text-halo-width': 1.5 },
+      })
+    }
 
     const popup = new maplibregl.Popup({ closeButton: true, closeOnClick: true, maxWidth: '220px' })
     mapRef.current.on('click', 'pts', (e) => {

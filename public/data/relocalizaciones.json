@@ -1,0 +1,3857 @@
+[
+  {
+    "titular": "ACUINOVA CHILE S.A.",
+    "holding": "MOWI CHILE S.A.",
+    "n_pert": 212110055,
+    "superficie_ha": 2.0,
+    "agrupacion": "25B",
+    "centros": [
+      110207
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-05-07",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AGUAS CLARAS S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 212110071,
+    "superficie_ha": 12.5,
+    "agrupacion": "31A",
+    "centros": [
+      110204
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-12-26",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES FRIOSUR S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 212110040,
+    "superficie_ha": 0.31,
+    "agrupacion": "24",
+    "centros": [
+      110378
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-09-05",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AGUAS CLARAS S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 212110061,
+    "superficie_ha": 10.0,
+    "agrupacion": "24",
+    "centros": [
+      110523
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-12-17",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 211110019,
+    "superficie_ha": 4.99,
+    "agrupacion": "25B",
+    "centros": [
+      110769,
+      110261
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2011-03-05",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISIÓN/RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD SUPEDITADA A ENVIO DE ANTECEDENTES",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 211110019,
+    "superficie_ha": 11.19,
+    "agrupacion": "26A",
+    "centros": [
+      110769
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2011-03-05",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION; RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD CORREPSONDE A SECTOR REMANENTE",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AGUAS CLARAS S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 212110062,
+    "superficie_ha": 12.49,
+    "agrupacion": "26A",
+    "centros": [
+      110206
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2013-02-13",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES FRIOSUR S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 211110077,
+    "superficie_ha": 1.49,
+    "agrupacion": "29",
+    "centros": [
+      110347
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2011-08-12",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AQUACHILE MAGALLANES SPA",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 225120001,
+    "superficie_ha": 64.38,
+    "agrupacion": "42",
+    "centros": [
+      120149
+    ],
+    "comuna": "NATALES",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2025-12-02",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AQUACHILE MAGALLANES SPA",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 225120001,
+    "superficie_ha": 70.61,
+    "agrupacion": "45",
+    "centros": [
+      120149,
+      120113
+    ],
+    "comuna": "NATALES",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2025-12-02",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AQUACHILE MAGALLANES SPA",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 225120001,
+    "superficie_ha": 70.2,
+    "agrupacion": "45",
+    "centros": [
+      120149,
+      120094
+    ],
+    "comuna": "NATALES",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2025-12-02",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A.",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 210110123,
+    "superficie_ha": 12.97,
+    "agrupacion": "30B",
+    "centros": [
+      110783
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2010-02-11",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "PISCICULTURA PALQUI LTDA.",
+    "holding": "MARINE FARM",
+    "n_pert": 210110037,
+    "superficie_ha": 5.94,
+    "agrupacion": "28B",
+    "centros": [
+      110276
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2010-08-22",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": 2760,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "PISCICULTURA PALQUI LTDA.",
+    "holding": "MARINE FARM",
+    "n_pert": 212110042,
+    "superficie_ha": 1.99,
+    "agrupacion": "31B",
+    "centros": [
+      110277
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-06-24",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION; RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "PISCICULTURA PALQUI LTDA.",
+    "holding": "MARINE FARM",
+    "n_pert": 212110043,
+    "superficie_ha": 1.93,
+    "agrupacion": "32",
+    "centros": [
+      110276
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-06-24",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION; RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "PISCICULTURA PALQUI LTDA.",
+    "holding": "MARINE FARM",
+    "n_pert": 212110043,
+    "superficie_ha": 1.99,
+    "agrupacion": "32",
+    "centros": [
+      110276
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-06-24",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES TECMAR S.A.",
+    "holding": "MOWI CHILE S.A.",
+    "n_pert": 211110018,
+    "superficie_ha": 6.07,
+    "agrupacion": "18C",
+    "centros": [
+      110525
+    ],
+    "comuna": "GUAITECAS",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2011-02-23",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 218110017,
+    "superficie_ha": 5.99,
+    "agrupacion": "21C",
+    "centros": [
+      110807
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2018-11-19",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 219110012,
+    "superficie_ha": 5.5,
+    "agrupacion": "23B",
+    "centros": [
+      110821,
+      110679
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2019-12-17",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EXPORTADORA LOS FIORDOS LTDA.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 210110069,
+    "superficie_ha": 5.91,
+    "agrupacion": "21B",
+    "centros": [
+      110744
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2010-08-22",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "INCOMPATIBILIDAD",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 220110001,
+    "superficie_ha": 8.0,
+    "agrupacion": "24",
+    "centros": [
+      110809
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-02-26",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A.",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 211110036,
+    "superficie_ha": 6.04,
+    "agrupacion": "19A",
+    "centros": [
+      110627
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2011-07-07",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "SI",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 220110015,
+    "superficie_ha": 7.87,
+    "agrupacion": "26B",
+    "centros": [
+      100857
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-05-04",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 220110014,
+    "superficie_ha": 6.0,
+    "agrupacion": "22D",
+    "centros": [
+      110835,
+      110903
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-06-05",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION; RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "PISCICULTURA PALQUI LTDA.",
+    "holding": "MARINE FARM",
+    "n_pert": 212110029,
+    "superficie_ha": 2.86,
+    "agrupacion": "28B",
+    "centros": [
+      110277
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-04-15",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION; RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD CORREPSONDE A SECTOR REMANENTE",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "PISCICULTURA PALQUI LTDA.",
+    "holding": "MARINE FARM",
+    "n_pert": 212110029,
+    "superficie_ha": 1.49,
+    "agrupacion": "34",
+    "centros": [
+      110277
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-04-15",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION; RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD CORREPSONDE A SECTOR REMANENTE",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 220110013,
+    "superficie_ha": 6.25,
+    "agrupacion": "23B",
+    "centros": [
+      110636,
+      110709
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-06-05",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISIÓN-FUSIÓN-RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AYSÉN SPA",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 211110070,
+    "superficie_ha": 2.99,
+    "agrupacion": "24",
+    "centros": [
+      110015
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2011-06-11",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "CERMAQ CHILE S.A.",
+    "holding": "CERMAQ CHILE S.A",
+    "n_pert": 210100013,
+    "superficie_ha": 17.51,
+    "agrupacion": "8",
+    "centros": [
+      102183
+    ],
+    "comuna": "QUEMCHI",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2010-08-22",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EXPORTADORA LOS FIORDOS LTDA.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 213110017,
+    "superficie_ha": 12.93,
+    "agrupacion": "28B",
+    "centros": [
+      110045
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2014-10-12",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION; RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD CORREPSONDE A SECTOR REMANENTE",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EXPORTADORA LOS FIORDOS LTDA.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 213110017,
+    "superficie_ha": 1.5,
+    "agrupacion": "29",
+    "centros": [
+      110045
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2013-10-12",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION; RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "CULTIVOS MARINOS YADRAN S.A.",
+    "holding": "EMPRESAS YADRAN.",
+    "n_pert": 220110012,
+    "superficie_ha": 12.0,
+    "agrupacion": "21C",
+    "centros": [
+      110931,
+      110676
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2022-03-19",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "SI",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EXPORTADORA LOS FIORDOS LTDA.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 214110005,
+    "superficie_ha": 8.0,
+    "agrupacion": "32",
+    "centros": [
+      110175
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2014-08-24",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "MAINSTREAM CHILE S.A.",
+    "holding": "CERMAQ CHILE S.A",
+    "n_pert": 213110011,
+    "superficie_ha": 2.99,
+    "agrupacion": "22D",
+    "centros": [
+      110413
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2013-07-30",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "CULTIVOS YADRAN S.A",
+    "holding": "EMPRESAS YADRAN.",
+    "n_pert": 220110008,
+    "superficie_ha": 12.0,
+    "agrupacion": "18B",
+    "centros": [
+      110638,
+      110832
+    ],
+    "comuna": "GUAITECAS",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-03-19",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "CULTIVOS YADRAN S.A",
+    "holding": "EMPRESAS YADRAN.",
+    "n_pert": 220110009,
+    "superficie_ha": 6.0,
+    "agrupacion": "18B",
+    "centros": [
+      110597
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-03-19",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "CULTIVOS YADRÁN S.A.",
+    "holding": "EMPRESAS YADRAN.",
+    "n_pert": 220110010,
+    "superficie_ha": 10.5,
+    "agrupacion": "21D",
+    "centros": [
+      110720,
+      110652
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-04-28",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "MAINSTREAM CHILE S.A.",
+    "holding": "CERMAQ CHILE S.A",
+    "n_pert": 213110010,
+    "superficie_ha": 3.0,
+    "agrupacion": "22D",
+    "centros": [
+      110586
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2013-07-30",
+    "tipo_requerimiento": "",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A.",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 215110003,
+    "superficie_ha": 2.0,
+    "agrupacion": "30B",
+    "centros": [
+      110786
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2015-09-30",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "CULTIVOS YADRÁN S.A.",
+    "holding": "EMPRESAS YADRAN.",
+    "n_pert": 220110011,
+    "superficie_ha": 7.66,
+    "agrupacion": "21D",
+    "centros": [
+      110898
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-04-28",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "CULTIVOS YADRÁN S.A.",
+    "holding": "EMPRESAS YADRAN.",
+    "n_pert": 220110046,
+    "superficie_ha": 12.0,
+    "agrupacion": "18C",
+    "centros": [
+      110880,
+      110694
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-02-17",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSIÓN-RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 215100030,
+    "superficie_ha": 7.21,
+    "agrupacion": "12B",
+    "centros": [
+      102063
+    ],
+    "comuna": "QUELLÓN",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2015-04-13",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 210110095,
+    "superficie_ha": 4.48,
+    "agrupacion": "24",
+    "centros": [
+      110468
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2010-08-22",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 211110017,
+    "superficie_ha": 7.91,
+    "agrupacion": "26B",
+    "centros": [
+      110223
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2011-02-16",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 213110004,
+    "superficie_ha": 5.97,
+    "agrupacion": "21B",
+    "centros": [
+      110252
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2013-01-01",
+    "tipo_requerimiento": "",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 213110005,
+    "superficie_ha": 3.96,
+    "agrupacion": "18D",
+    "centros": [
+      110609
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2013-01-01",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110001,
+    "superficie_ha": 9.99,
+    "agrupacion": "23C",
+    "centros": [
+      110350,
+      110453
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2017-12-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110001,
+    "superficie_ha": 9.99,
+    "agrupacion": "23C",
+    "centros": [
+      110350,
+      110453
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2018-09-26",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "FUSION/RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110001,
+    "superficie_ha": 10.0,
+    "agrupacion": "22D",
+    "centros": [
+      110350,
+      110453
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2018-09-26",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION  DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110001,
+    "superficie_ha": 9.99,
+    "agrupacion": "23C",
+    "centros": [
+      110889,
+      110453
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2018-01-10",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "FUSION/RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110001,
+    "superficie_ha": 10.0,
+    "agrupacion": "23C",
+    "centros": [
+      110122,
+      110453
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2018-09-26",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 212110068,
+    "superficie_ha": 4.47,
+    "agrupacion": "34",
+    "centros": [
+      110408
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2013-02-13",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 214110010,
+    "superficie_ha": 2.0,
+    "agrupacion": "35",
+    "centros": [
+      110402
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2014-12-18",
+    "tipo_requerimiento": "",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110003,
+    "superficie_ha": 18.04,
+    "agrupacion": "28B",
+    "centros": [
+      110509,
+      110890
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2018-03-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD CORREPSONDE A SECTOR REMANENTE",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110001,
+    "superficie_ha": 10.0,
+    "agrupacion": "26B",
+    "centros": [
+      110453,
+      110082
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2017-12-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 214110011,
+    "superficie_ha": 4.0,
+    "agrupacion": "35",
+    "centros": [
+      110412
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2014-12-18",
+    "tipo_requerimiento": "",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 214110012,
+    "superficie_ha": 1.92,
+    "agrupacion": "35",
+    "centros": [
+      110407
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2014-12-18",
+    "tipo_requerimiento": "",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110001,
+    "superficie_ha": 9.99,
+    "agrupacion": "26B",
+    "centros": [
+      110453
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2017-12-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/ RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110001,
+    "superficie_ha": 10.01,
+    "agrupacion": "28A",
+    "centros": [
+      110889
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2017-12-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/ RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD CORREPSONDE A SECTOR REMANENTE",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110001,
+    "superficie_ha": 10.0,
+    "agrupacion": "26B",
+    "centros": [
+      110453
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2017-12-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/ RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110001,
+    "superficie_ha": 63.63,
+    "agrupacion": "28B-2",
+    "centros": [
+      110453
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2017-12-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/ RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD CORREPSONDE A SECTOR REMANENTE",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A.",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110001,
+    "superficie_ha": 10.0,
+    "agrupacion": "26B",
+    "centros": [
+      110453,
+      110082
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2017-12-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 211110059,
+    "superficie_ha": 13.48,
+    "agrupacion": "22A",
+    "centros": [
+      110434
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2011-11-09",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 223110008,
+    "superficie_ha": 11.25,
+    "agrupacion": "33",
+    "centros": [
+      110849,
+      110414
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": null,
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "SI",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EMPRESAS AQUACHILE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 212110060,
+    "superficie_ha": 11.02,
+    "agrupacion": "22C",
+    "centros": [
+      110213
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-12-17",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EXPORTADORA LOS FIORDOS LTDA",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 211110041,
+    "superficie_ha": 1.71,
+    "agrupacion": "28B",
+    "centros": [
+      110045
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2011-07-27",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISIÓN/RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD SUPEDITADA A ENVIO DE ANTECEDENTES",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "GRANJA MARINA TORNAGALEONES S.A.",
+    "holding": "MARINE FARM",
+    "n_pert": 220110039,
+    "superficie_ha": 3.8,
+    "agrupacion": "18C",
+    "centros": [
+      110684
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-03-11",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A.",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 219110009,
+    "superficie_ha": 7.0,
+    "agrupacion": "23B",
+    "centros": [
+      110894,
+      110879,
+      110678
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-03-30",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "GRANJA MARINA TORNAGALEONES S.A.",
+    "holding": "MARINE FARM",
+    "n_pert": 220110042,
+    "superficie_ha": 2.25,
+    "agrupacion": "33",
+    "centros": [
+      110837
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-03-11",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "GRANJA MARINA TORNAGALEONES S.A.",
+    "holding": "MARINE FARM",
+    "n_pert": 220110040,
+    "superficie_ha": 3.23,
+    "agrupacion": "18C",
+    "centros": [
+      110776
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-03-11",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "GRANJA MARINA TORNAGALEONES S.A.",
+    "holding": "MARINE FARM",
+    "n_pert": 220110043,
+    "superficie_ha": 29.05,
+    "agrupacion": "34",
+    "centros": [
+      110851
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-08-30",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "GRANJA MARINA TORNAGALEONES S.A.",
+    "holding": "MARINE FARM",
+    "n_pert": 220110041,
+    "superficie_ha": 45.9,
+    "agrupacion": "32",
+    "centros": [
+      110692
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-07-31",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "MARINE HARVEST CHILE S.A.",
+    "holding": "MOWI CHILE S.A.",
+    "n_pert": 210110128,
+    "superficie_ha": 45.91,
+    "agrupacion": "19B",
+    "centros": [
+      110602
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2010-04-11",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "MARINE HARVEST CHILE S.A.",
+    "holding": "MOWI CHILE S.A.",
+    "n_pert": 214110003,
+    "superficie_ha": 3.59,
+    "agrupacion": "30A",
+    "centros": [
+      110311
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2014-07-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES PACIFIC STAR S.A.",
+    "holding": "SALMONES AUSTRAL S.A.",
+    "n_pert": 220110007,
+    "superficie_ha": 8.7,
+    "agrupacion": "30A",
+    "centros": [
+      110901
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-03-25",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "MULTIEPORT PACIFIC FARMS S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 222100001,
+    "superficie_ha": 5.5,
+    "agrupacion": "1",
+    "centros": [
+      101679,
+      103894
+    ],
+    "comuna": "COCHAMO",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2022-04-25",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "MULTIEPORT PACIFIC FARMS S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 222100002,
+    "superficie_ha": 9.4,
+    "agrupacion": "17B",
+    "centros": [
+      101541
+    ],
+    "comuna": "HUALAIHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2022-04-25",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A.",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 220110002,
+    "superficie_ha": 6.0,
+    "agrupacion": "21C",
+    "centros": [
+      110830
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": null,
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 218120001,
+    "superficie_ha": 6.84,
+    "agrupacion": "58",
+    "centros": [
+      120087,
+      120061
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2018-04-22",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR, PARQUE NACIONAL",
+    "estado_tramite": "DEVUELTA DE SUBSECRETARIA DE FUERZAS ARMADAS",
+    "n_resolucion": 2754,
+    "fecha_resolucion": "2021-07-10"
+  },
+  {
+    "titular": "PACIFIC SEAFOOD S.A",
+    "holding": "INVERMAR S.A",
+    "n_pert": 220110034,
+    "superficie_ha": 6.07,
+    "agrupacion": "23C",
+    "centros": [
+      110825
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-04-05",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMOCONCESIONES XI REGIÓN S.A.",
+    "holding": "SALMONES DE CHILE ALIMENTOS S.A",
+    "n_pert": 222110004,
+    "superficie_ha": 15.47,
+    "agrupacion": "33",
+    "centros": [
+      110283,
+      110240
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2022-04-28",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "SI",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONE SBLUMAR S.A.",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 220100025,
+    "superficie_ha": 4.95,
+    "agrupacion": "2",
+    "centros": [
+      104040
+    ],
+    "comuna": "HUALAIHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-02-17",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110002,
+    "superficie_ha": 9.99,
+    "agrupacion": "23C",
+    "centros": [
+      110351
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2017-12-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACIONES",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110002,
+    "superficie_ha": 18.31,
+    "agrupacion": "28B",
+    "centros": [
+      110351
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2017-12-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACIONES",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD CORREPSONDE A SECTOR REMANENTE",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110003,
+    "superficie_ha": 10.0,
+    "agrupacion": "23C",
+    "centros": [
+      110509
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2018-03-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110003,
+    "superficie_ha": 9.99,
+    "agrupacion": "23C",
+    "centros": [
+      110509
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2018-03-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110003,
+    "superficie_ha": 10.0,
+    "agrupacion": "23C",
+    "centros": [
+      110509,
+      110890
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2018-03-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 217110002,
+    "superficie_ha": 8.0,
+    "agrupacion": "23C",
+    "centros": [
+      110351
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2017-12-20",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACIONES",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A.",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 220110023,
+    "superficie_ha": 8.0,
+    "agrupacion": "21C",
+    "centros": [
+      110831
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-06-04",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A.",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 220110017,
+    "superficie_ha": 6.0,
+    "agrupacion": "22A",
+    "centros": [
+      110682
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-05-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A.",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 220110016,
+    "superficie_ha": 6.0,
+    "agrupacion": "22A",
+    "centros": [
+      110637
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-05-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A.",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 220110020,
+    "superficie_ha": 6.0,
+    "agrupacion": "22A",
+    "centros": [
+      110745
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-05-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 220100022,
+    "superficie_ha": 9.61,
+    "agrupacion": "17B",
+    "centros": [
+      102383
+    ],
+    "comuna": "HUALAIHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-02-17",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 220100021,
+    "superficie_ha": 9.1,
+    "agrupacion": "17B",
+    "centros": [
+      100682,
+      102376
+    ],
+    "comuna": "HUALAIHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-02-17",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 220100022,
+    "superficie_ha": 7.62,
+    "agrupacion": "17B",
+    "centros": [
+      102103,
+      102383
+    ],
+    "comuna": "HUALAIHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-02-17",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 220100021,
+    "superficie_ha": 9.61,
+    "agrupacion": "17B",
+    "centros": [
+      102376
+    ],
+    "comuna": "HUALAIHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-02-17",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 220100024,
+    "superficie_ha": 30.94,
+    "agrupacion": "8",
+    "centros": [
+      102677
+    ],
+    "comuna": "QUEMCHI",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-02-17",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "INVERMAR S.A.",
+    "holding": "INVERMAR S.A",
+    "n_pert": 220110035,
+    "superficie_ha": 6.0,
+    "agrupacion": "30B",
+    "centros": [
+      110712
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": null,
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES ANTARTICA S.A",
+    "holding": "SALMONES ANTARTICA S.A",
+    "n_pert": 220110033,
+    "superficie_ha": 2.1,
+    "agrupacion": "26B",
+    "centros": [
+      110906
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-04-16",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES AUSTRALES S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 212110050,
+    "superficie_ha": 1.27,
+    "agrupacion": "30B",
+    "centros": [
+      110005
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-06-24",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES AUSTRALES S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 212110036,
+    "superficie_ha": 1.22,
+    "agrupacion": "21C",
+    "centros": [
+      110242
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-04-26",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION; RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD SUPEDITADA A OTRA SOLICITUD DE CONCESION DE ACUICULTURA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES AUSTRALES S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 212110049,
+    "superficie_ha": 3.04,
+    "agrupacion": "18C",
+    "centros": [
+      110039
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2012-06-24",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 210110004,
+    "superficie_ha": 10.23,
+    "agrupacion": "21C",
+    "centros": [
+      110444
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2010-08-22",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES CAMANCHACA S.A.",
+    "holding": "SALMONES CAMANCHACA S.A.",
+    "n_pert": 221110002,
+    "superficie_ha": 25.0,
+    "agrupacion": "18B",
+    "centros": [
+      110934,
+      110463
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-07-09",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES CAMANCHACA S.A.",
+    "holding": "SALMONES CAMANCHACA S.A.",
+    "n_pert": 221110006,
+    "superficie_ha": 25.0,
+    "agrupacion": "18B",
+    "centros": [
+      110492,
+      110623
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-07-09",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES CAMANCHACA S.A.",
+    "holding": "SALMONES CAMANCHACA S.A.",
+    "n_pert": 221110008,
+    "superficie_ha": 24.08,
+    "agrupacion": "20",
+    "centros": [
+      110632,
+      110859,
+      110660
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-07-09",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES CAMANCHACA S.A.",
+    "holding": "SALMONES CAMANCHACA S.A.",
+    "n_pert": 221110003,
+    "superficie_ha": 20.95,
+    "agrupacion": "19A",
+    "centros": [
+      110768,
+      110464
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-07-09",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES CAMANCHACA S.A.",
+    "holding": "SALMONES CAMANCHACA S.A.",
+    "n_pert": 221110004,
+    "superficie_ha": 22.05,
+    "agrupacion": "18B",
+    "centros": [
+      110746,
+      110937
+    ],
+    "comuna": "GUAITECAS",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-07-09",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "FIORDO AZUL S.A.",
+    "holding": "SALMONES CAMANCHACA S.A.",
+    "n_pert": 221110005,
+    "superficie_ha": 21.26,
+    "agrupacion": "20",
+    "centros": [
+      110601,
+      110598
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-07-09",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES CAMANCHACA S.A.",
+    "holding": "SALMONES CAMANCHACA S.A.",
+    "n_pert": 221110007,
+    "superficie_ha": 25.0,
+    "agrupacion": "19B",
+    "centros": [
+      110747,
+      110766
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-11-23",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "MOWI CHILE S.A.",
+    "holding": "MOWI CHILE S.A.",
+    "n_pert": 221110012,
+    "superficie_ha": 11.09,
+    "agrupacion": "22C",
+    "centros": [
+      110545,
+      110367,
+      110366
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-10-19",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "MOWI CHILE S.A.",
+    "holding": "MOWI CHILE S.A.",
+    "n_pert": 221110012,
+    "superficie_ha": 11.08,
+    "agrupacion": "22C",
+    "centros": [
+      110545,
+      110368
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-10-19",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "MOWI CHILE S.A.",
+    "holding": "MOWI CHILE S.A.",
+    "n_pert": 221110012,
+    "superficie_ha": 11.09,
+    "agrupacion": "22C",
+    "centros": [
+      110545,
+      110365,
+      110542
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-10-19",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 221110014,
+    "superficie_ha": 4.03,
+    "agrupacion": "25A",
+    "centros": [
+      110336,
+      110229,
+      110340
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-12-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 221110014,
+    "superficie_ha": 3.71,
+    "agrupacion": "25A",
+    "centros": [
+      110336,
+      110341,
+      110227
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-12-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 221110014,
+    "superficie_ha": 3.31,
+    "agrupacion": "25A",
+    "centros": [
+      110336,
+      110339
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-12-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 221110013,
+    "superficie_ha": 2.32,
+    "agrupacion": "25A",
+    "centros": [
+      110260
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-12-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 221110014,
+    "superficie_ha": 3.31,
+    "agrupacion": "25A",
+    "centros": [
+      110336,
+      110341
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-12-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 221110014,
+    "superficie_ha": 4.19,
+    "agrupacion": "25A",
+    "centros": [
+      110336,
+      110230
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-12-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 221110014,
+    "superficie_ha": 3.71,
+    "agrupacion": "25A",
+    "centros": [
+      110336,
+      110224,
+      110339
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-12-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 221110014,
+    "superficie_ha": 3.31,
+    "agrupacion": "25A",
+    "centros": [
+      110336,
+      110340
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-12-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 220110024,
+    "superficie_ha": 4.89,
+    "agrupacion": "21B",
+    "centros": [
+      110788
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-07-04",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 220110026,
+    "superficie_ha": 6.0,
+    "agrupacion": "19A",
+    "centros": [
+      110650
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-07-04",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 220110025,
+    "superficie_ha": 6.0,
+    "agrupacion": "19A",
+    "centros": [
+      110631
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2020-07-04",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A.",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 222110001,
+    "superficie_ha": 12.0,
+    "agrupacion": "20",
+    "centros": [
+      110775,
+      110780
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2022-01-30",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 223110001,
+    "superficie_ha": 3.2,
+    "agrupacion": "26A",
+    "centros": [
+      110338,
+      110259
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2023-11-05",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 223110001,
+    "superficie_ha": 3.9,
+    "agrupacion": "25B",
+    "centros": [
+      110337
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": null,
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION; RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 223110001,
+    "superficie_ha": 3.38,
+    "agrupacion": "26B",
+    "centros": [
+      110259,
+      110337,
+      110338,
+      110424
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2023-04-25",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-RELOCALIZACION",
+    "invocacion_preferencia": "SI",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 223110001,
+    "superficie_ha": 4.0,
+    "agrupacion": "26B",
+    "centros": [
+      110228,
+      1110337,
+      110424
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2023-04-25",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-RELOCALIZACION",
+    "invocacion_preferencia": "SI",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A.",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 224110001,
+    "superficie_ha": 6.77,
+    "agrupacion": "28 C",
+    "centros": [
+      110442
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2024-04-07",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A.",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 223110002,
+    "superficie_ha": 5.0,
+    "agrupacion": "23B",
+    "centros": [
+      110798
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2023-05-29",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION; RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A.",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 223110007,
+    "superficie_ha": 14.51,
+    "agrupacion": "30B",
+    "centros": [
+      110763,
+      110629
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2024-01-01",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A.",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 223110003,
+    "superficie_ha": 7.34,
+    "agrupacion": "23B",
+    "centros": [
+      110801,
+      110911,
+      110848
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2023-05-29",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A.",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 223110006,
+    "superficie_ha": 10.5,
+    "agrupacion": "23B",
+    "centros": [
+      110910,
+      110739
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2023-05-29",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "AUSTRALIS MAR S.A.",
+    "holding": "AUSTRALIS MAR S.A",
+    "n_pert": 223110004,
+    "superficie_ha": 6.0,
+    "agrupacion": "28A",
+    "centros": [
+      110909
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2023-07-11",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A.",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 222110006,
+    "superficie_ha": 12.0,
+    "agrupacion": "19B",
+    "centros": [
+      110728,
+      110647
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2022-12-25",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES BLUMAR S.A.",
+    "holding": "BLUMAR S.A.",
+    "n_pert": 223110007,
+    "superficie_ha": 12.93,
+    "agrupacion": "21D",
+    "centros": [
+      110763,
+      110785
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2023-07-24",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "EXPORTADORA LOS FIORDOS LTDA.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 211110070,
+    "superficie_ha": 3.42,
+    "agrupacion": "28B-1",
+    "centros": [
+      110015
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2011-06-11",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "COOKE AQUACULTURE CHILE S.A.",
+    "holding": "COOKE AQUACULTURE CHILE S.A.",
+    "n_pert": 225110001,
+    "superficie_ha": 3.91,
+    "agrupacion": "25B",
+    "centros": [
+      110337
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2025-02-06",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "CERMAQ CHILE S.A.",
+    "holding": "CERMAQ CHILE S.A",
+    "n_pert": 210100026,
+    "superficie_ha": 2.16,
+    "agrupacion": "13",
+    "centros": [
+      100609
+    ],
+    "comuna": "CHAITÉN",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2010-02-09",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES CHILOE S.A.",
+    "holding": "EMPRESAS AQUACHILE S.A.",
+    "n_pert": 210100017,
+    "superficie_ha": 0.67,
+    "agrupacion": "12B",
+    "centros": [
+      102907
+    ],
+    "comuna": "QUELLON",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2010-08-22",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES HUMBOLDT LTDA",
+    "holding": "CERMAQ CHILE S.A",
+    "n_pert": 215100018,
+    "superficie_ha": 6.0,
+    "agrupacion": "17B",
+    "centros": [
+      100630
+    ],
+    "comuna": "HUALAIHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2010-10-21",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES HUMBOLDT LTDA.",
+    "holding": "CERMAQ CHILE S.A",
+    "n_pert": 214100002,
+    "superficie_ha": 6.09,
+    "agrupacion": "8",
+    "centros": [
+      104012
+    ],
+    "comuna": "QUEMCHI",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2014-01-30",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES HUMBOLDT LTDA.",
+    "holding": "CERMAQ CHILE S.A",
+    "n_pert": 215100016,
+    "superficie_ha": 3.36,
+    "agrupacion": "17B",
+    "centros": [
+      102265
+    ],
+    "comuna": "HUAILAHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2015-06-04",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": "<Null>",
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES HUMBOLDT SPA",
+    "holding": "CERMAQ CHILE S.A",
+    "n_pert": 210110052,
+    "superficie_ha": 7.8,
+    "agrupacion": "18C",
+    "centros": [
+      110514
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2010-08-22",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "MOWI CHILE S.A.",
+    "holding": "MOWI CHILE S.A.",
+    "n_pert": 215100006,
+    "superficie_ha": 10.0,
+    "agrupacion": "9C",
+    "centros": [
+      102126
+    ],
+    "comuna": "QUINCHAO",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2015-05-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISIÓN-RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "INVERMAR S.A.",
+    "holding": "INVERMAR S.A",
+    "n_pert": 215100013,
+    "superficie_ha": 1.68,
+    "agrupacion": "17A",
+    "centros": [
+      103310
+    ],
+    "comuna": "HUALAIHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2018-11-13",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "holding": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "n_pert": 215100012,
+    "superficie_ha": 10.99,
+    "agrupacion": "17A",
+    "centros": [
+      102135
+    ],
+    "comuna": "HUALAIHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2015-06-04",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "PARA SOLICITAR INSPECCION TERRENO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "MOWI CHILE S.A.",
+    "holding": "MOWI CHILE S.A.",
+    "n_pert": 215100027,
+    "superficie_ha": 15.0,
+    "agrupacion": "17B",
+    "centros": [
+      102925
+    ],
+    "comuna": "HUAILAHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2015-06-04",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES HUMBOLDT SPA",
+    "holding": "CERMAQ CHILE S.A",
+    "n_pert": 221110001,
+    "superficie_ha": 23.6,
+    "agrupacion": "18B",
+    "centros": [
+      110618,
+      110787,
+      110666
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2021-05-13",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "TRUSAL S.A.",
+    "holding": "SALMONES AUSTRAL S.A.",
+    "n_pert": 215100009,
+    "superficie_ha": 8.12,
+    "agrupacion": "17A",
+    "centros": [
+      103965
+    ],
+    "comuna": "CHAITÉN",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2015-06-04",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES HUMBOLDT SPA",
+    "holding": "CERMAQ CHILE S.A",
+    "n_pert": 214100003,
+    "superficie_ha": 7.34,
+    "agrupacion": "16",
+    "centros": [
+      103734
+    ],
+    "comuna": "CHAITÉN",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2014-01-30",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "TRUSAL S.A.",
+    "holding": "SALMONES AUSTRAL S.A.",
+    "n_pert": 219100002,
+    "superficie_ha": 6.21,
+    "agrupacion": "9B",
+    "centros": [
+      104109
+    ],
+    "comuna": "QUINCHAO",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2020-07-01",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "TRUSAL S.A.",
+    "holding": "SALMONES AUSTRAL S.A.",
+    "n_pert": 220100001,
+    "superficie_ha": 6.03,
+    "agrupacion": "9A",
+    "centros": [
+      104223
+    ],
+    "comuna": "QUINCHAO",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-12-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "TRUSAL S.A.",
+    "holding": "SALMONES AUSTRAL S.A.",
+    "n_pert": 220100003,
+    "superficie_ha": 13.12,
+    "agrupacion": "14",
+    "centros": [
+      103939
+    ],
+    "comuna": "CHAITÉN",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2020-01-03",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "CALETA BAY MAR SPA",
+    "holding": "CALETA BAY S.A.",
+    "n_pert": 220100018,
+    "superficie_ha": 3.58,
+    "agrupacion": "1",
+    "centros": [
+      103452
+    ],
+    "comuna": "COCHAMÓ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2020-03-25",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES MULTIEXPORT S.A",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 222110005,
+    "superficie_ha": 10.0,
+    "agrupacion": "23C",
+    "centros": [
+      110429,
+      110383
+    ],
+    "comuna": "AISEN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2022-04-17",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "TRUSAL S.A.",
+    "holding": "SALMONES AUSTRAL S.A.",
+    "n_pert": 220100011,
+    "superficie_ha": 8.12,
+    "agrupacion": "17A",
+    "centros": [
+      103965
+    ],
+    "comuna": "CHAITEN",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-02-17",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "TRUSAL S.A.",
+    "holding": "SALMONES AUSTRAL S.A.",
+    "n_pert": 220100009,
+    "superficie_ha": 6.52,
+    "agrupacion": "17A",
+    "centros": [
+      103813,
+      104145
+    ],
+    "comuna": "CHAITEN",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-02-17",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES MULTIEXPORT S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 210110032,
+    "superficie_ha": 9.79,
+    "agrupacion": "23C",
+    "centros": [
+      110376
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2010-08-22",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES MULTIEXPORT S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 216110014,
+    "superficie_ha": 10.0,
+    "agrupacion": "23C",
+    "centros": [
+      110387
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2016-01-09",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": "<Null>",
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "CALETA BAY MAR SPA",
+    "holding": "CALETA BAY S.A.",
+    "n_pert": 220100016,
+    "superficie_ha": 3.19,
+    "agrupacion": "1",
+    "centros": [
+      103661
+    ],
+    "comuna": "COCHAMÓ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2020-03-25",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES MULTIEXPORT S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 216110020,
+    "superficie_ha": 9.99,
+    "agrupacion": "23C",
+    "centros": [
+      110391
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2016-09-14",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES MULTIEXPORT S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 216110016,
+    "superficie_ha": 10.0,
+    "agrupacion": "S/N",
+    "centros": [
+      110401
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2016-09-14",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES MULTIEXPORT S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 216110009,
+    "superficie_ha": 17.86,
+    "agrupacion": "23C",
+    "centros": [
+      110915
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2016-01-09",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES MULTIEXPORT S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 216110010,
+    "superficie_ha": 3.99,
+    "agrupacion": "23C",
+    "centros": [
+      110394
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2016-01-09",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA NOTIFICACION AMBIENTAL",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "INVERMAR S.A.",
+    "holding": "INVERMAR S.A",
+    "n_pert": 220100033,
+    "superficie_ha": 24.28,
+    "agrupacion": "12A",
+    "centros": [
+      102043,
+      103563
+    ],
+    "comuna": "QUELLON",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2020-08-06",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSIÓN/RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "INVERMAR S.A.",
+    "holding": "INVERMAR S.A",
+    "n_pert": 220100034,
+    "superficie_ha": 19.8,
+    "agrupacion": "17A",
+    "centros": [
+      103310,
+      103340
+    ],
+    "comuna": "HUALAIHUE",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-04-25",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "TRUSAL S.A.",
+    "holding": "SALMONES AUSTRAL S.A.",
+    "n_pert": 220100036,
+    "superficie_ha": 8.24,
+    "agrupacion": "14",
+    "centros": [
+      103814,
+      102988
+    ],
+    "comuna": "CHAITÉN",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2020-08-06",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION/RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "TRUSAL S.A.",
+    "holding": "CALETA BAY S.A.",
+    "n_pert": 220100027,
+    "superficie_ha": 6.81,
+    "agrupacion": "1",
+    "centros": [
+      103735,
+      101822,
+      104174
+    ],
+    "comuna": "COCHAMÓ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2020-11-05",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION/RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "INVERMAR S.A.",
+    "holding": "INVERMAR S.A",
+    "n_pert": 220100035,
+    "superficie_ha": 20.53,
+    "agrupacion": "2",
+    "centros": [
+      103307,
+      103337
+    ],
+    "comuna": "CALBUCO",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2020-08-06",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES MULTIEXPORT S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 216110017,
+    "superficie_ha": 18.02,
+    "agrupacion": "S/N",
+    "centros": [
+      110868
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2016-01-09",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "holding": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "n_pert": 220100030,
+    "superficie_ha": 33.83,
+    "agrupacion": "17A",
+    "centros": [
+      103418,
+      100088
+    ],
+    "comuna": "HUALAIHUE",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-05-29",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "TRUSAL S.A.",
+    "holding": "MARINE FARM",
+    "n_pert": 220100014,
+    "superficie_ha": 26.66,
+    "agrupacion": "16",
+    "centros": [
+      104187,
+      103313,
+      103559,
+      102099
+    ],
+    "comuna": "CHAITEN",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-05-29",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD SUPEDITADA A ENVIO DE ANTECEDENTES",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "TRUSAL S.A.",
+    "holding": "SALMONES AUSTRAL S.A.",
+    "n_pert": 220100013,
+    "superficie_ha": 9.75,
+    "agrupacion": "17A",
+    "centros": [
+      103626
+    ],
+    "comuna": "HUALAIHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-05-29",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD SUPEDITADA A ENVIO DE ANTECEDENTES",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "holding": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "n_pert": 220100029,
+    "superficie_ha": 8.45,
+    "agrupacion": "2",
+    "centros": [
+      103341,
+      102034
+    ],
+    "comuna": "CALBUCO",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-04-25",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSIÓN/RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE RECHAZO",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "FIORDO BLANCO S.A.",
+    "holding": "SALMONES CAMANCHACA S.A.",
+    "n_pert": 221100005,
+    "superficie_ha": 6.75,
+    "agrupacion": "1",
+    "centros": [
+      104234
+    ],
+    "comuna": "COCHAMO",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-05-09",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES CAMANCHACA S.A.",
+    "holding": "SALMONES CAMANCHACA S.A.",
+    "n_pert": 221100002,
+    "superficie_ha": 7.2,
+    "agrupacion": "2",
+    "centros": [
+      103527
+    ],
+    "comuna": "HUALAIHUÉ",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-12-27",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "FIORDO BLANCO S.A.",
+    "holding": "SALMONES CAMANCHACA S.A.",
+    "n_pert": 221100004,
+    "superficie_ha": 4.5,
+    "agrupacion": "16",
+    "centros": [
+      102914
+    ],
+    "comuna": "CHAITEN",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": null,
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD SUPEDITADA A ENVIO DE ANTECEDENTES",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES MULTIEXPORT S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 216110021,
+    "superficie_ha": 17.99,
+    "agrupacion": "23C",
+    "centros": [
+      110834
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2016-01-09",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES MULTIEXPORT S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 216110018,
+    "superficie_ha": 6.0,
+    "agrupacion": "23C",
+    "centros": [
+      110945
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2016-01-09",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "holding": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "n_pert": 224100001,
+    "superficie_ha": 31.37,
+    "agrupacion": "17A",
+    "centros": [
+      100176
+    ],
+    "comuna": "HUALAIHUE",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2025-09-02",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "holding": "PRODUCTOS DEL MAR VENTISQUEROS S.A.",
+    "n_pert": 224100001,
+    "superficie_ha": 26.76,
+    "agrupacion": "17B",
+    "centros": [
+      100176,
+      102122
+    ],
+    "comuna": "HUALAIHUE",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": null,
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD ESPERA EVALUACION UNIDAD DE ORDENAMIENTO TERRITORIAL DE SUBPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 218120002,
+    "superficie_ha": 6.85,
+    "agrupacion": "59",
+    "centros": [
+      120092,
+      120062
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2018-06-08",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR, PARQUE NACIONAL",
+    "estado_tramite": "DEVUELTA DE SUBSECRETARIA DE FUERZAS ARMADAS",
+    "n_resolucion": 2804,
+    "fecha_resolucion": "2021-10-18"
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 218120002,
+    "superficie_ha": 6.85,
+    "agrupacion": "59",
+    "centros": [
+      120036,
+      120062
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2018-06-08",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "DEVUELTA DE SUBSECRETARIA DE FUERZAS ARMADAS",
+    "n_resolucion": 2805,
+    "fecha_resolucion": "2021-10-18"
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 218120001,
+    "superficie_ha": 6.85,
+    "agrupacion": "59",
+    "centros": [
+      120085,
+      120061
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2018-07-17",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR, PARQUE NACIONAL",
+    "estado_tramite": "DEVUELTA DE SUBSECRETARIA DE FUERZAS ARMADAS",
+    "n_resolucion": 2755,
+    "fecha_resolucion": "2021-07-10"
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 218120001,
+    "superficie_ha": 6.85,
+    "agrupacion": "59",
+    "centros": [
+      120097,
+      120061
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2018-07-17",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR, PARQUE NACIONAL",
+    "estado_tramite": "DEVUELTA DE SUBSECRETARIA DE FUERZAS ARMADAS",
+    "n_resolucion": 2756,
+    "fecha_resolucion": "2021-07-10"
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 218120001,
+    "superficie_ha": 2.71,
+    "agrupacion": "59",
+    "centros": [
+      120029,
+      120061
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2018-07-17",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "DEVUELTA DE SUBSECRETARIA DE FUERZAS ARMADAS",
+    "n_resolucion": 2758,
+    "fecha_resolucion": "2021-07-10"
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 218120001,
+    "superficie_ha": 7.4,
+    "agrupacion": "59",
+    "centros": [
+      120091,
+      120061
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2018-07-17",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION/RELOCALIZACION/FUSION",
+    "invocacion_preferencia": "CORREDOR, PARQUE NACIONAL",
+    "estado_tramite": "DEVUELTA DE SUBSECRETARIA DE FUERZAS ARMADAS",
+    "n_resolucion": 2757,
+    "fecha_resolucion": "2021-07-10"
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 218120002,
+    "superficie_ha": 6.86,
+    "agrupacion": "59",
+    "centros": [
+      120063,
+      120062
+    ],
+    "comuna": "PUNTA ARENAS1",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2018-05-08",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISIÓN/FUSION/RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "DEVUELTA DE SUBSECRETARIA DE FUERZAS ARMADAS",
+    "n_resolucion": 2807,
+    "fecha_resolucion": "2021-10-18"
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 218120002,
+    "superficie_ha": 2.62,
+    "agrupacion": "59",
+    "centros": [
+      120043,
+      120062
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2018-06-08",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "FUSION/RELOCALIZACION",
+    "invocacion_preferencia": "CORREDOR",
+    "estado_tramite": "DEVUELTA DE SUBSECRETARIA DE FUERZAS ARMADAS",
+    "n_resolucion": 2806,
+    "fecha_resolucion": "2021-10-18"
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 220120001,
+    "superficie_ha": 7.2,
+    "agrupacion": "S/N",
+    "centros": [
+      120070,
+      120067
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2020-04-28",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "SI",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 220120002,
+    "superficie_ha": 3.95,
+    "agrupacion": "58",
+    "centros": [
+      120068,
+      120008
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2020-04-28",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "FUSIÓN/RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 220120006,
+    "superficie_ha": 7.83,
+    "agrupacion": "S/N",
+    "centros": [
+      120023,
+      120128
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2021-04-02",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION-FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "NOVA AUSTRAL S.A.",
+    "holding": "NOVA AUSTRAL S.A.",
+    "n_pert": 220120006,
+    "superficie_ha": 7.59,
+    "agrupacion": "S/N",
+    "centros": [
+      120128
+    ],
+    "comuna": "PUNTA ARENAS",
+    "region": "REGION DE MAGALLANES Y DE LA ANTÁRTICA CHILENA",
+    "fecha_ingreso": "2021-04-02",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "DIVISION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SALMONES MULTIEXPORT S.A.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 222110003,
+    "superficie_ha": 24.0,
+    "agrupacion": "19B",
+    "centros": [
+      110458,
+      110374
+    ],
+    "comuna": "CISNES",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2022-03-31",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSIÓN-RELOCALIZACIÓN",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD EN PROCESO DE EVALUACION DE INSPECCION DE TERRENO REALIZADA POR SERNAPESCA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "SOC. DE INVERSIONES ISLA VICTORIA LTDA.",
+    "holding": "MULTIEXPORT FOODS S.A.",
+    "n_pert": 210110031,
+    "superficie_ha": 7.93,
+    "agrupacion": "S/N",
+    "centros": [
+      110388
+    ],
+    "comuna": "AISÉN",
+    "region": "REGIÓN DE AYSÉN DEL GENERAL CARLOS IBAÑEZ DEL CAMPO",
+    "fecha_ingreso": "2010-08-22",
+    "tipo_requerimiento": "LEY",
+    "tipo_relocalizacion": "RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SUPEDITADA A PLAN DE MANEJO DE AREA PROTEGIDA",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  },
+  {
+    "titular": "TRUSAL SA/ SALMONES PACIFIC STAR S.A.",
+    "holding": "SALMONES AUSTRAL S.A.",
+    "n_pert": 220100028,
+    "superficie_ha": 8.32,
+    "agrupacion": "17A",
+    "centros": [
+      104130,
+      101782,
+      104100
+    ],
+    "comuna": "CHAITEN",
+    "region": "REGION DE LOS LAGOS",
+    "fecha_ingreso": "2021-05-29",
+    "tipo_requerimiento": "RESA",
+    "tipo_relocalizacion": "FUSION-RELOCALIZACION",
+    "invocacion_preferencia": "NO",
+    "estado_tramite": "SOLICITUD SUPEDITADA A ENVIO DE ANTECEDENTES",
+    "n_resolucion": null,
+    "fecha_resolucion": null
+  }
+]
