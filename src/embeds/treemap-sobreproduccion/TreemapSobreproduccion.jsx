@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo, useRef, useCallback } from 'react'
+import { useEffect, useState, useMemo, useRef, useCallback, memo } from 'react'
 
 const BASE = import.meta.env.BASE_URL
 
@@ -84,6 +84,87 @@ function getColor(value, max) {
   const idx = Math.min(Math.floor(t * (COLORS.length - 1)), COLORS.length - 1)
   return COLORS[idx]
 }
+
+const MAX_CENTROS_SHOWN = 10
+
+const DetailPanel = memo(function DetailPanel({ active, maxCount }) {
+  const [showAll, setShowAll] = useState(false)
+
+  // Reset showAll when active changes
+  useEffect(() => { setShowAll(false) }, [active?.name])
+
+  const panelStyle = {
+    width: 280, flexShrink: 0, background: 'white', borderRadius: 8,
+    border: '1px solid rgba(27,58,75,0.1)', padding: 16, overflowY: 'auto',
+    fontSize: 13, color: '#1b3a4b',
+  }
+
+  if (!active) {
+    return (
+      <div style={panelStyle}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', opacity: 0.3, textAlign: 'center' }}>
+          <p>Selecciona una empresa para ver el detalle de sus procesos sancionatorios</p>
+        </div>
+      </div>
+    )
+  }
+
+  const visibleCentros = showAll ? active.centros : active.centros.slice(0, MAX_CENTROS_SHOWN)
+  const hasMore = active.centros.length > MAX_CENTROS_SHOWN
+
+  return (
+    <div style={panelStyle}>
+      <div style={{ marginBottom: 12 }}>
+        <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, opacity: 0.4, marginBottom: 4 }}>Titular</div>
+        <div style={{ fontSize: 15, fontWeight: 700 }}>{active.name}</div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
+        <div style={{ background: '#f0f4f3', borderRadius: 6, padding: '8px 10px' }}>
+          <div style={{ fontSize: 22, fontWeight: 700, color: '#00796b' }}>{active.count}</div>
+          <div style={{ fontSize: 10, opacity: 0.5 }}>Procesos</div>
+        </div>
+        <div style={{ background: '#f0f4f3', borderRadius: 6, padding: '8px 10px' }}>
+          <div style={{ fontSize: 22, fontWeight: 700, color: '#d94040' }}>{active.avgExceso}%</div>
+          <div style={{ fontSize: 10, opacity: 0.5 }}>Exceso promedio</div>
+        </div>
+      </div>
+
+      <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, opacity: 0.4, marginBottom: 8 }}>
+        Centros sancionados ({active.centros.length})
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {visibleCentros.map((c, i) => (
+          <div key={i} style={{
+            padding: '6px 8px', background: '#f8fafa', borderRadius: 4,
+            borderLeft: '3px solid ' + getColor(active.count, maxCount),
+          }}>
+            <div style={{ fontWeight: 600, fontSize: 12 }}>{c.nombre_centro}</div>
+            <div style={{ fontSize: 11, opacity: 0.5, marginTop: 2 }}>
+              {c.expediente} — {c.estado_procedimiento}
+            </div>
+            {(c.excesos || []).map((e, j) => (
+              <div key={j} style={{ fontSize: 11, color: '#d94040', marginTop: 2 }}>
+                {e.exceso_pct}% exceso ({e.fecha_inicio.slice(0, 7)} a {e.fecha_fin.slice(0, 7)})
+              </div>
+            ))}
+          </div>
+        ))}
+        {hasMore && !showAll && (
+          <button
+            onClick={() => setShowAll(true)}
+            style={{
+              background: 'none', border: '1px solid rgba(27,58,75,0.15)', borderRadius: 4,
+              padding: '6px', fontSize: 11, color: '#1b3a4b', opacity: 0.6, cursor: 'pointer',
+            }}
+          >
+            Ver {active.centros.length - MAX_CENTROS_SHOWN} centros mas...
+          </button>
+        )}
+      </div>
+    </div>
+  )
+})
 
 export default function TreemapSobreproduccion() {
   const [data, setData] = useState(null)
@@ -210,60 +291,7 @@ export default function TreemapSobreproduccion() {
         </div>
 
         {/* Detail panel */}
-        <div style={{
-          width: 280, flexShrink: 0, background: 'white', borderRadius: 8,
-          border: '1px solid rgba(27,58,75,0.1)', padding: 16, overflowY: 'auto',
-          fontSize: 13, color: '#1b3a4b',
-        }}>
-          {active ? (
-            <>
-              <div style={{ marginBottom: 12 }}>
-                <div style={{
-                  fontSize: 10, fontWeight: 700, textTransform: 'uppercase',
-                  letterSpacing: 1, opacity: 0.4, marginBottom: 4,
-                }}>Titular</div>
-                <div style={{ fontSize: 15, fontWeight: 700 }}>{active.name}</div>
-              </div>
-
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>
-                <div style={{ background: '#f0f4f3', borderRadius: 6, padding: '8px 10px' }}>
-                  <div style={{ fontSize: 22, fontWeight: 700, color: '#00796b' }}>{active.count}</div>
-                  <div style={{ fontSize: 10, opacity: 0.5 }}>Procesos</div>
-                </div>
-                <div style={{ background: '#f0f4f3', borderRadius: 6, padding: '8px 10px' }}>
-                  <div style={{ fontSize: 22, fontWeight: 700, color: '#d94040' }}>{active.avgExceso}%</div>
-                  <div style={{ fontSize: 10, opacity: 0.5 }}>Exceso promedio</div>
-                </div>
-              </div>
-
-              <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 1, opacity: 0.4, marginBottom: 8 }}>
-                Centros sancionados
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                {active.centros.map((c, i) => (
-                  <div key={i} style={{
-                    padding: '6px 8px', background: '#f8fafa', borderRadius: 4,
-                    borderLeft: '3px solid ' + getColor(active.count, maxCount),
-                  }}>
-                    <div style={{ fontWeight: 600, fontSize: 12 }}>{c.nombre_centro}</div>
-                    <div style={{ fontSize: 11, opacity: 0.5, marginTop: 2 }}>
-                      {c.expediente} — {c.estado_procedimiento}
-                    </div>
-                    {(c.excesos || []).map((e, j) => (
-                      <div key={j} style={{ fontSize: 11, color: '#d94040', marginTop: 2 }}>
-                        {e.exceso_pct}% exceso ({e.fecha_inicio.slice(0, 7)} a {e.fecha_fin.slice(0, 7)})
-                      </div>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            </>
-          ) : (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', opacity: 0.3, textAlign: 'center' }}>
-              <p>Selecciona una empresa para ver el detalle de sus procesos sancionatorios</p>
-            </div>
-          )}
-        </div>
+        <DetailPanel active={active} maxCount={maxCount} />
       </div>
     </div>
   )
