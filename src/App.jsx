@@ -3,11 +3,16 @@ import { lazy, Suspense } from 'react'
 const EmbedTimeline = lazy(() => import('./embeds/timeline/EmbedTimeline'))
 const EmbedConflicto = lazy(() => import('./embeds/conflicto/EmbedConflicto'))
 const EmbedTreemap = lazy(() => import('./embeds/treemap-sobreproduccion/EmbedTreemap'))
+const ArticuloPreview = lazy(() => import('./preview/ArticuloPreview'))
 
 const EMBEDS = {
   timeline: EmbedTimeline,
   conflicto: EmbedConflicto,
   treemap: EmbedTreemap,
+}
+
+const PREVIEWS = {
+  articulo: ArticuloPreview,
 }
 
 const Loading = () => (
@@ -28,6 +33,14 @@ function Index() {
             </a>
           ))}
         </div>
+        <div className='mt-6 pt-6 border-t border-[#1b3a4b]/10'>
+          <p className='text-[#1b3a4b]/40 text-xs uppercase tracking-wider mb-3'>Preview de articulo</p>
+          <a href='?preview=articulo'
+            className='block p-3 bg-[#1b3a4b] rounded-lg hover:bg-[#1b3a4b]/90 transition-colors'>
+            <span className='font-mono text-sm text-white'>?preview=articulo</span>
+            <span className='block text-xs text-white/50 mt-1'>Simula el reportaje completo con iframes</span>
+          </a>
+        </div>
       </div>
     </div>
   )
@@ -36,12 +49,22 @@ function Index() {
 function App() {
   const params = new URLSearchParams(window.location.search)
   const embedKey = params.get('embed')
+  const previewKey = params.get('preview')
   const EmbedComponent = embedKey ? EMBEDS[embedKey] : null
+  const PreviewComponent = previewKey ? PREVIEWS[previewKey] : null
 
   if (EmbedComponent) {
     return (
       <Suspense fallback={<Loading />}>
         <EmbedComponent />
+      </Suspense>
+    )
+  }
+
+  if (PreviewComponent) {
+    return (
+      <Suspense fallback={<Loading />}>
+        <PreviewComponent />
       </Suspense>
     )
   }
