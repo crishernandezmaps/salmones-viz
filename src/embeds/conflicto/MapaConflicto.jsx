@@ -26,8 +26,8 @@ function makeSVG(fill, stroke, symbol) {
 }
 
 const ICONS = {
-  normal:            { svg: makeSVG('#d94040', '#fff', 'circle') },
-  denuncia:          { svg: makeSVG('#d94040', '#ffd600', 'circle') },
+  normal:            { svg: makeSVG('#5b9ea6', '#fff', 'circle') },
+  denuncia:          { svg: makeSVG('#5b9ea6', '#ffd600', 'circle') },
   conflict:          { svg: makeSVG('#ff8c00', '#fff', 'triangle') },
   conflict_denuncia: { svg: makeSVG('#ff8c00', '#ffd600', 'triangle') },
   sobreproduccion:   { svg: makeSVG('#b71c1c', '#ffd600', 'diamond') },
@@ -324,14 +324,10 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
           <>
             <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Concesionario</p>
             <FichaRow label='Titular' value={concesion['nombre titular'] || concesion.Titular} />
-            <FichaRow label='RUT' value={concesion['rut titular']} />
 
             <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Concesion</p>
-            <FichaRow label='Toponimio' value={concesion.Toponimio} />
             <FichaRow label='Especies' value={concesion.Especies} />
-            <FichaRow label='Grupo especie' value={concesion['Grupo Especie']} />
             <FichaRow label='Superficie' value={concesion.superficieTotal ? concesion.superficieTotal + ' ha' : null} />
-            <FichaRow label='Barrio' value={concesion.barrio} />
           </>
         )}
       </div>
@@ -345,7 +341,7 @@ export default function MapaConflicto() {
   const mapRef = useRef(null)
   const dataRef = useRef({ concMap: {}, denMap: {}, ampPolygons: [], centrosByCode: {}, spMap: {}, relocMap: {} })
   const [loaded, setLoaded] = useState(false)
-  const [visible, setVisible] = useState({ centros: true, amp: true, sobreproduccion: true, relocalizacion: true })
+  const [visible, setVisible] = useState({ centros: true, amp: true, snaspe: true, sobreproduccion: true, relocalizacion: true })
   const [stats, setStats] = useState({ conflict: 0, denuncia: 0, both: 0, sobreproduccion: 0, relocalizacion: 0 })
   const [selected, setSelected] = useState(null)
   const [ranking, setRanking] = useState([])
@@ -413,8 +409,9 @@ export default function MapaConflicto() {
     mapRef.current.scrollZoom.disable()
 
     mapRef.current.on('load', async () => {
-      const [ampResp, centrosResp, concResp, denResp, spResp, relocResp] = await Promise.all([
+      const [ampResp, snaspeResp, centrosResp, concResp, denResp, spResp, relocResp] = await Promise.all([
         fetch(BASE + 'data/amp_nacional.topojson').then(r => r.json()),
+        fetch(BASE + 'data/snaspe_terrestre.topojson').then(r => r.json()),
         fetch(BASE + 'data/centros_salmoneros.geojson').then(r => r.json()),
         fetch(BASE + 'data/concesiones_excel.json').then(r => r.json()),
         fetch(BASE + 'data/denuncias.json').then(r => r.json()),
@@ -424,6 +421,8 @@ export default function MapaConflicto() {
 
       const ampGeo = feature(ampResp, ampResp.objects.amp)
       const ampPolygons = ampGeo.features.filter(f => f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon')
+
+      const snaspeGeo = feature(snaspeResp, snaspeResp.objects.snaspe)
 
       // Concesiones lookup
       const concMap = {}
@@ -533,6 +532,11 @@ export default function MapaConflicto() {
       const B = firstSym ? firstSym.id : undefined
       console.log('[MapaConflicto] beforeId =', B, '| layers:', allLayers.length, '| symbols:', allLayers.filter(l => l.type === 'symbol').length)
 
+      // ── SNASPE terrestre layers ──
+      mapRef.current.addSource('snaspe', { type: 'geojson', data: snaspeGeo })
+      mapRef.current.addLayer({ id: 'snaspe-fill', type: 'fill', source: 'snaspe', paint: { 'fill-color': '#4caf50', 'fill-opacity': 0.18 } }, B)
+      mapRef.current.addLayer({ id: 'snaspe-outline', type: 'line', source: 'snaspe', paint: { 'line-color': '#2e7d32', 'line-width': 1.5, 'line-dasharray': [3, 2] } }, B)
+
       // ── AMP layers ──
       mapRef.current.addSource('amp', { type: 'geojson', data: ampGeo })
       mapRef.current.addLayer({ id: 'amp-fill', type: 'fill', source: 'amp', paint: { 'fill-color': '#3a9e9e', 'fill-opacity': 0.3 } }, B)
@@ -559,8 +563,8 @@ export default function MapaConflicto() {
         'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 5, 1, 12, 2],
       }
       const COLORS = {
-        normal:            { fill: '#d94040', stroke: '#ffffff' },
-        denuncia:          { fill: '#d94040', stroke: '#ffd600' },
+        normal:            { fill: '#5b9ea6', stroke: '#ffffff' },
+        denuncia:          { fill: '#5b9ea6', stroke: '#ffd600' },
         conflict:          { fill: '#ff8c00', stroke: '#ffffff' },
         conflict_denuncia: { fill: '#ff8c00', stroke: '#ffd600' },
       }
@@ -650,6 +654,9 @@ export default function MapaConflicto() {
         for (const cat of ['normal', 'denuncia', 'conflict', 'conflict_denuncia']) {
           if (mapRef.current.getLayer('layer-' + cat)) mapRef.current.setLayoutProperty('layer-' + cat, 'visibility', vis)
         }
+      } else if (id === 'snaspe') {
+        mapRef.current.setLayoutProperty('snaspe-fill', 'visibility', vis)
+        mapRef.current.setLayoutProperty('snaspe-outline', 'visibility', vis)
       } else if (id === 'amp') {
         mapRef.current.setLayoutProperty('amp-fill', 'visibility', vis)
         mapRef.current.setLayoutProperty('amp-outline', 'visibility', vis)
@@ -676,38 +683,34 @@ export default function MapaConflicto() {
         <div className='absolute top-3 left-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-3 z-10 text-sm space-y-1.5'>
           <p className='text-[10px] font-bold uppercase tracking-wider text-[#1b3a4b]/50 mb-1'>Capas</p>
           <label className='flex items-center gap-2 cursor-pointer'>
-            <input type='checkbox' checked={visible.centros} onChange={() => toggleLayer('centros')} className='rounded accent-[#d94040]' />
+            <input type='checkbox' checked={visible.centros} onChange={() => toggleLayer('centros')} className='rounded accent-[#5b9ea6]' />
+            <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#5b9ea6' }} />
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Centros salmoneros</span>
           </label>
           <label className='flex items-center gap-2 cursor-pointer'>
             <input type='checkbox' checked={visible.amp} onChange={() => toggleLayer('amp')} className='rounded accent-[#3a9e9e]' />
-            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Areas marinas protegidas</span>
+            <span className='w-2.5 h-2.5 rounded shrink-0' style={{ background: 'rgba(58,158,158,0.4)', border: '1.5px solid #2a7a7a' }} />
+            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Áreas marinas protegidas</span>
+          </label>
+          <label className='flex items-center gap-2 cursor-pointer'>
+            <input type='checkbox' checked={visible.snaspe} onChange={() => toggleLayer('snaspe')} className='rounded accent-[#4caf50]' />
+            <span className='w-2.5 h-2.5 rounded shrink-0' style={{ background: 'rgba(76,175,80,0.3)', border: '1.5px dashed #2e7d32' }} />
+            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Áreas protegidas terrestres</span>
           </label>
           <label className='flex items-center gap-2 cursor-pointer'>
             <input type='checkbox' checked={visible.sobreproduccion} onChange={() => toggleLayer('sobreproduccion')} className='rounded accent-[#b71c1c]' />
-            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Sobreproduccion ({stats.sobreproduccion})</span>
+            <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#b71c1c', border: '1.5px solid #ffd600' }} />
+            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Proc. sancionatorio ({stats.sobreproduccion})</span>
           </label>
           <label className='flex items-center gap-2 cursor-pointer'>
             <input type='checkbox' checked={visible.relocalizacion} onChange={() => toggleLayer('relocalizacion')} className='rounded accent-[#1565c0]' />
+            <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#1565c0' }} />
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Relocalizaciones ({stats.relocalizacion})</span>
           </label>
-
-          <div className='pt-1.5 border-t border-[#1b3a4b]/10 space-y-1'>
+          <div className='pt-1.5 border-t border-[#1b3a4b]/10'>
             <div className='flex items-center gap-1.5'>
-              <span className='w-3 h-3 rounded-full inline-block' style={{ background: '#d94040', border: '1.5px solid #fff' }} />
-              <span className='text-[#1b3a4b]/60 text-[10px]'>Centro sin denuncia</span>
-            </div>
-            <div className='flex items-center gap-1.5'>
-              <span className='w-3 h-3 rounded-full inline-block' style={{ background: '#ff8c00', border: '1.5px solid #fff' }} />
+              <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#ff8c00' }} />
               <span className='text-[#1b3a4b]/60 text-[10px]'>En zona protegida ({stats.conflict})</span>
-            </div>
-            <div className='flex items-center gap-1.5'>
-              <span className='w-3.5 h-3.5 rounded-full inline-block' style={{ background: '#b71c1c', border: '2px solid #ffd600' }} />
-              <span className='text-[#1b3a4b]/60 text-[10px]'>Proc. sancionatorio ({stats.sobreproduccion})</span>
-            </div>
-            <div className='flex items-center gap-1.5'>
-              <span className='w-3.5 h-3.5 rounded-full inline-block' style={{ background: '#1565c0', border: '2px solid #fff' }} />
-              <span className='text-[#1b3a4b]/60 text-[10px]'>Solicitud relocalizacion ({stats.relocalizacion})</span>
             </div>
           </div>
         </div>

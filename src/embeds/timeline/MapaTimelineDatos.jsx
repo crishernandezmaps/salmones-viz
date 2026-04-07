@@ -128,27 +128,13 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
     mapRef.current.addSource('all', { type: 'geojson', data: allData })
 
     mapRef.current.addLayer({
-      id: 'heat', type: 'heatmap', source: 'all',
-      paint: {
-        'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 4, 0.6, 8, 1.5, 12, 2],
-        'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 14, 8, 22, 12, 30],
-        'heatmap-color': [
-          'interpolate', ['linear'], ['heatmap-density'],
-          0, 'rgba(0,0,0,0)', 0.1, 'rgba(58,120,130,0.2)', 0.25, 'rgba(40,100,120,0.4)',
-          0.4, 'rgba(30,90,110,0.55)', 0.55, 'rgba(80,140,140,0.65)', 0.7, 'rgba(120,80,150,0.7)',
-          0.85, 'rgba(40,110,120,0.8)', 1, 'rgba(25,80,100,0.9)',
-        ],
-        'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0.85, 10, 0.45, 13, 0],
-      },
-    }, BEFORE)
-
-    mapRef.current.addLayer({
       id: 'pts', type: 'circle', source: 'all',
       paint: {
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 2.5, 10, 5, 14, 8],
-        'circle-color': '#3a9e9e',
-        'circle-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0, 9, 0.8],
-        'circle-stroke-width': 0,
+        'circle-radius': ['interpolate', ['linear'], ['zoom'], 4, 2, 7, 3.5, 10, 5, 14, 8],
+        'circle-color': '#e07b39',
+        'circle-opacity': 0.8,
+        'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 4, 0, 7, 0.5],
+        'circle-stroke-color': '#fff',
       },
     }, BEFORE)
 
@@ -226,7 +212,7 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
       {/* Mobile: multiplier — top right, large */}
       {growthLabel && (
         <div className='absolute top-2 right-2 bg-white/70 backdrop-blur-sm rounded px-2 py-1 z-10 md:hidden'>
-          <span className='text-base font-bold' style={{ color: '#3a9e9e' }}>×{growthLabel.mult}</span>
+          <span className='text-base font-bold' style={{ color: '#e07b39' }}>×{growthLabel.mult}</span>
         </div>
       )}
 
@@ -264,12 +250,12 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
       <div className='absolute bottom-2 left-2 right-2 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1.5 z-10 hidden md:block'>
         <div className='flex items-center justify-between mb-1'>
           <div className='flex gap-2 text-[10px] items-center'>
-            <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#3a9e9e' }} />
+            <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#e07b39' }} />
             <span className='text-[#1b3a4b]/60'>Concesión de Salmones</span>
           </div>
           <div className='flex items-center gap-2'>
             {growthLabel && (
-              <span className='text-[10px] font-bold' style={{ color: '#3a9e9e' }}>
+              <span className='text-[10px] font-bold' style={{ color: '#e07b39' }}>
                 ×{growthLabel.mult}
               </span>
             )}
@@ -294,12 +280,12 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
               </g>
             )
           })}
-          <polyline fill='none' stroke='#3a9e9e' strokeWidth='1.5' points={mkLine(slicedData)} />
+          <polyline fill='none' stroke='#e07b39' strokeWidth='1.5' points={mkLine(slicedData)} />
           {slicedData.length > 0 && (() => {
             const last = slicedData[slicedData.length - 1]
             const x = cp.l + ((last.year - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw
             const y = cp.t + ph - (last.total / maxVal) * ph
-            return <circle cx={x} cy={y} r='2.5' fill='#3a9e9e' />
+            return <circle cx={x} cy={y} r='2.5' fill='#e07b39' />
           })()}
           {staticLabels.map(y => (
             <text key={y} x={cp.l + ((y - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * pw} y={CH - 2} fill='rgba(27,58,75,0.35)' fontSize='7' textAnchor='middle'>{y}</text>
@@ -403,7 +389,7 @@ export default function MapaTimelineDatos() {
                 <div key={d.year} className='flex-1 flex flex-col justify-end cursor-pointer' onClick={() => { setCurrentYear(d.year); setPlaying(false) }}>
                   <div
                     style={{ height: h + '%' }}
-                    className={'w-full rounded-t-sm transition-all duration-150 ' + (isCurrent ? 'ring-1 ring-[#1b3a4b]/40 ' : '') + (isActive ? 'bg-gradient-to-t from-[#3a9e9e] to-[#7ec8c8]' : 'bg-[#1b3a4b]/10')}
+                    className={'w-full rounded-t-sm transition-all duration-150 ' + (isCurrent ? 'ring-1 ring-[#1b3a4b]/40 ' : '') + (isActive ? 'bg-gradient-to-t from-[#e07b39] to-[#f0a870]' : 'bg-[#1b3a4b]/10')}
                   />
                 </div>
               )
@@ -413,13 +399,13 @@ export default function MapaTimelineDatos() {
             <button
               onClick={() => { if (currentYear >= YEAR_MAX) setCurrentYear(YEAR_MIN); setPlaying(!playing) }}
               className='w-7 h-7 shrink-0 flex items-center justify-center rounded-full text-white transition-colors text-sm hover:opacity-80'
-              style={{ background: '#3a9e9e' }}
+              style={{ background: '#e07b39' }}
             >
               {playing ? '\u23F8' : '\u25B6'}
             </button>
             <input type='range' min={YEAR_MIN} max={YEAR_MAX} value={currentYear}
               onChange={e => { setCurrentYear(parseInt(e.target.value)); setPlaying(false) }}
-              className='flex-1 accent-[#3a9e9e]'
+              className='flex-1 accent-[#e07b39]'
             />
             <span className='text-lg font-bold text-[#1b3a4b] w-12 text-right'>{currentYear}</span>
           </div>
