@@ -119,24 +119,72 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
     const allData = mkGJ(regionCentros)
 
     if (sourcesReady.current) {
+      // setData works fine with clustered sources — MapLibre reclusters automatically
       mapRef.current.getSource('all').setData(allData)
       return
     }
 
     const BEFORE = containerRef.current._beforeId
 
-    mapRef.current.addSource('all', { type: 'geojson', data: allData })
+    mapRef.current.addSource('all', {
+      type: 'geojson', data: allData,
+      cluster: true, clusterRadius: 28, clusterMaxZoom: 10,
+    })
 
+    // Cluster circles — size proportional to count
+    mapRef.current.addLayer({
+      id: 'clusters', type: 'circle', source: 'all',
+      filter: ['has', 'point_count'],
+      paint: {
+        'circle-color': '#e07b39',
+        'circle-opacity': 0.85,
+        'circle-stroke-width': 2,
+        'circle-stroke-color': '#fff',
+        'circle-radius': [
+          'step', ['get', 'point_count'],
+          10,   // < 10 pts
+          10,  14,  // < 50 pts
+          50,  19,  // < 150 pts
+          150, 24,  // >= 150
+        ],
+      },
+    }, BEFORE)
+
+    // Cluster count labels
+    mapRef.current.addLayer({
+      id: 'cluster-count', type: 'symbol', source: 'all',
+      filter: ['has', 'point_count'],
+      layout: {
+        'text-field': ['get', 'point_count_abbreviated'],
+        'text-font': ['Open Sans Bold'],
+        'text-size': 11,
+      },
+      paint: { 'text-color': '#fff' },
+    })
+
+    // Individual unclustered points
     mapRef.current.addLayer({
       id: 'pts', type: 'circle', source: 'all',
+      filter: ['!', ['has', 'point_count']],
       paint: {
-        'circle-radius': ['interpolate', ['linear'], ['zoom'], 4, 2, 7, 3.5, 10, 5, 14, 8],
+        'circle-radius': ['interpolate', ['linear'], ['zoom'], 8, 3.5, 12, 6, 14, 8],
         'circle-color': '#e07b39',
-        'circle-opacity': 0.8,
-        'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 4, 0, 7, 0.5],
+        'circle-opacity': 0.85,
+        'circle-stroke-width': 1.5,
         'circle-stroke-color': '#fff',
       },
     }, BEFORE)
+
+    // Zoom into cluster on click
+    mapRef.current.on('click', 'clusters', (e) => {
+      const feat = e.features[0]
+      mapRef.current.getSource('all').getClusterExpansionZoom(feat.properties.cluster_id, (err, zoom) => {
+        if (err) return
+        mapRef.current.easeTo({ center: feat.geometry.coordinates, zoom: zoom + 0.5 })
+      })
+    })
+    mapRef.current.on('mouseenter', 'clusters', () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
+    mapRef.current.on('mouseleave', 'clusters', () => { mapRef.current.getCanvas().style.cursor = '' })
 
     // Labels using 'name' (not 'name_en' which is empty for Chile)
     if (!mapRef.current.getLayer('labels-regions')) {
