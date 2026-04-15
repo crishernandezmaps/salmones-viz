@@ -1,9 +1,9 @@
-import MapaRelocalizaciones from './MapaRelocalizaciones'
+import MapaCapas from './MapaRelocalizaciones'
 
-export default function EmbedRelocalizaciones() {
+export default function EmbedCapas() {
   return (
     <div style={{ width: '100vw', height: '100vh', position: 'relative', overflow: 'hidden' }}>
-      <MapaRelocalizaciones />
+      <MapaCapas />
     </div>
   )
 }

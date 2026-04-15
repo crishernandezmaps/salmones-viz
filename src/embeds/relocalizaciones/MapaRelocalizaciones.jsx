@@ -5,25 +5,20 @@ import { feature } from 'topojson-client'
 const BASE = import.meta.env.BASE_URL
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
 
-const REGION_COLORS = {
-  'LOS LAGOS':   { fill: '#e07b39', label: 'Los Lagos' },
-  'AYSÉN':       { fill: '#d94040', label: 'Aysén' },
-  'MAGALLANES':  { fill: '#1565c0', label: 'Magallanes' },
-}
+const KEY_AP_NAMES = [
+  'Parque Nacional y Reserva Nacional Kawésqar',
+  'Reserva Nacional Las Guaitecas',
+  'Parque Nacional Laguna San Rafael',
+  'Parque Nacional Alberto de Agostini',
+  "Parque Nacional Bernardo O'Higgins",
+]
 
-function getRegionKey(regionStr) {
-  const r = (regionStr || '').toUpperCase()
-  if (r.includes('LAGOS')) return 'LOS LAGOS'
-  if (r.includes('AYS')) return 'AYSÉN'
-  if (r.includes('MAGALLANES')) return 'MAGALLANES'
-  return null
-}
-
-export default function MapaRelocalizaciones() {
+export default function MapaCapas() {
   const containerRef = useRef(null)
   const mapRef = useRef(null)
   const [loaded, setLoaded] = useState(false)
-  const [counts, setCounts] = useState({})
+  const [visible, setVisible] = useState({ centros: true, snaspe: true })
+  const [centroCount, setCentroCount] = useState(0)
 
   useEffect(() => {
     if (mapRef.current) return
@@ -38,39 +33,20 @@ export default function MapaRelocalizaciones() {
     mapRef.current.scrollZoom.disable()
 
     mapRef.current.on('load', async () => {
-      const [centrosResp, relocResp, snaspeResp] = await Promise.all([
+      const [centrosResp, snaspeResp] = await Promise.all([
         fetch(BASE + 'data/centros_salmoneros.geojson').then(r => r.json()),
-        fetch(BASE + 'data/relocalizaciones.json').then(r => r.json()),
         fetch(BASE + 'data/snaspe_terrestre.topojson').then(r => r.json()),
       ])
 
-      // Build set of centro codes involved in relocalizaciones
-      const relocCodes = new Set()
-      relocResp.forEach(r => {
-        r.centros.forEach(c => relocCodes.add(String(parseInt(c))))
-      })
+      setCentroCount(centrosResp.features.length)
 
-      // Classify centros by region, only those with relocalizacion
-      const byRegion = { 'LOS LAGOS': [], 'AYSÉN': [], 'MAGALLANES': [] }
-      const regionCounts = {}
-
-      centrosResp.features.forEach(f => {
-        const code = String(parseInt(f.properties.N_CODIGOCE))
-        if (!relocCodes.has(code)) return
-        const key = getRegionKey(f.properties.REGION)
-        if (!key) return
-        byRegion[key].push(f)
-        regionCounts[key] = (regionCounts[key] || 0) + 1
-      })
-
-      setCounts(regionCounts)
+      const snaspeGeo = feature(snaspeResp, snaspeResp.objects.snaspe)
 
       const allLayers = mapRef.current.getStyle().layers
       const firstSym = allLayers.find(l => l.type === 'symbol')
       const B = firstSym ? firstSym.id : undefined
 
       // ── SNASPE terrestre ──
-      const snaspeGeo = feature(snaspeResp, snaspeResp.objects.snaspe)
       mapRef.current.addSource('snaspe', { type: 'geojson', data: snaspeGeo })
       mapRef.current.addLayer({
         id: 'snaspe-fill', type: 'fill', source: 'snaspe',
@@ -78,28 +54,94 @@ export default function MapaRelocalizaciones() {
       }, B)
       mapRef.current.addLayer({
         id: 'snaspe-outline', type: 'line', source: 'snaspe',
-        paint: { 'line-color': '#2e7d32', 'line-width': 1.2, 'line-dasharray': [3, 2] },
+        paint: { 'line-color': '#2e7d32', 'line-width': 1.5, 'line-dasharray': [3, 2] },
       }, B)
 
-      // ── Centros por región ──
-      for (const [key, feats] of Object.entries(byRegion)) {
-        const color = REGION_COLORS[key]?.fill || '#888'
-        const src = `centros-${key.replace(/\s/g, '-').toLowerCase()}`
-        mapRef.current.addSource(src, {
-          type: 'geojson',
-          data: { type: 'FeatureCollection', features: feats },
-        })
-        mapRef.current.addLayer({
-          id: `layer-${src}`, type: 'circle', source: src,
-          paint: {
-            'circle-color': color,
-            'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 4, 9, 7, 12, 10],
-            'circle-stroke-width': 1.5,
-            'circle-stroke-color': '#fff',
-            'circle-opacity': 0.85,
-          },
-        }, B)
+      // ── SNASPE labels for key protected areas ──
+      const labelFeatures = []
+      for (const f of snaspeGeo.features) {
+        if (KEY_AP_NAMES.includes(f.properties.NOMBRE)) {
+          const coords = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates[0][0] : f.geometry.coordinates[0]
+          let cx = 0, cy = 0
+          for (const c of coords) { cx += c[0]; cy += c[1] }
+          cx /= coords.length; cy /= coords.length
+          const shortName = f.properties.NOMBRE
+            .replace('Parque Nacional y Reserva Nacional ', 'RN ')
+            .replace('Parque Nacional ', 'PN ')
+            .replace('Reserva Nacional ', 'RN ')
+          labelFeatures.push({
+            type: 'Feature',
+            geometry: { type: 'Point', coordinates: [cx, cy] },
+            properties: { name: shortName },
+          })
+        }
       }
+      mapRef.current.addSource('ap-labels', { type: 'geojson', data: { type: 'FeatureCollection', features: labelFeatures } })
+      mapRef.current.addLayer({
+        id: 'ap-labels', type: 'symbol', source: 'ap-labels',
+        minzoom: 5,
+        layout: {
+          'text-field': ['get', 'name'],
+          'text-size': ['interpolate', ['linear'], ['zoom'], 5, 10, 8, 13, 12, 16],
+          'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+          'text-padding': 2,
+          'text-allow-overlap': true,
+          'text-ignore-placement': true,
+          'text-anchor': 'center',
+        },
+        paint: {
+          'text-color': '#1b5e20',
+          'text-halo-color': 'rgba(255,255,255,0.95)',
+          'text-halo-width': 2,
+        },
+      })
+
+      // ── Centros salmoneros ──
+      mapRef.current.addSource('centros', { type: 'geojson', data: centrosResp })
+      mapRef.current.addLayer({
+        id: 'centros-heat', type: 'heatmap', source: 'centros',
+        paint: {
+          'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 4, 0.6, 8, 1.5, 12, 2],
+          'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 14, 8, 22, 12, 30],
+          'heatmap-color': ['interpolate', ['linear'], ['heatmap-density'],
+            0, 'rgba(0,0,0,0)', 0.1, 'rgba(91,158,166,0.15)', 0.3, 'rgba(91,158,166,0.35)',
+            0.5, 'rgba(58,158,158,0.5)', 0.7, 'rgba(58,158,158,0.65)',
+            0.9, 'rgba(42,122,122,0.8)', 1, 'rgba(27,90,90,0.9)'],
+          'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0.85, 10, 0.4, 13, 0],
+        },
+      }, B)
+      mapRef.current.addLayer({
+        id: 'centros-points', type: 'circle', source: 'centros',
+        paint: {
+          'circle-color': '#5b9ea6',
+          'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 3, 9, 6, 12, 9],
+          'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 5, 1, 12, 2],
+          'circle-stroke-color': '#fff',
+          'circle-opacity': 0.85,
+        },
+      }, B)
+
+      // ── Place labels ──
+      mapRef.current.addLayer({
+        id: 'labels-regions', type: 'symbol', source: 'carto', 'source-layer': 'place',
+        filter: ['in', ['get', 'class'], ['literal', ['state', 'province']]],
+        minzoom: 4, maxzoom: 10,
+        layout: { 'text-field': ['get', 'name'], 'text-size': 13, 'text-font': ['Open Sans Bold'], 'text-transform': 'uppercase', 'text-letter-spacing': 0.15, 'text-padding': 8 },
+        paint: { 'text-color': '#1b3a4b', 'text-opacity': 0.45, 'text-halo-color': '#ffffff', 'text-halo-width': 1.5 },
+      })
+      mapRef.current.addLayer({
+        id: 'labels-cities', type: 'symbol', source: 'carto', 'source-layer': 'place',
+        filter: ['in', ['get', 'class'], ['literal', ['city', 'town']]],
+        minzoom: 6,
+        layout: { 'text-field': ['get', 'name'], 'text-size': ['interpolate', ['linear'], ['zoom'], 6, 11, 10, 14, 14, 16], 'text-font': ['Open Sans Bold'], 'text-padding': 4 },
+        paint: { 'text-color': '#1b3a4b', 'text-halo-color': '#ffffff', 'text-halo-width': 1.5 },
+      })
+      mapRef.current.addLayer({
+        id: 'labels-water', type: 'symbol', source: 'carto', 'source-layer': 'water_name',
+        minzoom: 7,
+        layout: { 'text-field': ['get', 'name'], 'text-size': 11, 'text-font': ['Open Sans Italic'], 'text-padding': 6 },
+        paint: { 'text-color': '#4a7a8a', 'text-opacity': 0.6, 'text-halo-color': '#ffffff', 'text-halo-width': 1 },
+      })
 
       setLoaded(true)
     })
@@ -107,26 +149,38 @@ export default function MapaRelocalizaciones() {
     return () => { if (mapRef.current) { mapRef.current.remove(); mapRef.current = null } }
   }, [])
 
+  const toggleLayer = (id) => {
+    const next = !visible[id]
+    setVisible(v => ({ ...v, [id]: next }))
+    if (!mapRef.current || !loaded) return
+    const vis = next ? 'visible' : 'none'
+    if (id === 'centros') {
+      mapRef.current.setLayoutProperty('centros-heat', 'visibility', vis)
+      mapRef.current.setLayoutProperty('centros-points', 'visibility', vis)
+    } else if (id === 'snaspe') {
+      mapRef.current.setLayoutProperty('snaspe-fill', 'visibility', vis)
+      mapRef.current.setLayoutProperty('snaspe-outline', 'visibility', vis)
+      mapRef.current.setLayoutProperty('ap-labels', 'visibility', vis)
+    }
+  }
+
   return (
     <div style={{ position: 'absolute', inset: 0 }}>
       <div ref={containerRef} style={{ position: 'absolute', inset: 0 }} />
 
       {/* Leyenda */}
       <div className='absolute top-3 left-3 bg-white/85 backdrop-blur-sm rounded-lg shadow-sm p-3 z-10 space-y-1.5'>
-        <p className='text-[10px] font-bold uppercase tracking-wider text-[#1b3a4b]/50 mb-1'>Solicitudes de relocalización</p>
-        {Object.entries(REGION_COLORS).map(([key, { fill, label }]) => (
-          <div key={key} className='flex items-center gap-2'>
-            <span className='w-3 h-3 rounded-full shrink-0' style={{ background: fill, border: '1.5px solid #fff', boxShadow: '0 0 0 1px rgba(0,0,0,0.15)' }} />
-            <span className='text-[#1b3a4b]/80 text-xs font-medium'>{label}</span>
-            {counts[key] !== undefined && (
-              <span className='text-[#1b3a4b]/40 text-[10px]'>({counts[key]})</span>
-            )}
-          </div>
-        ))}
-        <div className='pt-1.5 border-t border-[#1b3a4b]/10 flex items-center gap-2'>
-          <span className='w-3 h-3 rounded shrink-0' style={{ background: 'rgba(76,175,80,0.25)', border: '1.5px dashed #2e7d32' }} />
-          <span className='text-[#1b3a4b]/60 text-[10px]'>Área protegida terrestre</span>
-        </div>
+        <p className='text-[10px] font-bold uppercase tracking-wider text-[#1b3a4b]/50 mb-1'>Capas</p>
+        <label className='flex items-center gap-2 cursor-pointer'>
+          <input type='checkbox' checked={visible.centros} onChange={() => toggleLayer('centros')} className='rounded accent-[#5b9ea6]' />
+          <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#5b9ea6' }} />
+          <span className='text-[#1b3a4b]/80 text-xs font-medium'>Centros salmoneros ({centroCount})</span>
+        </label>
+        <label className='flex items-center gap-2 cursor-pointer'>
+          <input type='checkbox' checked={visible.snaspe} onChange={() => toggleLayer('snaspe')} className='rounded accent-[#4caf50]' />
+          <span className='w-2.5 h-2.5 rounded shrink-0' style={{ background: 'rgba(76,175,80,0.3)', border: '1.5px dashed #2e7d32' }} />
+          <span className='text-[#1b3a4b]/80 text-xs font-medium'>Áreas protegidas terrestres</span>
+        </label>
       </div>
 
       {!loaded && (

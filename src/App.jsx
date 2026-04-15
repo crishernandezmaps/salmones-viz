@@ -9,8 +9,7 @@ const ArticuloPreview = lazy(() => import('./preview/ArticuloPreview'))
 const EMBEDS = {
   timeline: EmbedTimeline,
   conflicto: EmbedConflicto,
-  treemap: EmbedTreemap,
-  relocalizaciones: EmbedRelocalizaciones,
+  capas: EmbedRelocalizaciones,
 }
 
 const PREVIEWS = {
