@@ -10,6 +10,7 @@ const EMBEDS = {
   timeline: EmbedTimeline,
   conflicto: EmbedConflicto,
   capas: EmbedRelocalizaciones,
+  relocalizaciones: EmbedRelocalizaciones,
 }
 
 const PREVIEWS = {
