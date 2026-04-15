@@ -29,13 +29,10 @@ const ICONS = {
   normal:            { svg: makeSVG('#5b9ea6', '#fff', 'circle') },
   denuncia:          { svg: makeSVG('#5b9ea6', '#ffd600', 'circle') },
   conflict:          { svg: makeSVG('#ff8c00', '#fff', 'triangle') },
-  conflict_denuncia: { svg: makeSVG('#ff8c00', '#ffd600', 'triangle') },
   sobreproduccion:   { svg: makeSVG('#b71c1c', '#ffd600', 'diamond') },
-  relocalizacion:    { svg: makeSVG('#1565c0', '#fff', 'square') },
 }
 
 function getCategory(isConflict, hasDenuncia) {
-  if (isConflict && hasDenuncia) return 'conflict_denuncia'
   if (isConflict) return 'conflict'
   if (hasDenuncia) return 'denuncia'
   return 'normal'
@@ -163,15 +160,13 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
     )
   }
 
-  const { centro, concesion, denuncias, ampName, isConflict, hasDenuncia, sobreproduccion, relocalizaciones } = selected
+  const { centro, concesion, denuncias, ampName, isConflict, hasDenuncia, sobreproduccion } = selected
   const hasSobreprod = sobreproduccion && sobreproduccion.length > 0
-  const hasReloc = relocalizaciones && relocalizaciones.length > 0
 
   const headerBg = isConflict && hasDenuncia ? '#c62828'
     : isConflict ? '#ff8c00'
     : hasSobreprod ? '#b71c1c'
     : hasDenuncia ? '#d94040'
-    : hasReloc ? '#1565c0'
     : '#3a9e9e'
 
   const inRanking = rankIndex >= 0
@@ -180,7 +175,7 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
     <div
       className='h-full overflow-y-auto'
       style={{
-        background: isConflict ? '#fff3e0' : (hasSobreprod || hasDenuncia) ? '#fff5f5' : hasReloc ? '#e8f0fe' : '#fff',
+        background: isConflict ? '#fff3e0' : (hasSobreprod || hasDenuncia) ? '#fff5f5' : '#fff',
         color: isConflict ? '#4a2800' : (hasSobreprod || hasDenuncia) ? '#4a1010' : '#1b3a4b',
       }}
     >
@@ -188,7 +183,7 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
       <div className='sticky top-0 z-10 px-4 py-3 flex items-center justify-between' style={{ background: headerBg, color: '#fff' }}>
         <div>
           <p className='text-xs opacity-80'>Comuna: {centro.COMUNA || '—'}</p>
-          <p className='text-xs opacity-80'>Holding: {hasSobreprod ? sobreproduccion[0].titular : hasReloc ? relocalizaciones[0].holding : concesion?.Holding || concesion?.['Holding (columna manual)'] || concesion?.['nombre titular'] || '—'}</p>
+          <p className='text-xs opacity-80'>Holding: {hasSobreprod ? sobreproduccion[0].titular : concesion?.Holding || concesion?.['Holding (columna manual)'] || concesion?.['nombre titular'] || '—'}</p>
         </div>
       </div>
 
@@ -291,28 +286,6 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
           </>
         )}
 
-        {/* ── RELOCALIZACIONES section ── */}
-        {hasReloc && (
-          <>
-            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Solicitud de relocalizacion</p>
-            {relocalizaciones.map((r, ri) => (
-              <div key={ri} className='py-2 border-b border-current/10'>
-                <div className='flex items-center justify-between mb-1'>
-                  <span className='text-xs font-bold'>{r.holding}</span>
-                </div>
-                <FichaRow label='Centros' value={r.centros.join(', ')} />
-                <FichaRow label='Fecha solicitud' value={r.fecha_ingreso} />
-                <FichaRow label='Tipo' value={r.tipo_relocalizacion} />
-                <FichaRow label='Estado tramite' value={r.estado_tramite} />
-                {r.invocacion_preferencia && r.invocacion_preferencia !== 'NO' && (
-                  <FichaRow label='Preferencia' value={r.invocacion_preferencia} />
-                )}
-                <FichaRow label='Superficie' value={r.superficie_ha ? r.superficie_ha + ' ha' : null} />
-              </div>
-            ))}
-          </>
-        )}
-
         {/* ── Location ── */}
         <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Ubicacion</p>
         <FichaRow label='Comuna' value={centro.COMUNA} />
@@ -326,8 +299,6 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
             <FichaRow label='Titular' value={concesion['nombre titular'] || concesion.Titular} />
 
             <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Concesion</p>
-            <FichaRow label='Especies' value={concesion.Especies} />
-            <FichaRow label='Superficie' value={concesion.superficieTotal ? concesion.superficieTotal + ' ha' : null} />
           </>
         )}
       </div>
@@ -339,10 +310,10 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
 export default function MapaConflicto() {
   const containerRef = useRef(null)
   const mapRef = useRef(null)
-  const dataRef = useRef({ concMap: {}, denMap: {}, ampPolygons: [], centrosByCode: {}, spMap: {}, relocMap: {} })
+  const dataRef = useRef({ concMap: {}, denMap: {}, ampPolygons: [], centrosByCode: {}, spMap: {} })
   const [loaded, setLoaded] = useState(false)
-  const [visible, setVisible] = useState({ centros: true, amp: true, snaspe: true, sobreproduccion: true, relocalizacion: true })
-  const [stats, setStats] = useState({ conflict: 0, denuncia: 0, both: 0, sobreproduccion: 0, relocalizacion: 0 })
+  const [visible, setVisible] = useState({ centros: true, amp: true, snaspe: true, sobreproduccion: true })
+  const [stats, setStats] = useState({ conflict: 0, denuncia: 0, both: 0, sobreproduccion: 0 })
   const [selected, setSelected] = useState(null)
   const [ranking, setRanking] = useState([])
   const [rankIndex, setRankIndex] = useState(0)
@@ -350,13 +321,12 @@ export default function MapaConflicto() {
   const rankingRef = useRef([])
 
   const selectByCode = useCallback((code) => {
-    const { concMap, denMap, ampPolygons, centrosByCode, spMap, relocMap } = dataRef.current
+    const { concMap, denMap, ampPolygons, centrosByCode, spMap } = dataRef.current
     const props = centrosByCode[code]
     if (!props) return
     const concesion = concMap[code] || null
     const denuncias = denMap[code] || []
     const sobreproduccion = spMap[code] || []
-    const relocalizaciones = relocMap[code] || []
     const isConflict = props._conflict === true || props._conflict === 'true'
     const hasDenuncia = denuncias.length > 0
 
@@ -368,7 +338,7 @@ export default function MapaConflicto() {
         try { if (booleanPointInPolygon(pt, amp)) { ampName = amp.properties.NOMBRE; break } } catch (e) {}
       }
     }
-    setSelected({ centro: props, concesion, denuncias, ampName, isConflict, hasDenuncia, sobreproduccion, relocalizaciones })
+    setSelected({ centro: props, concesion, denuncias, ampName, isConflict, hasDenuncia, sobreproduccion })
 
     if (mapRef.current && props._lng && props._lat) {
       const lng = parseFloat(props._lng)
@@ -409,14 +379,13 @@ export default function MapaConflicto() {
     mapRef.current.scrollZoom.disable()
 
     mapRef.current.on('load', async () => {
-      const [ampResp, snaspeResp, centrosResp, concResp, denResp, spResp, relocResp] = await Promise.all([
+      const [ampResp, snaspeResp, centrosResp, concResp, denResp, spResp] = await Promise.all([
         fetch(BASE + 'data/amp_nacional.topojson').then(r => r.json()),
         fetch(BASE + 'data/snaspe_terrestre.topojson').then(r => r.json()),
         fetch(BASE + 'data/centros_salmoneros.geojson').then(r => r.json()),
         fetch(BASE + 'data/concesiones_excel.json').then(r => r.json()),
         fetch(BASE + 'data/denuncias.json').then(r => r.json()),
         fetch(BASE + 'data/sobreproduccion.json').then(r => r.json()),
-        fetch(BASE + 'data/relocalizaciones.json').then(r => r.json()),
       ])
 
       const ampGeo = feature(ampResp, ampResp.objects.amp)
@@ -450,18 +419,6 @@ export default function MapaConflicto() {
         spCodes.add(code)
       })
 
-      // Relocalizaciones lookup (by each centro code)
-      const relocMap = {}
-      const relocCodes = new Set()
-      relocResp.forEach(r => {
-        for (const c of r.centros) {
-          const code = String(parseInt(c))
-          if (!relocMap[code]) relocMap[code] = []
-          relocMap[code].push(r)
-          relocCodes.add(code)
-        }
-      })
-
       // Build ranking by HOLDING — sorted by number of sanction processes (most to least)
       const holdingMap = {}
       spResp.forEach(sp => {
@@ -480,10 +437,9 @@ export default function MapaConflicto() {
 
       // Classify centros
       let sConflict = 0, sDenuncia = 0, sBoth = 0
-      const buckets = { normal: [], denuncia: [], conflict: [], conflict_denuncia: [] }
+      const buckets = { normal: [], denuncia: [], conflict: [] }
       const centrosByCode = {}
       const spFeatures = []
-      const relocFeatures = []
 
       for (const centro of centrosResp.features) {
         centro.properties._lng = centro.geometry.coordinates[0]
@@ -503,12 +459,9 @@ export default function MapaConflicto() {
         else if (inside) sConflict++
         else if (hasDen) sDenuncia++
 
-        // Collect features for new layers
+        // Collect features for sobreproduccion layer
         if (spCodes.has(code)) {
           spFeatures.push({ ...centro, properties: { ...centro.properties, _layer: 'sobreproduccion' } })
-        }
-        if (relocCodes.has(code)) {
-          relocFeatures.push({ ...centro, properties: { ...centro.properties, _layer: 'relocalizacion' } })
         }
       }
 
@@ -523,8 +476,8 @@ export default function MapaConflicto() {
         }
       })
 
-      setStats({ conflict: sConflict, denuncia: sDenuncia, both: sBoth, sobreproduccion: spCodes.size, relocalizacion: relocCodes.size })
-      dataRef.current = { concMap, denMap, ampPolygons, centrosByCode, spMap, relocMap }
+      setStats({ conflict: sConflict, denuncia: sDenuncia, both: sBoth, sobreproduccion: spCodes.size })
+      dataRef.current = { concMap, denMap, ampPolygons, centrosByCode, spMap }
 
       // Insert data layers BEFORE first label so CARTO labels render on top
       const allLayers = mapRef.current.getStyle().layers
@@ -536,6 +489,52 @@ export default function MapaConflicto() {
       mapRef.current.addSource('snaspe', { type: 'geojson', data: snaspeGeo })
       mapRef.current.addLayer({ id: 'snaspe-fill', type: 'fill', source: 'snaspe', paint: { 'fill-color': '#4caf50', 'fill-opacity': 0.18 } }, B)
       mapRef.current.addLayer({ id: 'snaspe-outline', type: 'line', source: 'snaspe', paint: { 'line-color': '#2e7d32', 'line-width': 1.5, 'line-dasharray': [3, 2] } }, B)
+
+      // ── SNASPE + AMP labels for key protected areas ──
+      const KEY_AP_NAMES = [
+        'Parque Nacional y Reserva Nacional Kawésqar',
+        'Reserva Nacional Las Guaitecas',
+        'Parque Nacional Laguna San Rafael',
+        'Parque Nacional Alberto de Agostini',
+        "Parque Nacional Bernardo O'Higgins",
+      ]
+      const labelFeatures = []
+      for (const f of snaspeGeo.features) {
+        if (KEY_AP_NAMES.includes(f.properties.NOMBRE)) {
+          // Compute centroid for label placement
+          const coords = f.geometry.type === 'MultiPolygon' ? f.geometry.coordinates[0][0] : f.geometry.coordinates[0]
+          let cx = 0, cy = 0
+          for (const c of coords) { cx += c[0]; cy += c[1] }
+          cx /= coords.length; cy /= coords.length
+          // Short display name
+          const shortName = f.properties.NOMBRE
+            .replace('Parque Nacional y Reserva Nacional ', 'RN ')
+            .replace('Parque Nacional ', 'PN ')
+            .replace('Reserva Nacional ', 'RN ')
+          labelFeatures.push({
+            type: 'Feature',
+            geometry: { type: 'Point', coordinates: [cx, cy] },
+            properties: { name: shortName },
+          })
+        }
+      }
+      mapRef.current.addSource('ap-labels', { type: 'geojson', data: { type: 'FeatureCollection', features: labelFeatures } })
+      mapRef.current.addLayer({
+        id: 'ap-labels', type: 'symbol', source: 'ap-labels',
+        layout: {
+          'text-field': ['get', 'name'],
+          'text-size': ['interpolate', ['linear'], ['zoom'], 5, 9, 8, 11, 12, 14],
+          'text-font': ['Open Sans Bold'],
+          'text-padding': 4,
+          'text-allow-overlap': false,
+        },
+        paint: {
+          'text-color': '#2e7d32',
+          'text-halo-color': '#ffffff',
+          'text-halo-width': 1.5,
+          'text-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.7, 8, 0.9],
+        },
+      })
 
       // ── AMP layers ──
       mapRef.current.addSource('amp', { type: 'geojson', data: ampGeo })
@@ -566,7 +565,6 @@ export default function MapaConflicto() {
         normal:            { fill: '#5b9ea6', stroke: '#ffffff' },
         denuncia:          { fill: '#5b9ea6', stroke: '#ffd600' },
         conflict:          { fill: '#ff8c00', stroke: '#ffffff' },
-        conflict_denuncia: { fill: '#ff8c00', stroke: '#ffd600' },
       }
 
       for (const [cat, feats] of Object.entries(buckets)) {
@@ -590,17 +588,6 @@ export default function MapaConflicto() {
       mapRef.current.on('click', 'layer-sobreproduccion', (e) => handleCentroClick(e.features[0].properties))
       mapRef.current.on('mouseenter', 'layer-sobreproduccion', () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
       mapRef.current.on('mouseleave', 'layer-sobreproduccion', () => { mapRef.current.getCanvas().style.cursor = '' })
-
-      // Relocalizacion layer
-      mapRef.current.addSource('src-relocalizacion', { type: 'geojson', data: { type: 'FeatureCollection', features: relocFeatures } })
-      mapRef.current.addLayer({
-        id: 'layer-relocalizacion', type: 'circle', source: 'src-relocalizacion',
-        paint: { ...CIRCLE_STYLE, 'circle-color': '#1565c0', 'circle-stroke-color': '#ffffff',
-          'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 4, 8, 7, 12, 10] },
-      }, B)
-      mapRef.current.on('click', 'layer-relocalizacion', (e) => handleCentroClick(e.features[0].properties))
-      mapRef.current.on('mouseenter', 'layer-relocalizacion', () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
-      mapRef.current.on('mouseleave', 'layer-relocalizacion', () => { mapRef.current.getCanvas().style.cursor = '' })
 
       // Labels using 'name' (not 'name_en' which is empty for Chile)
       mapRef.current.addLayer({
@@ -651,7 +638,7 @@ export default function MapaConflicto() {
       const vis = next ? 'visible' : 'none'
       if (id === 'centros') {
         mapRef.current.setLayoutProperty('centros-heat', 'visibility', vis)
-        for (const cat of ['normal', 'denuncia', 'conflict', 'conflict_denuncia']) {
+        for (const cat of ['normal', 'denuncia', 'conflict']) {
           if (mapRef.current.getLayer('layer-' + cat)) mapRef.current.setLayoutProperty('layer-' + cat, 'visibility', vis)
         }
       } else if (id === 'snaspe') {
@@ -662,8 +649,6 @@ export default function MapaConflicto() {
         mapRef.current.setLayoutProperty('amp-outline', 'visibility', vis)
       } else if (id === 'sobreproduccion') {
         if (mapRef.current.getLayer('layer-sobreproduccion')) mapRef.current.setLayoutProperty('layer-sobreproduccion', 'visibility', vis)
-      } else if (id === 'relocalizacion') {
-        if (mapRef.current.getLayer('layer-relocalizacion')) mapRef.current.setLayoutProperty('layer-relocalizacion', 'visibility', vis)
       }
     }
   }
@@ -701,11 +686,6 @@ export default function MapaConflicto() {
             <input type='checkbox' checked={visible.sobreproduccion} onChange={() => toggleLayer('sobreproduccion')} className='rounded accent-[#b71c1c]' />
             <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#b71c1c', border: '1.5px solid #ffd600' }} />
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Proc. sancionatorio ({stats.sobreproduccion})</span>
-          </label>
-          <label className='flex items-center gap-2 cursor-pointer'>
-            <input type='checkbox' checked={visible.relocalizacion} onChange={() => toggleLayer('relocalizacion')} className='rounded accent-[#1565c0]' />
-            <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#1565c0' }} />
-            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Relocalizaciones ({stats.relocalizacion})</span>
           </label>
           <div className='pt-1.5 border-t border-[#1b3a4b]/10'>
             <div className='flex items-center gap-1.5'>
