@@ -521,18 +521,20 @@ export default function MapaConflicto() {
       mapRef.current.addSource('ap-labels', { type: 'geojson', data: { type: 'FeatureCollection', features: labelFeatures } })
       mapRef.current.addLayer({
         id: 'ap-labels', type: 'symbol', source: 'ap-labels',
+        minzoom: 5,
         layout: {
           'text-field': ['get', 'name'],
-          'text-size': ['interpolate', ['linear'], ['zoom'], 5, 9, 8, 11, 12, 14],
-          'text-font': ['Open Sans Bold'],
-          'text-padding': 4,
-          'text-allow-overlap': false,
+          'text-size': ['interpolate', ['linear'], ['zoom'], 5, 10, 8, 13, 12, 16],
+          'text-font': ['Open Sans Bold', 'Arial Unicode MS Bold'],
+          'text-padding': 2,
+          'text-allow-overlap': true,
+          'text-ignore-placement': true,
+          'text-anchor': 'center',
         },
         paint: {
-          'text-color': '#2e7d32',
-          'text-halo-color': '#ffffff',
-          'text-halo-width': 1.5,
-          'text-opacity': ['interpolate', ['linear'], ['zoom'], 5, 0.7, 8, 0.9],
+          'text-color': '#1b5e20',
+          'text-halo-color': 'rgba(255,255,255,0.95)',
+          'text-halo-width': 2,
         },
       })
 
