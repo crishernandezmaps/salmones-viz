@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 import maplibregl from 'maplibre-gl'
 import { feature } from 'topojson-client'
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
-import { point } from '@turf/helpers'
 
 const BASE = import.meta.env.BASE_URL
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
@@ -28,12 +26,10 @@ function makeSVG(fill, stroke, symbol) {
 const ICONS = {
   normal:            { svg: makeSVG('#5b9ea6', '#fff', 'circle') },
   denuncia:          { svg: makeSVG('#5b9ea6', '#ffd600', 'circle') },
-  conflict:          { svg: makeSVG('#ff8c00', '#fff', 'triangle') },
   sobreproduccion:   { svg: makeSVG('#b71c1c', '#ffd600', 'diamond') },
 }
 
-function getCategory(isConflict, hasDenuncia) {
-  if (isConflict) return 'conflict'
+function getCategory(hasDenuncia) {
   if (hasDenuncia) return 'denuncia'
   return 'normal'
 }
@@ -160,12 +156,10 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
     )
   }
 
-  const { centro, concesion, denuncias, ampName, isConflict, hasDenuncia, sobreproduccion } = selected
+  const { centro, concesion, denuncias, hasDenuncia, sobreproduccion } = selected
   const hasSobreprod = sobreproduccion && sobreproduccion.length > 0
 
-  const headerBg = isConflict && hasDenuncia ? '#c62828'
-    : isConflict ? '#ff8c00'
-    : hasSobreprod ? '#b71c1c'
+  const headerBg = hasSobreprod ? '#b71c1c'
     : hasDenuncia ? '#d94040'
     : '#3a9e9e'
 
@@ -175,8 +169,8 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
     <div
       className='h-full overflow-y-auto'
       style={{
-        background: isConflict ? '#fff3e0' : (hasSobreprod || hasDenuncia) ? '#fff5f5' : '#fff',
-        color: isConflict ? '#4a2800' : (hasSobreprod || hasDenuncia) ? '#4a1010' : '#1b3a4b',
+        background: (hasSobreprod || hasDenuncia) ? '#fff5f5' : '#fff',
+        color: (hasSobreprod || hasDenuncia) ? '#4a1010' : '#1b3a4b',
       }}
     >
       {/* Header */}
@@ -201,17 +195,6 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
             className='px-2 py-1 rounded text-xs font-bold disabled:opacity-20' style={{ color: headerBg }}>
             Siguiente &#8594;
           </button>
-        </div>
-      )}
-
-      {/* Alerts */}
-      {isConflict && (
-        <div className='px-4 py-2 flex items-center gap-2' style={{ background: '#ffe0b2' }}>
-          <span className='text-lg'>&#9888;</span>
-          <div>
-            <p className='text-xs font-bold' style={{ color: '#e65100' }}>DENTRO DE AREA PROTEGIDA</p>
-            {ampName && <p className='text-xs opacity-70'>{ampName}</p>}
-          </div>
         </div>
       )}
 
@@ -310,10 +293,10 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
 export default function MapaConflicto() {
   const containerRef = useRef(null)
   const mapRef = useRef(null)
-  const dataRef = useRef({ concMap: {}, denMap: {}, ampPolygons: [], centrosByCode: {}, spMap: {} })
+  const dataRef = useRef({ concMap: {}, denMap: {}, centrosByCode: {}, spMap: {} })
   const [loaded, setLoaded] = useState(false)
   const [visible, setVisible] = useState({ centros: true, amp: true, snaspe: true, sobreproduccion: true })
-  const [stats, setStats] = useState({ conflict: 0, denuncia: 0, both: 0, sobreproduccion: 0 })
+  const [stats, setStats] = useState({ sobreproduccion: 0 })
   const [selected, setSelected] = useState(null)
   const [ranking, setRanking] = useState([])
   const [rankIndex, setRankIndex] = useState(0)
@@ -321,24 +304,15 @@ export default function MapaConflicto() {
   const rankingRef = useRef([])
 
   const selectByCode = useCallback((code) => {
-    const { concMap, denMap, ampPolygons, centrosByCode, spMap } = dataRef.current
+    const { concMap, denMap, centrosByCode, spMap } = dataRef.current
     const props = centrosByCode[code]
     if (!props) return
     const concesion = concMap[code] || null
     const denuncias = denMap[code] || []
     const sobreproduccion = spMap[code] || []
-    const isConflict = props._conflict === true || props._conflict === 'true'
     const hasDenuncia = denuncias.length > 0
 
-    let ampName = null
-    if (isConflict) {
-      const coords = [parseFloat(props._lng), parseFloat(props._lat)]
-      const pt = point(coords)
-      for (const amp of ampPolygons) {
-        try { if (booleanPointInPolygon(pt, amp)) { ampName = amp.properties.NOMBRE; break } } catch (e) {}
-      }
-    }
-    setSelected({ centro: props, concesion, denuncias, ampName, isConflict, hasDenuncia, sobreproduccion })
+    setSelected({ centro: props, concesion, denuncias, hasDenuncia, sobreproduccion })
 
     if (mapRef.current && props._lng && props._lat) {
       const lng = parseFloat(props._lng)
@@ -389,7 +363,6 @@ export default function MapaConflicto() {
       ])
 
       const ampGeo = feature(ampResp, ampResp.objects.amp)
-      const ampPolygons = ampGeo.features.filter(f => f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon')
 
       const snaspeGeo = feature(snaspeResp, snaspeResp.objects.snaspe)
 
@@ -436,8 +409,7 @@ export default function MapaConflicto() {
       setRanking(holdingRanking)
 
       // Classify centros
-      let sConflict = 0, sDenuncia = 0, sBoth = 0
-      const buckets = { normal: [], denuncia: [], conflict: [] }
+      const buckets = { normal: [], denuncia: [] }
       const centrosByCode = {}
       const spFeatures = []
 
@@ -447,17 +419,8 @@ export default function MapaConflicto() {
         const code = String(parseInt(centro.properties.N_CODIGOCE))
         centrosByCode[code] = centro.properties
 
-        const pt = point(centro.geometry.coordinates)
-        let inside = false
-        for (const amp of ampPolygons) {
-          try { if (booleanPointInPolygon(pt, amp)) { inside = true; break } } catch (e) {}
-        }
-        centro.properties._conflict = inside
         const hasDen = !!denMap[code]
-        buckets[getCategory(inside, hasDen)].push(centro)
-        if (inside && hasDen) sBoth++
-        else if (inside) sConflict++
-        else if (hasDen) sDenuncia++
+        buckets[getCategory(hasDen)].push(centro)
 
         // Collect features for sobreproduccion layer
         if (spCodes.has(code)) {
@@ -476,8 +439,8 @@ export default function MapaConflicto() {
         }
       })
 
-      setStats({ conflict: sConflict, denuncia: sDenuncia, both: sBoth, sobreproduccion: spCodes.size })
-      dataRef.current = { concMap, denMap, ampPolygons, centrosByCode, spMap }
+      setStats({ sobreproduccion: spCodes.size })
+      dataRef.current = { concMap, denMap, centrosByCode, spMap }
 
       // Insert data layers BEFORE first label so CARTO labels render on top
       const allLayers = mapRef.current.getStyle().layers
@@ -497,6 +460,7 @@ export default function MapaConflicto() {
         'Parque Nacional Laguna San Rafael',
         'Parque Nacional Alberto de Agostini',
         "Parque Nacional Bernardo O'Higgins",
+        'Parque Nacional Isla Magdalena',
       ]
       const labelFeatures = []
       for (const f of snaspeGeo.features) {
@@ -566,7 +530,6 @@ export default function MapaConflicto() {
       const COLORS = {
         normal:            { fill: '#5b9ea6', stroke: '#ffffff' },
         denuncia:          { fill: '#5b9ea6', stroke: '#ffd600' },
-        conflict:          { fill: '#ff8c00', stroke: '#ffffff' },
       }
 
       for (const [cat, feats] of Object.entries(buckets)) {
@@ -640,7 +603,7 @@ export default function MapaConflicto() {
       const vis = next ? 'visible' : 'none'
       if (id === 'centros') {
         mapRef.current.setLayoutProperty('centros-heat', 'visibility', vis)
-        for (const cat of ['normal', 'denuncia', 'conflict']) {
+        for (const cat of ['normal', 'denuncia']) {
           if (mapRef.current.getLayer('layer-' + cat)) mapRef.current.setLayoutProperty('layer-' + cat, 'visibility', vis)
         }
       } else if (id === 'snaspe') {
@@ -689,12 +652,6 @@ export default function MapaConflicto() {
             <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#b71c1c', border: '1.5px solid #ffd600' }} />
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Proc. sancionatorio ({stats.sobreproduccion})</span>
           </label>
-          <div className='pt-1.5 border-t border-[#1b3a4b]/10'>
-            <div className='flex items-center gap-1.5'>
-              <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#ff8c00' }} />
-              <span className='text-[#1b3a4b]/60 text-[10px]'>En zona protegida ({stats.conflict})</span>
-            </div>
-          </div>
         </div>
 
         {/* Mini map inset */}

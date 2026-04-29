@@ -1,0 +1,521 @@
+/*
+Theme Name: UDP Scrollytelling
+Template: twentytwentyfive
+Description: Tema inmersivo tipo Shorthand para el reportaje de salmones — UDP CIP
+Version: 1.0.0
+Author: Tremen
+*/
+
+/* ══════════════════════════════════════════
+   RESET — quitar todo lo que sobra de TT25
+   ══════════════════════════════════════════ */
+
+body.page-template-page-blank {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body.page-template-page-blank .wp-site-blocks {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+body.page-template-page-blank .wp-site-blocks > * + * {
+  margin-block-start: 0 !important;
+}
+
+body.page-template-page-blank .entry-content > * {
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* ══════════════════════════════════════════
+   TIPOGRAFIA
+   ══════════════════════════════════════════ */
+
+:root {
+  --story-color-deep:    #0d1b2a;
+  --story-color-dark:    #1b3a4b;
+  --story-color-teal:    #3a9e9e;
+  --story-color-sage:    #f0f4f3;
+  --story-color-white:   #ffffff;
+  --story-color-red:     #d94040;
+  --story-font-heading:  'Roboto Condensed', 'Roboto', system-ui, sans-serif;
+  --story-font-body:     Georgia, 'Times New Roman', serif;
+  --story-font-ui:       'Roboto', system-ui, sans-serif;
+  --story-max-text:      640px;
+}
+
+/* ══════════════════════════════════════════
+   SELECTION
+   ══════════════════════════════════════════ */
+
+body.page-template-page-blank ::selection {
+  background: rgba(58, 158, 158, 0.35);
+  color: inherit;
+}
+
+/* ══════════════════════════════════════════
+   HERO — fullscreen con imagen de fondo
+   ══════════════════════════════════════════ */
+
+.story-hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  color: var(--story-color-white);
+}
+
+.story-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, rgba(13,27,42,0.92) 5%, rgba(13,27,42,0.3) 50%, transparent 100%);
+  z-index: 1;
+}
+
+.story-hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: clamp(2rem, 6vw, 4rem);
+  padding-bottom: clamp(3rem, 8vh, 6rem);
+  max-width: 860px;
+}
+
+.story-hero .story-kicker {
+  font-family: var(--story-font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--story-color-teal);
+  margin-bottom: 1.5rem;
+}
+
+.story-hero h1 {
+  font-family: var(--story-font-heading);
+  font-weight: 900;
+  font-size: clamp(2.4rem, 6vw, 4.5rem);
+  line-height: 1.05;
+  margin: 0 0 1.2rem 0;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+
+.story-hero .story-subtitle {
+  font-family: var(--story-font-body);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  line-height: 1.6;
+  color: rgba(255,255,255,0.75);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.story-hero .story-byline {
+  font-family: var(--story-font-ui);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.45);
+}
+
+.story-hero .story-scroll-hint {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 24px;
+  height: 40px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+}
+
+.story-hero .story-scroll-hint::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 8px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 2px;
+  animation: scrollBounce 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+  50% { transform: translateX(-50%) translateY(12px); opacity: 1; }
+}
+
+/* ══════════════════════════════════════════
+   TEXTO EDITORIAL — columna centrada
+   ══════════════════════════════════════════ */
+
+.story-text {
+  max-width: var(--story-max-text);
+  margin: 0 auto;
+  padding: clamp(3rem, 8vh, 6rem) clamp(1.5rem, 4vw, 2rem);
+  font-family: var(--story-font-body);
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  line-height: 1.85;
+  color: #2a2a2a;
+}
+
+.story-text--dark {
+  background: var(--story-color-deep);
+  color: rgba(255,255,255,0.85);
+}
+
+.story-text--sage {
+  background: var(--story-color-sage);
+}
+
+.story-text p {
+  margin: 0 0 1.5em 0;
+}
+
+.story-text p:last-child {
+  margin-bottom: 0;
+}
+
+.story-text a {
+  color: var(--story-color-teal);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.story-text strong {
+  font-weight: 700;
+}
+
+/* Drop cap para el primer parrafo de la historia */
+.story-text--dropcap p:first-child::first-letter {
+  float: left;
+  font-family: var(--story-font-heading);
+  font-size: 5.2em;
+  line-height: 0.85;
+  font-weight: 700;
+  margin-right: 0.08em;
+  margin-top: 0.05em;
+  color: var(--story-color-dark);
+}
+
+/* ══════════════════════════════════════════
+   HEADING — titulo de capitulo
+   ══════════════════════════════════════════ */
+
+.story-heading {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(4rem, 12vh, 8rem) clamp(1.5rem, 4vw, 3rem);
+  background: var(--story-color-sage);
+  color: var(--story-color-deep);
+}
+
+.story-heading--dark {
+  background: var(--story-color-deep);
+  color: var(--story-color-white);
+}
+
+.story-heading .story-kicker {
+  font-family: var(--story-font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--story-color-teal);
+  margin-bottom: 1.5rem;
+}
+
+.story-heading h2 {
+  font-family: var(--story-font-heading);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.1;
+  margin: 0 0 1rem 0;
+  max-width: 700px;
+}
+
+.story-heading .story-subtitle {
+  font-family: var(--story-font-body);
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  line-height: 1.6;
+  max-width: 560px;
+  margin: 0 auto;
+  opacity: 0.6;
+}
+
+/* ══════════════════════════════════════════
+   VIZ — iframe de visualizacion
+   ══════════════════════════════════════════ */
+
+.story-viz {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background: var(--story-color-sage);
+  overflow: hidden;
+}
+
+.story-viz--short {
+  height: 85vh;
+}
+
+.story-viz--700 {
+  height: 700px;
+}
+
+.story-viz iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* ══════════════════════════════════════════
+   DATA CALLOUT — estadisticas destacadas
+   ══════════════════════════════════════════ */
+
+.story-data {
+  background: var(--story-color-deep);
+  padding: clamp(3rem, 8vh, 5rem) clamp(1.5rem, 4vw, 3rem);
+}
+
+.story-data__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.story-data__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.story-data__value {
+  font-family: var(--story-font-heading);
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: var(--story-color-teal);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.story-data__label {
+  font-family: var(--story-font-ui);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ══════════════════════════════════════════
+   QUOTE — cita destacada
+   ══════════════════════════════════════════ */
+
+.story-quote {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--story-color-dark);
+  padding: clamp(4rem, 10vh, 8rem) clamp(1.5rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.story-quote blockquote {
+  max-width: 680px;
+  margin: 0 auto;
+  font-family: var(--story-font-body);
+  font-style: italic;
+  font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+  line-height: 1.6;
+  color: rgba(255,255,255,0.85);
+  border: none;
+  padding: 0;
+}
+
+.story-quote blockquote::before {
+  content: '\201C';
+  display: block;
+  font-size: 4rem;
+  line-height: 1;
+  color: var(--story-color-teal);
+  margin-bottom: 0.5rem;
+}
+
+.story-quote cite {
+  display: block;
+  margin-top: 1.5rem;
+  font-family: var(--story-font-ui);
+  font-style: normal;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--story-color-teal);
+}
+
+/* ══════════════════════════════════════════
+   IMAGE — imagen full-bleed
+   ══════════════════════════════════════════ */
+
+.story-image {
+  position: relative;
+  width: 100%;
+  min-height: 70vh;
+  overflow: hidden;
+}
+
+.story-image img {
+  width: 100%;
+  height: 100%;
+  min-height: 70vh;
+  object-fit: cover;
+  display: block;
+}
+
+.story-image--full {
+  min-height: 100vh;
+}
+
+.story-image--full img {
+  min-height: 100vh;
+}
+
+.story-image figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem clamp(1.5rem, 4vw, 3rem);
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  font-family: var(--story-font-ui);
+  font-size: 12px;
+  color: rgba(255,255,255,0.7);
+}
+
+/* ══════════════════════════════════════════
+   CREDITS — metodologia y creditos
+   ══════════════════════════════════════════ */
+
+.story-credits {
+  background: var(--story-color-deep);
+  color: rgba(255,255,255,0.7);
+  padding: clamp(4rem, 10vh, 6rem) clamp(1.5rem, 4vw, 3rem);
+}
+
+.story-credits__inner {
+  max-width: var(--story-max-text);
+  margin: 0 auto;
+}
+
+.story-credits .story-kicker {
+  font-family: var(--story-font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: var(--story-color-teal);
+  margin-bottom: 1.5rem;
+}
+
+.story-credits p {
+  font-family: var(--story-font-body);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin: 0 0 1.5em 0;
+}
+
+.story-credits__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.story-credits__grid h4 {
+  font-family: var(--story-font-ui);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.35);
+  margin: 0 0 0.5rem 0;
+}
+
+.story-credits__grid p {
+  font-family: var(--story-font-ui);
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  margin: 0;
+}
+
+/* ══════════════════════════════════════════
+   DIVIDER — separador simple
+   ══════════════════════════════════════════ */
+
+.story-divider {
+  width: 60px;
+  height: 3px;
+  background: var(--story-color-teal);
+  margin: 0 auto;
+  border: none;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .story-hero__content {
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .story-viz {
+    height: 70vh;
+  }
+
+  .story-viz--700 {
+    height: 500px;
+  }
+
+  .story-data__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .story-credits__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .story-image {
+    min-height: 50vh;
+  }
+
+  .story-image img {
+    min-height: 50vh;
+  }
+}
