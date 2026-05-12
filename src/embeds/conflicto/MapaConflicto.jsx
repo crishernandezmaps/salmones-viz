@@ -230,9 +230,15 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
                       {/* Content */}
                       <div>
                         <p className='text-[10px] opacity-40'>{c.fecha_inicio}{c.fecha_fin ? ` \u2014 ${c.fecha_fin}` : ''}</p>
-                        <div className='flex items-center gap-2 mt-0.5'>
-                          <p className='text-xs font-bold'>{c.expediente}</p>
-                          <span className='text-[11px] font-bold px-2 py-0.5 rounded shrink-0' style={{ background: `rgba(217,64,64,${intensity})`, color: '#fff' }}>+{c.exceso_pct}%</span>
+                        <div className='flex items-start gap-3 mt-0.5'>
+                          <div>
+                            <p className='text-[9px] uppercase tracking-wider opacity-40'>Expediente</p>
+                            <p className='text-xs font-bold'>{c.expediente}</p>
+                          </div>
+                          <div className='shrink-0'>
+                            <p className='text-[9px] uppercase tracking-wider opacity-40'>Exceso</p>
+                            <span className='text-[11px] font-bold px-2 py-0.5 rounded inline-block' style={{ background: `rgba(217,64,64,${intensity})`, color: '#fff' }}>+{c.exceso_pct}%</span>
+                          </div>
                         </div>
                       </div>
                       <span className='text-[9px] font-bold px-1.5 py-0.5 rounded inline-block mt-1' style={{ background: '#b71c1c', color: '#fff' }}>{c.estado}</span>
@@ -273,7 +279,13 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
         <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Ubicacion</p>
         <FichaRow label='Comuna' value={centro.COMUNA} />
         <FichaRow label='Region' value={centro.REGION} />
-        <FichaRow label='Fecha resolucion' value={centro.F_RESOLSSF} />
+        {hasSobreprod && sobreproduccion[0]?.excesos?.length > 0 && (
+          <FichaRow
+            label='Ciclo productivo'
+            value={`${sobreproduccion[0].excesos[0].fecha_inicio || '—'} → ${sobreproduccion[0].excesos[sobreproduccion[0].excesos.length - 1].fecha_fin || '—'}`}
+          />
+        )}
+        {!hasSobreprod && <FichaRow label='Fecha resolucion' value={centro.F_RESOLSSF} />}
 
         {/* ── Concession details ── */}
         {concesion && (
@@ -295,7 +307,7 @@ export default function MapaConflicto() {
   const mapRef = useRef(null)
   const dataRef = useRef({ concMap: {}, denMap: {}, centrosByCode: {}, spMap: {} })
   const [loaded, setLoaded] = useState(false)
-  const [visible, setVisible] = useState({ centros: true, amp: true, snaspe: true, sobreproduccion: true })
+  const [visible, setVisible] = useState({ centros: true, amp: true, snaspe: true, ecmpo: true, sobreproduccion: true })
   const [stats, setStats] = useState({ sobreproduccion: 0 })
   const [selected, setSelected] = useState(null)
   const [ranking, setRanking] = useState([])
@@ -353,9 +365,10 @@ export default function MapaConflicto() {
     mapRef.current.scrollZoom.disable()
 
     mapRef.current.on('load', async () => {
-      const [ampResp, snaspeResp, centrosResp, concResp, denResp, spResp] = await Promise.all([
+      const [ampResp, snaspeResp, ecmpoResp, centrosResp, concResp, denResp, spResp] = await Promise.all([
         fetch(BASE + 'data/amp_nacional.topojson').then(r => r.json()),
         fetch(BASE + 'data/snaspe_terrestre.topojson').then(r => r.json()),
+        fetch(BASE + 'data/ecmpo_salmon.topojson').then(r => r.json()),
         fetch(BASE + 'data/centros_salmoneros.geojson').then(r => r.json()),
         fetch(BASE + 'data/concesiones_excel.json').then(r => r.json()),
         fetch(BASE + 'data/denuncias.json').then(r => r.json()),
@@ -365,6 +378,9 @@ export default function MapaConflicto() {
       const ampGeo = feature(ampResp, ampResp.objects.amp)
 
       const snaspeGeo = feature(snaspeResp, snaspeResp.objects.snaspe)
+
+      const ecmpoObjKey = Object.keys(ecmpoResp.objects)[0]
+      const ecmpoGeo = feature(ecmpoResp, ecmpoResp.objects[ecmpoObjKey])
 
       // Concesiones lookup
       const concMap = {}
@@ -507,6 +523,11 @@ export default function MapaConflicto() {
       mapRef.current.addLayer({ id: 'amp-fill', type: 'fill', source: 'amp', paint: { 'fill-color': '#3a9e9e', 'fill-opacity': 0.3 } }, B)
       mapRef.current.addLayer({ id: 'amp-outline', type: 'line', source: 'amp', paint: { 'line-color': '#2a7a7a', 'line-width': 1.5 } }, B)
 
+      // ── ECMPO layers ──
+      mapRef.current.addSource('ecmpo', { type: 'geojson', data: ecmpoGeo })
+      mapRef.current.addLayer({ id: 'ecmpo-fill', type: 'fill', source: 'ecmpo', paint: { 'fill-color': '#e65100', 'fill-opacity': 0.25 } }, B)
+      mapRef.current.addLayer({ id: 'ecmpo-outline', type: 'line', source: 'ecmpo', paint: { 'line-color': '#bf360c', 'line-width': 1.5, 'line-dasharray': [4, 2] } }, B)
+
       // ── Heatmap ──
       mapRef.current.addSource('all-centros', { type: 'geojson', data: centrosResp })
       mapRef.current.addLayer({
@@ -612,6 +633,9 @@ export default function MapaConflicto() {
       } else if (id === 'amp') {
         mapRef.current.setLayoutProperty('amp-fill', 'visibility', vis)
         mapRef.current.setLayoutProperty('amp-outline', 'visibility', vis)
+      } else if (id === 'ecmpo') {
+        mapRef.current.setLayoutProperty('ecmpo-fill', 'visibility', vis)
+        mapRef.current.setLayoutProperty('ecmpo-outline', 'visibility', vis)
       } else if (id === 'sobreproduccion') {
         if (mapRef.current.getLayer('layer-sobreproduccion')) mapRef.current.setLayoutProperty('layer-sobreproduccion', 'visibility', vis)
       }
@@ -631,7 +655,8 @@ export default function MapaConflicto() {
 
         {/* Legend */}
         <div className='absolute top-3 left-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-3 z-10 text-sm space-y-1.5'>
-          <p className='text-[10px] font-bold uppercase tracking-wider text-[#1b3a4b]/50 mb-1'>Capas</p>
+          <p className='text-[10px] font-bold uppercase tracking-wider text-[#1b3a4b]/50 mb-0.5'>Capas</p>
+          <p className='text-[9px] text-[#1b3a4b]/40 mb-1'>Activa o desactiva capas para explorar</p>
           <label className='flex items-center gap-2 cursor-pointer'>
             <input type='checkbox' checked={visible.centros} onChange={() => toggleLayer('centros')} className='rounded accent-[#5b9ea6]' />
             <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#5b9ea6' }} />
@@ -648,9 +673,14 @@ export default function MapaConflicto() {
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Áreas protegidas terrestres</span>
           </label>
           <label className='flex items-center gap-2 cursor-pointer'>
+            <input type='checkbox' checked={visible.ecmpo} onChange={() => toggleLayer('ecmpo')} className='rounded accent-[#e65100]' />
+            <span className='w-2.5 h-2.5 rounded shrink-0' style={{ background: 'rgba(230,81,0,0.35)', border: '1.5px dashed #bf360c' }} />
+            <span className='text-[#1b3a4b]/80 text-xs font-medium'>ECMPO (pueblos originarios)</span>
+          </label>
+          <label className='flex items-center gap-2 cursor-pointer'>
             <input type='checkbox' checked={visible.sobreproduccion} onChange={() => toggleLayer('sobreproduccion')} className='rounded accent-[#b71c1c]' />
-            <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#b71c1c', border: '1.5px solid #ffd600' }} />
-            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Proc. sancionatorio ({stats.sobreproduccion})</span>
+            <span className='w-3.5 h-3.5 rounded-full shrink-0' style={{ background: '#b71c1c', border: '2px solid #ffd600' }} />
+            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Centros sancionados por sobreproducción ({stats.sobreproduccion})</span>
           </label>
         </div>
 
