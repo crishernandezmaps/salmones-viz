@@ -525,8 +525,8 @@ export default function MapaConflicto() {
 
       // ── ECMPO layers ──
       mapRef.current.addSource('ecmpo', { type: 'geojson', data: ecmpoGeo })
-      mapRef.current.addLayer({ id: 'ecmpo-fill', type: 'fill', source: 'ecmpo', paint: { 'fill-color': '#e65100', 'fill-opacity': 0.25 } }, B)
-      mapRef.current.addLayer({ id: 'ecmpo-outline', type: 'line', source: 'ecmpo', paint: { 'line-color': '#bf360c', 'line-width': 1.5, 'line-dasharray': [4, 2] } }, B)
+      mapRef.current.addLayer({ id: 'ecmpo-fill', type: 'fill', source: 'ecmpo', paint: { 'fill-color': '#e65100', 'fill-opacity': 0.35 } }, B)
+      mapRef.current.addLayer({ id: 'ecmpo-outline', type: 'line', source: 'ecmpo', paint: { 'line-color': '#bf360c', 'line-width': 2, 'line-dasharray': [4, 2] } }, B)
 
       // ── Heatmap ──
       mapRef.current.addSource('all-centros', { type: 'geojson', data: centrosResp })
