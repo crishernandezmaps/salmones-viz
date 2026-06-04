@@ -461,6 +461,15 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       beat(beat3,0.88,0.92,0.97,0.99);
     }
 
+    // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
+    // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
+    var SCREENS = 4.8;
+    function sizeIntro(){
+      var h = window.innerHeight;
+      if (stage) stage.style.height = h + 'px';
+      intro.style.height = Math.round(h * SCREENS) + 'px';
+    }
+
     var ticking=false;
     function onScroll(){
       if(ticking) return; ticking=true;
@@ -471,8 +480,10 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
         ticking=false;
       });
     }
+    sizeIntro();
     window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', onScroll);
+    window.addEventListener('resize', function(){ sizeIntro(); onScroll(); });
+    window.addEventListener('orientationchange', function(){ sizeIntro(); onScroll(); });
     render(0);
   }
 })();
