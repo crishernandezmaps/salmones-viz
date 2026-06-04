@@ -58,8 +58,13 @@ abrir `...?p=0.78`, capturar, y QUITARLO antes de desplegar.
 
 2. **Encuadre responsive del `.sv-frame`** (lo que mas se rompe):
    - **Movil (base):** `width:100%`, centrado vertical, `aspect-ratio:1664/2388`.
-     Llena el ancho (conserva camion/barco en los bordes) y rellena
-     arriba/abajo con `.sv-bg` (cielo/agua).
+     Llena el ancho (conserva camion/barco en los bordes). Las franjas
+     arriba/abajo NO son color plano: `.sv-bg` muestra el MISMO paisaje
+     DESENFOCADO (pre-generado: `of-mar3-blur.webp` / `of-deep-blur.webp`,
+     tecnica tipo Instagram) -> se ve como profundidad, no como "huincha".
+   - **Altura por JS:** el stage se fija en px = `window.innerHeight`
+     (vh/svh/dvh no son fiables en moviles: dejaban franja blanca). Ver el
+     bloque `sizeIntro()` en el `<script>`.
    - **Escritorio (`@media min-width:768px`):** el frame llena el viewport
      (`width:100%;height:100%;aspect-ratio:auto` → cover borde a borde) y cada
      escena se ancla con `object-position`:

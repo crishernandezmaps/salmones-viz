@@ -67,9 +67,12 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 /* ====== INTRO OFICIAL — parallax scroll-pinned (capas de la disenadora) ====== */
 .sv-intro { position:relative; height:480vh; height:480dvh; width:100% !important; }
 .sv-stage { position:sticky; top:0; height:100vh; height:100dvh; width:100%; overflow:hidden; background:#29516b; }
-.sv-bg { position:absolute; inset:0; z-index:0; will-change:opacity; }
-.sv-bg--surface { background:linear-gradient(180deg,#e9f0f2 0%,#9fbcc4 30%,#5b8190 55%,#29516b 100%); }
-.sv-bg--deep { background:linear-gradient(180deg,#3f5e78 0%,#2b4a5e 55%,#16313f 100%); opacity:0; }
+/* Relleno de las franjas (arte mas ancho que la pantalla): mismo paisaje
+   desenfocado y ampliado -> no se ve "huincha" plana, sino profundidad. */
+.sv-bg { position:absolute; inset:0; z-index:0; background-position:center; background-size:cover;
+         background-repeat:no-repeat; transform:scale(1.06); }
+.sv-bg--surface { background-color:#5b8190; background-image:url(/wp-content/uploads/scroll-assets/of-mar3-blur.webp); }
+.sv-bg--deep { background-color:#1c3a4a; background-image:url(/wp-content/uploads/scroll-assets/of-deep-blur.webp); opacity:0; }
 /* MOVIL (base): frame llena el ancho, centrado vertical (relleno cielo/agua arriba/abajo) */
 .sv-frame { position:absolute; left:0; top:50%; transform:translateY(-50%); width:100%; aspect-ratio:1664/2388; z-index:1; }
 /* ESCRITORIO: las capas llenan TODO el viewport (cover, borde a borde); ancla el encuadre al contenido */
