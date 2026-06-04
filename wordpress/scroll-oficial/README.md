@@ -14,17 +14,21 @@ hecho a mano (sin librerias) que vive dentro del post de WordPress.
 ## Anatomia
 
 ```
-.sv-intro (height:680vh)              ← da el "recorrido" de scroll
-  └─ .sv-stage (position:sticky; 100vh) ← se queda fija mientras scrolleas
-       ├─ .sv-bg--surface / .sv-bg--deep  (gradientes de relleno cielo/agua)
-       ├─ .sv-frame  (encuadre; contiene las capas)
-       │    └─ .sv-layer  x14  (mar3, montana1/2, fiordo1/2, camion, wellboat,
-       │                        avion, mar1/2, jaula-llena, jaula-escape2/3, fondo)
+.sv-intro (altura por JS = innerHeight * 4.8)  ← da el "recorrido" de scroll
+  └─ .sv-stage (sticky; altura por JS = innerHeight) ← se queda fija al scrollear
+       ├─ .sv-bg--surface / .sv-bg--deep  (paisaje DESENFOCADO de relleno)
+       ├─ .sv-frame  (encuadre centrado; contiene las capas)
+       │    └─ .sv-layer x13 (mar3, montana1/2, fiordo1/2, camion, wellboat,
+       │                      avion, mar1/2, jaula-llena, jaula-escape2/3)
+       ├─ #sv-fondo  (FUERA del frame; anclado al borde inferior; z-index:2)
        ├─ .sv-scrim  (oscurece arriba para legibilidad del titulo)
        ├─ .sv-hero   (titulo)
        ├─ .sv-beat x3 (leyendas — PLACEHOLDER, reemplazar con copy UDP)
        └─ .sv-cue    ("Desliza ↓")
 ```
+
+> Alturas e intro NO usan vh/svh/dvh para el calculo final: se fijan por JS en
+> px (`sizeIntro()`), porque en moviles esas unidades dejaban franja blanca.
 
 El motor (`render(p)` en el `<script>` del post) recibe el progreso de scroll
 `p ∈ [0,1]` y setea opacidad/posicion de cada capa. `p` se calcula con
