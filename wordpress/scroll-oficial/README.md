@@ -73,8 +73,10 @@ abrir `...?p=0.78`, capturar, y QUITARLO antes de desplegar.
    (`mar3 → mar1`). Escalar las lineas finas de las jaulas produce shimmer.
    En `render()`: `var zoom = 1;` y `scale` de mar1/mar2 = 1.
 
-4. **Compositing GPU para evitar shimmer/parpadeo:** `.sv-layer` lleva
-   `translateZ(0)` + `backface-visibility:hidden`; el JS usa `translate3d()`.
+4. **NO forzar GPU en las 14 capas.** Como ya no hay `scale` (punto 3), no se
+   necesita promocion GPU para evitar shimmer. `.sv-layer` NO lleva
+   `will-change`/`translateZ(0)` y el JS usa `translate()` 2D: forzar 14 capas
+   full-screen a GPU satura memoria en moviles y hace el scroll pesado.
 
 5. **Avion con fade suave** (no on/off duro), si no "prende y apaga".
 
@@ -140,9 +142,18 @@ Sintoma reportado: en Android/Brave "no anima y mal encuadrado". Causas y fixes:
 - `overflow-x:clip` en `<html>` puede romper `position:sticky` en navegadores
   moviles; ademas en movil no hay scrollbar, asi que NO hace falta. Se limito a
   escritorio: `@media (min-width:768px){ html{overflow-x:clip} }`.
-- Desajuste `vh` vs `window.innerHeight` por la barra dinamica del navegador
-  movil. Se usa `svh` en `.sv-intro`/`.sv-stage` y el progreso de scroll se
-  calcula con `stage.offsetHeight` (estable), no con `window.innerHeight`.
+- Desajuste `vh` vs viewport real por la barra dinamica movil hacia que el
+  contenido quedara "muy alto". Se usa **`dvh`** en `.sv-intro`/`.sv-stage`
+  (sigue el viewport real) y el progreso se calcula con `stage.offsetHeight`,
+  no con `window.innerHeight`.
+- Scroll pesado en movil: se quitaron `will-change`/`translateZ(0)` de las 14
+  capas (ver regla 4) y se acorto la intro de 680 a **480dvh** (menos scroll a dedo).
 
 Si persiste en un dispositivo: probar en pestana privada (descarta cache) y
 verificar si la escena de superficie aparece ESTATICA (JS no corre) o en blanco.
+
+### Mapas lentos en movil
+Cada iframe es una app React+MapLibre completa; el mapa **conflicto** baja
+`concesiones_excel.json` (~2.4 MB) + 6 archivos mas. Pendiente: optimizar esa
+carga (recortar columnas/derivar del topojson). Los iframes ya usan
+`loading="lazy"`.
