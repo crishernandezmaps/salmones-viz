@@ -1,4 +1,34 @@
 <!-- wp:html -->
+<!--
+  ============================================================================
+  UDP — "Asi nadan los salmones en Chile"  ·  POST SCROLLYTELLING (post ID 47)
+  Fuente de verdad: salmones_viz/wordpress/post-standalone.html (repo Tremen)
+  Deploy:  cat post-standalone.html | ssh root@46.224.221.33 \
+             'docker exec -i salmones-wp wp post update 47 - --allow-root'
+  ----------------------------------------------------------------------------
+  NO ROMPER (decisiones probadas, ver scroll-oficial/README.md):
+  1. position:sticky de la intro requiere que NINGUN ancestro recorte:
+     el clip horizontal va en `html{overflow-x:clip}`, NO en .story-wrap
+     (.story-wrap debe quedar overflow:visible).
+  2. ENCUADRE responsive de la intro (.sv-frame):
+     - MOVIL (base): width:100%, centrado, aspect 1664/2388 -> llena el ancho,
+       relleno cielo/agua arriba/abajo (.sv-bg). Conserva camion/barco.
+     - ESCRITORIO (@media min-width:768px): el frame llena el viewport (cover,
+       borde a borde) y cada escena se ancla con object-position:
+         superficie 40% · jaulas 10% · fondo bottom.
+     NO volver a "contain"/columna angosta: el cliente lo rechazo.
+  3. SIN zoom/scale en las capas de superficie: las jaulas "cambian con fade"
+     (mar3 -> mar1). Escalar lineas finas produce shimmer.
+  4. Compositing GPU: .sv-layer usa translateZ(0) y el JS usa translate3d().
+  5. Assets oficiales: /wp-content/uploads/scroll-assets/of-*.webp
+     (origen: SCROLL_VISUAL_OFICIAL/MOVIL/ELEMENTOS, optimizados a webp).
+  6. Header/titulo/byline del tema WP se ocultan por CSS (scoped a esta pagina).
+  7. Iframes de mapas con loading="lazy" (no cargar los 3 al abrir).
+  8. Texto ASCII (sin tildes/n~) para evitar mojibake en el pipeline wp-cli.
+  9. Hook de debug ?p=0.NN (render directo de un beat) se AGREGA temporalmente
+     para QA y se QUITA antes de desplegar. Pacing en render(): ver README.
+  ============================================================================
+-->
 <style>
 /* ── UDP Scrollytelling — portable (funciona en cualquier tema WP) ── */
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700;900&family=Roboto:wght@300;400;700;900&display=swap');
@@ -228,7 +258,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 <!-- wp:html -->
 <section class="story-viz">
-  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=timeline" width="100%" height="100%" frameborder="0" allowfullscreen title="Timeline"></iframe>
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=timeline" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Timeline"></iframe>
 </section>
 <!-- /wp:html -->
 
@@ -262,7 +292,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 <!-- wp:html -->
 <section class="story-viz">
-  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=conflicto" width="100%" height="100%" frameborder="0" allowfullscreen title="Conflicto"></iframe>
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=conflicto" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Conflicto"></iframe>
 </section>
 <!-- /wp:html -->
 
@@ -306,7 +336,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 <!-- wp:html -->
 <section class="story-viz">
-  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=capas" width="100%" height="100%" frameborder="0" allowfullscreen title="Mapa de capas"></iframe>
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=capas" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Mapa de capas"></iframe>
 </section>
 <!-- /wp:html -->
 
