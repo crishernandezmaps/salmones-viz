@@ -130,3 +130,19 @@ queda en ~580); para movil real, abrir en navegador.
   escritorio usa el arte movil en cover.
 - Optimizar carga del mapa **conflicto**: hoy baja `concesiones_excel.json`
   (~2.4 MB). Evaluar recortar columnas o derivarlo del topojson.
+
+---
+
+## Robustez en MOVIL (2026-06-04)
+
+Sintoma reportado: en Android/Brave "no anima y mal encuadrado". Causas y fixes:
+
+- `overflow-x:clip` en `<html>` puede romper `position:sticky` en navegadores
+  moviles; ademas en movil no hay scrollbar, asi que NO hace falta. Se limito a
+  escritorio: `@media (min-width:768px){ html{overflow-x:clip} }`.
+- Desajuste `vh` vs `window.innerHeight` por la barra dinamica del navegador
+  movil. Se usa `svh` en `.sv-intro`/`.sv-stage` y el progreso de scroll se
+  calcula con `stage.offsetHeight` (estable), no con `window.innerHeight`.
+
+Si persiste en un dispositivo: probar en pestana privada (descarta cache) y
+verificar si la escena de superficie aparece ESTATICA (JS no corre) o en blanco.

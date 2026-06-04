@@ -34,8 +34,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700;900&family=Roboto:wght@300;400;700;900&display=swap');
 
 /* === NUCLEAR RESET — rompe cualquier contenedor de cualquier tema === */
-/* Clip horizontal en la raiz (NO en .story-wrap, que romperia position:sticky) */
-html { overflow-x:clip; }
+/* Clip horizontal en la raiz SOLO en escritorio (en movil no hay scrollbar y
+   overflow en <html> puede romper position:sticky en algunos navegadores moviles).
+   NUNCA poner overflow distinto de visible en .story-wrap (rompe el sticky). */
+@media (min-width:768px) { html { overflow-x:clip; } }
 .story-wrap { --story-color-deep:#0d1b2a; --story-color-dark:#1b3a4b; --story-color-teal:#3a9e9e; --story-color-sage:#f0f4f3; --story-color-white:#fff; --story-font-heading:'Roboto Condensed','Roboto',system-ui,sans-serif; --story-font-body:Georgia,'Times New Roman',serif; --story-font-ui:'Roboto',system-ui,sans-serif; --story-max-text:640px; margin:0; padding:0; overflow:visible; -webkit-font-smoothing:antialiased; scroll-behavior:smooth; }
 .story-wrap, .story-wrap *, .story-wrap *::before, .story-wrap *::after { box-sizing:border-box; }
 .story-wrap ::selection { background:rgba(58,158,158,0.35); color:inherit; }
@@ -63,7 +65,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 .story-wrap > * { max-width:none !important; padding-left:0 !important; padding-right:0 !important; }
 
 /* ====== INTRO OFICIAL — parallax scroll-pinned (capas de la disenadora) ====== */
-.sv-intro { position:relative; height:680vh; width:100% !important; }
+.sv-intro { position:relative; height:680vh; height:680svh; width:100% !important; }
 .sv-stage { position:sticky; top:0; height:100vh; height:100svh; width:100%; overflow:hidden; background:#29516b; }
 .sv-bg { position:absolute; inset:0; z-index:0; will-change:opacity; }
 .sv-bg--surface { background:linear-gradient(180deg,#e9f0f2 0%,#9fbcc4 30%,#5b8190 55%,#29516b 100%); }
@@ -399,6 +401,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
   /* ── INTRO OFICIAL — motor de scroll parallax ── */
   var intro = document.getElementById('sv-intro');
   if (intro) {
+    var stage = intro.querySelector('.sv-stage');
     var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
     var lerp  = function(a,b,t){ return a + (b-a)*t; };
     var seg   = function(p,p0,p1){ return clamp((p-p0)/(p1-p0), 0, 1); };
@@ -461,7 +464,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       if(ticking) return; ticking=true;
       requestAnimationFrame(function(){
         var r=intro.getBoundingClientRect();
-        var total=intro.offsetHeight - window.innerHeight;
+        var total=intro.offsetHeight - (stage ? stage.offsetHeight : window.innerHeight);
         render(clamp((-r.top)/total, 0, 1));
         ticking=false;
       });
