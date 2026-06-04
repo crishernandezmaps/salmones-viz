@@ -14,6 +14,7 @@ Proyecto desarrollado por [Tremen SpA](https://tremen.tech) para la **Universida
 |-------|-------|-------------|------|
 | Timeline de Concesiones | `?embed=timeline` | Mapa 3 regiones con timeline animado 1985-2025 | [README](src/embeds/timeline/README.md) |
 | Mapa de Conflicto | `?embed=conflicto` | Concesiones vs areas protegidas, denuncias, sobreproduccion | [README](src/embeds/conflicto/README.md) |
+| Mapa de Capas | `?embed=capas` | Centros salmoneros + SNASPE con labels de areas protegidas | [README](src/embeds/relocalizaciones/README.md) |
 
 ## Embed en WordPress
 
@@ -67,7 +68,7 @@ salmones_viz/
 | Dataset | Archivo | Fuente | Registros |
 |---------|---------|--------|-----------|
 | Centros salmoneros | `centros_salmoneros.geojson` | SERNAPESCA | 1,346 |
-| Concesiones (tabular) | `concesiones_excel.json` | Subpesca | 1,346 |
+| Concesiones (tabular) | `concesiones_excel.json` | Subpesca (Nov 2025) | 3,172 |
 | Concesiones (geo) | `concesiones_salmones.topojson` | Subpesca | 1,351 |
 | Areas Marinas Protegidas | `amp_nacional.topojson` | MMA | 32 |
 | Areas Apropiadas (AAA) | `areas_apropiadas.topojson` | Subpesca | 1,277 |

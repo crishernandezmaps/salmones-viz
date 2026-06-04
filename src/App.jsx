@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react'
 
 const EmbedTimeline = lazy(() => import('./embeds/timeline/EmbedTimeline'))
 const EmbedConflicto = lazy(() => import('./embeds/conflicto/EmbedConflicto'))
-const EmbedTreemap = lazy(() => import('./embeds/treemap-sobreproduccion/EmbedTreemap'))
 const EmbedRelocalizaciones = lazy(() => import('./embeds/relocalizaciones/EmbedRelocalizaciones'))
 const ArticuloPreview = lazy(() => import('./preview/ArticuloPreview'))
 

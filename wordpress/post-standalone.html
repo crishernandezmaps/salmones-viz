@@ -1,0 +1,392 @@
+<!-- wp:html -->
+<style>
+/* ── UDP Scrollytelling — portable (funciona en cualquier tema WP) ── */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700;900&family=Roboto:wght@300;400;700;900&display=swap');
+
+/* === NUCLEAR RESET — rompe cualquier contenedor de cualquier tema === */
+.story-wrap { --story-color-deep:#0d1b2a; --story-color-dark:#1b3a4b; --story-color-teal:#3a9e9e; --story-color-sage:#f0f4f3; --story-color-white:#fff; --story-font-heading:'Roboto Condensed','Roboto',system-ui,sans-serif; --story-font-body:Georgia,'Times New Roman',serif; --story-font-ui:'Roboto',system-ui,sans-serif; --story-max-text:640px; margin:0; padding:0; overflow-x:clip; -webkit-font-smoothing:antialiased; scroll-behavior:smooth; }
+.story-wrap, .story-wrap *, .story-wrap *::before, .story-wrap *::after { box-sizing:border-box; }
+.story-wrap ::selection { background:rgba(58,158,158,0.35); color:inherit; }
+
+/* Forzar overflow visible en padres del tema (necesario para position:sticky) */
+.entry-content, .wp-block-post-content, .post-content, .site-content, .content-area, article, .type-post, .wp-site-blocks, .wp-site-blocks > * { overflow:visible !important; }
+
+/* Full-bleed: rompe cualquier max-width / padding del tema padre */
+.story-wrap { width:100vw !important; max-width:none !important; margin-left:calc(-50vw + 50%) !important; margin-right:0 !important; padding:0 !important; position:relative; }
+.story-wrap > * { max-width:none !important; padding-left:0 !important; padding-right:0 !important; }
+
+/* Ocultar titulo del post y meta del tema (header/byline nativo de WP) */
+.story-wrap ~ *, .story-wrap + * { /* no tocar hermanos */ }
+
+/* Hero */
+.story-hero { position:relative; min-height:100vh; min-height:100svh; display:flex !important; align-items:flex-end; justify-content:center; overflow:hidden; background-size:cover; background-position:center; color:#fff; width:100% !important; }
+.story-hero--video { background:var(--story-color-deep); }
+.story-hero--video video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+.story-hero__overlay { position:absolute; inset:0; background:linear-gradient(0deg,rgba(13,27,42,0.92) 5%,rgba(13,27,42,0.3) 50%,transparent 100%); z-index:1; }
+.story-hero__content { position:relative; z-index:2; text-align:center; padding:clamp(2rem,6vw,4rem); padding-bottom:clamp(3rem,8vh,6rem); max-width:860px; }
+.story-hero .story-kicker { font-family:var(--story-font-heading); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:4px; color:var(--story-color-teal); margin-bottom:1.5rem; }
+.story-hero h1 { font-family:var(--story-font-heading) !important; font-weight:900 !important; font-size:clamp(2.4rem,6vw,4.5rem) !important; line-height:1.05 !important; margin:0 0 1.2rem !important; text-shadow:0 2px 20px rgba(0,0,0,0.3); color:#fff !important; }
+.story-hero .story-subtitle { font-family:var(--story-font-body); font-size:clamp(1rem,2vw,1.3rem); line-height:1.6; color:rgba(255,255,255,0.75); max-width:600px; margin:0 auto 2rem; }
+.story-hero .story-byline { font-family:var(--story-font-ui); font-size:12px; text-transform:uppercase; letter-spacing:2px; color:rgba(255,255,255,0.45); }
+.story-hero .story-scroll-hint { position:absolute; bottom:1.5rem; left:50%; transform:translateX(-50%); z-index:2; width:24px; height:40px; border:2px solid rgba(255,255,255,0.3); border-radius:12px; }
+.story-hero .story-scroll-hint::after { content:''; position:absolute; top:6px; left:50%; transform:translateX(-50%); width:4px; height:8px; background:rgba(255,255,255,0.5); border-radius:2px; animation:scrollBounce 1.8s ease-in-out infinite; }
+@keyframes scrollBounce { 0%,100%{transform:translateX(-50%) translateY(0);opacity:0.5} 50%{transform:translateX(-50%) translateY(12px);opacity:1} }
+
+/* Data */
+.story-data { background:var(--story-color-white); padding:clamp(3rem,8vh,5rem) clamp(1.5rem,4vw,3rem); width:100% !important; }
+.story-data__grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:clamp(1.5rem,3vw,3rem); max-width:900px; margin:0 auto; text-align:center; }
+.story-data__item { display:flex; flex-direction:column; align-items:center; }
+.story-data__value { font-family:var(--story-font-heading); font-size:clamp(2.5rem,5vw,3.5rem); font-weight:800; color:var(--story-color-dark); line-height:1; margin-bottom:0.5rem; }
+.story-data__label { font-family:var(--story-font-ui); font-size:11px; text-transform:uppercase; letter-spacing:2px; color:var(--story-color-dark); opacity:0.4; }
+
+/* Text */
+.story-wrap .story-text { max-width:var(--story-max-text) !important; margin:0 auto !important; padding:clamp(3rem,8vh,6rem) clamp(1.5rem,4vw,2rem) !important; font-family:var(--story-font-body) !important; font-size:clamp(1.05rem,1.8vw,1.25rem) !important; line-height:1.85 !important; color:#2a2a2a; }
+.story-text--dark { background:var(--story-color-deep); color:rgba(255,255,255,0.85) !important; }
+.story-wrap .story-text p { margin:0 0 1.5em !important; font-family:inherit !important; font-size:inherit !important; line-height:inherit !important; }
+.story-wrap .story-text p:last-child { margin-bottom:0 !important; }
+.story-text a { color:var(--story-color-teal); text-decoration:underline; text-underline-offset:3px; }
+.story-text--dropcap p:first-of-type::first-letter { float:left; font-family:var(--story-font-heading); font-size:5.2em; line-height:0.85; font-weight:700; margin-right:0.08em; margin-top:0.05em; color:var(--story-color-dark); }
+
+/* Heading */
+.story-wrap .story-heading { min-height:60vh; display:flex !important; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:clamp(4rem,12vh,8rem) clamp(1.5rem,4vw,3rem) !important; background:var(--story-color-sage); color:var(--story-color-deep); width:100% !important; }
+.story-heading--dark { background:var(--story-color-deep) !important; color:var(--story-color-white) !important; }
+.story-heading .story-kicker { font-family:var(--story-font-heading); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:4px; color:var(--story-color-teal); margin-bottom:1.5rem; }
+.story-wrap .story-heading h2, .story-wrap .story-heading .wp-block-heading { font-family:var(--story-font-heading) !important; font-weight:900 !important; font-size:clamp(1.8rem,4vw,3rem) !important; line-height:1.1 !important; margin:0 0 1rem !important; max-width:700px; color:inherit !important; }
+.story-heading .story-subtitle { font-family:var(--story-font-body); font-size:clamp(0.95rem,1.6vw,1.15rem); line-height:1.6; max-width:560px; margin:0 auto; opacity:0.6; }
+
+/* Viz */
+.story-viz { position:relative; width:100% !important; height:100vh; background:var(--story-color-sage); overflow:hidden; }
+.story-viz--short { height:85vh; }
+.story-viz iframe { position:absolute; top:0; left:0; width:100% !important; height:100% !important; border:0 !important; display:block; }
+
+/* Quote */
+.story-wrap .story-quote { min-height:50vh; display:flex !important; align-items:center; justify-content:center; background:var(--story-color-dark) !important; padding:clamp(4rem,10vh,8rem) clamp(1.5rem,4vw,3rem) !important; text-align:center; width:100% !important; }
+.story-wrap .story-quote blockquote { max-width:680px !important; margin:0 auto !important; font-family:var(--story-font-body) !important; font-style:italic; font-size:clamp(1.2rem,2.5vw,1.7rem) !important; line-height:1.6 !important; color:rgba(255,255,255,0.85) !important; border:none !important; padding:0 !important; background:none !important; }
+.story-wrap .story-quote blockquote::before { content:'\201C'; display:block; font-size:4rem; line-height:1; color:var(--story-color-teal); margin-bottom:0.5rem; }
+.story-wrap .story-quote blockquote p { color:rgba(255,255,255,0.85) !important; font-family:inherit !important; font-size:inherit !important; }
+.story-wrap .story-quote cite { display:block; margin-top:1.5rem; font-family:var(--story-font-ui) !important; font-style:normal; font-size:13px; text-transform:uppercase; letter-spacing:2px; color:var(--story-color-teal) !important; }
+
+/* Scene */
+.story-scene { position:relative; min-height:100vh; overflow:hidden; display:flex !important; align-items:center; justify-content:center; width:100% !important; }
+.story-scene__bg { position:absolute; inset:0; z-index:0; }
+.story-scene__bg img { width:100% !important; height:100% !important; object-fit:cover !important; max-width:none !important; }
+.story-scene__content { position:relative; z-index:5; text-align:center; padding:clamp(2rem,6vw,4rem); }
+
+/* Parallax */
+.story-parallax { position:relative; width:100% !important; }
+.story-parallax__media { position:sticky; top:0; height:100vh; overflow:hidden; z-index:0; }
+.story-parallax__media > img { width:100% !important; height:100% !important; object-fit:cover !important; max-width:none !important; }
+.story-parallax__layer { position:absolute; inset:0; pointer-events:none; transition:transform 0.1s linear; }
+.story-parallax__layer img { width:100%; height:100%; object-fit:cover; }
+.story-parallax__points { position:relative; z-index:1; margin-top:-100vh; padding-bottom:20vh; }
+.story-parallax__point { padding-top:50vh; padding-bottom:30vh; display:flex; justify-content:center; }
+.story-parallax__card { max-width:560px; width:90%; background:rgba(13,27,42,0.88); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-radius:0.75rem; padding:clamp(1.5rem,3vw,2.5rem); color:rgba(255,255,255,0.9); font-family:var(--story-font-body); font-size:clamp(0.95rem,1.6vw,1.15rem); line-height:1.75; box-shadow:0 8px 40px rgba(0,0,0,0.3); }
+.story-parallax__card p { margin:0 0 1em !important; color:rgba(255,255,255,0.9) !important; font-family:inherit !important; font-size:inherit !important; line-height:inherit !important; }
+.story-parallax__card p:last-child { margin-bottom:0 !important; }
+
+/* Vignettes */
+.story-wrap .story-vignettes { display:grid !important; grid-template-columns:1fr 1fr !important; gap:0 !important; min-height:60vh; width:100% !important; flex-wrap:nowrap !important; }
+.story-vignettes__item { position:relative; overflow:hidden; display:flex !important; align-items:center !important; justify-content:center !important; padding:clamp(2rem,4vw,4rem) !important; min-height:40vh; flex-basis:auto !important; }
+.story-vignettes__item img, .story-vignettes__item .wp-block-image { max-width:85% !important; max-height:70vh; object-fit:contain; }
+.story-vignettes__item figure { margin:0 !important; display:flex; align-items:center; justify-content:center; }
+.story-vignettes__item--white { background:#fff !important; }
+.story-vignettes__item--sage { background:var(--story-color-sage) !important; }
+
+/* Credits */
+.story-credits { background:var(--story-color-deep); color:rgba(255,255,255,0.7); padding:clamp(4rem,10vh,6rem) clamp(1.5rem,4vw,3rem); width:100% !important; }
+.story-credits__inner { max-width:var(--story-max-text); margin:0 auto; }
+.story-credits .story-kicker { font-family:var(--story-font-heading); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:4px; color:var(--story-color-teal); margin-bottom:1.5rem; }
+.story-credits p { font-family:var(--story-font-body); font-size:0.95rem; line-height:1.7; margin:0 0 1.5em; color:rgba(255,255,255,0.7) !important; }
+.story-credits__grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:2rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.1); }
+.story-credits__grid h4 { font-family:var(--story-font-ui); font-size:10px; text-transform:uppercase; letter-spacing:2px; color:rgba(255,255,255,0.35); margin:0 0 0.5rem; }
+.story-credits__grid p { font-family:var(--story-font-ui) !important; font-size:14px !important; color:rgba(255,255,255,0.6) !important; margin:0 !important; }
+
+/* Scroll animations */
+.scroll-fade { opacity:0; transform:translateY(40px); transition:opacity 0.8s ease,transform 0.8s ease; }
+.scroll-fade.is-visible { opacity:1; transform:translateY(0); }
+.scroll-fade-left { opacity:0; transform:translateX(-60px); transition:opacity 0.8s ease,transform 0.8s ease; }
+.scroll-fade-left.is-visible { opacity:1; transform:translateX(0); }
+.scroll-fade-right { opacity:0; transform:translateX(60px); transition:opacity 0.8s ease,transform 0.8s ease; }
+.scroll-fade-right.is-visible { opacity:1; transform:translateX(0); }
+.scroll-zoom { opacity:0; transform:scale(0.9); transition:opacity 1s ease,transform 1.2s cubic-bezier(0.25,0.1,0.25,1); }
+.scroll-zoom.is-visible { opacity:1; transform:scale(1); }
+
+@media (max-width:600px) {
+  .story-hero__content { padding:2rem 1.5rem 4rem; }
+  .story-viz { height:70vh; }
+  .story-data__grid { grid-template-columns:repeat(2,1fr); }
+  .story-credits__grid { grid-template-columns:1fr; }
+  .story-wrap .story-vignettes { grid-template-columns:1fr !important; }
+  .story-parallax__card { width:92%; font-size:0.95rem; }
+  .story-parallax__point { padding-top:30vh; padding-bottom:20vh; }
+}
+</style>
+<div class="story-wrap">
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<section class="story-hero story-hero--video">
+  <video autoplay muted loop playsinline>
+    <source src="/wp-content/uploads/scroll-assets/PORTADA.mp4" type="video/mp4">
+  </video>
+  <div class="story-hero__overlay"></div>
+  <div class="story-hero__content">
+    <p class="story-kicker">Centro de Investigacion Periodistica UDP</p>
+    <h1>Asi nadan los salmones en Chile</h1>
+    <p class="story-subtitle">Cuatro decadas de expansion, conflictos ambientales y sobreproduccion en la industria salmonera del sur de Chile.</p>
+    <p class="story-byline">Equipo de Investigacion UDP &bull; Visualizaciones: Tremen &bull; 2026</p>
+  </div>
+  <div class="story-scroll-hint"></div>
+</section>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<section class="story-data">
+  <div class="story-data__grid">
+    <div class="story-data__item scroll-fade"><div class="story-data__value">1.346</div><div class="story-data__label">Centros de cultivo</div></div>
+    <div class="story-data__item scroll-fade"><div class="story-data__value">40</div><div class="story-data__label">Anos de expansion</div></div>
+    <div class="story-data__item scroll-fade"><div class="story-data__value">118</div><div class="story-data__label">Procesos sancionatorios</div></div>
+    <div class="story-data__item scroll-fade"><div class="story-data__value">3</div><div class="story-data__label">Regiones</div></div>
+  </div>
+</section>
+<!-- /wp:html -->
+
+<!-- wp:group {"className":"story-text story-text--dropcap scroll-fade"} -->
+<div class="wp-block-group story-text story-text--dropcap scroll-fade">
+<!-- wp:paragraph -->
+<p>Desde mediados de la decada de 1980, la industria salmonera en Chile ha experimentado un crecimiento sin precedentes. Lo que comenzo como un punado de concesiones en la Region de Los Lagos se ha expandido hasta convertirse en una de las principales industrias exportadoras del pais, con mas de 1.300 centros de cultivo distribuidos en tres regiones del sur de Chile.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Chile es hoy el segundo mayor productor de salmon del mundo, solo detras de Noruega. Pero esta expansion no ha estado exenta de conflictos: denuncias ambientales, sobreproduccion sistematica y operaciones dentro de areas marinas protegidas han marcado el camino de una industria que mueve miles de millones de dolares al ano.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:columns {"className":"story-vignettes"} -->
+<div class="wp-block-columns story-vignettes">
+<!-- wp:column {"className":"story-vignettes__item story-vignettes__item--white scroll-fade-left"} -->
+<div class="wp-block-column story-vignettes__item story-vignettes__item--white scroll-fade-left">
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full"><img src="/wp-content/uploads/scroll-assets/Extra_01.webp" alt="Procesamiento de ovas de salmon"/></figure>
+<!-- /wp:image -->
+</div>
+<!-- /wp:column -->
+
+<!-- wp:column {"className":"story-vignettes__item story-vignettes__item--sage scroll-fade-right"} -->
+<div class="wp-block-column story-vignettes__item story-vignettes__item--sage scroll-fade-right">
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full"><img src="/wp-content/uploads/scroll-assets/Extra_02.webp" alt="Estanques de cultivo de salmon"/></figure>
+<!-- /wp:image -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- wp:group {"className":"story-heading scroll-fade"} -->
+<div class="wp-block-group story-heading scroll-fade">
+<!-- wp:paragraph {"className":"story-kicker"} -->
+<p class="story-kicker">Capitulo 1</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Cuatro decadas de expansion</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"story-subtitle"} -->
+<p class="story-subtitle">La evolucion de las concesiones salmoneras en Los Lagos, Aysen y Magallanes entre 1985 y 2025.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:html -->
+<div class="story-parallax">
+  <div class="story-parallax__media">
+    <img src="/wp-content/uploads/scroll-assets/ESC_01_Fondo.webp" alt="Fiordos con jaulas salmoneras">
+    <div class="story-parallax__layer" style="z-index:1;">
+      <img src="/wp-content/uploads/scroll-assets/ESC_01_Fiordo_A.webp" alt="">
+    </div>
+    <div class="story-parallax__layer" style="z-index:2;">
+      <img src="/wp-content/uploads/scroll-assets/ESC_01_Fiordo_B.webp" alt="">
+    </div>
+    <div class="story-parallax__layer" style="z-index:3; display:flex; align-items:flex-start; justify-content:flex-end; padding:15% 10% 0 0;">
+      <img src="/wp-content/uploads/scroll-assets/ESC_04_Wellboat.webp" alt="Wellboat" style="width:220px; height:auto; object-fit:contain;">
+    </div>
+  </div>
+  <div class="story-parallax__points">
+    <div class="story-parallax__point">
+      <div class="story-parallax__card">
+        <p>En los fiordos de la Patagonia chilena, las concesiones de salmon se multiplican entre montanas e islas. Lo que en los anos 80 eran aguas pristinas, hoy alberga una de las industrias acuicolas mas grandes del mundo.</p>
+      </div>
+    </div>
+    <div class="story-parallax__point">
+      <div class="story-parallax__card">
+        <p>Los wellboats — barcos especializados en transporte de peces vivos — recorren estos canales llevando salmones entre centros de cultivo, plantas de procesamiento y puertos de exportacion.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<section class="story-viz">
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=timeline" width="100%" height="100%" frameborder="0" allowfullscreen title="Timeline"></iframe>
+</section>
+<!-- /wp:html -->
+
+<!-- wp:group {"className":"story-text scroll-fade"} -->
+<div class="wp-block-group story-text scroll-fade">
+<!-- wp:paragraph -->
+<p>Los datos revelan periodos de expansion particularmente intensos. En la Region de Los Lagos, el numero de concesiones se multiplico significativamente durante la decada de 1990 y principios de los 2000. Aysen, en tanto, experimento su mayor crecimiento a partir del ano 2000, cuando la industria comenzo a buscar nuevas aguas tras la saturacion de Los Lagos.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Magallanes representa la frontera mas reciente de expansion. Aunque su crecimiento ha sido mas gradual, la region ha visto un aumento sostenido de concesiones en la ultima decada, generando nuevos debates sobre el equilibrio entre desarrollo economico y proteccion ambiental en zonas pristinas.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"story-heading story-heading--dark scroll-fade"} -->
+<div class="wp-block-group story-heading story-heading--dark scroll-fade">
+<!-- wp:paragraph {"className":"story-kicker"} -->
+<p class="story-kicker">Capitulo 2</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Salmones en zonas protegidas</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"story-subtitle"} -->
+<p class="story-subtitle">Concesiones activas dentro de areas marinas protegidas, denuncias y procesos sancionatorios.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:html -->
+<section class="story-scene scroll-zoom">
+  <div class="story-scene__bg">
+    <img src="/wp-content/uploads/scroll-assets/ESC_06_Fondo_zoom.webp" alt="Fiordos con jaulas">
+  </div>
+</section>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<section class="story-viz">
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=conflicto" width="100%" height="100%" frameborder="0" allowfullscreen title="Conflicto"></iframe>
+</section>
+<!-- /wp:html -->
+
+<!-- wp:group {"className":"story-quote scroll-fade"} -->
+<div class="wp-block-group story-quote scroll-fade">
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+<p>Al cruzar datos geoespaciales de SERNAPESCA con las areas marinas protegidas, se identificaron concesiones activas dentro de zonas que deberian estar resguardadas.</p>
+<!-- /wp:paragraph --><cite>Investigacion UDP-Tremen, 2026</cite></blockquote>
+<!-- /wp:quote -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"story-text scroll-fade"} -->
+<div class="wp-block-group story-text scroll-fade">
+<!-- wp:paragraph -->
+<p>Los procesos sancionatorios por sobreproduccion — donde los centros producen mas toneladas de salmon de las autorizadas — son particularmente preocupantes cuando ocurren dentro o cerca de areas protegidas. El exceso de biomasa genera mayor contaminacion organica, uso de antibioticos y riesgo de escape de ejemplares, todos factores que impactan directamente los ecosistemas marinos.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>La navegacion por holding en el mapa permite recorrer las empresas con mayor numero de sanciones, revelando que la sobreproduccion no es un fenomeno aislado sino un patron sistematico en algunos grupos economicos.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:html -->
+<section class="story-scene" style="min-height:120vh;">
+  <div class="story-scene__bg">
+    <img src="/wp-content/uploads/scroll-assets/ESC_06_Jaulas.webp" alt="Jaulas submarinas con peces escapando">
+  </div>
+  <div class="story-scene__content scroll-fade">
+    <div class="story-parallax__card" style="margin:0 auto;">
+      <p>Bajo la superficie, las jaulas contienen miles de salmones hacinados. Cuando la produccion excede lo autorizado, los riesgos se multiplican: escapes masivos, enfermedades y contaminacion del fondo marino.</p>
+    </div>
+  </div>
+</section>
+<!-- /wp:html -->
+
+
+<!-- wp:html -->
+<section class="story-scene scroll-zoom">
+  <div class="story-scene__bg">
+    <img src="/wp-content/uploads/scroll-assets/ESC_07_FondoContaminado.webp" alt="Fondo marino contaminado">
+  </div>
+  <div class="story-scene__content scroll-fade">
+    <div class="story-parallax__card" style="margin:0 auto;">
+      <p>El impacto acumulado de decadas de sobreproduccion se refleja en los fondos marinos: sedimentos contaminados, fauna nativa desplazada y ecosistemas degradados que tardaran generaciones en recuperarse.</p>
+    </div>
+  </div>
+</section>
+<!-- /wp:html -->
+
+<!-- wp:columns {"className":"story-vignettes"} -->
+<div class="wp-block-columns story-vignettes">
+<!-- wp:column {"className":"story-vignettes__item story-vignettes__item--sage scroll-fade-left"} -->
+<div class="wp-block-column story-vignettes__item story-vignettes__item--sage scroll-fade-left">
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full"><img src="/wp-content/uploads/scroll-assets/Extra_03.webp" alt="Linea de procesamiento de salmon"/></figure>
+<!-- /wp:image -->
+</div>
+<!-- /wp:column -->
+
+<!-- wp:column {"className":"story-vignettes__item story-vignettes__item--white scroll-fade-right"} -->
+<div class="wp-block-column story-vignettes__item story-vignettes__item--white scroll-fade-right">
+<!-- wp:image {"sizeSlug":"full"} -->
+<figure class="wp-block-image size-full"><img src="/wp-content/uploads/scroll-assets/Extra_04.webp" alt="Sashimi de salmon"/></figure>
+<!-- /wp:image -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+
+<!-- wp:html -->
+<section class="story-credits">
+  <div class="story-credits__inner">
+    <p class="story-kicker">Metodologia</p>
+    <p>Este reportaje se basa en datos publicos de SERNAPESCA (centros de cultivo), Subsecretaria de Pesca (concesiones y relocalizaciones), Ministerio del Medio Ambiente (areas marinas protegidas) y Superintendencia del Medio Ambiente (denuncias y procesos sancionatorios). Los datos fueron procesados y cruzados geoespacialmente.</p>
+    <div class="story-credits__grid">
+      <div><h4>Investigacion</h4><p>Centro de Investigacion Periodistica UDP</p></div>
+      <div><h4>Visualizaciones</h4><p>Tremen</p></div>
+    </div>
+  </div>
+</section>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+</div><!-- /.story-wrap -->
+<script>
+(function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.scroll-fade,.scroll-fade-left,.scroll-fade-right,.scroll-zoom')
+    .forEach(function(el) { observer.observe(el); });
+  var pSections = document.querySelectorAll('.story-parallax');
+  if (pSections.length > 0) {
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        requestAnimationFrame(function() {
+          pSections.forEach(function(section) {
+            var rect = section.getBoundingClientRect();
+            var progress = -rect.top / (rect.height - window.innerHeight);
+            if (progress < 0 || progress > 1) return;
+            section.querySelectorAll('.story-parallax__layer').forEach(function(layer, i) {
+              layer.style.transform = 'translateY(' + ((progress - 0.5) * (i + 1) * 15) + 'px)';
+            });
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+  }
+})();
+</script>
+<!-- /wp:html -->

@@ -284,31 +284,6 @@ export default function ArticuloPreview() {
         </p>
       </TextSection>
 
-      {/* ── VIZ 3: Treemap ── */}
-      <HeadingSection
-        kicker="Capitulo 3"
-        title="Los principales infractores"
-        subtitle="Procesos sancionatorios por sobreproduccion agrupados por empresa titular."
-      />
-
-      <VizSection embedKey="treemap" height="85vh" />
-
-      <TextSection>
-        <p style={{ margin: '0 0 1.5em' }}>
-          El treemap permite visualizar la proporcion de procesos sancionatorios que
-          concentra cada holding. Al seleccionar una empresa, se despliegan los centros
-          involucrados, el expediente de cada proceso y el porcentaje de exceso de
-          produccion detectado. Algunas empresas superaron su produccion autorizada
-          en mas de un 100%.
-        </p>
-        <p style={{ margin: 0 }}>
-          La Superintendencia del Medio Ambiente ha abierto decenas de procesos
-          sancionatorios, pero la concentracion en un pequeno numero de holdings
-          plantea preguntas sobre la efectividad de las sanciones como mecanismo
-          disuasivo.
-        </p>
-      </TextSection>
-
       {/* ── Cierre ── */}
       <section style={{
         background: '#0d1b2a', padding: 'clamp(5rem, 12vh, 10rem) clamp(2rem, 6vw, 4rem)',
