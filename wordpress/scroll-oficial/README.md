@@ -62,6 +62,9 @@ abrir `...?p=0.78`, capturar, y QUITARLO antes de desplegar.
      arriba/abajo NO son color plano: `.sv-bg` muestra el MISMO paisaje
      DESENFOCADO (pre-generado: `of-mar3-blur.webp` / `of-deep-blur.webp`,
      tecnica tipo Instagram) -> se ve como profundidad, no como "huincha".
+   - **Fondo contaminado:** `#sv-fondo` vive FUERA de `.sv-frame` (hijo directo
+     de `.sv-stage`, `z-index:2`, `object-position:center bottom`) para anclar el
+     lecho marino al borde inferior de la pantalla (no flotando al medio).
    - **Altura por JS:** el stage se fija en px = `window.innerHeight`
      (vh/svh/dvh no son fiables en moviles: dejaban franja blanca). Ver el
      bloque `sizeIntro()` en el `<script>`.
