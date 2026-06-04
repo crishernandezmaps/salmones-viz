@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Salmones — Intro (prototipo)</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:#0d1b2a}
+  body{font-family:Georgia,serif;color:#fff}
+
+  /* ====== INTRO SCROLL-PINNED ====== */
+  .intro{position:relative;height:680vh}
+  .intro__stage{position:sticky;top:0;height:100vh;width:100%;overflow:hidden;background:#29516b}
+
+  /* fondos de relleno (cielo/agua) detrás del frame, para las franjas en móvil */
+  .bg{position:absolute;inset:0;z-index:0;will-change:opacity}
+  #bgSurface{background:linear-gradient(180deg,#e9f0f2 0%,#9fbcc4 30%,#5b8190 55%,#29516b 100%)}
+  #bgDeep{background:linear-gradient(180deg,#3f5e78 0%,#2b4a5e 55%,#16313f 100%);opacity:0}
+
+  /* frame con el encuadre de la diseñadora (aspect maqueta) */
+  .frame{position:absolute;left:0;top:50%;transform:translateY(-50%);width:100%;
+         aspect-ratio:1664/2388;z-index:1}
+  .layer{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
+         will-change:transform,opacity}
+
+  /* scrim para legibilidad del título */
+  #topscrim{position:absolute;left:0;right:0;top:0;height:42%;z-index:45;pointer-events:none;
+            background:linear-gradient(180deg,rgba(11,33,46,.42),rgba(11,33,46,0));will-change:opacity}
+  /* título del hero */
+  .hero-title{position:absolute;left:0;right:0;top:9vh;text-align:center;z-index:50;padding:0 22px;
+              will-change:opacity,transform}
+  .hero-title .kicker{font-family:'Helvetica Neue',Arial,sans-serif;font-size:10px;letter-spacing:2px;
+              text-transform:uppercase;color:#fff;opacity:.9;margin-bottom:14px;
+              text-shadow:0 1px 10px rgba(0,40,60,.6)}
+  .hero-title h1{font-size:clamp(24px,6.2vw,42px);line-height:1.1;font-weight:700;color:#fff;
+              max-width:13ch;margin:0 auto;overflow-wrap:break-word;text-shadow:0 2px 20px rgba(0,30,50,.6)}
+  .hero-title .sub{margin-top:16px;font-size:clamp(13px,3.6vw,16px);color:#fff;opacity:.92;
+              max-width:26ch;margin-left:auto;margin-right:auto;
+              font-family:'Helvetica Neue',Arial,sans-serif;text-shadow:0 1px 12px rgba(0,30,50,.55)}
+  .scrollcue{position:absolute;left:0;right:0;bottom:26px;text-align:center;z-index:50;
+             font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;letter-spacing:3px;
+             text-transform:uppercase;color:#fff;opacity:.85;will-change:opacity}
+  .scrollcue span{display:block;font-size:20px;margin-top:6px;animation:bob 1.6s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+  /* leyendas narrativas */
+  .beat{position:absolute;left:0;right:0;bottom:12%;z-index:40;padding:0 18px;
+        text-align:center;will-change:opacity}
+  .beat p{display:block;max-width:460px;margin:0 auto;background:rgba(7,22,34,.62);
+          backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);color:#fff;
+          font-size:clamp(15px,4.2vw,19px);line-height:1.5;padding:13px 19px;border-radius:6px;
+          font-family:Georgia,serif;overflow-wrap:break-word}
+
+  #dbg{position:fixed;top:6px;left:6px;z-index:999;font:11px monospace;background:#000;color:#0f0;padding:2px 6px;border-radius:3px;opacity:.7}
+</style>
+</head>
+<body>
+
+<section class="intro" id="intro">
+  <div class="intro__stage" id="stage">
+    <div class="bg" id="bgSurface"></div>
+    <div class="bg" id="bgDeep"></div>
+
+    <div class="frame">
+      <!-- SUPERFICIE -->
+      <img id="mar3"     class="layer" src="assets/mar3.webp" alt="" style="object-position:center 42%">
+      <img id="montana2" class="layer" src="assets/montana2.webp" alt="">
+      <img id="montana1" class="layer" src="assets/montana1.webp" alt="">
+      <img id="fiordo1"  class="layer" src="assets/fiordo1.webp" alt="">
+      <img id="fiordo2"  class="layer" src="assets/fiordo2.webp" alt="">
+      <img id="avion"    class="layer" src="assets/avion.webp" alt="" style="object-fit:contain;object-position:center 20%">
+      <img id="wellboat" class="layer" src="assets/wellboat.webp" alt="">
+      <img id="camion"   class="layer" src="assets/camion.webp" alt="">
+      <!-- ZOOM -->
+      <img id="mar1" class="layer" src="assets/mar1.webp" alt="" style="opacity:0">
+      <img id="mar2" class="layer" src="assets/mar2.webp" alt="" style="opacity:0">
+      <!-- INMERSIÓN -->
+      <img id="jaulaLlena" class="layer" src="assets/jaula-llena.webp"   alt="" style="opacity:0">
+      <img id="jaulaEsc2"  class="layer" src="assets/jaula-escape2.webp" alt="" style="opacity:0">
+      <img id="jaulaEsc3"  class="layer" src="assets/jaula-escape3.webp" alt="" style="opacity:0">
+      <!-- FONDO -->
+      <img id="fondo" class="layer" src="assets/fondo-contaminado.webp" alt="" style="opacity:0;object-position:center bottom">
+    </div>
+
+    <!-- TEXTO -->
+    <div id="topscrim"></div>
+    <div class="hero-title" id="heroTitle">
+      <div class="kicker">Universidad Diego Portales</div>
+      <h1>Así nadan los salmones en Chile</h1>
+      <div class="sub">Cuatro décadas de una industria que transformó los mares del sur</div>
+    </div>
+    <div class="beat" id="beat1"><p>Miles de jaulas flotan en los fiordos del sur.</p></div>
+    <div class="beat" id="beat2"><p>Bajo la superficie, millones de salmones hacinados.</p></div>
+    <div class="beat" id="beat3"><p>Al exceder la producción, los peces escapan y el fondo se degrada.</p></div>
+    <div class="scrollcue" id="cue">Desliza<span>↓</span></div>
+  </div>
+</section>
+
+<section style="height:100vh;background:#0d1b2a;display:flex;align-items:center;justify-content:center;color:#7ec8c8;font-family:monospace">(aquí continúa el artículo)</section>
+
+<div id="dbg">p=0</div>
+
+<script>
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const lerp=(a,b,t)=>a+(b-a)*t;
+const seg=(p,p0,p1)=>clamp((p-p0)/(p1-p0),0,1);
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+const el=id=>document.getElementById(id);
+const L={mar3:el('mar3'),montana1:el('montana1'),montana2:el('montana2'),fiordo1:el('fiordo1'),fiordo2:el('fiordo2'),
+  avion:el('avion'),wellboat:el('wellboat'),camion:el('camion'),mar1:el('mar1'),mar2:el('mar2'),
+  jaulaLlena:el('jaulaLlena'),jaulaEsc2:el('jaulaEsc2'),jaulaEsc3:el('jaulaEsc3'),fondo:el('fondo')};
+const T={hero:el('heroTitle'),b1:el('beat1'),b2:el('beat2'),b3:el('beat3'),cue:el('cue')};
+function set(node,{o=null,x=0,y=0,s=1}={}){if(o!==null)node.style.opacity=o;node.style.transform=`translate(${x}%,${y}%) scale(${s})`;}
+
+function render(p){
+  el('dbg').textContent='p='+p.toFixed(3);
+  const part=seg(p,.46,.60);              // apertura de fiordos
+  const zoom=lerp(1,1.12,seg(p,.30,.60)); // zoom hacia las jaulas
+
+  set(L.mar3,{o:1-part,s:zoom});
+  set(L.montana1,{o:1-part,x:lerp(0,-60,ease(part)),s:zoom});
+  set(L.montana2,{o:1-part,x:lerp(0, 60,ease(part)),s:zoom});
+  set(L.fiordo1,{o:1-seg(p,.50,.60),x:lerp(0,-78,ease(part)),s:zoom});
+  set(L.fiordo2,{o:1-seg(p,.50,.60),x:lerp(0, 78,ease(part)),s:zoom});
+
+  {const i=seg(p,.12,.24),o=seg(p,.46,.56);set(L.camion,{o:i*(1-o),x:lerp(-26,0,ease(i))+lerp(0,-42,ease(o))});}
+  {const i=seg(p,.26,.38),o=seg(p,.46,.56);set(L.wellboat,{o:i*(1-o),x:lerp(34,0,ease(i))+lerp(0,42,ease(o))});}
+  {const c=seg(p,.38,.56);set(L.avion,{o:(c>0&&c<1)?1:0,x:lerp(-62,72,c)});}
+
+  set(L.mar1,{o:seg(p,.50,.60)*(1-seg(p,.62,.70)),s:lerp(1.0,1.08,seg(p,.50,.70))});
+  set(L.mar2,{o:seg(p,.62,.70)*(1-seg(p,.70,.78)),s:lerp(1.0,1.06,seg(p,.62,.80))});
+
+  set(L.jaulaLlena,{o:seg(p,.70,.78)*(1-seg(p,.80,.86)),y:lerp(16,0,ease(seg(p,.70,.80)))});
+  set(L.jaulaEsc2,{o:seg(p,.80,.86)*(1-seg(p,.86,.92))});
+  set(L.jaulaEsc3,{o:seg(p,.86,.92)});
+  set(L.fondo,{o:seg(p,.90,.98),y:lerp(38,0,ease(seg(p,.90,1.0)))});
+
+  // fondo de relleno: superficie -> profundo
+  el('bgDeep').style.opacity=seg(p,.60,.80);
+  el('bgSurface').style.opacity=1-seg(p,.60,.80);
+
+  // textos
+  T.hero.style.opacity=1-seg(p,.06,.14);
+  T.hero.style.transform=`translateY(${lerp(0,-30,seg(p,.06,.14))}px)`;
+  el('topscrim').style.opacity=1-seg(p,.10,.20);
+  T.cue.style.opacity=1-seg(p,.04,.10);
+  const beat=(n,a,b,c,d)=>{n.style.opacity=Math.min(seg(p,a,b),1-seg(p,c,d));};
+  beat(T.b1,.16,.22,.40,.46);
+  beat(T.b2,.72,.78,.84,.88);
+  beat(T.b3,.86,.90,.965,.99);
+}
+
+const intro=el('intro');
+function onScroll(){const r=intro.getBoundingClientRect();const total=intro.offsetHeight-window.innerHeight;render(clamp((-r.top)/total,0,1));}
+const qp=new URLSearchParams(location.search).get('p');
+if(qp!==null){document.body.style.overflow='hidden';intro.style.height='100vh';render(parseFloat(qp));}
+else{window.addEventListener('scroll',onScroll,{passive:true});window.addEventListener('resize',onScroll);render(0);}
+</script>
+</body>
+</html>

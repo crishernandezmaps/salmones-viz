@@ -4,33 +4,52 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700;900&family=Roboto:wght@300;400;700;900&display=swap');
 
 /* === NUCLEAR RESET — rompe cualquier contenedor de cualquier tema === */
-.story-wrap { --story-color-deep:#0d1b2a; --story-color-dark:#1b3a4b; --story-color-teal:#3a9e9e; --story-color-sage:#f0f4f3; --story-color-white:#fff; --story-font-heading:'Roboto Condensed','Roboto',system-ui,sans-serif; --story-font-body:Georgia,'Times New Roman',serif; --story-font-ui:'Roboto',system-ui,sans-serif; --story-max-text:640px; margin:0; padding:0; overflow-x:clip; -webkit-font-smoothing:antialiased; scroll-behavior:smooth; }
+/* Clip horizontal en la raiz (NO en .story-wrap, que romperia position:sticky) */
+html { overflow-x:clip; }
+.story-wrap { --story-color-deep:#0d1b2a; --story-color-dark:#1b3a4b; --story-color-teal:#3a9e9e; --story-color-sage:#f0f4f3; --story-color-white:#fff; --story-font-heading:'Roboto Condensed','Roboto',system-ui,sans-serif; --story-font-body:Georgia,'Times New Roman',serif; --story-font-ui:'Roboto',system-ui,sans-serif; --story-max-text:640px; margin:0; padding:0; overflow:visible; -webkit-font-smoothing:antialiased; scroll-behavior:smooth; }
 .story-wrap, .story-wrap *, .story-wrap *::before, .story-wrap *::after { box-sizing:border-box; }
 .story-wrap ::selection { background:rgba(58,158,158,0.35); color:inherit; }
 
 /* Forzar overflow visible en padres del tema (necesario para position:sticky) */
 .entry-content, .wp-block-post-content, .post-content, .site-content, .content-area, article, .type-post, .wp-site-blocks, .wp-site-blocks > * { overflow:visible !important; }
 
+/* Ocultar titulo y meta nativos del tema (el hero inmersivo ya trae su propio titulo) */
+.wp-block-post-title, .wp-block-post-author, .wp-block-post-author-name, .wp-block-post-date, .wp-block-post-terms { display:none !important; }
+/* Ocultar el byline completo ("Written by ... in ...") y compactar el header del tema */
+.wp-block-group:has(> .wp-block-post-author-name) { display:none !important; }
+main:has(.wp-block-post-content) { margin-top:0 !important; }
+.wp-block-group:has(> .wp-block-post-content) { padding-top:0 !important; }
+/* Ocultar el header del sitio (barra blanca con titulo del sitio + nav) */
+header.wp-block-template-part { display:none !important; }
+/* Eliminar TODO el espacio superior del tema (huincha blanca al inicio) */
+html, body { margin-top:0 !important; padding-top:0 !important; }
+.wp-site-blocks { margin-top:0 !important; padding-top:0 !important; }
+.wp-site-blocks > main, main.is-layout-constrained { margin-top:0 !important; padding-top:0 !important; }
+.wp-block-group:has(> .wp-block-post-content) { padding-top:0 !important; margin-top:0 !important; }
+.entry-content { margin-top:0 !important; padding-top:0 !important; }
+
 /* Full-bleed: rompe cualquier max-width / padding del tema padre */
 .story-wrap { width:100vw !important; max-width:none !important; margin-left:calc(-50vw + 50%) !important; margin-right:0 !important; padding:0 !important; position:relative; }
 .story-wrap > * { max-width:none !important; padding-left:0 !important; padding-right:0 !important; }
 
-/* Ocultar titulo del post y meta del tema (header/byline nativo de WP) */
-.story-wrap ~ *, .story-wrap + * { /* no tocar hermanos */ }
-
-/* Hero */
-.story-hero { position:relative; min-height:100vh; min-height:100svh; display:flex !important; align-items:flex-end; justify-content:center; overflow:hidden; background-size:cover; background-position:center; color:#fff; width:100% !important; }
-.story-hero--video { background:var(--story-color-deep); }
-.story-hero--video video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
-.story-hero__overlay { position:absolute; inset:0; background:linear-gradient(0deg,rgba(13,27,42,0.92) 5%,rgba(13,27,42,0.3) 50%,transparent 100%); z-index:1; }
-.story-hero__content { position:relative; z-index:2; text-align:center; padding:clamp(2rem,6vw,4rem); padding-bottom:clamp(3rem,8vh,6rem); max-width:860px; }
-.story-hero .story-kicker { font-family:var(--story-font-heading); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:4px; color:var(--story-color-teal); margin-bottom:1.5rem; }
-.story-hero h1 { font-family:var(--story-font-heading) !important; font-weight:900 !important; font-size:clamp(2.4rem,6vw,4.5rem) !important; line-height:1.05 !important; margin:0 0 1.2rem !important; text-shadow:0 2px 20px rgba(0,0,0,0.3); color:#fff !important; }
-.story-hero .story-subtitle { font-family:var(--story-font-body); font-size:clamp(1rem,2vw,1.3rem); line-height:1.6; color:rgba(255,255,255,0.75); max-width:600px; margin:0 auto 2rem; }
-.story-hero .story-byline { font-family:var(--story-font-ui); font-size:12px; text-transform:uppercase; letter-spacing:2px; color:rgba(255,255,255,0.45); }
-.story-hero .story-scroll-hint { position:absolute; bottom:1.5rem; left:50%; transform:translateX(-50%); z-index:2; width:24px; height:40px; border:2px solid rgba(255,255,255,0.3); border-radius:12px; }
-.story-hero .story-scroll-hint::after { content:''; position:absolute; top:6px; left:50%; transform:translateX(-50%); width:4px; height:8px; background:rgba(255,255,255,0.5); border-radius:2px; animation:scrollBounce 1.8s ease-in-out infinite; }
-@keyframes scrollBounce { 0%,100%{transform:translateX(-50%) translateY(0);opacity:0.5} 50%{transform:translateX(-50%) translateY(12px);opacity:1} }
+/* ====== INTRO OFICIAL — parallax scroll-pinned (capas de la disenadora) ====== */
+.sv-intro { position:relative; height:680vh; width:100% !important; }
+.sv-stage { position:sticky; top:0; height:100vh; height:100svh; width:100%; overflow:hidden; background:#29516b; }
+.sv-bg { position:absolute; inset:0; z-index:0; will-change:opacity; }
+.sv-bg--surface { background:linear-gradient(180deg,#e9f0f2 0%,#9fbcc4 30%,#5b8190 55%,#29516b 100%); }
+.sv-bg--deep { background:linear-gradient(180deg,#3f5e78 0%,#2b4a5e 55%,#16313f 100%); opacity:0; }
+.sv-frame { position:absolute; left:0; top:50%; transform:translateY(-50%); width:100%; aspect-ratio:1664/2388; z-index:1; }
+.sv-layer { position:absolute !important; inset:0; width:100% !important; height:100% !important; object-fit:cover !important; object-position:center; max-width:none !important; will-change:transform,opacity; backface-visibility:hidden; -webkit-backface-visibility:hidden; transform:translateZ(0); }
+.sv-scrim { position:absolute; left:0; right:0; top:0; height:42%; z-index:45; pointer-events:none; background:linear-gradient(180deg,rgba(11,33,46,0.42),rgba(11,33,46,0)); will-change:opacity; }
+.sv-hero { position:absolute; left:0; right:0; top:9vh; text-align:center; z-index:50; padding:0 22px; will-change:opacity,transform; }
+.sv-hero .sv-kicker { font-family:var(--story-font-heading); font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#fff; opacity:0.92; margin-bottom:14px; text-shadow:0 1px 10px rgba(0,40,60,0.6); }
+.story-wrap .sv-hero h1 { font-family:var(--story-font-heading) !important; font-weight:900 !important; font-size:clamp(2rem,7vw,3.6rem) !important; line-height:1.06 !important; color:#fff !important; max-width:14ch; margin:0 auto !important; text-shadow:0 2px 22px rgba(0,30,50,0.6); }
+.sv-hero .sv-sub { margin-top:16px; font-family:var(--story-font-body); font-size:clamp(0.92rem,3.6vw,1.05rem); color:#fff; opacity:0.92; max-width:30ch; margin-left:auto; margin-right:auto; text-shadow:0 1px 12px rgba(0,30,50,0.55); }
+.sv-cue { position:absolute; left:0; right:0; bottom:26px; text-align:center; z-index:50; font-family:var(--story-font-ui); font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#fff; opacity:0.85; will-change:opacity; }
+.sv-cue span { display:block; font-size:20px; margin-top:6px; animation:svBob 1.6s ease-in-out infinite; }
+@keyframes svBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+.sv-beat { position:absolute; left:0; right:0; bottom:12%; z-index:40; padding:0 18px; text-align:center; will-change:opacity; }
+.story-wrap .sv-beat p { display:block; max-width:460px; margin:0 auto !important; background:rgba(7,22,34,0.62); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); color:#fff !important; font-family:var(--story-font-body) !important; font-size:clamp(1rem,4.2vw,1.2rem) !important; line-height:1.5 !important; padding:13px 19px; border-radius:6px; }
 
 /* Data */
 .story-data { background:var(--story-color-white); padding:clamp(3rem,8vh,5rem) clamp(1.5rem,4vw,3rem); width:100% !important; }
@@ -66,24 +85,6 @@
 .story-wrap .story-quote blockquote p { color:rgba(255,255,255,0.85) !important; font-family:inherit !important; font-size:inherit !important; }
 .story-wrap .story-quote cite { display:block; margin-top:1.5rem; font-family:var(--story-font-ui) !important; font-style:normal; font-size:13px; text-transform:uppercase; letter-spacing:2px; color:var(--story-color-teal) !important; }
 
-/* Scene */
-.story-scene { position:relative; min-height:100vh; overflow:hidden; display:flex !important; align-items:center; justify-content:center; width:100% !important; }
-.story-scene__bg { position:absolute; inset:0; z-index:0; }
-.story-scene__bg img { width:100% !important; height:100% !important; object-fit:cover !important; max-width:none !important; }
-.story-scene__content { position:relative; z-index:5; text-align:center; padding:clamp(2rem,6vw,4rem); }
-
-/* Parallax */
-.story-parallax { position:relative; width:100% !important; }
-.story-parallax__media { position:sticky; top:0; height:100vh; overflow:hidden; z-index:0; }
-.story-parallax__media > img { width:100% !important; height:100% !important; object-fit:cover !important; max-width:none !important; }
-.story-parallax__layer { position:absolute; inset:0; pointer-events:none; transition:transform 0.1s linear; }
-.story-parallax__layer img { width:100%; height:100%; object-fit:cover; }
-.story-parallax__points { position:relative; z-index:1; margin-top:-100vh; padding-bottom:20vh; }
-.story-parallax__point { padding-top:50vh; padding-bottom:30vh; display:flex; justify-content:center; }
-.story-parallax__card { max-width:560px; width:90%; background:rgba(13,27,42,0.88); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border-radius:0.75rem; padding:clamp(1.5rem,3vw,2.5rem); color:rgba(255,255,255,0.9); font-family:var(--story-font-body); font-size:clamp(0.95rem,1.6vw,1.15rem); line-height:1.75; box-shadow:0 8px 40px rgba(0,0,0,0.3); }
-.story-parallax__card p { margin:0 0 1em !important; color:rgba(255,255,255,0.9) !important; font-family:inherit !important; font-size:inherit !important; line-height:inherit !important; }
-.story-parallax__card p:last-child { margin-bottom:0 !important; }
-
 /* Vignettes */
 .story-wrap .story-vignettes { display:grid !important; grid-template-columns:1fr 1fr !important; gap:0 !important; min-height:60vh; width:100% !important; flex-wrap:nowrap !important; }
 .story-vignettes__item { position:relative; overflow:hidden; display:flex !important; align-items:center !important; justify-content:center !important; padding:clamp(2rem,4vw,4rem) !important; min-height:40vh; flex-basis:auto !important; }
@@ -112,31 +113,49 @@
 .scroll-zoom.is-visible { opacity:1; transform:scale(1); }
 
 @media (max-width:600px) {
-  .story-hero__content { padding:2rem 1.5rem 4rem; }
   .story-viz { height:70vh; }
   .story-data__grid { grid-template-columns:repeat(2,1fr); }
   .story-credits__grid { grid-template-columns:1fr; }
   .story-wrap .story-vignettes { grid-template-columns:1fr !important; }
-  .story-parallax__card { width:92%; font-size:0.95rem; }
-  .story-parallax__point { padding-top:30vh; padding-bottom:20vh; }
 }
 </style>
 <div class="story-wrap">
 <!-- /wp:html -->
 
 <!-- wp:html -->
-<section class="story-hero story-hero--video">
-  <video autoplay muted loop playsinline>
-    <source src="/wp-content/uploads/scroll-assets/PORTADA.mp4" type="video/mp4">
-  </video>
-  <div class="story-hero__overlay"></div>
-  <div class="story-hero__content">
-    <p class="story-kicker">Centro de Investigacion Periodistica UDP</p>
-    <h1>Asi nadan los salmones en Chile</h1>
-    <p class="story-subtitle">Cuatro decadas de expansion, conflictos ambientales y sobreproduccion en la industria salmonera del sur de Chile.</p>
-    <p class="story-byline">Equipo de Investigacion UDP &bull; Visualizaciones: Tremen &bull; 2026</p>
+<section class="sv-intro" id="sv-intro">
+  <div class="sv-stage">
+    <div class="sv-bg sv-bg--surface" id="sv-bgSurface"></div>
+    <div class="sv-bg sv-bg--deep" id="sv-bgDeep"></div>
+
+    <div class="sv-frame">
+      <img id="sv-mar3"     class="sv-layer" src="/wp-content/uploads/scroll-assets/of-mar3.webp" alt="" style="object-position:center 42%">
+      <img id="sv-montana2" class="sv-layer" src="/wp-content/uploads/scroll-assets/of-montana2.webp" alt="">
+      <img id="sv-montana1" class="sv-layer" src="/wp-content/uploads/scroll-assets/of-montana1.webp" alt="">
+      <img id="sv-fiordo1"  class="sv-layer" src="/wp-content/uploads/scroll-assets/of-fiordo1.webp" alt="">
+      <img id="sv-fiordo2"  class="sv-layer" src="/wp-content/uploads/scroll-assets/of-fiordo2.webp" alt="">
+      <img id="sv-avion"    class="sv-layer" src="/wp-content/uploads/scroll-assets/of-avion.webp" alt="" style="object-fit:contain !important;object-position:center 20%;opacity:0">
+      <img id="sv-wellboat" class="sv-layer" src="/wp-content/uploads/scroll-assets/of-wellboat.webp" alt="" style="opacity:0">
+      <img id="sv-camion"   class="sv-layer" src="/wp-content/uploads/scroll-assets/of-camion.webp" alt="" style="opacity:0">
+      <img id="sv-mar1"     class="sv-layer" src="/wp-content/uploads/scroll-assets/of-mar1.webp" alt="" style="opacity:0">
+      <img id="sv-mar2"     class="sv-layer" src="/wp-content/uploads/scroll-assets/of-mar2.webp" alt="" style="opacity:0">
+      <img id="sv-jaulaLlena" class="sv-layer" src="/wp-content/uploads/scroll-assets/of-jaula-llena.webp" alt="" style="opacity:0">
+      <img id="sv-jaulaEsc2"  class="sv-layer" src="/wp-content/uploads/scroll-assets/of-jaula-escape2.webp" alt="" style="opacity:0">
+      <img id="sv-jaulaEsc3"  class="sv-layer" src="/wp-content/uploads/scroll-assets/of-jaula-escape3.webp" alt="" style="opacity:0">
+      <img id="sv-fondo"    class="sv-layer" src="/wp-content/uploads/scroll-assets/of-fondo-contaminado.webp" alt="" style="opacity:0;object-position:center bottom">
+    </div>
+
+    <div class="sv-scrim" id="sv-scrim"></div>
+    <div class="sv-hero" id="sv-hero">
+      <div class="sv-kicker">Universidad Diego Portales</div>
+      <h1>Asi nadan los salmones en Chile</h1>
+      <div class="sv-sub">Cuatro decadas de una industria que transformo los mares del sur</div>
+    </div>
+    <div class="sv-beat" id="sv-beat1"><p>Miles de jaulas flotan en los fiordos del sur.</p></div>
+    <div class="sv-beat" id="sv-beat2"><p>Bajo la superficie, millones de salmones hacinados.</p></div>
+    <div class="sv-beat" id="sv-beat3"><p>Al exceder la produccion, los peces escapan y el fondo se degrada.</p></div>
+    <div class="sv-cue" id="sv-cue">Desliza<span>&#8595;</span></div>
   </div>
-  <div class="story-scroll-hint"></div>
 </section>
 <!-- /wp:html -->
 
@@ -200,35 +219,6 @@
 <!-- /wp:group -->
 
 <!-- wp:html -->
-<div class="story-parallax">
-  <div class="story-parallax__media">
-    <img src="/wp-content/uploads/scroll-assets/ESC_01_Fondo.webp" alt="Fiordos con jaulas salmoneras">
-    <div class="story-parallax__layer" style="z-index:1;">
-      <img src="/wp-content/uploads/scroll-assets/ESC_01_Fiordo_A.webp" alt="">
-    </div>
-    <div class="story-parallax__layer" style="z-index:2;">
-      <img src="/wp-content/uploads/scroll-assets/ESC_01_Fiordo_B.webp" alt="">
-    </div>
-    <div class="story-parallax__layer" style="z-index:3; display:flex; align-items:flex-start; justify-content:flex-end; padding:15% 10% 0 0;">
-      <img src="/wp-content/uploads/scroll-assets/ESC_04_Wellboat.webp" alt="Wellboat" style="width:220px; height:auto; object-fit:contain;">
-    </div>
-  </div>
-  <div class="story-parallax__points">
-    <div class="story-parallax__point">
-      <div class="story-parallax__card">
-        <p>En los fiordos de la Patagonia chilena, las concesiones de salmon se multiplican entre montanas e islas. Lo que en los anos 80 eran aguas pristinas, hoy alberga una de las industrias acuicolas mas grandes del mundo.</p>
-      </div>
-    </div>
-    <div class="story-parallax__point">
-      <div class="story-parallax__card">
-        <p>Los wellboats — barcos especializados en transporte de peces vivos — recorren estos canales llevando salmones entre centros de cultivo, plantas de procesamiento y puertos de exportacion.</p>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /wp:html -->
-
-<!-- wp:html -->
 <section class="story-viz">
   <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=timeline" width="100%" height="100%" frameborder="0" allowfullscreen title="Timeline"></iframe>
 </section>
@@ -263,14 +253,6 @@
 <!-- /wp:group -->
 
 <!-- wp:html -->
-<section class="story-scene scroll-zoom">
-  <div class="story-scene__bg">
-    <img src="/wp-content/uploads/scroll-assets/ESC_06_Fondo_zoom.webp" alt="Fiordos con jaulas">
-  </div>
-</section>
-<!-- /wp:html -->
-
-<!-- wp:html -->
 <section class="story-viz">
   <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=conflicto" width="100%" height="100%" frameborder="0" allowfullscreen title="Conflicto"></iframe>
 </section>
@@ -293,37 +275,44 @@
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>La navegacion por holding en el mapa permite recorrer las empresas con mayor numero de sanciones, revelando que la sobreproduccion no es un fenomeno aislado sino un patron sistematico en algunos grupos economicos.</p>
+<p>El mapa de conflicto permite recorrer las concesiones que se superponen con figuras de proteccion y las que registran denuncias o sobreproduccion, revelando que estos casos no son aislados sino un patron presente en distintas zonas del sur.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className":"story-heading scroll-fade"} -->
+<div class="wp-block-group story-heading scroll-fade">
+<!-- wp:paragraph {"className":"story-kicker"} -->
+<p class="story-kicker">Capitulo 3</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">Cerca de las areas protegidas</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"story-subtitle"} -->
+<p class="story-subtitle">Los centros de cultivo frente a los parques y reservas del Estado (SNASPE).</p>
 <!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
 <!-- wp:html -->
-<section class="story-scene" style="min-height:120vh;">
-  <div class="story-scene__bg">
-    <img src="/wp-content/uploads/scroll-assets/ESC_06_Jaulas.webp" alt="Jaulas submarinas con peces escapando">
-  </div>
-  <div class="story-scene__content scroll-fade">
-    <div class="story-parallax__card" style="margin:0 auto;">
-      <p>Bajo la superficie, las jaulas contienen miles de salmones hacinados. Cuando la produccion excede lo autorizado, los riesgos se multiplican: escapes masivos, enfermedades y contaminacion del fondo marino.</p>
-    </div>
-  </div>
+<section class="story-viz">
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=capas" width="100%" height="100%" frameborder="0" allowfullscreen title="Mapa de capas"></iframe>
 </section>
 <!-- /wp:html -->
 
+<!-- wp:group {"className":"story-text scroll-fade"} -->
+<div class="wp-block-group story-text scroll-fade">
+<!-- wp:paragraph -->
+<p>Mas alla de las areas marinas, muchos centros operan en las inmediaciones de parques nacionales y reservas del Estado. El mapa de capas permite encender y apagar las distintas figuras de proteccion para visualizar que tan cerca llega la industria de los ecosistemas resguardados por el Sistema Nacional de Areas Silvestres Protegidas (SNASPE).</p>
+<!-- /wp:paragraph -->
 
-<!-- wp:html -->
-<section class="story-scene scroll-zoom">
-  <div class="story-scene__bg">
-    <img src="/wp-content/uploads/scroll-assets/ESC_07_FondoContaminado.webp" alt="Fondo marino contaminado">
-  </div>
-  <div class="story-scene__content scroll-fade">
-    <div class="story-parallax__card" style="margin:0 auto;">
-      <p>El impacto acumulado de decadas de sobreproduccion se refleja en los fondos marinos: sedimentos contaminados, fauna nativa desplazada y ecosistemas degradados que tardaran generaciones en recuperarse.</p>
-    </div>
-  </div>
-</section>
-<!-- /wp:html -->
+<!-- wp:paragraph -->
+<p>La cercania entre concesiones y zonas protegidas plantea preguntas sobre los limites del crecimiento de la industria en la Patagonia, donde la frontera de expansion sigue avanzando hacia el sur.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
 
 <!-- wp:columns {"className":"story-vignettes"} -->
 <div class="wp-block-columns story-vignettes">
@@ -362,30 +351,86 @@
 </div><!-- /.story-wrap -->
 <script>
 (function() {
+  /* ── animaciones de entrada (fade/zoom) ── */
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('is-visible'); });
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.scroll-fade,.scroll-fade-left,.scroll-fade-right,.scroll-zoom')
     .forEach(function(el) { observer.observe(el); });
-  var pSections = document.querySelectorAll('.story-parallax');
-  if (pSections.length > 0) {
-    var ticking = false;
-    window.addEventListener('scroll', function() {
-      if (!ticking) {
-        requestAnimationFrame(function() {
-          pSections.forEach(function(section) {
-            var rect = section.getBoundingClientRect();
-            var progress = -rect.top / (rect.height - window.innerHeight);
-            if (progress < 0 || progress > 1) return;
-            section.querySelectorAll('.story-parallax__layer').forEach(function(layer, i) {
-              layer.style.transform = 'translateY(' + ((progress - 0.5) * (i + 1) * 15) + 'px)';
-            });
-          });
-          ticking = false;
-        });
-        ticking = true;
-      }
-    });
+
+  /* ── INTRO OFICIAL — motor de scroll parallax ── */
+  var intro = document.getElementById('sv-intro');
+  if (intro) {
+    var clamp = function(v,a,b){ return Math.max(a, Math.min(b, v)); };
+    var lerp  = function(a,b,t){ return a + (b-a)*t; };
+    var seg   = function(p,p0,p1){ return clamp((p-p0)/(p1-p0), 0, 1); };
+    var ease  = function(t){ return t<0.5 ? 2*t*t : 1-Math.pow(-2*t+2,2)/2; };
+    var g = function(id){ return document.getElementById(id); };
+    var mar3=g('sv-mar3'), montana1=g('sv-montana1'), montana2=g('sv-montana2'),
+        fiordo1=g('sv-fiordo1'), fiordo2=g('sv-fiordo2'), avion=g('sv-avion'),
+        wellboat=g('sv-wellboat'), camion=g('sv-camion'), mar1=g('sv-mar1'), mar2=g('sv-mar2'),
+        jaulaLlena=g('sv-jaulaLlena'), jaulaEsc2=g('sv-jaulaEsc2'), jaulaEsc3=g('sv-jaulaEsc3'),
+        fondo=g('sv-fondo'),
+        hero=g('sv-hero'), beat1=g('sv-beat1'), beat2=g('sv-beat2'), beat3=g('sv-beat3'),
+        cue=g('sv-cue'), scrim=g('sv-scrim'), bgDeep=g('sv-bgDeep'), bgSurface=g('sv-bgSurface');
+    var setL = function(node,o,x,y,s){ if(!node) return; if(o!==null) node.style.opacity=o; node.style.transform='translate3d('+x+'%,'+y+'%,0) scale('+s+')'; };
+
+    function render(p) {
+      /* ── SUPERFICIE (fade, sin zoom: las jaulas cambian con fade) ── */
+      var part = seg(p,0.46,0.58);
+      setL(mar3, 1-part, 0,0,1);
+      setL(montana1, 1-part, lerp(0,-60,ease(part)),0,1);
+      setL(montana2, 1-part, lerp(0, 60,ease(part)),0,1);
+      setL(fiordo1, 1-seg(p,0.50,0.58), lerp(0,-80,ease(part)),0,1);
+      setL(fiordo2, 1-seg(p,0.50,0.58), lerp(0, 80,ease(part)),0,1);
+
+      /* ── VEHICULOS ── */
+      var ci=seg(p,0.10,0.22), co=seg(p,0.46,0.54);
+      setL(camion, ci*(1-co), lerp(-26,0,ease(ci))+lerp(0,-42,ease(co)),0,1);
+      var wi=seg(p,0.22,0.34), wo=seg(p,0.46,0.54);
+      setL(wellboat, wi*(1-wo), lerp(34,0,ease(wi))+lerp(0,42,ease(wo)),0,1);
+      var ax=seg(p,0.32,0.50), aop=Math.min(seg(p,0.32,0.37), 1-seg(p,0.45,0.50));
+      setL(avion, aop, lerp(-62,72,ax),0,1);
+
+      /* ── JAULAS GRANDES: aparecen al abrirse los fiordos, luego se van (handoff limpio) ── */
+      setL(mar1, seg(p,0.50,0.57)*(1-seg(p,0.62,0.67)),0,0,1);
+      setL(mar2, 0, 0,0,1);
+
+      /* ── INMERSION: jaula llena, vista de abajo hacia arriba, HOLD largo ── */
+      setL(jaulaLlena, seg(p,0.66,0.74)*(1-seg(p,0.85,0.90)), 0, lerp(10,0,ease(seg(p,0.66,0.76))),1);
+      /* ── ESCAPE ── */
+      setL(jaulaEsc2, seg(p,0.85,0.90)*(1-seg(p,0.91,0.94)),0,0,1);
+      setL(jaulaEsc3, seg(p,0.91,0.95),0,0,1);
+      /* ── FONDO CONTAMINADO sube desde abajo ── */
+      setL(fondo, seg(p,0.95,1.0),0, lerp(34,0,ease(seg(p,0.95,1.0))),1);
+
+      /* ── fondo de relleno: superficie -> profundo (durante el descenso) ── */
+      if(bgDeep) bgDeep.style.opacity = seg(p,0.60,0.74);
+      if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.60,0.74);
+
+      /* ── TEXTOS ── */
+      if(hero){ hero.style.opacity = 1-seg(p,0.12,0.24); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.12,0.24))+'px)'; }
+      if(cue) cue.style.opacity = 1-seg(p,0.06,0.16);
+      if(scrim) scrim.style.opacity = 1-seg(p,0.16,0.28);
+      var beat=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
+      beat(beat1,0.14,0.20,0.38,0.44);
+      beat(beat2,0.72,0.78,0.82,0.86);
+      beat(beat3,0.88,0.92,0.97,0.99);
+    }
+
+    var ticking=false;
+    function onScroll(){
+      if(ticking) return; ticking=true;
+      requestAnimationFrame(function(){
+        var r=intro.getBoundingClientRect();
+        var total=intro.offsetHeight - window.innerHeight;
+        render(clamp((-r.top)/total, 0, 1));
+        ticking=false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll);
+    render(0);
   }
 })();
 </script>
