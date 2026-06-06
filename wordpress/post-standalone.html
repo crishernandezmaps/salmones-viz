@@ -425,50 +425,50 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
     function render(p) {
       /* ── SUPERFICIE (fade, sin zoom: las jaulas cambian con fade) ── */
-      var part = seg(p,0.46,0.58);
+      var part = seg(p,0.52,0.62);
       setL(mar3, 1-part, 0,0,1);
       setL(montana1, 1-part, lerp(0,-60,ease(part)),0,1);
       setL(montana2, 1-part, lerp(0, 60,ease(part)),0,1);
-      setL(fiordo1, 1-seg(p,0.50,0.58), lerp(0,-80,ease(part)),0,1);
-      setL(fiordo2, 1-seg(p,0.50,0.58), lerp(0, 80,ease(part)),0,1);
+      setL(fiordo1, 1-seg(p,0.54,0.62), lerp(0,-80,ease(part)),0,1);
+      setL(fiordo2, 1-seg(p,0.54,0.62), lerp(0, 80,ease(part)),0,1);
 
       /* ── VEHICULOS ── */
-      var ci=seg(p,0.10,0.22), co=seg(p,0.46,0.54);
+      var ci=seg(p,0.10,0.18), co=seg(p,0.50,0.58);
       setL(camion, ci*(1-co), lerp(-26,0,ease(ci))+lerp(0,-42,ease(co)),0,1);
-      var wi=seg(p,0.22,0.34), wo=seg(p,0.46,0.54);
+      var wi=seg(p,0.27,0.35), wo=seg(p,0.52,0.60);
       setL(wellboat, wi*(1-wo), lerp(34,0,ease(wi))+lerp(0,42,ease(wo)),0,1);
-      var ax=seg(p,0.32,0.50), aop=Math.min(seg(p,0.32,0.37), 1-seg(p,0.45,0.50));
+      var ax=seg(p,0.44,0.60), aop=Math.min(seg(p,0.44,0.49), 1-seg(p,0.56,0.60));
       setL(avion, aop, lerp(-62,72,ax),0,1);
 
       /* ── JAULAS GRANDES: aparecen al abrirse los fiordos, luego se van (handoff limpio) ── */
-      setL(mar1, seg(p,0.50,0.57)*(1-seg(p,0.62,0.67)),0,0,1);
+      setL(mar1, seg(p,0.58,0.66)*(1-seg(p,0.70,0.76)),0,0,1);
       setL(mar2, 0, 0,0,1);
 
       /* ── INMERSION: jaula llena, vista de abajo hacia arriba, HOLD largo ── */
-      setL(jaulaLlena, seg(p,0.66,0.74)*(1-seg(p,0.85,0.90)), 0, lerp(10,0,ease(seg(p,0.66,0.76))),1);
+      setL(jaulaLlena, seg(p,0.70,0.78)*(1-seg(p,0.88,0.92)), 0, lerp(10,0,ease(seg(p,0.70,0.80))),1);
       /* ── ESCAPE ── */
-      setL(jaulaEsc2, seg(p,0.85,0.90)*(1-seg(p,0.91,0.94)),0,0,1);
-      setL(jaulaEsc3, seg(p,0.91,0.95),0,0,1);
+      setL(jaulaEsc2, seg(p,0.88,0.92)*(1-seg(p,0.93,0.96)),0,0,1);
+      setL(jaulaEsc3, seg(p,0.93,0.96),0,0,1);
       /* ── FONDO CONTAMINADO sube desde abajo ── */
-      setL(fondo, seg(p,0.95,1.0),0, lerp(34,0,ease(seg(p,0.95,1.0))),1);
+      setL(fondo, seg(p,0.96,1.0),0, lerp(34,0,ease(seg(p,0.96,1.0))),1);
 
       /* ── fondo de relleno: superficie -> profundo (durante el descenso) ── */
-      if(bgDeep) bgDeep.style.opacity = seg(p,0.60,0.74);
-      if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.60,0.74);
+      if(bgDeep) bgDeep.style.opacity = seg(p,0.64,0.76);
+      if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.64,0.76);
 
       /* ── TEXTOS ── */
-      if(hero){ hero.style.opacity = 1-seg(p,0.12,0.24); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.12,0.24))+'px)'; }
-      if(cue) cue.style.opacity = 1-seg(p,0.06,0.16);
-      if(scrim) scrim.style.opacity = 1-seg(p,0.16,0.28);
+      if(hero){ hero.style.opacity = 1-seg(p,0.10,0.20); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.10,0.20))+'px)'; }
+      if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
+      if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
       var beat=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      beat(beat1,0.14,0.20,0.38,0.44);
-      beat(beat2,0.72,0.78,0.82,0.86);
-      beat(beat3,0.88,0.92,0.97,0.99);
+      beat(beat1,0.16,0.22,0.44,0.50);
+      beat(beat2,0.74,0.80,0.86,0.90);
+      beat(beat3,0.90,0.94,0.98,0.995);
     }
 
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
-    var SCREENS = 4.8;
+    var SCREENS = 6;  // recorrido mas largo -> pacing pausado/escenificado
     function sizeIntro(){
       var h = window.innerHeight;
       if (stage) stage.style.height = h + 'px';
