@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from 'react'
+import MapSpinner from '../../shared/MapSpinner'
 import maplibregl from 'maplibre-gl'
 import { feature } from 'topojson-client'
 
@@ -650,6 +651,7 @@ export default function MapaConflicto() {
 
   return (
     <div className='flex h-full w-full' style={{ position: 'relative' }}>
+      <MapSpinner show={!loaded} />
       <div className={selected ? 'w-full md:w-3/5 relative' : 'w-full relative'}>
         <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
 

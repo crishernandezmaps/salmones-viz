@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import MapSpinner from '../../shared/MapSpinner'
 import maplibregl from 'maplibre-gl'
 import { feature } from 'topojson-client'
 
@@ -183,11 +184,7 @@ export default function MapaCapas() {
         </label>
       </div>
 
-      {!loaded && (
-        <div className='absolute inset-0 flex items-center justify-center bg-[#f0f4f3] z-20'>
-          <p className='text-[#1b3a4b]/40'>Cargando...</p>
-        </div>
-      )}
+      <MapSpinner show={!loaded} />
     </div>
   )
 }

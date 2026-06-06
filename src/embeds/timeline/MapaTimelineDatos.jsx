@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, useMemo } from 'react'
+import MapSpinner from '../../shared/MapSpinner'
 import maplibregl from 'maplibre-gl'
 
 const YEAR_MIN = 1985
@@ -411,6 +412,7 @@ export default function MapaTimelineDatos() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', background: '#f0f4f3' }}>
+      <MapSpinner show={centros.length === 0} />
       {/* Three region columns — horizontal on desktop, vertical on mobile */}
       <div style={{ flex: '1 1 0', minHeight: 0, display: 'flex', overflow: 'hidden' }} className='flex-col md:flex-row'>
         {REGIONS.map(region => (
