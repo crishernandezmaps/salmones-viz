@@ -660,10 +660,9 @@ export default function MapaConflicto() {
         paint: { 'text-color': '#4a7a8a', 'text-opacity': 0.6, 'text-halo-color': '#ffffff', 'text-halo-width': 1 },
       })
 
-      // Auto-seleccion del primer holding sancionado: SOLO en escritorio (ahi la
-      // ficha es panel lateral). En movil arrancaria tapando el mapa, asi que la
-      // ficha queda cerrada y el usuario elige un punto.
-      if (window.innerWidth >= 768 && holdingRanking.length > 0) {
+      // Auto-seleccion del primer holding sancionado al cargar (movil y escritorio):
+      // el usuario ve un ejemplo ya desplegado de inmediato (ficha + punto marcado).
+      if (holdingRanking.length > 0) {
         selectByCode(holdingRanking[0].code)
         setRankIndex(0)
       }

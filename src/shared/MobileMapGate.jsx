@@ -51,7 +51,7 @@ export default function MobileMapGate() {
       className='absolute inset-0 z-20 w-full h-full bg-transparent border-0 cursor-pointer'
       style={{ touchAction: 'pan-y' }}
     >
-      <span className='absolute bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-[#1b3a4b]/85 text-white text-xs font-semibold shadow-lg whitespace-nowrap pointer-events-none'>
+      <span className='absolute top-16 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full bg-[#1b3a4b]/85 text-white text-xs font-semibold shadow-lg whitespace-nowrap pointer-events-none'>
         👆 Toca para interactuar con el mapa
       </span>
     </button>
