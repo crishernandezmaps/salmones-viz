@@ -336,6 +336,7 @@ export default function MapaConflicto() {
   const [legendOpen, setLegendOpen] = useState(() => typeof window === 'undefined' || window.innerWidth >= 768)
 
   const rankingRef = useRef([])
+  const selMarkerRef = useRef(null)
 
   const selectByCode = useCallback((code) => {
     const { concMap, denMap, centrosByCode, spMap } = dataRef.current
@@ -383,6 +384,30 @@ export default function MapaConflicto() {
       setRankIndex(-1)
     }
   }, [selectByCode])
+
+  // Marcador del punto SELECCIONADO: anillo pulsante de alto contraste que "lazo"
+  // el centro elegido para distinguirlo entre los muchos puntos del mapa.
+  useEffect(() => {
+    if (!mapRef.current) return
+    const c = selected && selected.centro
+    if (c && c._lng && c._lat) {
+      const lngLat = [parseFloat(c._lng), parseFloat(c._lat)]
+      if (!selMarkerRef.current) {
+        const el = document.createElement('div')
+        el.className = 'conf-selmarker'
+        el.style.width = '42px'
+        el.style.height = '42px'
+        el.innerHTML = '<div class="conf-selmarker__pulse"></div><div class="conf-selmarker__ring"></div>'
+        selMarkerRef.current = new maplibregl.Marker({ element: el, anchor: 'center' })
+          .setLngLat(lngLat).addTo(mapRef.current)
+      } else {
+        selMarkerRef.current.setLngLat(lngLat)
+      }
+    } else if (selMarkerRef.current) {
+      selMarkerRef.current.remove()
+      selMarkerRef.current = null
+    }
+  }, [selected])
 
   useEffect(() => {
     if (mapRef.current) return
@@ -683,6 +708,14 @@ export default function MapaConflicto() {
 
   return (
     <div className='flex h-full w-full' style={{ position: 'relative' }}>
+      <style>{`
+        .conf-selmarker { position:relative; pointer-events:none; }
+        .conf-selmarker__ring { position:absolute; inset:0; border:3px solid #1b3a4b; border-radius:50%;
+          box-shadow:0 0 0 2px rgba(255,255,255,0.95), inset 0 0 0 1px rgba(255,255,255,0.55); }
+        .conf-selmarker__pulse { position:absolute; inset:0; border-radius:50%; background:rgba(27,58,75,0.22);
+          animation:confSelPulse 1.6s ease-out infinite; }
+        @keyframes confSelPulse { 0%{transform:scale(0.5);opacity:0.75} 100%{transform:scale(1.95);opacity:0} }
+      `}</style>
       <MapSpinner show={!loaded} />
       <div className={selected ? 'w-full md:w-3/5 relative' : 'w-full relative'}>
         <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
