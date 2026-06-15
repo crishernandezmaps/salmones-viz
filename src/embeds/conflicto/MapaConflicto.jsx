@@ -389,16 +389,17 @@ export default function MapaConflicto() {
     mapRef.current = new maplibregl.Map({
       container: containerRef.current, style: MAP_STYLE,
       center: [-73.2, -43.5], zoom: 7, attributionControl: false,
-      // Gestos cooperativos: 1 dedo / scroll mueven la PAGINA; 2 dedos / Ctrl+scroll
-      // mueven el MAPA. Evita que el mapa atrape el scroll del articulo (movil y desktop).
-      cooperativeGestures: true,
-      locale: {
-        'CooperativeGesturesHandler.WindowsHelpText': 'Usa Ctrl + scroll para hacer zoom',
-        'CooperativeGesturesHandler.MacHelpText': 'Usa ⌘ + scroll para hacer zoom',
-        'CooperativeGesturesHandler.MobileHelpText': 'Usa dos dedos para mover el mapa',
-      },
     })
     mapRef.current.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
+    mapRef.current.scrollZoom.disable()  // la rueda scrollea la pagina, no hace zoom
+    if (window.innerWidth < 768) {
+      // Movil = mapa fijo: 1 dedo SIEMPRE scrollea el articulo; zoom con botones +/-;
+      // tap selecciona un centro. Asi el mapa no atrapa ni "salta" el scroll.
+      mapRef.current.dragPan.disable()
+      mapRef.current.touchZoomRotate.disable()
+      mapRef.current.touchPitch.disable()
+      mapRef.current.dragRotate.disable()
+    }
 
     mapRef.current.on('load', async () => {
       const [ampResp, snaspeResp, ecmpoResp, centrosResp, concResp, denResp, spResp] = await Promise.all([
