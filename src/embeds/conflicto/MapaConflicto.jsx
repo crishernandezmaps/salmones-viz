@@ -6,6 +6,19 @@ import { feature } from 'topojson-client'
 const BASE = import.meta.env.BASE_URL
 const MAP_STYLE = 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json'
 
+/* ── Detecta viewport movil de forma reactiva (orientacion / resize del iframe) ── */
+function useIsMobile(bp = 768) {
+  const [m, setM] = useState(() => typeof window !== 'undefined' && window.innerWidth < bp)
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${bp - 1}px)`)
+    const on = () => setM(mq.matches)
+    on()
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [bp])
+  return m
+}
+
 /* ── SVG icon factory ── */
 function makeSVG(fill, stroke, symbol) {
   return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(
@@ -146,7 +159,7 @@ function MiniMap({ lng, lat }) {
 }
 
 /* ── Ficha Panel ── */
-function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
+function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
   if (!selected) {
     return (
       <div className='h-full flex items-center justify-center p-6'>
@@ -175,11 +188,17 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate }) {
       }}
     >
       {/* Header */}
-      <div className='sticky top-0 z-10 px-4 py-3 flex items-center justify-between' style={{ background: headerBg, color: '#fff' }}>
+      <div className='sticky top-0 z-10 px-4 py-3 flex items-center justify-between gap-2' style={{ background: headerBg, color: '#fff' }}>
         <div>
           <p className='text-xs opacity-80'>Comuna: {centro.COMUNA || '—'}</p>
           <p className='text-xs opacity-80'>Holding: {hasSobreprod ? sobreproduccion[0].titular : concesion?.Holding || concesion?.['Holding (columna manual)'] || concesion?.['nombre titular'] || '—'}</p>
         </div>
+        {onClose && (
+          <button onClick={onClose} aria-label='Cerrar ficha'
+            className='shrink-0 -mr-1.5 w-8 h-8 flex items-center justify-center rounded-full text-white/90 hover:bg-white/20 text-lg leading-none'>
+            &#10005;
+          </button>
+        )}
       </div>
 
       {/* Pagination — by holding */}
@@ -313,6 +332,8 @@ export default function MapaConflicto() {
   const [selected, setSelected] = useState(null)
   const [ranking, setRanking] = useState([])
   const [rankIndex, setRankIndex] = useState(0)
+  const isMobile = useIsMobile()
+  const [legendOpen, setLegendOpen] = useState(() => typeof window === 'undefined' || window.innerWidth >= 768)
 
   const rankingRef = useRef([])
 
@@ -330,7 +351,14 @@ export default function MapaConflicto() {
     if (mapRef.current && props._lng && props._lat) {
       const lng = parseFloat(props._lng)
       const lat = parseFloat(props._lat)
-      mapRef.current.flyTo({ center: [lng + 0.15, lat + 0.1], zoom: 9, duration: 1200 })
+      const m = window.innerWidth < 768
+      // En movil la ficha ocupa la mitad inferior: bajamos el centro para que el
+      // punto quede en la franja superior visible. En escritorio lo corremos a la
+      // derecha (el mapa ocupa 3/5 y la ficha va a la derecha).
+      mapRef.current.flyTo({
+        center: m ? [lng, lat - 0.18] : [lng + 0.15, lat + 0.1],
+        zoom: m ? 8.2 : 9, duration: 1200,
+      })
     }
   }, [])
 
@@ -612,8 +640,10 @@ export default function MapaConflicto() {
         paint: { 'text-color': '#4a7a8a', 'text-opacity': 0.6, 'text-halo-color': '#ffffff', 'text-halo-width': 1 },
       })
 
-      // Select first in ranking
-      if (holdingRanking.length > 0) {
+      // Auto-seleccion del primer holding sancionado: SOLO en escritorio (ahi la
+      // ficha es panel lateral). En movil arrancaria tapando el mapa, asi que la
+      // ficha queda cerrada y el usuario elige un punto.
+      if (window.innerWidth >= 768 && holdingRanking.length > 0) {
         selectByCode(holdingRanking[0].code)
         setRankIndex(0)
       }
@@ -662,9 +692,17 @@ export default function MapaConflicto() {
       <div className={selected ? 'w-full md:w-3/5 relative' : 'w-full relative'}>
         <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
 
-        {/* Legend */}
-        <div className='absolute top-3 left-3 bg-white/80 backdrop-blur-sm rounded-lg shadow-sm p-3 z-10 text-sm space-y-1.5'>
-          <p className='text-[10px] font-bold uppercase tracking-wider text-[#1b3a4b]/50 mb-0.5'>Capas</p>
+        {/* Legend — colapsable (en movil arranca cerrada para no tapar el mapa) */}
+        <div className='absolute top-3 left-3 z-10'>
+          <button
+            onClick={() => setLegendOpen(o => !o)}
+            className='flex items-center gap-1.5 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-[#1b3a4b]/70'
+          >
+            <span className='inline-block w-3 h-3 rounded-sm' style={{ background: 'linear-gradient(135deg,#5b9ea6,#b71c1c)' }} />
+            Capas
+            <span className='text-[#1b3a4b]/40 text-[9px]'>{legendOpen ? '▾' : '▸'}</span>
+          </button>
+          <div className={(legendOpen ? 'block' : 'hidden') + ' mt-1 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm p-3 text-sm space-y-1.5 max-w-[80vw] md:max-w-none'}>
           <p className='text-[9px] text-[#1b3a4b]/40 mb-1'>Activa o desactiva capas para explorar</p>
           <label className='flex items-center gap-2 cursor-pointer'>
             <input type='checkbox' checked={visible.centros} onChange={() => toggleLayer('centros')} className='rounded accent-[#5b9ea6]' />
@@ -691,10 +729,11 @@ export default function MapaConflicto() {
             <span className='w-3.5 h-3.5 rounded-full shrink-0' style={{ background: '#b71c1c', border: '2px solid #ffd600' }} />
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Centros sancionados por sobreproducción ({stats.sobreproduccion})</span>
           </label>
+          </div>
         </div>
 
-        {/* Mini map inset */}
-        {selected && selected.centro._lng && (
+        {/* Mini map inset — solo escritorio (en movil estorba el mapa pequeño) */}
+        {!isMobile && selected && selected.centro._lng && (
           <InsetWithConnector
             key={selected.centro.N_CODIGOCE}
             mapRef={mapRef}
@@ -721,6 +760,7 @@ export default function MapaConflicto() {
           ranking={ranking}
           rankIndex={currentRankIndex}
           onNavigate={handleNavigate}
+          onClose={() => { setSelected(null); setRankIndex(-1) }}
         />
       </div>
     </div>
