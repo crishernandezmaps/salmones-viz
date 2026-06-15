@@ -158,7 +158,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 .scroll-zoom.is-visible { opacity:1; transform:scale(1); }
 
 @media (max-width:600px) {
-  .story-viz { height:70vh; }
+  .story-viz { height:100vh; height:100dvh; }
   .story-data__grid { grid-template-columns:repeat(2,1fr); }
   .story-credits__grid { grid-template-columns:1fr; }
   .story-wrap .story-vignettes { grid-template-columns:1fr !important; }
@@ -404,6 +404,31 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.scroll-fade,.scroll-fade-left,.scroll-fade-right,.scroll-zoom')
     .forEach(function(el) { observer.observe(el); });
+
+  /* -- Mapas: cargar/descargar iframes segun cercania al viewport --
+     Cada iframe de mapa es un contexto WebGL pesado (el timeline crea 3). Si los
+     3 quedan vivos a la vez, el movil satura la GPU (scroll trabado, mapas que
+     "desaparecen" por perdida de contexto). Mantenemos cargado solo el mapa
+     cercano; los lejanos se descargan a about:blank y se recargan al volver. */
+  (function(){
+    var frames = document.querySelectorAll('.story-viz iframe');
+    if (!frames.length || !('IntersectionObserver' in window)) return;
+    frames.forEach(function(f){
+      f.setAttribute('data-src', f.getAttribute('src'));
+      f.setAttribute('src', 'about:blank');
+    });
+    var mapIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        var f = e.target, real = f.getAttribute('data-src');
+        if (e.isIntersecting) {
+          if (f.getAttribute('src') !== real) f.setAttribute('src', real);
+        } else if (f.getAttribute('src') === real) {
+          f.setAttribute('src', 'about:blank');
+        }
+      });
+    }, { rootMargin: '150% 0px 150% 0px', threshold: 0 });
+    frames.forEach(function(f){ mapIO.observe(f); });
+  })();
 
   /* ── INTRO OFICIAL — motor de scroll parallax ── */
   var intro = document.getElementById('sv-intro');

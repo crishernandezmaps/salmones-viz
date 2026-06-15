@@ -32,14 +32,8 @@ export default function MapaCapas() {
     })
     mapRef.current.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
     mapRef.current.scrollZoom.disable()  // la rueda scrollea la pagina, no hace zoom
-    if (window.innerWidth < 768) {
-      // Movil = mapa fijo: 1 dedo SIEMPRE scrollea el articulo; zoom con botones +/-.
-      // Asi el mapa no atrapa ni "salta" el scroll de la pagina.
-      mapRef.current.dragPan.disable()
-      mapRef.current.touchZoomRotate.disable()
-      mapRef.current.touchPitch.disable()
-      mapRef.current.dragRotate.disable()
-    }
+    // En movil la interaccion se controla con MobileMapGate (toca-para-activar) en
+    // el wrapper: en modo scroll el mapa no recibe gestos; al activar, gestos normales.
 
     mapRef.current.on('load', async () => {
       const [centrosResp, snaspeResp] = await Promise.all([

@@ -1,4 +1,5 @@
 import MapaTimelineDatos from './MapaTimelineDatos'
+import MobileMapGate from '../../shared/MobileMapGate'
 
 export default function EmbedTimeline() {
   return (
@@ -7,6 +8,7 @@ export default function EmbedTimeline() {
           del dispositivo. Dejamos que los breakpoints Tailwind respondan al ancho real:
           escritorio = 3 columnas + grafico; movil = apilado vertical + sparklines. */}
       <MapaTimelineDatos />
+      <MobileMapGate />
     </div>
   )
 }
