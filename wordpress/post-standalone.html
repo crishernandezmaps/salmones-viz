@@ -47,8 +47,11 @@
 
 /* Ocultar titulo y meta nativos del tema (el hero inmersivo ya trae su propio titulo) */
 .wp-block-post-title, .wp-block-post-author, .wp-block-post-author-name, .wp-block-post-date, .wp-block-post-terms { display:none !important; }
-/* Ocultar el byline completo ("Written by ... in ...") y compactar el header del tema */
-.wp-block-group:has(> .wp-block-post-author-name) { display:none !important; }
+/* Ocultar el byline ("Written by ... in <categoria>"). Es el grupo cuyo HIJO
+   DIRECTO es .wp-block-post-terms (los <p>Written by</p>/<p>in</p> tambien estan
+   ahi). Usar ':has(> ...)' (hijo directo) es clave: con descendiente se matchea
+   tambien el grupo ancestro que envuelve el articulo y se oculta TODO. */
+.wp-block-group:has(> .wp-block-post-terms) { display:none !important; }
 main:has(.wp-block-post-content) { margin-top:0 !important; }
 .wp-block-group:has(> .wp-block-post-content) { padding-top:0 !important; }
 /* Ocultar el header del sitio (barra blanca con titulo del sitio + nav) */
@@ -163,6 +166,24 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
   .story-credits__grid { grid-template-columns:1fr; }
   .story-wrap .story-vignettes { grid-template-columns:1fr !important; }
 }
+
+/* === Rama MOVIL de la intro (secuencia MOVIL_1, junio) === */
+/* Frame a pantalla completa; las capas se muestran COMPLETAS (contain) al ancho
+   del dispositivo, centradas, con relleno cielo/agua (.sv-bg) en las franjas.
+   Asi la composicion coincide con el arte de la disenadora (vista amplia, jaulas
+   en la distancia, agua abajo) sin recortar. */
+.sv-frame-m { position:absolute; inset:0; z-index:1; display:none; }
+.sv-frame-m .sv-layer { object-fit:contain !important; object-position:center !important; }
+.sv-dark { position:absolute; inset:0; z-index:46; pointer-events:none; background:#03101a; opacity:0; will-change:opacity; }
+@media (max-width:767px){
+  .sv-frame.sv-frame-d { display:none; }
+  .sv-frame-m { display:block; }
+  /* Franjas del letterbox: cielo arriba / agua abajo (degradado limpio).
+     Antes usaban el paisaje desenfocado (of-mar3-blur) que se "repetia" como
+     una copia fantasma de la escena arriba y abajo. */
+  .sv-bg--surface { background-image:linear-gradient(180deg,#d2dce0 0%,#a6b8c3 20%,#6a8a9c 46%,#436278 100%) !important; transform:none !important; }
+  .sv-bg--deep { background-image:linear-gradient(180deg,#27414f 0%,#162c3a 100%) !important; transform:none !important; }
+}
 </style>
 <div class="story-wrap">
 <!-- /wp:html -->
@@ -173,25 +194,42 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
     <div class="sv-bg sv-bg--surface" id="sv-bgSurface"></div>
     <div class="sv-bg sv-bg--deep" id="sv-bgDeep"></div>
 
-    <div class="sv-frame">
-      <img id="sv-mar3"     class="sv-layer" src="/wp-content/uploads/scroll-assets/of-mar3.webp" alt="" style="object-position:center 42%">
-      <img id="sv-montana2" class="sv-layer" src="/wp-content/uploads/scroll-assets/of-montana2.webp" alt="">
-      <img id="sv-montana1" class="sv-layer" src="/wp-content/uploads/scroll-assets/of-montana1.webp" alt="">
-      <img id="sv-fiordo1"  class="sv-layer" src="/wp-content/uploads/scroll-assets/of-fiordo1.webp" alt="">
-      <img id="sv-fiordo2"  class="sv-layer" src="/wp-content/uploads/scroll-assets/of-fiordo2.webp" alt="">
-      <img id="sv-avion"    class="sv-layer" src="/wp-content/uploads/scroll-assets/of-avion.webp" alt="" style="object-fit:contain !important;object-position:center 20%;opacity:0">
-      <img id="sv-wellboat" class="sv-layer" src="/wp-content/uploads/scroll-assets/of-wellboat.webp" alt="" style="opacity:0">
-      <img id="sv-camion"   class="sv-layer" src="/wp-content/uploads/scroll-assets/of-camion.webp" alt="" style="opacity:0">
-      <img id="sv-mar1"     class="sv-layer" src="/wp-content/uploads/scroll-assets/of-mar1.webp" alt="" style="opacity:0">
-      <img id="sv-mar2"     class="sv-layer" src="/wp-content/uploads/scroll-assets/of-mar2.webp" alt="" style="opacity:0">
-      <img id="sv-jaulaLlena" class="sv-layer" src="/wp-content/uploads/scroll-assets/of-jaula-llena.webp" alt="" style="opacity:0">
-      <img id="sv-jaulaEsc2"  class="sv-layer" src="/wp-content/uploads/scroll-assets/of-jaula-escape2.webp" alt="" style="opacity:0">
-      <img id="sv-jaulaEsc3"  class="sv-layer" src="/wp-content/uploads/scroll-assets/of-jaula-escape3.webp" alt="" style="opacity:0">
+    <div class="sv-frame sv-frame-d">
+      <img id="sv-mar3"     class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-mar3.webp" alt="" style="object-position:center 42%">
+      <img id="sv-montana2" class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-montana2.webp" alt="">
+      <img id="sv-montana1" class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-montana1.webp" alt="">
+      <img id="sv-fiordo1"  class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-fiordo1.webp" alt="">
+      <img id="sv-fiordo2"  class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-fiordo2.webp" alt="">
+      <img id="sv-avion"    class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-avion.webp" alt="" style="object-fit:contain !important;object-position:center 20%;opacity:0">
+      <img id="sv-wellboat" class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-wellboat.webp" alt="" style="opacity:0">
+      <img id="sv-camion"   class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-camion.webp" alt="" style="opacity:0">
+      <img id="sv-mar1"     class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-mar1.webp" alt="" style="opacity:0">
+      <img id="sv-mar2"     class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-mar2.webp" alt="" style="opacity:0">
+      <img id="sv-jaulaLlena" class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-jaula-llena.webp" alt="" style="opacity:0">
+      <img id="sv-jaulaEsc2"  class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-jaula-escape2.webp" alt="" style="opacity:0">
+      <img id="sv-jaulaEsc3"  class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-jaula-escape3.webp" alt="" style="opacity:0">
     </div>
 
     <!-- fondo contaminado: fuera del frame, anclado al fondo del escenario completo -->
-    <img id="sv-fondo" class="sv-layer" src="/wp-content/uploads/scroll-assets/of-fondo-contaminado.webp" alt="" style="opacity:0;object-position:center bottom;z-index:2;">
+    <img id="sv-fondo" class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-fondo-contaminado.webp" alt="" style="opacity:0;object-position:center bottom;z-index:2;">
 
+    <div class="sv-frame-m">
+      <img id="m1-mar1"      class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-mar1.webp" alt="">
+      <img id="m1-fiordo2"   class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-fiordo2.webp" alt="">
+      <img id="m1-fiordo1"   class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-fiordo1.webp" alt="">
+      <img id="m1-fiordo1b"  class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-fiordo1b.webp" alt="">
+      <img id="m1-montana2"  class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-montana2.webp" alt="">
+      <img id="m1-montana1"  class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-montana1.webp" alt="">
+      <img id="m1-wellboat"  class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-wellboat.webp" alt="" style="opacity:0">
+      <img id="m1-camion"    class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-camion.webp" alt="" style="opacity:0">
+      <img id="m1-avion"     class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-avion.webp" alt="" style="opacity:0">
+      <img id="m1-jaula1"    class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-jaula1.webp" alt="" style="opacity:0">
+      <img id="m1-jaula2"    class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-jaula2.webp" alt="" style="opacity:0">
+      <img id="m1-jaula3"    class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-jaula3.webp" alt="" style="opacity:0">
+      <img id="m1-fondo"     class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-fondo.webp" alt="" style="opacity:0;object-position:center bottom">
+      <img id="m1-fondobuzo" class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-fondobuzo.webp" alt="" style="opacity:0;object-position:center bottom">
+    </div>
+    <div class="sv-dark" id="sv-dark"></div>
     <div class="sv-scrim" id="sv-scrim"></div>
     <div class="sv-hero" id="sv-hero">
       <div class="sv-kicker">Universidad Diego Portales</div>
@@ -446,6 +484,13 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
         fondo=g('sv-fondo'),
         hero=g('sv-hero'), beat1=g('sv-beat1'), beat2=g('sv-beat2'), beat3=g('sv-beat3'),
         cue=g('sv-cue'), scrim=g('sv-scrim'), bgDeep=g('sv-bgDeep'), bgSurface=g('sv-bgSurface');
+    var mMar1=g('m1-mar1'), mFiordo1=g('m1-fiordo1'), mFiordo1b=g('m1-fiordo1b'), mFiordo2=g('m1-fiordo2'),
+        mMontana1=g('m1-montana1'), mMontana2=g('m1-montana2'),
+        mCamion=g('m1-camion'), mWellboat=g('m1-wellboat'), mAvion=g('m1-avion'),
+        mJaula1=g('m1-jaula1'), mJaula2=g('m1-jaula2'), mJaula3=g('m1-jaula3'),
+        mFondo=g('m1-fondo'), mFondoBuzo=g('m1-fondobuzo'), dark=g('sv-dark');
+    var isMobileIntro = window.matchMedia('(max-width:767px)').matches;
+    (function(){ var im=document.querySelectorAll(isMobileIntro?'.sv-m':'.sv-d'); for(var i=0;i<im.length;i++){ var ds=im[i].getAttribute('data-src'); if(ds){ im[i].src=ds; } } })();
     var setL = function(node,o,x,y,s){ if(!node) return; if(o!==null) node.style.opacity=o; node.style.transform='translate('+x+'%,'+y+'%) scale('+s+')'; };
 
     function render(p) {
@@ -491,9 +536,49 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       beat(beat3,0.90,0.94,0.98,0.995);
     }
 
+    function renderMobile(p) {
+      /* SUPERFICIE: agua + jaulas vacias (mar1) + fiordo + montanas */
+      var surf = seg(p,0.42,0.52), openF = ease(seg(p,0.42,0.52));
+      setL(mMar1, 1-surf, 0,0,1);
+      setL(mFiordo2,  1-seg(p,0.44,0.52), lerp(0, 46,openF),0,1);
+      setL(mFiordo1,  1-seg(p,0.44,0.52), lerp(0,-46,openF),0,1);
+      setL(mFiordo1b, 1-seg(p,0.44,0.52), lerp(0,-46,openF),0,1);
+      setL(mMontana1, 1-surf, lerp(0,-30,openF),0,1);
+      setL(mMontana2, 1-surf, lerp(0, 30,openF),0,1);
+      /* VEHICULOS: camion -> barco -> avion */
+      var ci=seg(p,0.10,0.18), co=seg(p,0.40,0.48);
+      setL(mCamion, ci*(1-co), lerp(-28,0,ease(ci))+lerp(0,-44,ease(co)),0,1);
+      var wi=seg(p,0.22,0.30), wo=seg(p,0.42,0.50);
+      setL(mWellboat, wi*(1-wo), lerp(36,0,ease(wi))+lerp(0,44,ease(wo)),0,1);
+      var ax=seg(p,0.30,0.42), aop=Math.min(seg(p,0.30,0.34), 1-seg(p,0.38,0.42));
+      setL(mAvion, aop, lerp(-64,72,ax),0,1);
+      /* JAULA QUE SE LLENA: vacia -> llenandose -> llena */
+      setL(mJaula1, seg(p,0.48,0.54)*(1-seg(p,0.56,0.60)), 0, lerp(8,0,ease(seg(p,0.48,0.56))),1);
+      setL(mJaula2, seg(p,0.56,0.60)*(1-seg(p,0.62,0.66)), 0,0,1);
+      setL(mJaula3, seg(p,0.62,0.66), 0,0,1);
+      /* INMERSION: el fondo marino sube; luego aparece el buzo */
+      setL(mFondo,     seg(p,0.68,0.80)*(1-seg(p,0.84,0.90)), 0, lerp(42,0,ease(seg(p,0.68,0.82))),1);
+      setL(mFondoBuzo, seg(p,0.84,0.90), 0, lerp(10,0,ease(seg(p,0.84,0.92))),1);
+      /* relleno: superficie -> profundo */
+      if(bgDeep) bgDeep.style.opacity = seg(p,0.60,0.76);
+      if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.60,0.76);
+      /* OSCURECIMIENTO FINAL: el fondo se hace cada vez mas oscuro (profundidad) */
+      if(dark) dark.style.opacity = seg(p,0.86,1.0)*0.92;
+      /* TEXTOS */
+      if(hero){ hero.style.opacity = 1-seg(p,0.10,0.20); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.10,0.20))+'px)'; }
+      if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
+      if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
+      var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
+      beatM(beat1,0.14,0.20,0.40,0.46);
+      beatM(beat2,0.56,0.62,0.66,0.72);
+      beatM(beat3,0.84,0.90,0.97,0.995);
+    }
+
+    var activeRender = isMobileIntro ? renderMobile : render;
+
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
-    var SCREENS = 6;  // recorrido mas largo -> pacing pausado/escenificado
+    var SCREENS = isMobileIntro ? 10 : 6;  // movil: recorrido mas largo -> transiciones mas lentas/graduales
     function sizeIntro(){
       var h = window.innerHeight;
       if (stage) stage.style.height = h + 'px';
@@ -506,7 +591,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       requestAnimationFrame(function(){
         var r=intro.getBoundingClientRect();
         var total=intro.offsetHeight - (stage ? stage.offsetHeight : window.innerHeight);
-        render(clamp((-r.top)/total, 0, 1));
+        activeRender(clamp((-r.top)/total, 0, 1));
         ticking=false;
       });
     }
@@ -514,7 +599,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
     window.addEventListener('scroll', onScroll, {passive:true});
     window.addEventListener('resize', function(){ sizeIntro(); onScroll(); });
     window.addEventListener('orientationchange', function(){ sizeIntro(); onScroll(); });
-    render(0);
+    activeRender(0);
   }
 })();
 </script>
