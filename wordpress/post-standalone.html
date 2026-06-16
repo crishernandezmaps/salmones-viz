@@ -131,6 +131,21 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 .story-viz { position:relative; width:100% !important; height:100vh; background:var(--story-color-sage); overflow:hidden; }
 .story-viz--short { height:85vh; }
 .story-viz iframe { position:absolute; top:0; left:0; width:100% !important; height:100% !important; border:0 !important; display:block; }
+/* === Gate de interaccion de mapas en MOVIL (controlado desde el post padre) ===
+   Resuelve el scroll-vs-interaccion: en movil el iframe va pointer-events:none ->
+   arrastrar sobre el mapa scrollea la pagina NATIVO (el gesto no entra al iframe,
+   no hay secuestro). Al tocar el overlay se agrega .mapgate-active -> el iframe
+   recibe gestos (pan/zoom/play); el boton Listo vuelve al modo scroll. */
+.mapgate-overlay { position:absolute; inset:0; z-index:6; display:none; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.mapgate-overlay__hint { position:absolute; top:18px; left:50%; transform:translateX(-50%); background:rgba(27,58,75,0.9); color:#fff; font-family:var(--story-font-ui); font-size:12px; font-weight:600; padding:9px 18px; border-radius:999px; white-space:nowrap; box-shadow:0 2px 10px rgba(0,0,0,0.3); pointer-events:none; }
+.mapgate-done { position:absolute; top:14px; left:50%; transform:translateX(-50%); z-index:7; display:none; align-items:center; gap:6px; background:#1b3a4b; color:#fff; font-family:var(--story-font-ui); font-size:12px; font-weight:700; padding:9px 18px; border-radius:999px; border:0; box-shadow:0 2px 10px rgba(0,0,0,0.35); cursor:pointer; }
+@media (max-width:767px){
+  .story-viz iframe { pointer-events:none; }
+  .story-viz.mapgate-active iframe { pointer-events:auto; }
+  .story-viz .mapgate-overlay { display:block; }
+  .story-viz.mapgate-active .mapgate-overlay { display:none; }
+  .story-viz.mapgate-active .mapgate-done { display:flex; }
+}
 
 /* Quote */
 .story-wrap .story-quote { min-height:50vh; display:flex !important; align-items:center; justify-content:center; background:var(--story-color-dark) !important; padding:clamp(4rem,10vh,8rem) clamp(1.5rem,4vw,3rem) !important; text-align:center; width:100% !important; }
@@ -473,6 +488,31 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       });
     }, { rootMargin: '150% 0px 150% 0px', threshold: 0 });
     frames.forEach(function(f){ mapIO.observe(f); });
+  })();
+
+  /* -- Gate de interaccion de mapas en MOVIL (toca-para-activar, desde el padre) --
+     iframe pointer-events:none por CSS en movil -> arrastrar scrollea la pagina.
+     Tocar el overlay agrega .mapgate-active al .story-viz -> el iframe recibe gestos. */
+  (function(){
+    if (!window.matchMedia('(max-width:767px)').matches) return;
+    var secs = document.querySelectorAll('.story-viz');
+    for (var i=0;i<secs.length;i++){ (function(sec){
+      if (!sec.querySelector('iframe')) return;
+      var ov = document.createElement('div');
+      ov.className = 'mapgate-overlay';
+      var hint = document.createElement('span');
+      hint.className = 'mapgate-overlay__hint';
+      hint.innerHTML = '&#128070; Toca para interactuar con el mapa';
+      ov.appendChild(hint);
+      var done = document.createElement('button');
+      done.type = 'button';
+      done.className = 'mapgate-done';
+      done.innerHTML = '&#10003; Listo &#183; seguir leyendo';
+      sec.appendChild(ov);
+      sec.appendChild(done);
+      ov.addEventListener('click', function(){ sec.classList.add('mapgate-active'); });
+      done.addEventListener('click', function(){ sec.classList.remove('mapgate-active'); });
+    })(secs[i]); }
   })();
 
   /* ── INTRO OFICIAL — motor de scroll parallax ── */
