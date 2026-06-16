@@ -47,6 +47,14 @@ el navegador trate como nueva**. Eso implica DOS cosas (no basta con una):
 2. **Cambiar el slug del post** a uno nuevo (`salmones-movil-vN`). El slug viejo
    queda con redirect 301 al nuevo automáticamente.
 
+> **IMPORTANTE (orden):** si el cambio toca los MAPAS (Pages), bumpea la version
+> `&v=N` y el slug **DESPUES** de que el deploy de Pages confirme `completed/success`
+> (y dale ~1 min extra por la CDN de GitHub Pages). Si bumpeas ANTES, el navegador
+> baja el build VIEJO y lo cachea bajo la clave nueva -> el usuario ve lo viejo aunque
+> el codigo este bien, y hay que volver a bumpear. (Paso real: v5 se entrego antes de
+> que Pages terminara; hubo que rehacer a v6.) Si el cambio es solo del POST (HTML),
+> no hay build de Pages que esperar.
+
 Proceso completo (incrementar N cada vez que se quiera un link fresco):
 
 ```bash
@@ -58,9 +66,9 @@ ssh root@46.224.221.33 'cd /root/work/salmones-viz &&   # 1) subir version de lo
 ```
 
 **Estado actual:** post 70 ("Asi nadan los salmones en Chile (movil)"),
-slug `salmones-movil-v2`, iframes en `&v=2`.
-URL vigente: https://salmoneswp.tremen.tech/2026/06/15/salmones-movil-v2/
-Próximo link fresco = `v3` (subir iframes a `&v=3` + slug `salmones-movil-v3`).
+slug `salmones-movil-v6`, iframes en `&v=6`.
+URL vigente: https://salmoneswp.tremen.tech/2026/06/15/salmones-movil-v6/
+Próximo link fresco = `v7` (subir iframes a `&v=7` + slug `salmones-movil-v7`).
 
 > Nota: el `&` en el `src` del iframe se sirve como `&#038;` (encoding HTML
 > correcto); el navegador lo decodifica a `&` y pide `?embed=...&v=N`. Está bien.
