@@ -205,15 +205,15 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
       {ranking.length > 0 && (
         <div className='flex items-center justify-between px-4 py-2 border-b border-current/10' style={{ background: inRanking ? 'rgba(217,64,64,0.08)' : 'rgba(27,58,75,0.04)' }}>
           <button onClick={() => onNavigate(Math.max(0, rankIndex - 1))} disabled={rankIndex <= 0}
-            className='px-2 py-1 rounded text-xs font-bold disabled:opacity-20' style={{ color: headerBg }}>
+            className='inline-flex items-center gap-1 px-3 py-1.5 rounded-full border text-xs font-bold disabled:opacity-20' style={{ color: headerBg, borderColor: headerBg }}>
             &#8592; Anterior
           </button>
           <span className='text-[10px] opacity-50 uppercase tracking-wider'>
             {inRanking ? `Holding ${rankIndex + 1} de ${ranking.length}` : 'Holdings sancionados'}
           </span>
           <button onClick={() => onNavigate(Math.min(ranking.length - 1, rankIndex + 1))} disabled={rankIndex >= ranking.length - 1}
-            className='px-2 py-1 rounded text-xs font-bold disabled:opacity-20' style={{ color: headerBg }}>
-            Siguiente &#8594;
+            className='sv-next inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-sm disabled:opacity-20' style={{ background: headerBg }}>
+            Siguiente <span className='sv-next__arrow'>&#8594;</span>
           </button>
         </div>
       )}
