@@ -148,13 +148,14 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 .story-vignettes__item--sage { background:var(--story-color-sage) !important; }
 
 /* Credits */
-.story-credits { background:var(--story-color-deep); color:rgba(255,255,255,0.7); padding:clamp(4rem,10vh,6rem) clamp(1.5rem,4vw,3rem); width:100% !important; }
-.story-credits__inner { max-width:var(--story-max-text); margin:0 auto; }
-.story-credits .story-kicker { font-family:var(--story-font-heading); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:4px; color:var(--story-color-teal); margin-bottom:1.5rem; }
-.story-credits p { font-family:var(--story-font-body); font-size:0.95rem; line-height:1.7; margin:0 0 1.5em; color:rgba(255,255,255,0.7) !important; }
-.story-credits__grid { display:grid; grid-template-columns:1fr 1fr; gap:2rem; margin-top:2rem; padding-top:2rem; border-top:1px solid rgba(255,255,255,0.1); }
-.story-credits__grid h4 { font-family:var(--story-font-ui); font-size:10px; text-transform:uppercase; letter-spacing:2px; color:rgba(255,255,255,0.35); margin:0 0 0.5rem; }
-.story-credits__grid p { font-family:var(--story-font-ui) !important; font-size:14px !important; color:rgba(255,255,255,0.6) !important; margin:0 !important; }
+.story-credits { background:var(--story-color-deep); color:rgba(255,255,255,0.7); padding:clamp(3.5rem,9vh,5.5rem) clamp(1.5rem,5vw,3rem); width:100% !important; }
+.story-credits__inner { max-width:var(--story-max-text); margin:0 auto; padding:0 clamp(1.4rem,5vw,2rem); }
+.story-credits .story-kicker { font-family:var(--story-font-heading); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:3.5px; color:var(--story-color-teal); margin:0 0 0.9rem; }
+.story-credits p { font-family:var(--story-font-body); font-size:0.9rem; line-height:1.65; margin:0; color:rgba(255,255,255,0.6) !important; }
+.story-credits__grid { display:grid; grid-template-columns:1fr 1fr; gap:1.6rem 2rem; margin-top:2.5rem; padding-top:1.8rem; border-top:1px solid rgba(255,255,255,0.12); }
+.story-credits__grid > div { min-width:0; }
+.story-credits__grid h4 { font-family:var(--story-font-ui); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:2px; color:var(--story-color-teal); opacity:0.85; margin:0 0 0.35rem; }
+.story-credits__grid p { font-family:var(--story-font-ui) !important; font-size:15px !important; line-height:1.4 !important; color:rgba(255,255,255,0.85) !important; margin:0 !important; }
 
 /* Scroll animations */
 .scroll-fade { opacity:0; transform:translateY(40px); transition:opacity 0.8s ease,transform 0.8s ease; }
@@ -180,7 +181,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
    en la distancia, agua abajo) sin recortar. */
 .sv-frame-m { position:absolute; inset:0; z-index:1; display:none; }
 .sv-frame-m .sv-layer { object-fit:cover !important; object-position:center !important; }
-.sv-dark { position:absolute; inset:0; z-index:46; pointer-events:none; background:linear-gradient(180deg,rgba(3,16,26,0) 0%,rgba(3,16,26,0) 46%,rgba(3,16,26,0.5) 74%,rgba(3,16,26,0.95) 100%); opacity:0; will-change:opacity; }
+.sv-dark { position:absolute; inset:0; z-index:46; pointer-events:none; background:linear-gradient(180deg,rgba(2,11,18,0) 0%,rgba(2,11,18,0) 38%,rgba(2,11,18,0.5) 66%,rgba(2,11,18,0.97) 100%); opacity:0; will-change:opacity; }
 @media (max-width:767px){
   .sv-frame.sv-frame-d { display:none; }
   .sv-frame-m { display:block; }
@@ -561,17 +562,24 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       var ax=seg(p,0.30,0.42), aop=Math.min(seg(p,0.30,0.34), 1-seg(p,0.38,0.42));
       setL(mAvion, aop, lerp(-64,72,ax),0,1);
       /* JAULA QUE SE LLENA: vacia -> llenandose -> llena */
-      setL(mJaula1, seg(p,0.48,0.54)*(1-seg(p,0.56,0.60)), 0, lerp(8,0,ease(seg(p,0.48,0.56))),1);
-      setL(mJaula2, seg(p,0.56,0.60)*(1-seg(p,0.62,0.66)), 0,0,1);
+      /* Las jaulas se APILAN (no se funden hacia afuera): jaula1 y jaula2 quedan
+         opacas debajo y jaula3 entra encima. Asi SIEMPRE hay una capa submarina
+         opaca cubriendo la superficie persistente -> no se transparenta ni se
+         asoma el paisaje de arriba durante las transiciones. */
+      setL(mJaula1, seg(p,0.48,0.54), 0, lerp(8,0,ease(seg(p,0.48,0.56))),1);
+      setL(mJaula2, seg(p,0.56,0.60), 0,0,1);
       setL(mJaula3, seg(p,0.62,0.66), 0,0,1);
       /* INMERSION: el fondo marino sube; luego aparece el buzo */
-      setL(mFondo,     seg(p,0.68,0.80)*(1-seg(p,0.84,0.90)), 0, lerp(42,0,ease(seg(p,0.68,0.82))),1);
-      setL(mFondoBuzo, seg(p,0.84,0.90), 0, lerp(10,0,ease(seg(p,0.84,0.92))),1);
+      /* Lecho marino: fundido SIMPLE en su lugar (abajo), sin translateY -> antes
+         el barrido subia el borde del lecho (red rota) por encima de la jaula y la
+         dejaba lavada/fantasmal durante la transicion. */
+      setL(mFondo,     seg(p,0.68,0.80)*(1-seg(p,0.84,0.90)), 0, 0, 1);
+      setL(mFondoBuzo, seg(p,0.84,0.90), 0, 0, 1);
       /* relleno: superficie -> profundo */
       if(bgDeep) bgDeep.style.opacity = seg(p,0.60,0.76);
       if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.60,0.76);
       /* OSCURECIMIENTO FINAL: el fondo se hace cada vez mas oscuro (profundidad) */
-      if(dark) dark.style.opacity = seg(p,0.86,1.0)*0.92;
+      if(dark) dark.style.opacity = seg(p,0.84,1.0);
       /* TEXTOS */
       if(hero){ hero.style.opacity = 1-seg(p,0.02,0.09); hero.style.transform='translateY('+lerp(0,-40,seg(p,0.02,0.09))+'px)'; }
       if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
