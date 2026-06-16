@@ -75,7 +75,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 /* ====== INTRO OFICIAL — parallax scroll-pinned (capas de la disenadora) ====== */
 .sv-intro { position:relative; height:480vh; height:480dvh; width:100% !important; overflow-x:clip; }
-.sv-stage { position:sticky; top:0; height:100vh; height:100dvh; height:100lvh; width:100%; overflow:hidden; background:#29516b; }
+.sv-stage { position:sticky; top:0; height:100vh; height:100dvh; width:100%; overflow:hidden; background:#29516b; }
 /* Relleno de las franjas (arte mas ancho que la pantalla): mismo paisaje
    desenfocado y ampliado -> no se ve "huincha" plana, sino profundidad. */
 .sv-bg { position:absolute; inset:0; z-index:0; background-position:center; background-size:cover;
@@ -312,7 +312,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 <!-- wp:html -->
 <section class="story-viz">
-  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=timeline&v=3" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Timeline"></iframe>
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=timeline&v=4" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Timeline"></iframe>
 </section>
 <!-- /wp:html -->
 
@@ -346,7 +346,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 <!-- wp:html -->
 <section class="story-viz">
-  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=conflicto&v=3" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Conflicto"></iframe>
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=conflicto&v=4" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Conflicto"></iframe>
 </section>
 <!-- /wp:html -->
 
@@ -390,7 +390,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 <!-- wp:html -->
 <section class="story-viz">
-  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=capas&v=3" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Mapa de capas"></iframe>
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=capas&v=4" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Mapa de capas"></iframe>
 </section>
 <!-- /wp:html -->
 
@@ -595,30 +595,40 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
     var SCREENS = isMobileIntro ? 10 : 6;  // movil: recorrido mas largo -> transiciones mas lentas/graduales
+    // Alto del escenario = el viewport visible mas GRANDE visto (solo crece, nunca encoge).
+    // En movil la barra de URL colapsa al scrollear y el viewport CRECE; si el escenario
+    // solo crece, nunca queda corto (sin franja blanca abajo) ni oscila (sin tiriton).
+    // lvh/dvh/innerHeight-a-secas fallaban cada uno en algun caso.
+    var maxH = 0, lastW = window.innerWidth;
     function sizeIntro(){
-      // El alto del escenario lo fija el CSS con 100lvh (viewport GRANDE y estable):
-      // asi NO persigue la barra de URL del movil. Antes se fijaba a innerHeight al
-      // cargar (barra visible = chico) -> al colapsar la barra al scrollear, el
-      // escenario quedaba corto = franja blanca abajo + tiriton. El total de scroll
-      // de la intro se calcula del alto REAL ya renderizado del escenario.
-      var h = stage ? stage.offsetHeight : window.innerHeight;
-      intro.style.height = Math.round(h * SCREENS) + 'px';
+      var h = window.innerHeight;
+      if (h <= maxH) return;                 // ya cubierto -> no-op (sin reflow por frame)
+      maxH = h;
+      if (stage) stage.style.height = maxH + 'px';
+      intro.style.height = Math.round(maxH * SCREENS) + 'px';
     }
 
     var ticking=false;
     function onScroll(){
       if(ticking) return; ticking=true;
       requestAnimationFrame(function(){
+        sizeIntro();                         // crece el escenario apenas la barra colapsa
         var r=intro.getBoundingClientRect();
         var total=intro.offsetHeight - (stage ? stage.offsetHeight : window.innerHeight);
         activeRender(clamp((-r.top)/total, 0, 1));
         ticking=false;
       });
     }
+    function onResize(){
+      // rotacion / resize real (cambia el ancho) -> resetear el maximo; cambio de altura
+      // solo (barra de URL) -> NO resetear, dejar que sizeIntro crezca.
+      if (window.innerWidth !== lastW) { lastW = window.innerWidth; maxH = 0; }
+      sizeIntro(); onScroll();
+    }
     sizeIntro();
     window.addEventListener('scroll', onScroll, {passive:true});
-    window.addEventListener('resize', function(){ sizeIntro(); onScroll(); });
-    window.addEventListener('orientationchange', function(){ sizeIntro(); onScroll(); });
+    window.addEventListener('resize', onResize);
+    window.addEventListener('orientationchange', onResize);
     activeRender(0);
   }
 })();
