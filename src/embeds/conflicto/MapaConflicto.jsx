@@ -181,14 +181,14 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
 
   return (
     <div
-      className='h-full overflow-y-auto'
+      className='h-full flex flex-col overflow-hidden md:overflow-y-auto'
       style={{
         background: (hasSobreprod || hasDenuncia) ? '#fff5f5' : '#fff',
         color: (hasSobreprod || hasDenuncia) ? '#4a1010' : '#1b3a4b',
       }}
     >
       {/* Header */}
-      <div className='sticky top-0 z-10 px-4 py-3 flex items-center justify-between gap-2' style={{ background: headerBg, color: '#fff' }}>
+      <div className='shrink-0 z-10 px-4 py-2.5 flex items-center justify-between gap-2' style={{ background: headerBg, color: '#fff' }}>
         <div>
           <p className='text-xs opacity-80'>Comuna: {centro.COMUNA || '—'}</p>
           <p className='text-xs opacity-80'>Holding: {hasSobreprod ? sobreproduccion[0].titular : concesion?.Holding || concesion?.['Holding (columna manual)'] || concesion?.['nombre titular'] || '—'}</p>
@@ -203,7 +203,7 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
 
       {/* Pagination — by holding */}
       {ranking.length > 0 && (
-        <div className='flex items-center justify-between px-4 py-2 border-b border-current/10' style={{ background: inRanking ? 'rgba(217,64,64,0.08)' : 'rgba(27,58,75,0.04)' }}>
+        <div className='shrink-0 flex items-center justify-between px-4 py-2 border-b border-current/10' style={{ background: inRanking ? 'rgba(217,64,64,0.08)' : 'rgba(27,58,75,0.04)' }}>
           <button onClick={() => onNavigate(Math.max(0, rankIndex - 1))} disabled={rankIndex <= 0}
             className='inline-flex items-center gap-1 px-3 py-1.5 rounded-full border text-xs font-bold disabled:opacity-20' style={{ color: headerBg, borderColor: headerBg }}>
             &#8592; Anterior
@@ -218,8 +218,8 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
         </div>
       )}
 
-      <div className='px-4 py-2'>
-        {/* ── SOBREPRODUCCION vertical timeline ── */}
+      <div className='px-4 py-2 flex-1 min-h-0 overflow-hidden md:overflow-visible'>
+        {/* ── SOBREPRODUCCION: una linea por ciclo (cero scroll en movil) ── */}
         {hasSobreprod && (() => {
           const allCycles = []
           sobreproduccion.forEach(sp => {
@@ -230,32 +230,25 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
           allCycles.sort((a, b) => (a.fecha_inicio || '').localeCompare(b.fecha_inicio || ''))
           const maxPct = Math.max(...allCycles.map(c => c.exceso_pct), 1)
 
+          const estados = [...new Set(allCycles.map(c => c.estado).filter(Boolean))]
+          const yr = (d) => (d || '').slice(0, 4)
           return (
             <>
-              <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-2 mt-1'>Proc. sancionatorio por sobreproduccion</p>
-              <div className='relative ml-3'>
-                {/* Vertical line */}
-                <div className='absolute left-[7px] top-0 bottom-0 w-[2px]' style={{ background: 'rgba(217,64,64,0.2)' }} />
-
+              <div className='flex items-center justify-between gap-2 mb-1.5 mt-0.5'>
+                <p className='text-[11px] font-bold uppercase tracking-wider opacity-40'>Proc. sancionatorio por sobreproduccion</p>
+                {estados.length === 1 && <span className='text-[8px] font-bold px-1.5 py-0.5 rounded shrink-0' style={{ background: '#b71c1c', color: '#fff' }}>{estados[0]}</span>}
+              </div>
+              <div className='relative ml-2'>
+                <div className='absolute left-[4px] top-1 bottom-1 w-[2px]' style={{ background: 'rgba(217,64,64,0.18)' }} />
                 {allCycles.map((c, ci) => {
-                  const radius = 6 + (c.exceso_pct / maxPct) * 10
                   const intensity = 0.4 + (c.exceso_pct / maxPct) * 0.6
                   return (
-                    <div key={ci} className='relative pl-6 pb-2.5'>
-                      {/* Node */}
-                      <div className='absolute left-0 top-0.5 flex items-center justify-center'
-                        style={{ width: radius * 2, height: radius * 2, marginLeft: 8 - radius, borderRadius: '50%', background: `rgba(217,64,64,${intensity})`, border: '2px solid #fff', boxShadow: '0 0 0 1px rgba(217,64,64,0.3)' }}>
-                        {radius > 10 && <span className='text-[8px] font-bold text-white'>!</span>}
-                      </div>
-                      {/* Content compacto: 2 lineas (fecha+estado | expediente+exceso) */}
-                      <div className='flex items-center justify-between gap-2'>
-                        <p className='text-[10px] opacity-50'>{c.fecha_inicio}{c.fecha_fin ? ` \u2014 ${c.fecha_fin}` : ''}</p>
-                        <span className='text-[8px] font-bold px-1.5 py-0.5 rounded inline-block shrink-0' style={{ background: '#b71c1c', color: '#fff' }}>{c.estado}</span>
-                      </div>
-                      <div className='flex items-center gap-2 mt-0.5'>
-                        <span className='text-xs font-bold'>{c.expediente}</span>
-                        <span className='text-[11px] font-bold px-2 py-0.5 rounded inline-block' style={{ background: `rgba(217,64,64,${intensity})`, color: '#fff' }}>+{c.exceso_pct}%</span>
-                      </div>
+                    <div key={ci} className='relative pl-4 py-[3px] flex items-center gap-2 text-[10px] whitespace-nowrap'>
+                      <span className='absolute left-0 top-1/2 -translate-y-1/2 rounded-full' style={{ width: 8, height: 8, marginLeft: 1, background: `rgba(217,64,64,${intensity})`, border: '1.5px solid #fff', boxShadow: '0 0 0 1px rgba(217,64,64,0.3)' }} />
+                      <span className='opacity-50 shrink-0'>{yr(c.fecha_inicio)}{c.fecha_fin ? `\u2013${yr(c.fecha_fin)}` : ''}</span>
+                      <span className='font-bold truncate'>{c.expediente}</span>
+                      <span className='font-bold px-1.5 py-0.5 rounded shrink-0' style={{ background: `rgba(217,64,64,${intensity})`, color: '#fff' }}>+{c.exceso_pct}%</span>
+                      {estados.length > 1 && <span className='font-bold px-1 py-0.5 rounded shrink-0 text-[8px]' style={{ background: '#b71c1c', color: '#fff' }}>{c.estado}</span>}
                     </div>
                   )
                 })}
@@ -289,26 +282,10 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
           </>
         )}
 
-        {/* ── Location ── */}
-        <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-3'>Ubicacion</p>
-        <FichaRow label='Region' value={centro.REGION} />
-        {hasSobreprod && sobreproduccion[0]?.excesos?.length > 0 && (
-          <FichaRow
-            label='Ciclo productivo'
-            value={`${sobreproduccion[0].excesos[0].fecha_inicio || '—'} → ${sobreproduccion[0].excesos[sobreproduccion[0].excesos.length - 1].fecha_fin || '—'}`}
-          />
-        )}
-        {!hasSobreprod && <FichaRow label='Fecha resolucion' value={centro.F_RESOLSSF} />}
-
-        {/* ── Concession details ── */}
-        {concesion && (
-          <>
-            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-3'>Concesionario</p>
-            <FichaRow label='Titular' value={concesion['nombre titular'] || concesion.Titular} />
-
-            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-3'>Concesion</p>
-          </>
-        )}
+        {/* Pie compacto: region + titular en una linea (resto colapsado para no scrollear) */}
+        <p className='text-[10px] opacity-50 mt-2 truncate'>
+          {[centro.REGION, concesion && (concesion['nombre titular'] || concesion.Titular)].filter(Boolean).join(' \u00b7 ')}
+        </p>
       </div>
     </div>
   )
@@ -350,7 +327,7 @@ export default function MapaConflicto() {
       // punto quede en la franja superior visible. En escritorio lo corremos a la
       // derecha (el mapa ocupa 3/5 y la ficha va a la derecha).
       mapRef.current.flyTo({
-        center: m ? [lng, lat - 0.18] : [lng + 0.15, lat + 0.1],
+        center: m ? [lng, lat - 0.26] : [lng + 0.15, lat + 0.1],
         zoom: m ? 8.2 : 9, duration: 1200,
       })
     }
@@ -774,7 +751,7 @@ export default function MapaConflicto() {
       {/* Ficha panel */}
       <div className={
         selected
-          ? 'absolute bottom-0 left-0 right-0 h-[50%] md:relative md:h-auto md:w-2/5 z-20 shadow-lg md:shadow-none border-t md:border-t-0 md:border-l border-[#1b3a4b]/10'
+          ? 'absolute bottom-0 left-0 right-0 h-[60%] md:relative md:h-auto md:w-2/5 z-20 shadow-lg md:shadow-none border-t md:border-t-0 md:border-l border-[#1b3a4b]/10'
           : 'hidden md:block md:relative md:w-2/5 border-l border-[#1b3a4b]/10'
       }>
         <FichaPanel
