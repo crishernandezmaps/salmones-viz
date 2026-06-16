@@ -38,6 +38,12 @@
    overflow en <html> puede romper position:sticky en algunos navegadores moviles).
    NUNCA poner overflow distinto de visible en .story-wrap (rompe el sticky). */
 @media (min-width:768px) { html { overflow-x:clip; } }
+/* Ocultar la barra de scroll clasica: en el modo dispositivo de DevTools esa
+   barra reserva un gutter de ~15-30px que 100vw NO cubre -> franja blanca a la
+   derecha en el full-bleed. En telefono real la barra es overlay (no afecta),
+   asi que ocultarla es seguro y hace que vw == ancho visual completo. */
+html { scrollbar-width:none; -ms-overflow-style:none; }
+html::-webkit-scrollbar { display:none; width:0; height:0; }
 .story-wrap { --story-color-deep:#0d1b2a; --story-color-dark:#1b3a4b; --story-color-teal:#3a9e9e; --story-color-sage:#f0f4f3; --story-color-white:#fff; --story-font-heading:'Roboto Condensed','Roboto',system-ui,sans-serif; --story-font-body:Georgia,'Times New Roman',serif; --story-font-ui:'Roboto',system-ui,sans-serif; --story-max-text:640px; margin:0; padding:0; overflow:visible; -webkit-font-smoothing:antialiased; scroll-behavior:smooth; }
 .story-wrap, .story-wrap *, .story-wrap *::before, .story-wrap *::after { box-sizing:border-box; }
 .story-wrap ::selection { background:rgba(58,158,158,0.35); color:inherit; }
@@ -68,7 +74,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 .story-wrap > * { max-width:none !important; padding-left:0 !important; padding-right:0 !important; }
 
 /* ====== INTRO OFICIAL — parallax scroll-pinned (capas de la disenadora) ====== */
-.sv-intro { position:relative; height:480vh; height:480dvh; width:100% !important; }
+.sv-intro { position:relative; height:480vh; height:480dvh; width:100% !important; overflow-x:clip; }
 .sv-stage { position:sticky; top:0; height:100vh; height:100dvh; width:100%; overflow:hidden; background:#29516b; }
 /* Relleno de las franjas (arte mas ancho que la pantalla): mismo paisaje
    desenfocado y ampliado -> no se ve "huincha" plana, sino profundidad. */
@@ -173,8 +179,8 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
    Asi la composicion coincide con el arte de la disenadora (vista amplia, jaulas
    en la distancia, agua abajo) sin recortar. */
 .sv-frame-m { position:absolute; inset:0; z-index:1; display:none; }
-.sv-frame-m .sv-layer { object-fit:contain !important; object-position:center !important; }
-.sv-dark { position:absolute; inset:0; z-index:46; pointer-events:none; background:#03101a; opacity:0; will-change:opacity; }
+.sv-frame-m .sv-layer { object-fit:cover !important; object-position:center !important; }
+.sv-dark { position:absolute; inset:0; z-index:46; pointer-events:none; background:linear-gradient(180deg,rgba(3,16,26,0) 0%,rgba(3,16,26,0) 46%,rgba(3,16,26,0.5) 74%,rgba(3,16,26,0.95) 100%); opacity:0; will-change:opacity; }
 @media (max-width:767px){
   .sv-frame.sv-frame-d { display:none; }
   .sv-frame-m { display:block; }
@@ -182,7 +188,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
      Antes usaban el paisaje desenfocado (of-mar3-blur) que se "repetia" como
      una copia fantasma de la escena arriba y abajo. */
   .sv-bg--surface { background-image:linear-gradient(180deg,#d2dce0 0%,#a6b8c3 20%,#6a8a9c 46%,#436278 100%) !important; transform:none !important; }
-  .sv-bg--deep { background-image:linear-gradient(180deg,#27414f 0%,#162c3a 100%) !important; transform:none !important; }
+  .sv-bg--deep { background-image:linear-gradient(180deg,#6a8a9c 0%,#4a6a7c 40%,#27414f 72%,#142c3a 100%) !important; transform:none !important; }
 }
 </style>
 <div class="story-wrap">
@@ -537,14 +543,16 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
     }
 
     function renderMobile(p) {
-      /* SUPERFICIE: agua + jaulas vacias (mar1) + fiordo + montanas */
-      var surf = seg(p,0.42,0.52), openF = ease(seg(p,0.42,0.52));
-      setL(mMar1, 1-surf, 0,0,1);
-      setL(mFiordo2,  1-seg(p,0.44,0.52), lerp(0, 46,openF),0,1);
-      setL(mFiordo1,  1-seg(p,0.44,0.52), lerp(0,-46,openF),0,1);
-      setL(mFiordo1b, 1-seg(p,0.44,0.52), lerp(0,-46,openF),0,1);
-      setL(mMontana1, 1-surf, lerp(0,-30,openF),0,1);
-      setL(mMontana2, 1-surf, lerp(0, 30,openF),0,1);
+      /* SUPERFICIE persistente: fiordos + montanas + superficie quedan ANCLADOS
+         arriba toda la secuencia (cutaway continuo de la disenadora). Las capas
+         submarinas (jaula/fondo) son transparentes sobre la linea de agua y se
+         dibujan ENCIMA, asi que se componen debajo sin tapar el paisaje de arriba. */
+      setL(mMar1,     1, 0,0,1);
+      setL(mFiordo2,  1, 0,0,1);
+      setL(mFiordo1,  1, 0,0,1);
+      setL(mFiordo1b, 1, 0,0,1);
+      setL(mMontana1, 1, 0,0,1);
+      setL(mMontana2, 1, 0,0,1);
       /* VEHICULOS: camion -> barco -> avion */
       var ci=seg(p,0.10,0.18), co=seg(p,0.40,0.48);
       setL(mCamion, ci*(1-co), lerp(-28,0,ease(ci))+lerp(0,-44,ease(co)),0,1);
@@ -565,7 +573,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       /* OSCURECIMIENTO FINAL: el fondo se hace cada vez mas oscuro (profundidad) */
       if(dark) dark.style.opacity = seg(p,0.86,1.0)*0.92;
       /* TEXTOS */
-      if(hero){ hero.style.opacity = 1-seg(p,0.10,0.20); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.10,0.20))+'px)'; }
+      if(hero){ hero.style.opacity = 1-seg(p,0.02,0.09); hero.style.transform='translateY('+lerp(0,-40,seg(p,0.02,0.09))+'px)'; }
       if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
       if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
       var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
