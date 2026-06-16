@@ -17,6 +17,6 @@ html, body, #root {
 
 /* Boton "Siguiente" de la ficha de holdings (conflicto): pista sutil de que es
    presionable -> la flecha se desplaza levemente en loop (solo si esta habilitado). */
-@keyframes sv-next-nudge { 0%, 55%, 100% { transform: translateX(0); } 78% { transform: translateX(3px); } }
-.sv-next:not(:disabled) .sv-next__arrow { display: inline-block; animation: sv-next-nudge 1.6s ease-in-out infinite; }
+@keyframes sv-next-nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(5px); } }
+.sv-next:not(:disabled) .sv-next__arrow { display: inline-block; animation: sv-next-nudge 0.9s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .sv-next .sv-next__arrow { animation: none; } }

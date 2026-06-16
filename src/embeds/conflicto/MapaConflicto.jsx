@@ -232,7 +232,7 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
 
           return (
             <>
-              <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-3 mt-2'>Proc. sancionatorio por sobreproduccion</p>
+              <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-2 mt-1'>Proc. sancionatorio por sobreproduccion</p>
               <div className='relative ml-3'>
                 {/* Vertical line */}
                 <div className='absolute left-[7px] top-0 bottom-0 w-[2px]' style={{ background: 'rgba(217,64,64,0.2)' }} />
@@ -241,27 +241,21 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
                   const radius = 6 + (c.exceso_pct / maxPct) * 10
                   const intensity = 0.4 + (c.exceso_pct / maxPct) * 0.6
                   return (
-                    <div key={ci} className='relative pl-7 pb-5'>
+                    <div key={ci} className='relative pl-6 pb-2.5'>
                       {/* Node */}
-                      <div className='absolute left-0 top-1 flex items-center justify-center'
+                      <div className='absolute left-0 top-0.5 flex items-center justify-center'
                         style={{ width: radius * 2, height: radius * 2, marginLeft: 8 - radius, borderRadius: '50%', background: `rgba(217,64,64,${intensity})`, border: '2px solid #fff', boxShadow: '0 0 0 1px rgba(217,64,64,0.3)' }}>
                         {radius > 10 && <span className='text-[8px] font-bold text-white'>!</span>}
                       </div>
-                      {/* Content */}
-                      <div>
-                        <p className='text-[10px] opacity-40'>{c.fecha_inicio}{c.fecha_fin ? ` \u2014 ${c.fecha_fin}` : ''}</p>
-                        <div className='flex items-start gap-3 mt-0.5'>
-                          <div>
-                            <p className='text-[9px] uppercase tracking-wider opacity-40'>Expediente</p>
-                            <p className='text-xs font-bold'>{c.expediente}</p>
-                          </div>
-                          <div className='shrink-0'>
-                            <p className='text-[9px] uppercase tracking-wider opacity-40'>Exceso</p>
-                            <span className='text-[11px] font-bold px-2 py-0.5 rounded inline-block' style={{ background: `rgba(217,64,64,${intensity})`, color: '#fff' }}>+{c.exceso_pct}%</span>
-                          </div>
-                        </div>
+                      {/* Content compacto: 2 lineas (fecha+estado | expediente+exceso) */}
+                      <div className='flex items-center justify-between gap-2'>
+                        <p className='text-[10px] opacity-50'>{c.fecha_inicio}{c.fecha_fin ? ` \u2014 ${c.fecha_fin}` : ''}</p>
+                        <span className='text-[8px] font-bold px-1.5 py-0.5 rounded inline-block shrink-0' style={{ background: '#b71c1c', color: '#fff' }}>{c.estado}</span>
                       </div>
-                      <span className='text-[9px] font-bold px-1.5 py-0.5 rounded inline-block mt-1' style={{ background: '#b71c1c', color: '#fff' }}>{c.estado}</span>
+                      <div className='flex items-center gap-2 mt-0.5'>
+                        <span className='text-xs font-bold'>{c.expediente}</span>
+                        <span className='text-[11px] font-bold px-2 py-0.5 rounded inline-block' style={{ background: `rgba(217,64,64,${intensity})`, color: '#fff' }}>+{c.exceso_pct}%</span>
+                      </div>
                     </div>
                   )
                 })}
@@ -296,8 +290,7 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
         )}
 
         {/* ── Location ── */}
-        <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Ubicacion</p>
-        <FichaRow label='Comuna' value={centro.COMUNA} />
+        <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-3'>Ubicacion</p>
         <FichaRow label='Region' value={centro.REGION} />
         {hasSobreprod && sobreproduccion[0]?.excesos?.length > 0 && (
           <FichaRow
@@ -310,10 +303,10 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
         {/* ── Concession details ── */}
         {concesion && (
           <>
-            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Concesionario</p>
+            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-3'>Concesionario</p>
             <FichaRow label='Titular' value={concesion['nombre titular'] || concesion.Titular} />
 
-            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-4'>Concesion</p>
+            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-3'>Concesion</p>
           </>
         )}
       </div>
