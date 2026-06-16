@@ -92,6 +92,8 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
       pitch: window.innerWidth < 768 ? 65 : 50,
       maxPitch: 75,
       attributionControl: false,
+      cooperativeGestures: true,
+      locale: { 'CooperativeGesturesHandler.MobileHelpText': 'Usa dos dedos para mover el mapa', 'CooperativeGesturesHandler.WindowsHelpText': 'Usa Ctrl + scroll para acercar', 'CooperativeGesturesHandler.MacHelpText': 'Usa Cmd + scroll para acercar' },
     })
     mapRef.current.scrollZoom.disable()
     // Interaccion movil via el gate toca-para-activar (pointer-events) en el wrapper:

@@ -414,6 +414,8 @@ export default function MapaConflicto() {
     mapRef.current = new maplibregl.Map({
       container: containerRef.current, style: MAP_STYLE,
       center: [-73.2, -43.5], zoom: 7, attributionControl: false,
+      cooperativeGestures: true,
+      locale: { 'CooperativeGesturesHandler.MobileHelpText': 'Usa dos dedos para mover el mapa', 'CooperativeGesturesHandler.WindowsHelpText': 'Usa Ctrl + scroll para acercar', 'CooperativeGesturesHandler.MacHelpText': 'Usa Cmd + scroll para acercar' },
     })
     mapRef.current.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
     mapRef.current.scrollZoom.disable()  // la rueda scrollea la pagina, no hace zoom
