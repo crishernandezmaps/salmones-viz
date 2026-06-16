@@ -34,6 +34,37 @@ ssh root@46.224.221.33 'cd /root/work/salmones-viz && \
   cat wordpress/post-standalone.html | docker exec -i salmones-wp wp post update 47 - --allow-root'
 ```
 
+## Publicar una versión FRESCA para revisión en móvil (evitar caché)
+
+En el teléfono es difícil hacer hard refresh, y el navegador móvil cachea fuerte
+(tanto el HTML del post como los iframes de mapas desde GitHub Pages). Para que la
+clienta/cris vea la última versión sin hard refresh, hay que entregar una **URL que
+el navegador trate como nueva**. Eso implica DOS cosas (no basta con una):
+
+1. **Versionar los iframes de mapas** en `wordpress/post-standalone.html`: subir el
+   `&v=N` de cada `?embed=...` (`v=2` -> `v=3` -> ...). Sin esto el teléfono carga
+   el mapa cacheado (con el gate viejo, que choca con el gate del padre).
+2. **Cambiar el slug del post** a uno nuevo (`salmones-movil-vN`). El slug viejo
+   queda con redirect 301 al nuevo automáticamente.
+
+Proceso completo (incrementar N cada vez que se quiera un link fresco):
+
+```bash
+ssh root@46.224.221.33 'cd /root/work/salmones-viz &&   # 1) subir version de los 3 iframes (ej. v=2 -> v=3)
+  sed -i "s|&v=2\"|\&v=3\"|g" wordpress/post-standalone.html &&   # 2) desplegar el post (ID 70 = test movil; 47 = articulo oficial)
+  cat wordpress/post-standalone.html | docker exec -i salmones-wp wp post update 70 - --allow-root &&   # 3) nuevo slug -> nueva ruta
+  docker exec salmones-wp wp post update 70 --post_name="salmones-movil-v3" --allow-root &&   docker exec salmones-wp wp post url 70 --allow-root'
+# 4) commitear el cambio de version del archivo
+```
+
+**Estado actual:** post 70 ("Asi nadan los salmones en Chile (movil)"),
+slug `salmones-movil-v2`, iframes en `&v=2`.
+URL vigente: https://salmoneswp.tremen.tech/2026/06/15/salmones-movil-v2/
+Próximo link fresco = `v3` (subir iframes a `&v=3` + slug `salmones-movil-v3`).
+
+> Nota: el `&` en el `src` del iframe se sirve como `&#038;` (encoding HTML
+> correcto); el navegador lo decodifica a `&` y pide `?embed=...&v=N`. Está bien.
+
 ## Desplegar los MAPAS (GitHub Pages)
 
 Cualquier cambio en `src/` o `public/data/` se publica con push a `main`
