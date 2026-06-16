@@ -40,7 +40,7 @@
 /* Clip horizontal en TODO ancho: elimina cualquier scroll horizontal (capas de la
    intro que se van de cuadro, 100vw del wrap). Va en html (clip = NO crea scroll
    container, no rompe el sticky); la barra de scroll oculta evita el gutter. */
-html { overflow-x:clip; }
+html, body { overflow-x:clip; }
 /* Ocultar la barra de scroll clasica: en el modo dispositivo de DevTools esa
    barra reserva un gutter de ~15-30px que 100vw NO cubre -> franja blanca a la
    derecha en el full-bleed. En telefono real la barra es overlay (no afecta),
