@@ -417,7 +417,7 @@ export default function MapaConflicto() {
     })
     mapRef.current.addControl(new maplibregl.NavigationControl({ showCompass: false }), 'top-right')
     mapRef.current.scrollZoom.disable()  // la rueda scrollea la pagina, no hace zoom
-    // En movil la interaccion se controla con MobileMapGate (toca-para-activar) en
+    // En movil la interaccion se controla con el gate toca-para-activar (pointer-events) en
     // el wrapper: en modo scroll el mapa no recibe gestos; al activar, gestos normales.
 
     mapRef.current.on('load', async () => {

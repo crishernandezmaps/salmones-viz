@@ -94,7 +94,7 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
       attributionControl: false,
     })
     mapRef.current.scrollZoom.disable()
-    // Interaccion movil via MobileMapGate (toca-para-activar) en el wrapper:
+    // Interaccion movil via el gate toca-para-activar (pointer-events) en el wrapper:
     // en modo scroll el mapa no recibe gestos; al activar funcionan play/slider/pan.
     mapRef.current.on('load', () => {
       const firstSym = mapRef.current.getStyle().layers.find(l => l.type === 'symbol')

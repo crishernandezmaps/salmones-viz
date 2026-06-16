@@ -1,5 +1,4 @@
 import MapaConflicto from './MapaConflicto'
-import MobileMapGate from '../../shared/MobileMapGate'
 
 export default function EmbedConflicto() {
   return (
@@ -8,7 +7,6 @@ export default function EmbedConflicto() {
           dispositivo. Dejamos que los breakpoints respondan al ancho real:
           escritorio = mapa + ficha lateral; movil = mapa + ficha como bottom-sheet. */}
       <MapaConflicto />
-      <MobileMapGate />
     </div>
   )
 }
