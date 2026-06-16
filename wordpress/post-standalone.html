@@ -37,7 +37,10 @@
 /* Clip horizontal en la raiz SOLO en escritorio (en movil no hay scrollbar y
    overflow en <html> puede romper position:sticky en algunos navegadores moviles).
    NUNCA poner overflow distinto de visible en .story-wrap (rompe el sticky). */
-@media (min-width:768px) { html { overflow-x:clip; } }
+/* Clip horizontal en TODO ancho: elimina cualquier scroll horizontal (capas de la
+   intro que se van de cuadro, 100vw del wrap). Va en html (clip = NO crea scroll
+   container, no rompe el sticky); la barra de scroll oculta evita el gutter. */
+html { overflow-x:clip; }
 /* Ocultar la barra de scroll clasica: en el modo dispositivo de DevTools esa
    barra reserva un gutter de ~15-30px que 100vw NO cubre -> franja blanca a la
    derecha en el full-bleed. En telefono real la barra es overlay (no afecta),
@@ -75,7 +78,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 /* ====== INTRO OFICIAL — parallax scroll-pinned (capas de la disenadora) ====== */
 .sv-intro { position:relative; height:480vh; height:480dvh; width:100% !important; overflow-x:clip; }
-.sv-stage { position:sticky; top:0; height:100vh; height:100dvh; width:100%; overflow:hidden; background:#29516b; }
+.sv-stage { position:sticky; top:0; height:100vh; height:100dvh; width:100%; overflow:hidden; background:#29516b; transition:height 0.3s ease-out; }
 /* Relleno de las franjas (arte mas ancho que la pantalla): mismo paisaje
    desenfocado y ampliado -> no se ve "huincha" plana, sino profundidad. */
 .sv-bg { position:absolute; inset:0; z-index:0; background-position:center; background-size:cover;
@@ -312,7 +315,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 <!-- wp:html -->
 <section class="story-viz">
-  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=timeline&v=6" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Timeline"></iframe>
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=timeline&v=7" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Timeline"></iframe>
 </section>
 <!-- /wp:html -->
 
@@ -346,7 +349,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 <!-- wp:html -->
 <section class="story-viz">
-  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=conflicto&v=6" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Conflicto"></iframe>
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=conflicto&v=7" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Conflicto"></iframe>
 </section>
 <!-- /wp:html -->
 
@@ -390,7 +393,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 <!-- wp:html -->
 <section class="story-viz">
-  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=capas&v=6" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Mapa de capas"></iframe>
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=capas&v=7" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Mapa de capas"></iframe>
 </section>
 <!-- /wp:html -->
 
