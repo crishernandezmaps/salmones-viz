@@ -327,7 +327,7 @@ export default function MapaConflicto() {
       // punto quede en la franja superior visible. En escritorio lo corremos a la
       // derecha (el mapa ocupa 3/5 y la ficha va a la derecha).
       mapRef.current.flyTo({
-        center: m ? [lng, lat - 0.26] : [lng + 0.15, lat + 0.1],
+        center: m ? [lng, lat - 0.10] : [lng + 0.15, lat + 0.1],
         zoom: m ? 8.2 : 9, duration: 1200,
       })
     }
@@ -751,7 +751,7 @@ export default function MapaConflicto() {
       {/* Ficha panel */}
       <div className={
         selected
-          ? 'absolute bottom-0 left-0 right-0 h-[60%] md:relative md:h-auto md:w-2/5 z-20 shadow-lg md:shadow-none border-t md:border-t-0 md:border-l border-[#1b3a4b]/10'
+          ? 'absolute bottom-0 left-0 right-0 h-[30%] md:relative md:h-auto md:w-2/5 z-20 shadow-lg md:shadow-none border-t md:border-t-0 md:border-l border-[#1b3a4b]/10'
           : 'hidden md:block md:relative md:w-2/5 border-l border-[#1b3a4b]/10'
       }>
         <FichaPanel
