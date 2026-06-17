@@ -6,7 +6,7 @@ hecho a mano (sin librerias) que vive dentro del post de WordPress.
 
 - **Fuente de verdad del post:** `salmones_viz/wordpress/post-standalone.html`
 - **Prototipo standalone (referencia/QA):** `prototipo.html` (incluye hook `?p=`)
-- **Assets:** `assets/of-*.webp` → se suben a `/wp-content/uploads/scroll-assets/`
+- **Assets:** servidos desde GitHub Pages `https://crishernandezmaps.github.io/salmones-viz/scroll-assets/` (carpeta del repo `public/scroll-assets/`). Copia de respaldo tambien en WP `/wp-content/uploads/scroll-assets/`.
 - **Post en vivo:** post ID **47** en `salmoneswp.tremen.tech` (test)
 
 ---
@@ -169,3 +169,26 @@ Cada iframe es una app React+MapLibre completa; el mapa **conflicto** baja
 `concesiones_excel.json` (~2.4 MB) + 6 archivos mas. Pendiente: optimizar esa
 carga (recortar columnas/derivar del topojson). Los iframes ya usan
 `loading="lazy"`.
+
+
+---
+
+## Handoff / post autocontenido (cliente con WordPress propio)
+
+Desde 2026-06-17 el `post-standalone.html` es **autocontenido**: las rutas de los
+assets son URLs absolutas a GitHub Pages (`.../salmones-viz/scroll-assets/...`), no
+`/wp-content/uploads/...`. Por eso se puede pegar en CUALQUIER WordPress sin subir
+imagenes.
+
+Instrucciones para quien lo suba:
+1. Crear un post nuevo.
+2. Menu tres-puntos -> **Editor de codigo** (no el visual).
+3. Pegar TODO el contenido de `post-standalone.html`.
+4. Publicar. No subir ningun archivo; imagenes y mapas cargan desde GitHub Pages.
+5. NO editar en el editor visual (rompe el CSS/JS del scrollytelling).
+
+Dependencia: imagenes (`public/scroll-assets/`) y mapas viven en NUESTRO GitHub
+Pages. Para actualizar una imagen: reemplazar en `public/scroll-assets/` + `git push`.
+Las imagenes tambien quedan como respaldo en el WP de test
+(`/wp-content/uploads/scroll-assets/`). Para que el cliente sea 100% independiente
+habria que migrar assets+mapas a su propio hosting.
