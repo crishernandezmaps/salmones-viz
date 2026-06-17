@@ -66,9 +66,9 @@ ssh root@46.224.221.33 'cd /root/work/salmones-viz &&   # 1) subir version de lo
 ```
 
 **Estado actual:** post 70 ("Asi nadan los salmones en Chile (movil)"),
-slug `salmones-movil-v6`, iframes en `&v=6`.
-URL vigente: https://salmoneswp.tremen.tech/2026/06/15/salmones-movil-v6/
-Próximo link fresco = `v7` (subir iframes a `&v=7` + slug `salmones-movil-v7`).
+slug `salmones-movil-v10`, iframes en `&v=10`.
+URL vigente: https://salmoneswp.tremen.tech/2026/06/15/salmones-movil-v10/
+Próximo link fresco = `v11` (subir iframes a `&v=11` + slug `salmones-movil-v11`).
 
 > Nota: el `&` en el `src` del iframe se sirve como `&#038;` (encoding HTML
 > correcto); el navegador lo decodifica a `&` y pide `?embed=...&v=N`. Está bien.
@@ -107,6 +107,33 @@ scroll: `/tmp/shot.mjs`.
 - **Spinner de carga**: componente `src/shared/MapSpinner.jsx` en los 3 mapas
   (timeline, conflicto, capas); se muestra mientras cargan datos/capas.
 - Iframes de mapas en el post con `loading="lazy"`.
+
+## Decisiones de interaccion / render en MOVIL (sesion junio 2026)
+
+Capturado para no re-litigarlo ni revertirlo por error en la proxima sesion:
+
+- **Mapas — gestos:** los 3 mapas usan `cooperativeGestures: true` (MapLibre):
+  un dedo scrollea la pagina, DOS dedos mueven/zoom el mapa. Se QUITO el patron
+  anterior "toca-para-activar" (`MobileMapGate` in-iframe + gate de pointer-events
+  en el post). **No reintroducir el gate.** Mensaje en espanol via `locale`.
+- **Intro — alto del escenario:** se fija por JS al viewport visible mas GRANDE
+  visto (`maxH`, "solo crece, nunca encoge"); `sizeIntro()` se llama tambien en
+  `onScroll`. Esto evita la franja blanca abajo + el tiriton cuando colapsa la barra
+  de URL. **`lvh`/`dvh`/`innerHeight`-a-secas fallaron** (franja o tiriton): no volver
+  a esas unidades. El escenario tiene `transition:height 0.3s ease-out` para suavizar
+  el crecimiento.
+- **Overflow horizontal:** `html, body { overflow-x:clip }` global (clip = NO crea
+  scroll container, no rompe el sticky) + barra de scroll oculta (evita el gutter en
+  DevTools). `.story-wrap` debe quedar `overflow:visible`.
+- **Ficha del mapa 2 (conflicto) en movil:** split 70/30 (mapa 70% / ficha 30%),
+  CERO scroll. Layout flex-column (header + paginacion fijos, contenido flex-1 con
+  overflow clip en movil / scroll en escritorio). Cada ciclo de sobreproduccion en
+  UNA linea (`anio-anio · expediente · +X%`); estado mostrado UNA vez junto al
+  titulo; Ubicacion/Concesionario/Concesion colapsados a un pie `Region · Titular`.
+  Boton "Siguiente": pill rojo con la flecha en bob continuo (`.sv-next` en index.css).
+- **QA:** siempre en TELEFONO real (el modo dispositivo de DevTools y headless mienten
+  con el encuadre/overflow/barra de URL). Para ver fresco sin hard refresh: link nuevo
+  (bump `&v=N` + slug `vN`) DESPUES de confirmar el deploy de Pages.
 
 ## Intro scrollytelling
 
