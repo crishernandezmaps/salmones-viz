@@ -20,7 +20,7 @@
   3. SIN zoom/scale en las capas de superficie: las jaulas "cambian con fade"
      (mar3 -> mar1). Escalar lineas finas produce shimmer.
   4. Compositing GPU: .sv-layer usa translateZ(0) y el JS usa translate3d().
-  5. Assets oficiales: /wp-content/uploads/scroll-assets/of-*.webp
+  5. Assets oficiales: https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-*.webp
      (origen: SCROLL_VISUAL_OFICIAL/MOVIL/ELEMENTOS, optimizados a webp).
   6. Header/titulo/byline del tema WP se ocultan por CSS (scoped a esta pagina).
   7. Iframes de mapas con loading="lazy" (no cargar los 3 al abrir).
@@ -83,8 +83,8 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
    desenfocado y ampliado -> no se ve "huincha" plana, sino profundidad. */
 .sv-bg { position:absolute; inset:0; z-index:0; background-position:center; background-size:cover;
          background-repeat:no-repeat; transform:scale(1.06); }
-.sv-bg--surface { background-color:#5b8190; background-image:url(/wp-content/uploads/scroll-assets/of-mar3-blur.webp); }
-.sv-bg--deep { background-color:#1c3a4a; background-image:url(/wp-content/uploads/scroll-assets/of-deep-blur.webp); opacity:0; }
+.sv-bg--surface { background-color:#5b8190; background-image:url(https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-mar3-blur.webp); }
+.sv-bg--deep { background-color:#1c3a4a; background-image:url(https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-deep-blur.webp); opacity:0; }
 /* MOVIL (base): frame llena el ancho, centrado vertical (relleno cielo/agua arriba/abajo) */
 .sv-frame { position:absolute; left:0; top:50%; transform:translateY(-50%); width:100%; aspect-ratio:1664/2388; z-index:1; }
 /* ESCRITORIO: las capas llenan TODO el viewport (cover, borde a borde); ancla el encuadre al contenido */
@@ -205,39 +205,39 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
     <div class="sv-bg sv-bg--deep" id="sv-bgDeep"></div>
 
     <div class="sv-frame sv-frame-d">
-      <img id="sv-mar3"     class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-mar3.webp" alt="" style="object-position:center 42%">
-      <img id="sv-montana2" class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-montana2.webp" alt="">
-      <img id="sv-montana1" class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-montana1.webp" alt="">
-      <img id="sv-fiordo1"  class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-fiordo1.webp" alt="">
-      <img id="sv-fiordo2"  class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-fiordo2.webp" alt="">
-      <img id="sv-avion"    class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-avion.webp" alt="" style="object-fit:contain !important;object-position:center 20%;opacity:0">
-      <img id="sv-wellboat" class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-wellboat.webp" alt="" style="opacity:0">
-      <img id="sv-camion"   class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-camion.webp" alt="" style="opacity:0">
-      <img id="sv-mar1"     class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-mar1.webp" alt="" style="opacity:0">
-      <img id="sv-mar2"     class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-mar2.webp" alt="" style="opacity:0">
-      <img id="sv-jaulaLlena" class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-jaula-llena.webp" alt="" style="opacity:0">
-      <img id="sv-jaulaEsc2"  class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-jaula-escape2.webp" alt="" style="opacity:0">
-      <img id="sv-jaulaEsc3"  class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-jaula-escape3.webp" alt="" style="opacity:0">
+      <img id="sv-mar3"     class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-mar3.webp" alt="" style="object-position:center 42%">
+      <img id="sv-montana2" class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-montana2.webp" alt="">
+      <img id="sv-montana1" class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-montana1.webp" alt="">
+      <img id="sv-fiordo1"  class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-fiordo1.webp" alt="">
+      <img id="sv-fiordo2"  class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-fiordo2.webp" alt="">
+      <img id="sv-avion"    class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-avion.webp" alt="" style="object-fit:contain !important;object-position:center 20%;opacity:0">
+      <img id="sv-wellboat" class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-wellboat.webp" alt="" style="opacity:0">
+      <img id="sv-camion"   class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-camion.webp" alt="" style="opacity:0">
+      <img id="sv-mar1"     class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-mar1.webp" alt="" style="opacity:0">
+      <img id="sv-mar2"     class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-mar2.webp" alt="" style="opacity:0">
+      <img id="sv-jaulaLlena" class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-jaula-llena.webp" alt="" style="opacity:0">
+      <img id="sv-jaulaEsc2"  class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-jaula-escape2.webp" alt="" style="opacity:0">
+      <img id="sv-jaulaEsc3"  class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-jaula-escape3.webp" alt="" style="opacity:0">
     </div>
 
     <!-- fondo contaminado: fuera del frame, anclado al fondo del escenario completo -->
-    <img id="sv-fondo" class="sv-layer sv-d" data-src="/wp-content/uploads/scroll-assets/of-fondo-contaminado.webp" alt="" style="opacity:0;object-position:center bottom;z-index:2;">
+    <img id="sv-fondo" class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-fondo-contaminado.webp" alt="" style="opacity:0;object-position:center bottom;z-index:2;">
 
     <div class="sv-frame-m">
-      <img id="m1-mar1"      class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-mar1.webp" alt="">
-      <img id="m1-fiordo2"   class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-fiordo2.webp" alt="">
-      <img id="m1-fiordo1"   class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-fiordo1.webp" alt="">
-      <img id="m1-fiordo1b"  class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-fiordo1b.webp" alt="">
-      <img id="m1-montana2"  class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-montana2.webp" alt="">
-      <img id="m1-montana1"  class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-montana1.webp" alt="">
-      <img id="m1-wellboat"  class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-wellboat.webp" alt="" style="opacity:0">
-      <img id="m1-camion"    class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-camion.webp" alt="" style="opacity:0">
-      <img id="m1-avion"     class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-avion.webp" alt="" style="opacity:0">
-      <img id="m1-jaula1"    class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-jaula1.webp" alt="" style="opacity:0">
-      <img id="m1-jaula2"    class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-jaula2.webp" alt="" style="opacity:0">
-      <img id="m1-jaula3"    class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-jaula3.webp" alt="" style="opacity:0">
-      <img id="m1-fondo"     class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-fondo.webp" alt="" style="opacity:0;object-position:center bottom">
-      <img id="m1-fondobuzo" class="sv-layer sv-m" data-src="/wp-content/uploads/scroll-assets/m1-fondobuzo.webp" alt="" style="opacity:0;object-position:center bottom">
+      <img id="m1-mar1"      class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-mar1.webp" alt="">
+      <img id="m1-fiordo2"   class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fiordo2.webp" alt="">
+      <img id="m1-fiordo1"   class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fiordo1.webp" alt="">
+      <img id="m1-fiordo1b"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fiordo1b.webp" alt="">
+      <img id="m1-montana2"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-montana2.webp" alt="">
+      <img id="m1-montana1"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-montana1.webp" alt="">
+      <img id="m1-wellboat"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-wellboat.webp" alt="" style="opacity:0">
+      <img id="m1-camion"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-camion.webp" alt="" style="opacity:0">
+      <img id="m1-avion"     class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-avion.webp" alt="" style="opacity:0">
+      <img id="m1-jaula1"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula1.webp" alt="" style="opacity:0">
+      <img id="m1-jaula2"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula2.webp" alt="" style="opacity:0">
+      <img id="m1-jaula3"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula3.webp" alt="" style="opacity:0">
+      <img id="m1-fondo"     class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fondo.webp" alt="" style="opacity:0;object-position:center bottom">
+      <img id="m1-fondobuzo" class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fondobuzo.webp" alt="" style="opacity:0;object-position:center bottom">
     </div>
     <div class="sv-dark" id="sv-dark"></div>
     <div class="sv-scrim" id="sv-scrim"></div>
@@ -282,7 +282,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 <!-- wp:column {"className":"story-vignettes__item story-vignettes__item--white scroll-fade-left"} -->
 <div class="wp-block-column story-vignettes__item story-vignettes__item--white scroll-fade-left">
 <!-- wp:image {"sizeSlug":"full"} -->
-<figure class="wp-block-image size-full"><img src="/wp-content/uploads/scroll-assets/Extra_01.webp" alt="Procesamiento de ovas de salmon"/></figure>
+<figure class="wp-block-image size-full"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/Extra_01.webp" alt="Procesamiento de ovas de salmon"/></figure>
 <!-- /wp:image -->
 </div>
 <!-- /wp:column -->
@@ -290,7 +290,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 <!-- wp:column {"className":"story-vignettes__item story-vignettes__item--sage scroll-fade-right"} -->
 <div class="wp-block-column story-vignettes__item story-vignettes__item--sage scroll-fade-right">
 <!-- wp:image {"sizeSlug":"full"} -->
-<figure class="wp-block-image size-full"><img src="/wp-content/uploads/scroll-assets/Extra_02.webp" alt="Estanques de cultivo de salmon"/></figure>
+<figure class="wp-block-image size-full"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/Extra_02.webp" alt="Estanques de cultivo de salmon"/></figure>
 <!-- /wp:image -->
 </div>
 <!-- /wp:column -->
@@ -414,7 +414,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 <!-- wp:column {"className":"story-vignettes__item story-vignettes__item--sage scroll-fade-left"} -->
 <div class="wp-block-column story-vignettes__item story-vignettes__item--sage scroll-fade-left">
 <!-- wp:image {"sizeSlug":"full"} -->
-<figure class="wp-block-image size-full"><img src="/wp-content/uploads/scroll-assets/Extra_03.webp" alt="Linea de procesamiento de salmon"/></figure>
+<figure class="wp-block-image size-full"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/Extra_03.webp" alt="Linea de procesamiento de salmon"/></figure>
 <!-- /wp:image -->
 </div>
 <!-- /wp:column -->
@@ -422,7 +422,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 <!-- wp:column {"className":"story-vignettes__item story-vignettes__item--white scroll-fade-right"} -->
 <div class="wp-block-column story-vignettes__item story-vignettes__item--white scroll-fade-right">
 <!-- wp:image {"sizeSlug":"full"} -->
-<figure class="wp-block-image size-full"><img src="/wp-content/uploads/scroll-assets/Extra_04.webp" alt="Sashimi de salmon"/></figure>
+<figure class="wp-block-image size-full"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/Extra_04.webp" alt="Sashimi de salmon"/></figure>
 <!-- /wp:image -->
 </div>
 <!-- /wp:column -->
