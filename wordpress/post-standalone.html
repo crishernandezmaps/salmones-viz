@@ -184,6 +184,8 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
    en la distancia, agua abajo) sin recortar. */
 .sv-frame-m { position:absolute; inset:0; z-index:1; display:none; }
 .sv-frame-m .sv-layer { object-fit:cover !important; object-position:center !important; }
+@keyframes luzFlicker { 0%,100%{filter:brightness(1)} 45%{filter:brightness(1.3)} 70%{filter:brightness(0.95)} }
+#m1-luz { animation:luzFlicker 2.6s ease-in-out infinite; will-change:filter; }
 .sv-dark { position:absolute; inset:0; z-index:46; pointer-events:none; background:linear-gradient(180deg,rgba(2,11,18,0) 0%,rgba(2,11,18,0) 38%,rgba(2,11,18,0.5) 66%,rgba(2,11,18,0.97) 100%); opacity:0; will-change:opacity; }
 @media (max-width:767px){
   .sv-frame.sv-frame-d { display:none; }
@@ -225,11 +227,11 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
     <div class="sv-frame-m">
       <img id="m1-mar1"      class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-mar1.webp" alt="">
+      <img id="m1-montana2"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-montana2.webp" alt="">
+      <img id="m1-montana1"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-montana1.webp" alt="">
       <img id="m1-fiordo2"   class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fiordo2.webp" alt="">
       <img id="m1-fiordo1"   class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fiordo1.webp" alt="">
       <img id="m1-fiordo1b"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fiordo1b.webp" alt="">
-      <img id="m1-montana2"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-montana2.webp" alt="">
-      <img id="m1-montana1"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-montana1.webp" alt="">
       <img id="m1-wellboat"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-wellboat.webp" alt="" style="opacity:0">
       <img id="m1-camion"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-camion.webp" alt="" style="opacity:0">
       <img id="m1-avion"     class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-avion.webp" alt="" style="opacity:0">
@@ -238,6 +240,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <img id="m1-jaula3"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula3.webp" alt="" style="opacity:0">
       <img id="m1-fondo"     class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fondo.webp" alt="" style="opacity:0;object-position:center bottom">
       <img id="m1-fondobuzo" class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fondobuzo.webp" alt="" style="opacity:0;object-position:center bottom">
+      <div id="m1-luz" style="position:absolute;inset:0;opacity:0;pointer-events:none;mix-blend-mode:screen;z-index:45;background:radial-gradient(circle at 47% 77%, rgba(255,251,228,1) 0%, rgba(255,244,190,0.85) 3%, rgba(255,238,170,0.35) 8%, rgba(0,0,0,0) 16%), radial-gradient(ellipse 20% 24% at 51% 87%, rgba(255,236,172,0.34) 0%, rgba(255,232,160,0.10) 48%, rgba(0,0,0,0) 78%);"></div>
     </div>
     <div class="sv-dark" id="sv-dark"></div>
     <div class="sv-scrim" id="sv-scrim"></div>
@@ -393,7 +396,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
 <!-- wp:html -->
 <section class="story-viz">
-  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=capas&v=10" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Mapa de capas"></iframe>
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=relocalizaciones-ap" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Relocalizaciones y areas protegidas"></iframe>
 </section>
 <!-- /wp:html -->
 
@@ -498,7 +501,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
         mMontana1=g('m1-montana1'), mMontana2=g('m1-montana2'),
         mCamion=g('m1-camion'), mWellboat=g('m1-wellboat'), mAvion=g('m1-avion'),
         mJaula1=g('m1-jaula1'), mJaula2=g('m1-jaula2'), mJaula3=g('m1-jaula3'),
-        mFondo=g('m1-fondo'), mFondoBuzo=g('m1-fondobuzo'), dark=g('sv-dark');
+        mFondo=g('m1-fondo'), mFondoBuzo=g('m1-fondobuzo'), mLuz=g('m1-luz'), dark=g('sv-dark');
     var isMobileIntro = window.matchMedia('(max-width:767px)').matches;
     (function(){ var im=document.querySelectorAll(isMobileIntro?'.sv-m':'.sv-d'); for(var i=0;i<im.length;i++){ var ds=im[i].getAttribute('data-src'); if(ds){ im[i].src=ds; } } })();
     var setL = function(node,o,x,y,s){ if(!node) return; if(o!==null) node.style.opacity=o; node.style.transform='translate('+x+'%,'+y+'%) scale('+s+')'; };
@@ -578,6 +581,12 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          dejaba lavada/fantasmal durante la transicion. */
       setL(mFondo,     seg(p,0.68,0.80)*(1-seg(p,0.84,0.90)), 0, 0, 1);
       setL(mFondoBuzo, seg(p,0.84,0.90), 0, 0, 1);
+      /* FONDO: claro al aparecer -> mas oscuro con la profundidad (feedback clienta) */
+      var fdepth  = seg(p,0.68,1.0);
+      var fbright = lerp(1.5, 0.82, ease(fdepth));
+      if(mFondo)     mFondo.style.filter     = "brightness("+fbright+")";
+      if(mFondoBuzo) mFondoBuzo.style.filter = "brightness("+fbright+")";
+      if(mLuz) mLuz.style.opacity = Math.min(seg(p,0.84,0.90), 1-seg(p,0.95,1.0));
       /* relleno: superficie -> profundo */
       if(bgDeep) bgDeep.style.opacity = seg(p,0.60,0.76);
       if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.60,0.76);
@@ -597,7 +606,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
-    var SCREENS = isMobileIntro ? 10 : 6;  // movil: recorrido mas largo -> transiciones mas lentas/graduales
+    var SCREENS = isMobileIntro ? 13 : 6;  // movil: recorrido mas largo -> transiciones mas lentas/graduales
     // Alto del escenario = el viewport visible mas GRANDE visto (solo crece, nunca encoge).
     // En movil la barra de URL colapsa al scrollear y el viewport CRECE; si el escenario
     // solo crece, nunca queda corto (sin franja blanca abajo) ni oscila (sin tiriton).
