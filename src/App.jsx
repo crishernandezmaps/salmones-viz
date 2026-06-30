@@ -3,6 +3,7 @@ import { lazy, Suspense } from 'react'
 const EmbedTimeline = lazy(() => import('./embeds/timeline/EmbedTimeline'))
 const EmbedConflicto = lazy(() => import('./embeds/conflicto/EmbedConflicto'))
 const EmbedRelocalizaciones = lazy(() => import('./embeds/relocalizaciones/EmbedRelocalizaciones'))
+const EmbedRelocalizacionesAP = lazy(() => import('./embeds/relocalizaciones-ap/EmbedRelocalizacionesAP'))
 const ArticuloPreview = lazy(() => import('./preview/ArticuloPreview'))
 
 const EMBEDS = {
@@ -10,6 +11,7 @@ const EMBEDS = {
   conflicto: EmbedConflicto,
   capas: EmbedRelocalizaciones,
   relocalizaciones: EmbedRelocalizaciones,
+  'relocalizaciones-ap': EmbedRelocalizacionesAP,
 }
 
 const PREVIEWS = {
