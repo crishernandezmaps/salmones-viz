@@ -66,9 +66,9 @@ ssh root@46.224.221.33 'cd /root/work/salmones-viz &&   # 1) subir version de lo
 ```
 
 **Estado actual:** post 70 ("Asi nadan los salmones en Chile (movil)"),
-slug `salmones-movil-v10`, iframes en `&v=10`.
-URL vigente: https://salmoneswp.tremen.tech/2026/06/15/salmones-movil-v10/
-Próximo link fresco = `v11` (subir iframes a `&v=11` + slug `salmones-movil-v11`).
+slug `salmones-movil-v14` (iframe de relocalizaciones ahora = ?embed=relocalizaciones-ap).
+URL vigente: https://salmoneswp.tremen.tech/2026/06/15/salmones-movil-v14/
+Proximo link fresco = `v15` (slug `salmones-movil-v15`).
 
 > Nota: el `&` en el `src` del iframe se sirve como `&#038;` (encoding HTML
 > correcto); el navegador lo decodifica a `&` y pide `?embed=...&v=N`. Está bien.

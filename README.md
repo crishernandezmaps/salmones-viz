@@ -15,6 +15,7 @@ Proyecto desarrollado por [Tremen SpA](https://tremen.tech) para la **Universida
 | Timeline de Concesiones | `?embed=timeline` | Mapa 3 regiones con timeline animado 1985-2025 | [README](src/embeds/timeline/README.md) |
 | Mapa de Conflicto | `?embed=conflicto` | Concesiones vs areas protegidas, denuncias, sobreproduccion | [README](src/embeds/conflicto/README.md) |
 | Mapa de Capas | `?embed=capas` | Centros salmoneros + SNASPE con labels de areas protegidas | [README](src/embeds/relocalizaciones/README.md) |
+| Relocalizaciones y AP | `?embed=relocalizaciones-ap` | 36 centros relocalizados x areas protegidas (rojo=en AP, teal=fuera) | [README](src/embeds/relocalizaciones-ap/README.md) |
 
 ## Embed en WordPress
 
@@ -75,6 +76,7 @@ salmones_viz/
 | Denuncias | `denuncias.json` | SMA | 102 |
 | Sobreproduccion | `sobreproduccion.json` | SMA | — |
 | Relocalizaciones | `relocalizaciones.json` | Subpesca | — |
+| Relocalizaciones x AP | `relocalizaciones_ap.geojson` | Subpesca (Mapa 2.0) | 36 |
 
 ---
 
