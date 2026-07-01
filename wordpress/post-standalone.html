@@ -657,7 +657,8 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       setL(mar2, surfOp*picada,     0,surfY,1);
       /* VEHICULOS: camion -> wellboat -> avion */
       var ci=seg(p,0.08,0.15), co=seg(p,0.30,0.37);
-      setL(cam, ci*(1-co), lerp(-26,0,ease(ci))+lerp(0,-40,ease(co)),0,1);
+      // reposo -16% (no 0): el asset dibuja el camion sobre el agua; -16% lo asienta en la orilla
+      setL(cam, ci*(1-co), lerp(-42,-16,ease(ci))+lerp(0,-40,ease(co)),0,1);
       var wi=seg(p,0.16,0.23), wo=seg(p,0.32,0.39);
       setL(wb,  wi*(1-wo), lerp(34,0,ease(wi))+lerp(0,42,ease(wo)),0,1);
       var ax=seg(p,0.24,0.40), aop=Math.min(seg(p,0.24,0.29), 1-seg(p,0.36,0.40));
