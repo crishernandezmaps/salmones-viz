@@ -93,7 +93,12 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
   .sv-layer { object-position:center 40%; }
   #sv-jaulaLlena, #sv-jaulaEsc2, #sv-jaulaEsc3 { object-position:center 10% !important; }
   #sv-fondo { object-position:center bottom !important; }
+  /* rama aditiva ESCRITORIO (junio) — encuadre de capas d1-* */
+  #d1-jaula1, #d1-jaula2, #d1-jaula3 { object-position:center 14% !important; }
+  #d1-fondo-mar, #d1-fondo-mar-buzo { object-position:center bottom !important; }
 }
+/* rama aditiva ESCRITORIO (junio): oculta salvo que la active el flag ?introd=junio */
+.sv-frame-d2 { display:none; }
 /* sin will-change/translateZ: ya no hay scale (no shimmer) y forzar 14 capas a
    GPU satura memoria en moviles -> scroll pesado. */
 .sv-layer { position:absolute !important; inset:0; width:100% !important; height:100% !important; object-fit:cover !important; object-position:center; max-width:none !important; }
@@ -224,6 +229,24 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
     <!-- fondo contaminado: fuera del frame, anclado al fondo del escenario completo -->
     <img id="sv-fondo" class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-fondo-contaminado.webp" alt="" style="opacity:0;object-position:center bottom;z-index:2;">
+
+    <!-- rama aditiva ESCRITORIO (secuencia junio DESKTOP_1) — activable con ?introd=junio -->
+    <div class="sv-frame sv-frame-d2">
+      <img id="d1-montana2"   class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-montana2.webp" alt="">
+      <img id="d1-montana1"   class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-montana1.webp" alt="">
+      <img id="d1-fiordo1"    class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fiordo1.webp" alt="">
+      <img id="d1-fiordo2"    class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fiordo2.webp" alt="">
+      <img id="d1-mar-jaulas"  class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-mar-jaulas.webp" alt="">
+      <img id="d1-mar-jaulas2" class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-mar-jaulas2.webp" alt="" style="opacity:0">
+      <img id="d1-camion"     class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-camion.webp" alt="" style="opacity:0">
+      <img id="d1-wellboat"   class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-wellboat.webp" alt="" style="opacity:0">
+      <img id="d1-avion"      class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-avion.webp" alt="" style="opacity:0">
+      <img id="d1-jaula1"     class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-jaula1.webp" alt="" style="opacity:0">
+      <img id="d1-jaula2"     class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-jaula2.webp" alt="" style="opacity:0">
+      <img id="d1-jaula3"     class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-jaula3.webp" alt="" style="opacity:0">
+      <img id="d1-fondo-mar"      class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fondo-mar.webp" alt="" style="opacity:0;z-index:2">
+      <img id="d1-fondo-mar-buzo" class="sv-layer sv-d2" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fondo-mar-buzo.webp" alt="" style="opacity:0;z-index:2">
+    </div>
 
     <div class="sv-frame-m">
       <img id="m1-mar1"      class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-mar1.webp" alt="">
@@ -503,7 +526,10 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
         mJaula1=g('m1-jaula1'), mJaula2=g('m1-jaula2'), mJaula3=g('m1-jaula3'),
         mFondo=g('m1-fondo'), mFondoBuzo=g('m1-fondobuzo'), mLuz=g('m1-luz'), dark=g('sv-dark');
     var isMobileIntro = window.matchMedia('(max-width:767px)').matches;
-    (function(){ var im=document.querySelectorAll(isMobileIntro?'.sv-m':'.sv-d'); for(var i=0;i<im.length;i++){ var ds=im[i].getAttribute('data-src'); if(ds){ im[i].src=ds; } } })();
+    // flag ADITIVO: ?introd=junio activa la intro de ESCRITORIO nueva (capas d1-*), solo en escritorio.
+    var useJunio = /[?&]introd=junio/.test(location.search) && !isMobileIntro;
+    var introSel = isMobileIntro ? '.sv-m' : (useJunio ? '.sv-d2' : '.sv-d');
+    (function(){ var im=document.querySelectorAll(introSel); for(var i=0;i<im.length;i++){ var ds=im[i].getAttribute('data-src'); if(ds){ im[i].src=ds; } } })();
     var setL = function(node,o,x,y,s){ if(!node) return; if(o!==null) node.style.opacity=o; node.style.transform='translate('+x+'%,'+y+'%) scale('+s+')'; };
 
     function render(p) {
@@ -608,11 +634,71 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       beatM(beat3,0.84,0.90,0.97,0.995);
     }
 
-    var activeRender = isMobileIntro ? renderMobile : render;
+    /* ── INTRO ESCRITORIO (secuencia junio DESKTOP_1, capas d1-*) — ADITIVA ──
+       Misma logica probada en movil: superficie persistente que se comprime con el
+       descenso de camara + jaulas APILADAS (opacas, no se funden hacia afuera, para
+       que no se asome el paisaje) + fondo/buzo en fundido simple. 13 beats. Rangos
+       AFINABLES contra los 13 frames de SECUENCIA_ARMADA. */
+    function renderDesktopJunio(p) {
+      var mon2=g('d1-montana2'), mon1=g('d1-montana1'), fio1=g('d1-fiordo1'), fio2=g('d1-fiordo2'),
+          mar=g('d1-mar-jaulas'), mar2=g('d1-mar-jaulas2'),
+          cam=g('d1-camion'), wb=g('d1-wellboat'), av=g('d1-avion'),
+          j1=g('d1-jaula1'), j2=g('d1-jaula2'), j3=g('d1-jaula3'),
+          fm=g('d1-fondo-mar'), fmb=g('d1-fondo-mar-buzo');
+      /* SUPERFICIE persistente: sube y se comprime al descender la camara */
+      var dive   = ease(seg(p,0.42,0.72));
+      var surfY  = lerp(0,-16,dive);
+      var surfOp = 1 - seg(p,0.70,0.80);
+      setL(mon2, surfOp, 0,surfY,1); setL(mon1, surfOp, 0,surfY,1);
+      setL(fio1, surfOp, 0,surfY,1); setL(fio2, surfOp, 0,surfY,1);
+      /* mar-jaulas (base) -> cross-fade a mar-jaulas2 (vista picada) en el descenso */
+      var picada = seg(p,0.44,0.54);
+      setL(mar,  surfOp*(1-picada), 0,surfY,1);
+      setL(mar2, surfOp*picada,     0,surfY,1);
+      /* VEHICULOS: camion -> wellboat -> avion */
+      var ci=seg(p,0.08,0.15), co=seg(p,0.30,0.37);
+      setL(cam, ci*(1-co), lerp(-26,0,ease(ci))+lerp(0,-40,ease(co)),0,1);
+      var wi=seg(p,0.16,0.23), wo=seg(p,0.32,0.39);
+      setL(wb,  wi*(1-wo), lerp(34,0,ease(wi))+lerp(0,42,ease(wo)),0,1);
+      var ax=seg(p,0.24,0.40), aop=Math.min(seg(p,0.24,0.29), 1-seg(p,0.36,0.40));
+      setL(av,  aop, lerp(-60,72,ax),0,1);
+      /* JAULAS submarinas APILADAS (opacas): jaula1 (llena) -> jaula2/3 (escape) */
+      var cageY = lerp(0,-10,dive);
+      setL(j1, seg(p,0.54,0.60), 0,cageY,1);
+      setL(j2, seg(p,0.62,0.68), 0,cageY,1);
+      setL(j3, seg(p,0.70,0.76), 0,cageY,1);
+      /* FONDO contaminado (fade en su lugar) -> buzo */
+      setL(fm,  seg(p,0.76,0.86)*(1-seg(p,0.90,0.95)), 0,0,1);
+      setL(fmb, seg(p,0.90,0.96), 0,0,1);
+      var fdepth=seg(p,0.72,1.0), fbright=lerp(1.4,0.85,ease(fdepth));
+      if(fm)  fm.style.filter  = "brightness("+fbright+")";
+      if(fmb) fmb.style.filter = "brightness("+fbright+")";
+      /* relleno bg superficie -> profundo + oscurecimiento final */
+      if(bgDeep) bgDeep.style.opacity = seg(p,0.60,0.78);
+      if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.60,0.78);
+      if(dark) dark.style.opacity = seg(p,0.84,1.0);
+      /* TEXTOS */
+      if(hero){ hero.style.opacity = 1-seg(p,0.06,0.14); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.06,0.14))+'px)'; }
+      if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
+      if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
+      var bd=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
+      bd(beat1,0.14,0.20,0.40,0.46);
+      bd(beat2,0.56,0.62,0.68,0.74);
+      bd(beat3,0.84,0.90,0.97,0.995);
+    }
+
+    // activar la rama nueva SOLO con el flag: oculta la vieja (.sv-frame-d + sv-fondo), muestra la d2
+    if (useJunio) {
+      var _fd=intro.querySelector('.sv-frame-d'), _fd2=intro.querySelector('.sv-frame-d2'), _sf=g('sv-fondo');
+      if(_fd) _fd.style.display='none';
+      if(_sf) _sf.style.display='none';
+      if(_fd2) _fd2.style.display='block';
+    }
+    var activeRender = isMobileIntro ? renderMobile : (useJunio ? renderDesktopJunio : render);
 
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
-    var SCREENS = isMobileIntro ? 13 : 6;  // movil: recorrido mas largo -> transiciones mas lentas/graduales
+    var SCREENS = isMobileIntro ? 13 : (useJunio ? 8 : 6);  // movil 13; escritorio junio 8 (13 beats -> mas recorrido)
     // Alto del escenario = el viewport visible mas GRANDE visto (solo crece, nunca encoge).
     // En movil la barra de URL colapsa al scrollear y el viewport CRECE; si el escenario
     // solo crece, nunca queda corto (sin franja blanca abajo) ni oscila (sin tiriton).
