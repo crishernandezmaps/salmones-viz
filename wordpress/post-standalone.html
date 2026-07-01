@@ -527,7 +527,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
         mFondo=g('m1-fondo'), mFondoBuzo=g('m1-fondobuzo'), mLuz=g('m1-luz'), dark=g('sv-dark');
     var isMobileIntro = window.matchMedia('(max-width:767px)').matches;
     // flag ADITIVO: ?introd=junio activa la intro de ESCRITORIO nueva (capas d1-*), solo en escritorio.
-    var useJunio = /[?&]introd=junio/.test(location.search) && !isMobileIntro;
+    var useJunio = isMobileIntro ? false : (location.search.indexOf('introd=junio') !== -1);
     var introSel = isMobileIntro ? '.sv-m' : (useJunio ? '.sv-d2' : '.sv-d');
     (function(){ var im=document.querySelectorAll(introSel); for(var i=0;i<im.length;i++){ var ds=im[i].getAttribute('data-src'); if(ds){ im[i].src=ds; } } })();
     var setL = function(node,o,x,y,s){ if(!node) return; if(o!==null) node.style.opacity=o; node.style.transform='translate('+x+'%,'+y+'%) scale('+s+')'; };
