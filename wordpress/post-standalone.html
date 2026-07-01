@@ -554,12 +554,17 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          arriba toda la secuencia (cutaway continuo de la disenadora). Las capas
          submarinas (jaula/fondo) son transparentes sobre la linea de agua y se
          dibujan ENCIMA, asi que se componen debajo sin tapar el paisaje de arriba. */
-      setL(mMar1,     1, 0,0,1);
-      setL(mFiordo2,  1, 0,0,1);
-      setL(mFiordo1,  1, 0,0,1);
-      setL(mFiordo1b, 1, 0,0,1);
-      setL(mMontana1, 1, 0,0,1);
-      setL(mMontana2, 1, 0,0,1);
+      /* DESCENSO DE CAMARA (inmersion): la superficie retrocede hacia arriba y se
+         pierde al profundizar; las jaulas suben menos para alinear la linea de agua. */
+      var dive   = ease(seg(p,0.44,0.72));
+      var surfY  = lerp(0,-20,dive);
+      var surfOp = 1 - seg(p,0.72,0.82);
+      setL(mMar1,     surfOp, 0,surfY,1);
+      setL(mFiordo2,  surfOp, 0,surfY,1);
+      setL(mFiordo1,  surfOp, 0,surfY,1);
+      setL(mFiordo1b, surfOp, 0,surfY,1);
+      setL(mMontana1, surfOp, 0,surfY,1);
+      setL(mMontana2, surfOp, 0,surfY,1);
       /* VEHICULOS: camion -> barco -> avion */
       var ci=seg(p,0.10,0.18), co=seg(p,0.40,0.48);
       setL(mCamion, ci*(1-co), lerp(-28,0,ease(ci))+lerp(0,-44,ease(co)),0,1);
@@ -572,9 +577,10 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          opacas debajo y jaula3 entra encima. Asi SIEMPRE hay una capa submarina
          opaca cubriendo la superficie persistente -> no se transparenta ni se
          asoma el paisaje de arriba durante las transiciones. */
-      setL(mJaula1, seg(p,0.48,0.54), 0, lerp(8,0,ease(seg(p,0.48,0.56))),1);
-      setL(mJaula2, seg(p,0.56,0.60), 0,0,1);
-      setL(mJaula3, seg(p,0.62,0.66), 0,0,1);
+      var cageY = lerp(0,-12,dive);
+      setL(mJaula1, seg(p,0.48,0.54), 0, cageY, 1);
+      setL(mJaula2, seg(p,0.56,0.60), 0, cageY, 1);
+      setL(mJaula3, seg(p,0.62,0.66), 0, cageY, 1);
       /* INMERSION: el fondo marino sube; luego aparece el buzo */
       /* Lecho marino: fundido SIMPLE en su lugar (abajo), sin translateY -> antes
          el barrido subia el borde del lecho (red rota) por encima de la jaula y la
