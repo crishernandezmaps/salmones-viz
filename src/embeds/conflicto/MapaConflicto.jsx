@@ -642,27 +642,22 @@ export default function MapaConflicto() {
             <span className='text-[#1b3a4b]/40 text-[9px]'>{legendOpen ? '▾' : '▸'}</span>
           </button>
           <div className={(legendOpen ? 'block' : 'hidden') + ' mt-1 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm p-3 text-sm space-y-1.5 max-w-[80vw] md:max-w-none'}>
-          <p className='text-[9px] text-[#1b3a4b]/40 mb-1'>Activa o desactiva capas para explorar</p>
-          <label className='flex items-center gap-2 cursor-pointer'>
-            <input type='checkbox' checked={visible.centros} onChange={() => toggleLayer('centros')} className='rounded accent-[#5b9ea6]' />
+          <div className='flex items-center gap-2'>
             <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#5b9ea6' }} />
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Centros salmoneros</span>
-          </label>
-          <label className='flex items-center gap-2 cursor-pointer'>
-            <input type='checkbox' checked={visible.amp} onChange={() => toggleLayer('amp')} className='rounded accent-[#3a9e9e]' />
+          </div>
+          <div className='flex items-center gap-2'>
             <span className='w-2.5 h-2.5 rounded shrink-0' style={{ background: 'rgba(58,158,158,0.4)', border: '1.5px solid #2a7a7a' }} />
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Áreas marinas protegidas</span>
-          </label>
-          <label className='flex items-center gap-2 cursor-pointer'>
-            <input type='checkbox' checked={visible.snaspe} onChange={() => toggleLayer('snaspe')} className='rounded accent-[#4caf50]' />
+          </div>
+          <div className='flex items-center gap-2'>
             <span className='w-2.5 h-2.5 rounded shrink-0' style={{ background: 'rgba(76,175,80,0.3)', border: '1.5px dashed #2e7d32' }} />
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Áreas protegidas terrestres</span>
-          </label>
-          <label className='flex items-center gap-2 cursor-pointer'>
-            <input type='checkbox' checked={visible.sobreproduccion} onChange={() => toggleLayer('sobreproduccion')} className='rounded accent-[#b71c1c]' />
+          </div>
+          <div className='flex items-center gap-2'>
             <span className='w-3.5 h-3.5 rounded-full shrink-0' style={{ background: '#b71c1c', border: '2px solid #ffd600' }} />
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Centros sancionados por sobreproducción ({stats.sobreproduccion})</span>
-          </label>
+          </div>
           </div>
         </div>
 
