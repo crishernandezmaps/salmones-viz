@@ -269,7 +269,7 @@ export default function MapaConflicto() {
   const rankingRef = useRef([])
   const selMarkerRef = useRef(null)
 
-  const selectByCode = useCallback((code) => {
+  const selectByCode = useCallback((code, zoomOverride) => {
     const { concMap, denMap, centrosByCode, spMap } = dataRef.current
     const props = centrosByCode[code]
     if (!props) return
@@ -289,7 +289,7 @@ export default function MapaConflicto() {
       // derecha (el mapa ocupa 3/5 y la ficha va a la derecha).
       mapRef.current.flyTo({
         center: m ? [lng, lat - 0.10] : [lng + 0.15, lat + 0.1],
-        zoom: m ? 8.2 : 9, duration: 1200,
+        zoom: zoomOverride != null ? zoomOverride : (m ? 8.2 : 9), duration: 1200,
       })
     }
   }, [])
@@ -578,7 +578,7 @@ export default function MapaConflicto() {
       // Auto-seleccion del primer centro sancionado al cargar (movil y escritorio):
       // el usuario ve un ejemplo ya desplegado de inmediato (ficha + punto marcado).
       if (centroRanking.length > 0) {
-        selectByCode(centroRanking[0].code)
+        selectByCode(centroRanking[0].code, window.innerWidth < 768 ? 6.2 : 7)  // parte mas alejado
         setRankIndex(0)
       }
 
