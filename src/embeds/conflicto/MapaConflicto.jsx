@@ -176,6 +176,12 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
   const headerBg = hasSobreprod ? '#b71c1c' : '#3a9e9e'
   const inRanking = rankIndex >= 0
   const regionShort = (r) => !r ? '' : String(r).replace(/^REGI[ÓO]N DE\s+/i, '').replace(/\s+DEL GENERAL.*$/i, '').trim()
+  // Holding = grupo empresarial SIN el titular ("TITULAR - HOLDING (pais)" -> "HOLDING (pais)")
+  const holding = sp
+    ? (sp.titular && sp.grupo_empresarial && sp.grupo_empresarial.indexOf(sp.titular) === 0
+        ? sp.grupo_empresarial.slice(sp.titular.length).replace(/^\s*[-–]\s*/, '').trim()
+        : (sp.grupo_empresarial || ''))
+    : ''
 
   return (
     <div
@@ -203,9 +209,11 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
       <div className='px-3 py-2 flex-1 min-h-0 overflow-y-auto columns-2 gap-4 text-[11px] leading-snug md:columns-1 md:px-4 md:py-3 md:text-sm'>
         {sp ? (
           <>
-            {/* nombre + grupo empresarial (pais) — abre el cuerpo, en rojo */}
-            <p className='break-inside-avoid mb-2 font-bold leading-tight' style={{ color: '#b71c1c' }}>{sp.grupo_empresarial}</p>
-            <p className='break-inside-avoid mb-2 text-sm md:text-base font-bold'>Centro {sp.codigo_centro}</p>
+            {/* HOLDING (solo el grupo, sin titular) a la IZQUIERDA del codigo del centro */}
+            <div className='break-inside-avoid mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-0.5 leading-tight'>
+              <span className='font-bold' style={{ color: '#b71c1c' }}>{holding}</span>
+              <span className='text-sm md:text-base font-bold'>Centro {sp.codigo_centro}</span>
+            </div>
 
             {sp.area_protegida && (
               <p className='break-inside-avoid mb-2'>
@@ -645,7 +653,7 @@ export default function MapaConflicto() {
           </div>
           <div className='flex items-center gap-2'>
             <span className='w-3.5 h-3.5 rounded-full shrink-0' style={{ background: '#b71c1c', border: '2px solid #ffd600' }} />
-            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Centros sancionados por sobreproducción ({stats.sobreproduccion})</span>
+            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Centros con solicitud de relocalización y procedimiento sancionatorio ({stats.sobreproduccion})</span>
           </div>
           </div>
         </div>
