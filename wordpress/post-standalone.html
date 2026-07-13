@@ -249,6 +249,12 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <img id="ds-camion"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-camion.webp" alt="" style="opacity:0">
       <img id="ds-wellboat" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-wellboat.webp" alt="" style="opacity:0">
       <img id="ds-avion"    class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-avion.webp" alt="" style="opacity:0">
+      <!-- submarinas: se apilan OPACAS encima (traen su linea de agua + transparencia arriba) -->
+      <img id="ds-jaula1"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-jaula1.webp" alt="" style="opacity:0">
+      <img id="ds-jaula2"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-jaula2.webp" alt="" style="opacity:0">
+      <img id="ds-jaula3"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-jaula3.webp" alt="" style="opacity:0">
+      <img id="ds-fondo"      class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fondo-mar.webp" alt="" style="opacity:0">
+      <img id="ds-fondobuzo"  class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fondo-mar-buzo.webp" alt="" style="opacity:0">
     </div>
 
     <!-- ESCRITORIO HIBRIDO - TRAMO B (submarino): frames de la disenadora (descenso->cutaway->jaula->escape->fondo->buzo) -->
@@ -570,7 +576,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
     // OFICIAL: en escritorio la intro nueva (secuencia armada, 13 frames dq-*) es la de por defecto.
     // Via de escape para comparar/rollback la vieja (of-*): ?introd=old. En movil nunca aplica.
     var useJunio = isMobileIntro ? false : (location.search.indexOf('introd=old') === -1);
-    var introSel = isMobileIntro ? '.sv-m' : (useJunio ? '.sv-dq, .sv-ds' : '.sv-d');
+    var introSel = isMobileIntro ? '.sv-m' : (useJunio ? '.sv-ds' : '.sv-d');
     (function(){ var im=document.querySelectorAll(introSel); for(var i=0;i<im.length;i++){ var ds=im[i].getAttribute('data-src'); if(ds){ im[i].src=ds; } } })();
     var setL = function(node,o,x,y,s){ if(!node) return; if(o!==null) node.style.opacity=o; node.style.transform='translate('+x+'%,'+y+'%) scale('+s+')'; };
 
@@ -676,60 +682,53 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       beatM(beat3,0.84,0.90,0.97,0.995);
     }
 
-    /* ── INTRO ESCRITORIO OFICIAL — HIBRIDO capas + frames ──
-       TRAMO A (superficie): capas d1-* con VEHICULOS ANIMADOS (camion/barco/avion entran y
-       salen deslizando con translate, como el movil). Los frames de la disenadora tienen los
-       vehiculos ESTATICOS, por eso la superficie se hace por capas.
-       TRAMO B (submarino): flipbook de los frames dq-* (descenso->cutaway->jaula->escape->
-       fondo->buzo), interpolados x3 -> movimiento suave, composicion fiel de la disenadora.
-       EMPALME: la superficie-capas se disuelve en [0.44,0.52] mientras entra el primer frame
-       del tramo B (misma superficie en reposo -> crossfade casi invisible). */
-    var DQ_N = 34;
-    var DQ_CF = 0.22;                  // cross-fade corto entre frames (tramo B)
-    var DQ_B_START = 15;               // primer frame del tramo B (superficie casi en reposo, sin vehiculos)
-    function dqPad(n){ return (n<10?'00':n<100?'0':'')+n; }
-    function renderDesktopHybrid(p) {
+    /* ── INTRO ESCRITORIO OFICIAL — PARALLAX POR CAPAS (replica el mecanismo del MOVIL) ──
+       Descenso de camara continuo: la superficie (balsas+cerros) sube y se comprime; las
+       jaulas submarinas suben y se APILAN opacas (cutaway: superficie arriba + jaulas
+       colgando); luego fondo contaminado + buzo. Los VEHICULOS entran y salen con translate.
+       Capas d1-* (bloque .sv-frame-ds). Mismo mecanismo que renderMobile (NO frames). */
+    function renderDesktopParallax(p) {
       var dMon2=g('ds-montana2'), dMon1=g('ds-montana1'), dFio1=g('ds-fiordo1'), dFio2=g('ds-fiordo2'),
-          dMar=g('ds-mar'), dCam=g('ds-camion'), dWb=g('ds-wellboat'), dAv=g('ds-avion');
-      /* ── TRAMO A: superficie (fondo) + VEHICULOS que entran y salen ── */
-      var surfOp = 1 - seg(p,0.44,0.50);       // la superficie-capas se disuelve en el empalme
-      // la superficie sube un poco justo antes del empalme, para calzar con el primer frame
-      // del tramo B (que ya inicio el descenso) -> el crossfade del empalme queda alineado.
-      var surfY = -lerp(0,8,seg(p,0.36,0.46));
-      setL(dMon2, surfOp, 0,surfY,1); setL(dMon1, surfOp, 0,surfY,1);
-      setL(dFio1, surfOp, 0,surfY,1); setL(dFio2, surfOp, 0,surfY,1);
+          dMar=g('ds-mar'), dCam=g('ds-camion'), dWb=g('ds-wellboat'), dAv=g('ds-avion'),
+          dJ1=g('ds-jaula1'), dJ2=g('ds-jaula2'), dJ3=g('ds-jaula3'),
+          dFondo=g('ds-fondo'), dBuzo=g('ds-fondobuzo');
+      /* DESCENSO DE CAMARA: la superficie sube (surfY) y se comprime; se pierde al profundizar */
+      var dive   = ease(seg(p,0.44,0.72));
+      var surfY  = lerp(0,-26,dive);
+      var surfOp = 1 - seg(p,0.72,0.82);
       setL(dMar,  surfOp, 0,surfY,1);
-      var ci=seg(p,0.06,0.14), co=seg(p,0.30,0.38);      // camion entra por la izquierda, reposa, sale
-      setL(dCam, surfOp*ci*(1-co), lerp(-42,-16,ease(ci))+lerp(0,-44,ease(co)),0,1);
-      var wi=seg(p,0.14,0.22), wo=seg(p,0.32,0.40);      // wellboat entra por la derecha, sale
-      setL(dWb,  surfOp*wi*(1-wo), lerp(34,0,ease(wi))+lerp(0,44,ease(wo)),0,1);
-      var ax=seg(p,0.22,0.42), aop=Math.min(seg(p,0.22,0.28), 1-seg(p,0.38,0.42));  // avion cruza
-      setL(dAv,  surfOp*aop, lerp(-60,72,ax),0,1);
-
-      /* ── TRAMO B: flipbook de frames (descenso->buzo). Empalma en [0.44,0.52]. ── */
-      var handoffIn = seg(p,0.44,0.50);
-      var fB = DQ_B_START + seg(p,0.48,1.0)*(DQ_N-DQ_B_START);   // frame continuo en [DQ_B_START, DQ_N] (avanza tras el empalme)
-      for (var k=0;k<DQ_N;k++){
-        var el = g('dq-'+dqPad(k+1));
-        if(!el) continue;
-        var kk = k+1, op = 0;
-        if (kk >= DQ_B_START) {
-          op = handoffIn * clamp((fB-(kk-1)-(1-DQ_CF))/DQ_CF, 0, 1);
-        }
-        el.style.opacity = op;
-      }
-      /* los frames y las capas traen su propio cielo -> no usar el relleno blur */
+      setL(dFio2, surfOp, 0,surfY,1); setL(dFio1, surfOp, 0,surfY,1);
+      setL(dMon1, surfOp, 0,surfY,1); setL(dMon2, surfOp, 0,surfY,1);
+      /* VEHICULOS: camion -> barco -> avion, entran y salen */
+      var ci=seg(p,0.06,0.14), co=seg(p,0.30,0.38);
+      setL(dCam, ci*(1-co), lerp(-42,-16,ease(ci))+lerp(0,-44,ease(co)),0,1);
+      var wi=seg(p,0.14,0.22), wo=seg(p,0.32,0.40);
+      setL(dWb,  wi*(1-wo), lerp(34,0,ease(wi))+lerp(0,44,ease(wo)),0,1);
+      var ax=seg(p,0.22,0.42), aop=Math.min(seg(p,0.22,0.28), 1-seg(p,0.38,0.42));
+      setL(dAv,  aop, lerp(-60,72,ax),0,1);
+      /* JAULAS submarinas APILADAS (opacas, traen su linea de agua): jaula1 (llena) -> escape */
+      var cageY = lerp(0,-14,dive);
+      setL(dJ1, seg(p,0.50,0.58), 0, cageY, 1);
+      setL(dJ2, seg(p,0.60,0.66), 0, cageY, 1);
+      setL(dJ3, seg(p,0.68,0.74), 0, cageY, 1);
+      /* FONDO contaminado (fade en su lugar) -> buzo */
+      setL(dFondo, seg(p,0.76,0.86)*(1-seg(p,0.90,0.95)), 0, 0, 1);
+      setL(dBuzo,  seg(p,0.90,0.96), 0, 0, 1);
+      var fdepth=seg(p,0.74,1.0), fbright=lerp(1.4,0.85,ease(fdepth));
+      if(dFondo) dFondo.style.filter="brightness("+fbright+")";
+      if(dBuzo)  dBuzo.style.filter ="brightness("+fbright+")";
+      /* el cielo lo pone sv-sky-d; oscurecimiento final */
       if(bgSurface) bgSurface.style.opacity = 0;
       if(bgDeep) bgDeep.style.opacity = 0;
-      if(dark) dark.style.opacity = seg(p,0.86,1.0);
+      if(dark) dark.style.opacity = seg(p,0.80,1.0);
       /* ── TEXTOS ── */
       if(hero){ hero.style.opacity = 1-seg(p,0.05,0.13); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.05,0.13))+'px)'; }
       if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
       if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
       var bd=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      bd(beat1,0.14,0.20,0.40,0.44);
-      bd(beat2,0.58,0.64,0.72,0.78);
-      bd(beat3,0.84,0.90,0.97,0.995);
+      bd(beat1,0.14,0.20,0.40,0.46);
+      bd(beat2,0.56,0.62,0.70,0.76);
+      bd(beat3,0.86,0.92,0.97,0.995);
     }
 
     // ESCRITORIO OFICIAL (hibrido): muestra la superficie-capas (.sv-frame-ds) + los frames
@@ -741,13 +740,13 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       if(_sf) _sf.style.display='none';
       if(_sky) _sky.style.display='block';
       if(_fds) _fds.style.display='block';
-      if(_fdq) _fdq.style.display='block';
+      // .sv-frame-dq (frames) ya NO se usa en el parallax por capas -> queda oculto
     }
-    var activeRender = isMobileIntro ? renderMobile : (useJunio ? renderDesktopHybrid : render);
+    var activeRender = isMobileIntro ? renderMobile : (useJunio ? renderDesktopParallax : render);
 
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
-    var SCREENS = isMobileIntro ? 13 : (useJunio ? 12 : 6);  // movil 13; escritorio frames 12 (13 frames -> ~1 pantalla c/u)
+    var SCREENS = isMobileIntro ? 13 : (useJunio ? 13 : 6);  // escritorio parallax por capas: 13 (ritmo del movil)
     // Alto del escenario = el viewport visible mas GRANDE visto (solo crece, nunca encoge).
     // En movil la barra de URL colapsa al scrollear y el viewport CRECE; si el escenario
     // solo crece, nunca queda corto (sin franja blanca abajo) ni oscila (sin tiriton).
