@@ -258,7 +258,7 @@ export default function MapaConflicto() {
   const mapRef = useRef(null)
   const dataRef = useRef({ concMap: {}, denMap: {}, centrosByCode: {}, spMap: {} })
   const [loaded, setLoaded] = useState(false)
-  const [visible, setVisible] = useState({ centros: true, amp: true, snaspe: true, ecmpo: true, sobreproduccion: true })
+  const [visible, setVisible] = useState({ centros: true, amp: true, snaspe: true, sobreproduccion: true })
   const [stats, setStats] = useState({ sobreproduccion: 0 })
   const [selected, setSelected] = useState(null)
   const [ranking, setRanking] = useState([])
@@ -347,10 +347,9 @@ export default function MapaConflicto() {
     // el wrapper: en modo scroll el mapa no recibe gestos; al activar, gestos normales.
 
     mapRef.current.on('load', async () => {
-      const [ampResp, snaspeResp, ecmpoResp, centrosResp, concResp, denResp, spResp] = await Promise.all([
+      const [ampResp, snaspeResp, centrosResp, concResp, denResp, spResp] = await Promise.all([
         fetch(BASE + 'data/amp_nacional.topojson').then(r => r.json()),
         fetch(BASE + 'data/snaspe_terrestre.topojson').then(r => r.json()),
-        fetch(BASE + 'data/ecmpo_salmon.topojson').then(r => r.json()),
         fetch(BASE + 'data/centros_salmoneros.geojson').then(r => r.json()),
         fetch(BASE + 'data/concesiones_excel.json').then(r => r.json()),
         fetch(BASE + 'data/denuncias.json').then(r => r.json()),
@@ -360,9 +359,6 @@ export default function MapaConflicto() {
       const ampGeo = feature(ampResp, ampResp.objects.amp)
 
       const snaspeGeo = feature(snaspeResp, snaspeResp.objects.snaspe)
-
-      const ecmpoObjKey = Object.keys(ecmpoResp.objects)[0]
-      const ecmpoGeo = feature(ecmpoResp, ecmpoResp.objects[ecmpoObjKey])
 
       // Concesiones lookup
       const concMap = {}
@@ -502,10 +498,6 @@ export default function MapaConflicto() {
       mapRef.current.addLayer({ id: 'amp-fill', type: 'fill', source: 'amp', paint: { 'fill-color': '#3a9e9e', 'fill-opacity': 0.3 } }, B)
       mapRef.current.addLayer({ id: 'amp-outline', type: 'line', source: 'amp', paint: { 'line-color': '#2a7a7a', 'line-width': 1.5 } }, B)
 
-      // ── ECMPO layers ──
-      mapRef.current.addSource('ecmpo', { type: 'geojson', data: ecmpoGeo })
-      mapRef.current.addLayer({ id: 'ecmpo-fill', type: 'fill', source: 'ecmpo', paint: { 'fill-color': '#e65100', 'fill-opacity': 0.35 } }, B)
-      mapRef.current.addLayer({ id: 'ecmpo-outline', type: 'line', source: 'ecmpo', paint: { 'line-color': '#bf360c', 'line-width': 2, 'line-dasharray': [4, 2] } }, B)
 
       // ── Heatmap ──
       mapRef.current.addSource('all-centros', { type: 'geojson', data: centrosResp })
@@ -613,9 +605,6 @@ export default function MapaConflicto() {
       } else if (id === 'amp') {
         mapRef.current.setLayoutProperty('amp-fill', 'visibility', vis)
         mapRef.current.setLayoutProperty('amp-outline', 'visibility', vis)
-      } else if (id === 'ecmpo') {
-        mapRef.current.setLayoutProperty('ecmpo-fill', 'visibility', vis)
-        mapRef.current.setLayoutProperty('ecmpo-outline', 'visibility', vis)
       } else if (id === 'sobreproduccion') {
         if (mapRef.current.getLayer('layer-sobreproduccion')) mapRef.current.setLayoutProperty('layer-sobreproduccion', 'visibility', vis)
       }
@@ -668,11 +657,6 @@ export default function MapaConflicto() {
             <input type='checkbox' checked={visible.snaspe} onChange={() => toggleLayer('snaspe')} className='rounded accent-[#4caf50]' />
             <span className='w-2.5 h-2.5 rounded shrink-0' style={{ background: 'rgba(76,175,80,0.3)', border: '1.5px dashed #2e7d32' }} />
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Áreas protegidas terrestres</span>
-          </label>
-          <label className='flex items-center gap-2 cursor-pointer'>
-            <input type='checkbox' checked={visible.ecmpo} onChange={() => toggleLayer('ecmpo')} className='rounded accent-[#e65100]' />
-            <span className='w-2.5 h-2.5 rounded shrink-0' style={{ background: 'rgba(230,81,0,0.35)', border: '1.5px dashed #bf360c' }} />
-            <span className='text-[#1b3a4b]/80 text-xs font-medium'>ECMPO (pueblos originarios)</span>
           </label>
           <label className='flex items-center gap-2 cursor-pointer'>
             <input type='checkbox' checked={visible.sobreproduccion} onChange={() => toggleLayer('sobreproduccion')} className='rounded accent-[#b71c1c]' />
