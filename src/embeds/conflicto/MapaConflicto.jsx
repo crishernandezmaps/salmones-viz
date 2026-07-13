@@ -172,27 +172,21 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
 
   const { centro, concesion, denuncias, hasDenuncia, sobreproduccion } = selected
   const hasSobreprod = sobreproduccion && sobreproduccion.length > 0
-
-  const headerBg = hasSobreprod ? '#b71c1c'
-    : hasDenuncia ? '#d94040'
-    : '#3a9e9e'
-
+  const sp = hasSobreprod ? sobreproduccion[0] : null
+  const headerBg = hasSobreprod ? '#b71c1c' : '#3a9e9e'
   const inRanking = rankIndex >= 0
+  const regionShort = (r) => !r ? '' : String(r).replace(/^REGI[ÓO]N DE\s+/i, '').replace(/\s+DEL GENERAL.*$/i, '').trim()
 
   return (
     <div
       className='h-full flex flex-col overflow-hidden md:overflow-y-auto'
-      style={{
-        background: (hasSobreprod || hasDenuncia) ? '#fff5f5' : '#fff',
-        color: (hasSobreprod || hasDenuncia) ? '#4a1010' : '#1b3a4b',
-      }}
+      style={{ background: hasSobreprod ? '#fff5f5' : '#fff', color: hasSobreprod ? '#4a1010' : '#1b3a4b' }}
     >
-      {/* Header */}
-      <div className='shrink-0 z-10 px-4 py-2.5 flex items-center justify-between gap-2' style={{ background: headerBg, color: '#fff' }}>
-        <div>
-          <p className='text-xs opacity-80'>Comuna: {centro.COMUNA || '—'}</p>
-          <p className='text-xs opacity-80'>Holding: {hasSobreprod ? sobreproduccion[0].titular : concesion?.Holding || concesion?.['Holding (columna manual)'] || concesion?.['nombre titular'] || '—'}</p>
-        </div>
+      {/* Header: titular - grupo empresarial (pais) */}
+      <div className='shrink-0 z-10 px-4 py-3 flex items-start justify-between gap-2' style={{ background: headerBg, color: '#fff' }}>
+        <p className='text-sm font-bold leading-tight'>
+          {sp ? sp.grupo_empresarial : (centro.NOMBRE || 'Centro salmonero')}
+        </p>
         {onClose && (
           <button onClick={onClose} aria-label='Cerrar ficha'
             className='shrink-0 -mr-1.5 w-8 h-8 flex items-center justify-center rounded-full text-white/90 hover:bg-white/20 text-lg leading-none'>
@@ -201,15 +195,15 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
         )}
       </div>
 
-      {/* Pagination — by holding */}
+      {/* Paginacion por CENTRO */}
       {ranking.length > 0 && (
-        <div className='shrink-0 flex items-center justify-between px-4 py-2 border-b border-current/10' style={{ background: inRanking ? 'rgba(217,64,64,0.08)' : 'rgba(27,58,75,0.04)' }}>
+        <div className='shrink-0 flex items-center justify-between px-4 py-2 border-b border-current/10' style={{ background: 'rgba(183,28,28,0.06)' }}>
           <button onClick={() => onNavigate(Math.max(0, rankIndex - 1))} disabled={rankIndex <= 0}
             className='inline-flex items-center gap-1 px-3 py-1.5 rounded-full border text-xs font-bold disabled:opacity-20' style={{ color: headerBg, borderColor: headerBg }}>
             &#8592; Anterior
           </button>
           <span className='text-[10px] opacity-50 uppercase tracking-wider'>
-            {inRanking ? `Holding ${rankIndex + 1} de ${ranking.length}` : 'Holdings sancionados'}
+            {inRanking ? `Centro ${rankIndex + 1} de ${ranking.length}` : 'Centros sancionados'}
           </span>
           <button onClick={() => onNavigate(Math.min(ranking.length - 1, rankIndex + 1))} disabled={rankIndex >= ranking.length - 1}
             className='sv-next inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-sm disabled:opacity-20' style={{ background: headerBg }}>
@@ -218,74 +212,41 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
         </div>
       )}
 
-      <div className='px-4 py-2 flex-1 min-h-0 overflow-hidden md:overflow-visible'>
-        {/* ── SOBREPRODUCCION: una linea por ciclo (cero scroll en movil) ── */}
-        {hasSobreprod && (() => {
-          const allCycles = []
-          sobreproduccion.forEach(sp => {
-            sp.excesos.forEach((ex, ei) => {
-              if (ex.fecha_inicio) allCycles.push({ ...ex, expediente: sp.expediente, estado: sp.estado_procedimiento })
-            })
-          })
-          allCycles.sort((a, b) => (a.fecha_inicio || '').localeCompare(b.fecha_inicio || ''))
-          const maxPct = Math.max(...allCycles.map(c => c.exceso_pct), 1)
-
-          const estados = [...new Set(allCycles.map(c => c.estado).filter(Boolean))]
-          const yr = (d) => (d || '').slice(0, 4)
-          return (
-            <>
-              <div className='flex items-center justify-between gap-2 mb-1.5 mt-0.5'>
-                <p className='text-[11px] font-bold uppercase tracking-wider opacity-40'>Proc. sancionatorio por sobreproduccion</p>
-                {estados.length === 1 && <span className='text-[8px] font-bold px-1.5 py-0.5 rounded shrink-0' style={{ background: '#b71c1c', color: '#fff' }}>{estados[0]}</span>}
-              </div>
-              <div className='relative ml-2'>
-                <div className='absolute left-[4px] top-1 bottom-1 w-[2px]' style={{ background: 'rgba(217,64,64,0.18)' }} />
-                {allCycles.map((c, ci) => {
-                  const intensity = 0.4 + (c.exceso_pct / maxPct) * 0.6
-                  return (
-                    <div key={ci} className='relative pl-4 py-[3px] flex items-center gap-2 text-[10px] whitespace-nowrap'>
-                      <span className='absolute left-0 top-1/2 -translate-y-1/2 rounded-full' style={{ width: 8, height: 8, marginLeft: 1, background: `rgba(217,64,64,${intensity})`, border: '1.5px solid #fff', boxShadow: '0 0 0 1px rgba(217,64,64,0.3)' }} />
-                      <span className='opacity-50 shrink-0'>{yr(c.fecha_inicio)}{c.fecha_fin ? `\u2013${yr(c.fecha_fin)}` : ''}</span>
-                      <span className='font-bold truncate'>{c.expediente}</span>
-                      <span className='font-bold px-1.5 py-0.5 rounded shrink-0' style={{ background: `rgba(217,64,64,${intensity})`, color: '#fff' }}>+{c.exceso_pct}%</span>
-                      {estados.length > 1 && <span className='font-bold px-1 py-0.5 rounded shrink-0 text-[8px]' style={{ background: '#b71c1c', color: '#fff' }}>{c.estado}</span>}
-                    </div>
-                  )
-                })}
-              </div>
-            </>
-          )
-        })()}
-
-        {/* ── Old denuncias (legacy data, shown if no sobreproduccion match) ── */}
-        {!hasSobreprod && denuncias && denuncias.length > 0 && (
+      {/* Cuerpo — formato ficha de referencia */}
+      <div className='px-4 py-3 flex-1 min-h-0 overflow-y-auto space-y-3 text-sm leading-snug'>
+        {sp ? (
           <>
-            <p className='text-xs font-bold uppercase tracking-wider opacity-40 mb-1 mt-2'>Sobreproduccion</p>
-            {denuncias.map((d, i) => {
-              const auth = parseFloat(d['Produccion autorizada (Ton)']) || 0
-              const real = parseFloat(d['Produccion ciclo (Ton)']) || 0
-              const pct = auth > 0 ? Math.round(((real - auth) / auth) * 100) : 0
-              return (
-                <div key={i} className='py-2 border-b border-current/10'>
-                  <div className='flex items-center justify-between mb-1'>
-                    <span className='text-xs font-bold'>Denuncia {i + 1}</span>
-                    <span className='text-[10px] font-bold px-1.5 py-0.5 rounded' style={{ background: '#d94040', color: '#fff' }}>+{pct}% exceso</span>
-                  </div>
-                  <FichaRow label='Fecha denuncia' value={d['Fecha Denuncia']?.split('T')[0]} />
-                  <FichaRow label='Produccion autorizada' value={auth.toLocaleString() + ' ton'} />
-                  <FichaRow label='Produccion real' value={real.toLocaleString() + ' ton'} />
-                  <FichaRow label='Exceso' value={(real - auth).toLocaleString() + ' ton'} />
-                  <FichaRow label='Ciclo' value={(d['Inicio Ciclo Productivo']?.split('T')[0] || '') + ' \u2192 ' + (d['Termino de Ciclo Productivo']?.split('T')[0] || '')} />
-                </div>
-              )
-            })}
+            <p className='text-base font-bold'>Centro {sp.codigo_centro}</p>
+
+            {sp.area_protegida && (
+              <p>
+                <span className='font-semibold'>{sp.area_protegida}</span><br />
+                <span className='opacity-70'>{[sp.comuna, regionShort(sp.region)].filter(Boolean).join(' · ')}</span>
+              </p>
+            )}
+
+            {sp.n_tramite_reloca && (
+              <p><span className='opacity-60'>Tr&aacute;mite relocalizaci&oacute;n:</span> <span className='font-semibold'>{sp.n_tramite_reloca}</span></p>
+            )}
+
+            {sp.descripcion && <p>{sp.descripcion}</p>}
+
+            {(sp.expediente || sp.estado) && (
+              <p className='pt-1'>
+                {sp.expediente && <span>Expediente SNIFA <span className='font-semibold'>{sp.expediente}</span>. </span>}
+                {sp.estado && <span className='font-bold' style={{ color: '#b71c1c' }}>{sp.estado}</span>}
+              </p>
+            )}
           </>
+        ) : (
+          <p className='opacity-60'>Centro salmonero sin proceso por sobreproducci&oacute;n registrado.</p>
         )}
 
-        {/* Pie compacto: region + titular en una linea (resto colapsado para no scrollear) */}
-        <p className='text-[10px] opacity-50 mt-2 truncate'>
-          {[centro.REGION, concesion && (concesion['nombre titular'] || concesion.Titular)].filter(Boolean).join(' \u00b7 ')}
-        </p>
+        {sp && (
+          <p className='text-[10px] opacity-40 pt-2 border-t border-current/10 truncate'>
+            {[sp.comuna, sp.region].filter(Boolean).join(' · ')}
+          </p>
+        )}
       </div>
     </div>
   )
@@ -343,16 +304,9 @@ export default function MapaConflicto() {
   const handleCentroClick = useCallback((props) => {
     const code = String(parseInt(props.N_CODIGOCE))
     selectByCode(code)
-    // Find holding that contains this code
-    const { spMap } = dataRef.current
-    const sp = spMap[code]
-    if (sp && sp.length > 0) {
-      const holding = sp[0].titular
-      const ri = rankingRef.current.findIndex(r => r.holding === holding)
-      setRankIndex(ri >= 0 ? ri : -1)
-    } else {
-      setRankIndex(-1)
-    }
+    // paginacion por CENTRO: ubicar el indice del centro en el ranking (36 centros)
+    const ri = rankingRef.current.findIndex(r => r.code === code)
+    setRankIndex(ri)
   }, [selectByCode])
 
   // Marcador del punto SELECCIONADO: anillo pulsante de alto contraste que "lazo"
@@ -436,21 +390,18 @@ export default function MapaConflicto() {
         spCodes.add(code)
       })
 
-      // Build ranking by HOLDING — sorted by number of sanction processes (most to least)
-      const holdingMap = {}
-      spResp.forEach(sp => {
-        if (!sp.codigo_centro || !sp.titular) return
-        const holding = sp.titular
-        if (!holdingMap[holding]) holdingMap[holding] = { holding, codes: new Set(), procesos: 0 }
-        holdingMap[holding].codes.add(String(sp.codigo_centro))
-        holdingMap[holding].procesos++
-      })
-      // For each holding, pick the first centro code as representative
-      const holdingRanking = Object.values(holdingMap)
-        .sort((a, b) => b.procesos - a.procesos)
-        .map(h => ({ holding: h.holding, code: [...h.codes][0], procesos: h.procesos, centros: h.codes.size }))
-      rankingRef.current = holdingRanking
-      setRanking(holdingRanking)
+      // Ranking por CENTRO (los 36 sancionados). Se recorre uno por uno con Anterior/Siguiente.
+      // Orden: por region, luego titular, luego codigo -> agrupa visualmente por zona/empresa.
+      const centroRanking = spResp
+        .filter(sp => sp.codigo_centro)
+        .slice()
+        .sort((a, b) =>
+          String(a.region || '').localeCompare(String(b.region || '')) ||
+          String(a.titular || '').localeCompare(String(b.titular || '')) ||
+          String(a.codigo_centro).localeCompare(String(b.codigo_centro)))
+        .map(sp => ({ code: String(sp.codigo_centro), titular: sp.titular }))
+      rankingRef.current = centroRanking
+      setRanking(centroRanking)
 
       // Classify centros
       const buckets = { normal: [], denuncia: [] }
