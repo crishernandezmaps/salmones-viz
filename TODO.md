@@ -36,3 +36,25 @@ _Actualizado 2026-07-13._
 ## Deploy
 Ver `.claude/infra.md` (local). Resumen: editar `wordpress/post-standalone.html` -> `wp post update 70`
 (post) ; push a `main` -> Actions -> Pages (mapas/assets).
+
+## Correcciones de cris (lista 2026-07-13)
+
+### Mapa 2 (?embed=conflicto)
+- [HECHO parcial] Quitar huincha roja del nombre de empresa: HECHO (se removio el header rojo).
+  PENDIENTE del pedido: (a) ubicar el nombre A LA IZQUIERDA del "Centro NNNNN" (hoy va ARRIBA);
+  (b) mostrar SOLO el HOLDING, no el titular (hoy `grupo_empresarial` trae "TITULAR - HOLDING (pais)").
+- [HECHO parcial] Recuadro de capas como simbologia (sin activar/desactivar): HECHO.
+  PENDIENTE del pedido: el circulo rojo debe decir EXACTAMENTE "centros con solicitud de
+  relocalizacion y procedimiento sancionatorio" (hoy dice "Centros sancionados por sobreproduccion (36)").
+- [HECHO] Preview por defecto con mas zoom out (inicial 7/6.2).
+- [POR HACER] Incluir el Excel del mapa, con casos destacados para iniciar la navegacion (si se puede).
+  Aclarar con cris que significa: ¿arrancar la navegacion en ciertos centros destacados en vez del
+  primero por orden? ¿publicar el Excel como descarga?
+
+### Intro de escritorio (post 70)
+- [POR HACER] Reducir la cantidad de scrolls iniciales: hoy hay que scrollear mucho para que el
+  titular (hero) suba y empiecen a aparecer las piezas. Acortar ese tramo inicial.
+- [POR HACER] Transicion jaulas->buzo mas despejada (como en movil): en escritorio la jaula con
+  peces (escape) arranca DETRAS del buzo e interfiere. Separar los tiempos.
+- [POR HACER] Recuperar el buzo apuntando al lector con la linterna al final (estaba en versiones
+  anteriores). Requiere asset/pose del buzo mirando al frente o reposicionar la linterna.
