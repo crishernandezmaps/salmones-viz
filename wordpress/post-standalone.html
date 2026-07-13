@@ -98,7 +98,10 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 }
 /* ESCRITORIO OFICIAL (frames armados): oculto por defecto; el JS lo muestra en escritorio.
    Fondo de CIELO detras: los frames de superficie traen el cielo transparente (alpha). */
-.sv-frame-dq { display:none; background:linear-gradient(180deg,#b7c2ca 0%,#a7b6bf 46%,#8ba0ab 62%,#5b8190 100%); }
+.sv-frame-dq, .sv-frame-ds { display:none; }
+/* cielo del hibrido: DETRAS de ambos frames (ds/dq), para no taparse entre si. Los frames de
+   superficie traen el cielo transparente (alpha) y dejan ver este gradiente. */
+.sv-sky-d { position:absolute; inset:0; z-index:0; display:none; background:linear-gradient(180deg,#b7c2ca 0%,#a7b6bf 46%,#8ba0ab 62%,#5b8190 100%); }
 /* sin will-change/translateZ: ya no hay scale (no shimmer) y forzar 14 capas a
    GPU satura memoria en moviles -> scroll pesado. */
 .sv-layer { position:absolute !important; inset:0; width:100% !important; height:100% !important; object-fit:cover !important; object-position:center; max-width:none !important; }
@@ -210,6 +213,8 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
   <div class="sv-stage">
     <div class="sv-bg sv-bg--surface" id="sv-bgSurface"></div>
     <div class="sv-bg sv-bg--deep" id="sv-bgDeep"></div>
+    <div class="sv-sky-d" id="sv-sky-d"></div>
+
 
     <div class="sv-frame sv-frame-d">
       <img id="sv-mar3"     class="sv-layer sv-d" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/of-mar3.webp" alt="" style="object-position:center 42%">
@@ -233,6 +238,20 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
     <!-- ESCRITORIO OFICIAL: secuencia armada de la disenadora (13 frames 16:9, DESKTOP_1).
          Cross-fade por scroll (flipbook). Cada frame ES la composicion final; replica la
          secuencia del movil (cutaway: superficie arriba + jaulas colgando). -->
+    <!-- ESCRITORIO HIBRIDO - TRAMO A (superficie): capas con VEHICULOS ANIMADOS (entran/salen con translate).
+         Reemplaza los frames 1-5 (donde los vehiculos eran estaticos). Empalma con los frames en el descenso. -->
+    <div class="sv-frame sv-frame-ds">
+      <img id="ds-montana2" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-montana2.webp" alt="">
+      <img id="ds-montana1" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-montana1.webp" alt="">
+      <img id="ds-fiordo1"  class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fiordo1.webp" alt="">
+      <img id="ds-fiordo2"  class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fiordo2.webp" alt="">
+      <img id="ds-mar"      class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-mar-jaulas.webp" alt="">
+      <img id="ds-camion"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-camion.webp" alt="" style="opacity:0">
+      <img id="ds-wellboat" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-wellboat.webp" alt="" style="opacity:0">
+      <img id="ds-avion"    class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-avion.webp" alt="" style="opacity:0">
+    </div>
+
+    <!-- ESCRITORIO HIBRIDO - TRAMO B (submarino): frames de la disenadora (descenso->cutaway->jaula->escape->fondo->buzo) -->
     <div class="sv-frame sv-frame-dq">
       <img id="dq-001" class="sv-layer sv-dq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/dq-001.webp" alt="">
       <img id="dq-002" class="sv-layer sv-dq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/dq-002.webp" alt="" style="opacity:0">
@@ -551,7 +570,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
     // OFICIAL: en escritorio la intro nueva (secuencia armada, 13 frames dq-*) es la de por defecto.
     // Via de escape para comparar/rollback la vieja (of-*): ?introd=old. En movil nunca aplica.
     var useJunio = isMobileIntro ? false : (location.search.indexOf('introd=old') === -1);
-    var introSel = isMobileIntro ? '.sv-m' : (useJunio ? '.sv-dq' : '.sv-d');
+    var introSel = isMobileIntro ? '.sv-m' : (useJunio ? '.sv-dq, .sv-ds' : '.sv-d');
     (function(){ var im=document.querySelectorAll(introSel); for(var i=0;i<im.length;i++){ var ds=im[i].getAttribute('data-src'); if(ds){ im[i].src=ds; } } })();
     var setL = function(node,o,x,y,s){ if(!node) return; if(o!==null) node.style.opacity=o; node.style.transform='translate('+x+'%,'+y+'%) scale('+s+')'; };
 
@@ -657,50 +676,74 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       beatM(beat3,0.84,0.90,0.97,0.995);
     }
 
-    /* ── INTRO ESCRITORIO OFICIAL (secuencia armada de la disenadora, 13 frames dq-*) ──
-       Flipbook: cada frame ES la composicion final de la disenadora (cutaway: superficie
-       arriba + jaulas colgando), replicando la secuencia del movil. Los frames mas nuevos
-       van ENCIMA en el DOM y hacen fade-in; como son opacos, tapan al anterior.
-       CROSS-FADE CORTO: entre frames la disenadora movio la camara (las balsas cambian de
-       posicion), asi que un fundido largo mostraba la MISMA balsa en dos sitios ("fantasma"
-       duplicado). Con DQ_CF chico el frame se mantiene estable casi todo su tramo y solo
-       cruza en un parpadeo breve -> stop-motion limpio, sin doble imagen. */
-    var DQ_N = 34;                     // 13 frames de la disenadora interpolados x3 (motion) -> movimiento suave
-    var DQ_CF = 0.22;                  // cross-fade corto: la suavidad viene de la densidad de frames, no del fundido
+    /* ── INTRO ESCRITORIO OFICIAL — HIBRIDO capas + frames ──
+       TRAMO A (superficie): capas d1-* con VEHICULOS ANIMADOS (camion/barco/avion entran y
+       salen deslizando con translate, como el movil). Los frames de la disenadora tienen los
+       vehiculos ESTATICOS, por eso la superficie se hace por capas.
+       TRAMO B (submarino): flipbook de los frames dq-* (descenso->cutaway->jaula->escape->
+       fondo->buzo), interpolados x3 -> movimiento suave, composicion fiel de la disenadora.
+       EMPALME: la superficie-capas se disuelve en [0.44,0.52] mientras entra el primer frame
+       del tramo B (misma superficie en reposo -> crossfade casi invisible). */
+    var DQ_N = 34;
+    var DQ_CF = 0.22;                  // cross-fade corto entre frames (tramo B)
+    var DQ_B_START = 15;               // primer frame del tramo B (superficie casi en reposo, sin vehiculos)
     function dqPad(n){ return (n<10?'00':n<100?'0':'')+n; }
-    function renderDesktopFrames(p) {
-      var pc = clamp(p,0,1);
-      var fN = pc*(DQ_N-1);           // posicion continua en [0, 12]
+    function renderDesktopHybrid(p) {
+      var dMon2=g('ds-montana2'), dMon1=g('ds-montana1'), dFio1=g('ds-fiordo1'), dFio2=g('ds-fiordo2'),
+          dMar=g('ds-mar'), dCam=g('ds-camion'), dWb=g('ds-wellboat'), dAv=g('ds-avion');
+      /* ── TRAMO A: superficie (fondo) + VEHICULOS que entran y salen ── */
+      var surfOp = 1 - seg(p,0.44,0.50);       // la superficie-capas se disuelve en el empalme
+      // la superficie sube un poco justo antes del empalme, para calzar con el primer frame
+      // del tramo B (que ya inicio el descenso) -> el crossfade del empalme queda alineado.
+      var surfY = -lerp(0,8,seg(p,0.36,0.46));
+      setL(dMon2, surfOp, 0,surfY,1); setL(dMon1, surfOp, 0,surfY,1);
+      setL(dFio1, surfOp, 0,surfY,1); setL(dFio2, surfOp, 0,surfY,1);
+      setL(dMar,  surfOp, 0,surfY,1);
+      var ci=seg(p,0.06,0.14), co=seg(p,0.30,0.38);      // camion entra por la izquierda, reposa, sale
+      setL(dCam, surfOp*ci*(1-co), lerp(-42,-16,ease(ci))+lerp(0,-44,ease(co)),0,1);
+      var wi=seg(p,0.14,0.22), wo=seg(p,0.32,0.40);      // wellboat entra por la derecha, sale
+      setL(dWb,  surfOp*wi*(1-wo), lerp(34,0,ease(wi))+lerp(0,44,ease(wo)),0,1);
+      var ax=seg(p,0.22,0.42), aop=Math.min(seg(p,0.22,0.28), 1-seg(p,0.38,0.42));  // avion cruza
+      setL(dAv,  surfOp*aop, lerp(-60,72,ax),0,1);
+
+      /* ── TRAMO B: flipbook de frames (descenso->buzo). Empalma en [0.44,0.52]. ── */
+      var handoffIn = seg(p,0.44,0.50);
+      var fB = DQ_B_START + seg(p,0.48,1.0)*(DQ_N-DQ_B_START);   // frame continuo en [DQ_B_START, DQ_N] (avanza tras el empalme)
       for (var k=0;k<DQ_N;k++){
         var el = g('dq-'+dqPad(k+1));
         if(!el) continue;
-        // fade-in concentrado en los ultimos DQ_CF del slot: pleno en fN=k, se queda a 1
-        // hasta que el frame k+1 lo tapa. Solape corto -> "fantasma" reducido a un parpadeo.
-        el.style.opacity = clamp((fN-(k-1)-(1-DQ_CF))/DQ_CF, 0, 1);
+        var kk = k+1, op = 0;
+        if (kk >= DQ_B_START) {
+          op = handoffIn * clamp((fB-(kk-1)-(1-DQ_CF))/DQ_CF, 0, 1);
+        }
+        el.style.opacity = op;
       }
-      /* los frames traen su propio fondo/cielo -> no usar el relleno blur (bgSurface/bgDeep) */
+      /* los frames y las capas traen su propio cielo -> no usar el relleno blur */
       if(bgSurface) bgSurface.style.opacity = 0;
       if(bgDeep) bgDeep.style.opacity = 0;
       if(dark) dark.style.opacity = seg(p,0.86,1.0);
-      /* TEXTOS: hero + beats sincronizados con la secuencia (mismos beats que el movil) */
+      /* ── TEXTOS ── */
       if(hero){ hero.style.opacity = 1-seg(p,0.05,0.13); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.05,0.13))+'px)'; }
       if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
       if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
       var bd=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      bd(beat1,0.16,0.24,0.42,0.48);
-      bd(beat2,0.55,0.62,0.70,0.76);
+      bd(beat1,0.14,0.20,0.40,0.44);
+      bd(beat2,0.58,0.64,0.72,0.78);
       bd(beat3,0.84,0.90,0.97,0.995);
     }
 
-    // ESCRITORIO OFICIAL: muestra los frames (oculta la vieja .sv-frame-d + sv-fondo).
-    // Con ?introd=old, useJunio=false -> se ve la intro vieja (of-*/render()) como rollback.
+    // ESCRITORIO OFICIAL (hibrido): muestra la superficie-capas (.sv-frame-ds) + los frames
+    // (.sv-frame-dq); oculta la vieja (.sv-frame-d + sv-fondo). Con ?introd=old -> intro vieja.
     if (useJunio) {
-      var _fd=intro.querySelector('.sv-frame-d'), _fdq=intro.querySelector('.sv-frame-dq'), _sf=g('sv-fondo');
+      var _fd=intro.querySelector('.sv-frame-d'), _fdq=intro.querySelector('.sv-frame-dq'),
+          _fds=intro.querySelector('.sv-frame-ds'), _sf=g('sv-fondo'), _sky=g('sv-sky-d');
       if(_fd) _fd.style.display='none';
       if(_sf) _sf.style.display='none';
+      if(_sky) _sky.style.display='block';
+      if(_fds) _fds.style.display='block';
       if(_fdq) _fdq.style.display='block';
     }
-    var activeRender = isMobileIntro ? renderMobile : (useJunio ? renderDesktopFrames : render);
+    var activeRender = isMobileIntro ? renderMobile : (useJunio ? renderDesktopHybrid : render);
 
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
