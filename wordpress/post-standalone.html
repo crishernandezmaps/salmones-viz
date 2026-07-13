@@ -526,8 +526,9 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
         mJaula1=g('m1-jaula1'), mJaula2=g('m1-jaula2'), mJaula3=g('m1-jaula3'),
         mFondo=g('m1-fondo'), mFondoBuzo=g('m1-fondobuzo'), mLuz=g('m1-luz'), dark=g('sv-dark');
     var isMobileIntro = window.matchMedia('(max-width:767px)').matches;
-    // flag ADITIVO: ?introd=junio activa la intro de ESCRITORIO nueva (capas d1-*), solo en escritorio.
-    var useJunio = isMobileIntro ? false : (location.search.indexOf('introd=junio') !== -1);
+    // OFICIAL: en escritorio la intro nueva (secuencia junio, capas d1-*) es la de por defecto.
+    // Via de escape para comparar/rollback la vieja (of-*): ?introd=old. En movil nunca aplica.
+    var useJunio = isMobileIntro ? false : (location.search.indexOf('introd=old') === -1);
     var introSel = isMobileIntro ? '.sv-m' : (useJunio ? '.sv-d2' : '.sv-d');
     (function(){ var im=document.querySelectorAll(introSel); for(var i=0;i<im.length;i++){ var ds=im[i].getAttribute('data-src'); if(ds){ im[i].src=ds; } } })();
     var setL = function(node,o,x,y,s){ if(!node) return; if(o!==null) node.style.opacity=o; node.style.transform='translate('+x+'%,'+y+'%) scale('+s+')'; };
@@ -657,8 +658,13 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       setL(fio1, surfOp, 0,landY,1); setL(fio2, surfOp, 0,landY,1);
       /* mar-jaulas (base) -> cross-fade a mar-jaulas2 (vista picada) en el descenso */
       var picada = seg(p,0.44,0.54);
-      setL(mar,  surfOp*(1-picada), 0,waterY,1);
-      setL(mar2, surfOp*picada,     0,waterY,1);
+      /* la vista AEREA del agua (balsas desde arriba) cede su lugar a la vista
+         SUBMARINA (jaula1) en el MISMO rango en que jaula1 sube: evita que ambas
+         perspectivas coexistan (el "fantasma" translucido ~p=0.55). Los cerros/
+         fiordos NO se van aqui (siguen con surfOp) para conservar el marco superior. */
+      var toDeep = seg(p,0.50,0.56);
+      setL(mar,  surfOp*(1-picada)*(1-toDeep), 0,waterY,1);
+      setL(mar2, surfOp*picada*(1-toDeep),     0,waterY,1);
       /* VEHICULOS: camion -> wellboat -> avion */
       var ci=seg(p,0.08,0.15), co=seg(p,0.30,0.37);
       // reposo -16% (no 0): el asset dibuja el camion sobre el agua; -16% lo asienta en la orilla
@@ -669,7 +675,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       setL(av,  aop, lerp(-60,72,ax),0,1);
       /* JAULAS submarinas APILADAS (opacas): jaula1 (llena) -> jaula2/3 (escape) */
       var cageY = lerp(0,-10,dive);
-      setL(j1, seg(p,0.54,0.60), 0,cageY,1);
+      setL(j1, seg(p,0.56,0.63), 0,cageY,1);
       setL(j2, seg(p,0.62,0.68), 0,cageY,1);
       setL(j3, seg(p,0.70,0.76), 0,cageY,1);
       /* FONDO contaminado (fade en su lugar) -> buzo */
