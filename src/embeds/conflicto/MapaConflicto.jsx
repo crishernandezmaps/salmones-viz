@@ -182,20 +182,7 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
       className='h-full flex flex-col overflow-hidden md:overflow-y-auto'
       style={{ background: hasSobreprod ? '#fff5f5' : '#fff', color: hasSobreprod ? '#4a1010' : '#1b3a4b' }}
     >
-      {/* Header: titular - grupo empresarial (pais) */}
-      <div className='shrink-0 z-10 px-4 py-3 flex items-start justify-between gap-2' style={{ background: headerBg, color: '#fff' }}>
-        <p className='text-sm font-bold leading-tight'>
-          {sp ? sp.grupo_empresarial : (centro.NOMBRE || 'Centro salmonero')}
-        </p>
-        {onClose && (
-          <button onClick={onClose} aria-label='Cerrar ficha'
-            className='shrink-0 -mr-1.5 w-8 h-8 flex items-center justify-center rounded-full text-white/90 hover:bg-white/20 text-lg leading-none'>
-            &#10005;
-          </button>
-        )}
-      </div>
-
-      {/* Paginacion por CENTRO */}
+      {/* Paginacion por CENTRO (primer elemento; el nombre de la empresa va abajo, en el cuerpo) */}
       {ranking.length > 0 && (
         <div className='shrink-0 flex items-center justify-between px-4 py-2 border-b border-current/10' style={{ background: 'rgba(183,28,28,0.06)' }}>
           <button onClick={() => onNavigate(Math.max(0, rankIndex - 1))} disabled={rankIndex <= 0}
@@ -216,6 +203,8 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
       <div className='px-4 py-3 flex-1 min-h-0 overflow-y-auto space-y-3 text-sm leading-snug'>
         {sp ? (
           <>
+            {/* nombre + grupo empresarial (pais) — antes iba en el header rojo, ahora abre el cuerpo */}
+            <p className='text-sm font-bold leading-tight' style={{ color: '#b71c1c' }}>{sp.grupo_empresarial}</p>
             <p className='text-base font-bold'>Centro {sp.codigo_centro}</p>
 
             {sp.area_protegida && (
