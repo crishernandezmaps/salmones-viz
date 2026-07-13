@@ -724,22 +724,23 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       // translucida). Descansa en translateY 0 (llena el frame) -> NO deja franja abajo.
       var j1rise = ease(seg(p,0.42,0.60));
       setL(dJ1, seg(p,0.42,0.47), 0, lerp(55,0,j1rise), 1);
-      setL(dJ2, seg(p,0.62,0.68), 0, 0, 1);
-      setL(dJ3, seg(p,0.70,0.76), 0, 0, 1);
-      /* FONDO contaminado (fade en su lugar) -> buzo */
-      setL(dFondo, seg(p,0.76,0.86)*(1-seg(p,0.90,0.95)), 0, 0, 1);
-      setL(dBuzo,  seg(p,0.90,0.96), 0, 0, 1);
-      // LINTERNA del buzo (copiada del movil): enciende con el buzo y se mantiene hasta el final
-      if(dLuz) dLuz.style.opacity = seg(p,0.91,0.96);
-      var fdepth=seg(p,0.74,1.0), fbright=lerp(1.4,0.85,ease(fdepth));
+      setL(dJ2, seg(p,0.58,0.64), 0, 0, 1);
+      setL(dJ3, seg(p,0.66,0.72), 0, 0, 1);
+      /* FONDO contaminado (fade en su lugar) -> buzo. Adelantados para que el buzo llegue
+         PLENO temprano (~0.88) y se vea un buen rato con la linterna ANTES del fundido a negro. */
+      setL(dFondo, seg(p,0.70,0.80)*(1-seg(p,0.82,0.88)), 0, 0, 1);
+      setL(dBuzo,  seg(p,0.82,0.88), 0, 0, 1);
+      // LINTERNA del buzo (copiada del movil): enciende con el buzo y se mantiene
+      if(dLuz) dLuz.style.opacity = seg(p,0.83,0.88);
+      var fdepth=seg(p,0.70,0.92), fbright=lerp(1.4,0.85,ease(fdepth));
       if(dFondo) dFondo.style.filter="brightness("+fbright+")";
       if(dBuzo)  dBuzo.style.filter ="brightness("+fbright+")";
       /* el cielo lo pone sv-sky-d; oscurecimiento por profundidad + fundido a NEGRO al final */
       if(bgSurface) bgSurface.style.opacity = 0;
       if(bgDeep) bgDeep.style.opacity = 0;
-      if(dark) dark.style.opacity = seg(p,0.80,1.0);
-      // toda la escena (buzo + fondo) se va a negro de a poco al seguir bajando
-      var blackO=g('sv-black'); if(blackO) blackO.style.opacity = seg(p,0.90,1.0);
+      if(dark) dark.style.opacity = seg(p,0.78,0.98);
+      // el buzo se ve un par de scrolls (0.88-0.94) y RECIEN despues la escena se va a negro
+      var blackO=g('sv-black'); if(blackO) blackO.style.opacity = seg(p,0.94,1.0);
       /* ── TEXTOS ── */
       if(hero){ hero.style.opacity = 1-seg(p,0.05,0.13); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.05,0.13))+'px)'; }
       if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
