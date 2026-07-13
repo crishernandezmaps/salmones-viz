@@ -199,29 +199,29 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
         </div>
       )}
 
-      {/* Cuerpo — formato ficha de referencia */}
-      <div className='px-4 py-3 flex-1 min-h-0 overflow-y-auto space-y-3 text-sm leading-snug'>
+      {/* Cuerpo — MOVIL: 2 columnas + fuente menor para evitar scroll. ESCRITORIO (md): 1 columna. */}
+      <div className='px-3 py-2 flex-1 min-h-0 overflow-y-auto columns-2 gap-4 text-[11px] leading-snug md:columns-1 md:px-4 md:py-3 md:text-sm'>
         {sp ? (
           <>
-            {/* nombre + grupo empresarial (pais) — antes iba en el header rojo, ahora abre el cuerpo */}
-            <p className='text-sm font-bold leading-tight' style={{ color: '#b71c1c' }}>{sp.grupo_empresarial}</p>
-            <p className='text-base font-bold'>Centro {sp.codigo_centro}</p>
+            {/* nombre + grupo empresarial (pais) — abre el cuerpo, en rojo */}
+            <p className='break-inside-avoid mb-2 font-bold leading-tight' style={{ color: '#b71c1c' }}>{sp.grupo_empresarial}</p>
+            <p className='break-inside-avoid mb-2 text-sm md:text-base font-bold'>Centro {sp.codigo_centro}</p>
 
             {sp.area_protegida && (
-              <p>
+              <p className='break-inside-avoid mb-2'>
                 <span className='font-semibold'>{sp.area_protegida}</span><br />
                 <span className='opacity-70'>{[sp.comuna, regionShort(sp.region)].filter(Boolean).join(' · ')}</span>
               </p>
             )}
 
             {sp.n_tramite_reloca && (
-              <p><span className='opacity-60'>Tr&aacute;mite relocalizaci&oacute;n:</span> <span className='font-semibold'>{sp.n_tramite_reloca}</span></p>
+              <p className='break-inside-avoid mb-2'><span className='opacity-60'>Tr&aacute;mite relocalizaci&oacute;n:</span> <span className='font-semibold'>{sp.n_tramite_reloca}</span></p>
             )}
 
-            {sp.descripcion && <p>{sp.descripcion}</p>}
+            {sp.descripcion && <p className='break-inside-avoid mb-2'>{sp.descripcion}</p>}
 
             {(sp.expediente || sp.estado) && (
-              <p className='pt-1'>
+              <p className='break-inside-avoid mb-2'>
                 {sp.expediente && <span>Expediente SNIFA <span className='font-semibold'>{sp.expediente}</span>. </span>}
                 {sp.estado && <span className='font-bold' style={{ color: '#b71c1c' }}>{sp.estado}</span>}
               </p>
@@ -232,7 +232,7 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
         )}
 
         {sp && (
-          <p className='text-[10px] opacity-40 pt-2 border-t border-current/10 truncate'>
+          <p className='break-inside-avoid text-[9px] md:text-[10px] opacity-40 pt-2 border-t border-current/10'>
             {[sp.comuna, sp.region].filter(Boolean).join(' · ')}
           </p>
         )}
