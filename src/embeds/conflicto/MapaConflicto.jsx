@@ -583,10 +583,10 @@ export default function MapaConflicto() {
         paint: { 'text-color': '#4a7a8a', 'text-opacity': 0.6, 'text-halo-color': '#ffffff', 'text-halo-width': 1 },
       })
 
-      // Auto-seleccion del primer holding sancionado al cargar (movil y escritorio):
+      // Auto-seleccion del primer centro sancionado al cargar (movil y escritorio):
       // el usuario ve un ejemplo ya desplegado de inmediato (ficha + punto marcado).
-      if (holdingRanking.length > 0) {
-        selectByCode(holdingRanking[0].code)
+      if (centroRanking.length > 0) {
+        selectByCode(centroRanking[0].code)
         setRankIndex(0)
       }
 
@@ -624,8 +624,8 @@ export default function MapaConflicto() {
 
   const currentRankIndex = useMemo(() => {
     if (!selected || !selected.sobreproduccion || selected.sobreproduccion.length === 0) return -1
-    const holding = selected.sobreproduccion[0].titular
-    return ranking.findIndex(r => r.holding === holding)
+    const code = String(selected.sobreproduccion[0].codigo_centro)
+    return ranking.findIndex(r => r.code === code)
   }, [selected, ranking])
 
   return (
