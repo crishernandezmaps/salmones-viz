@@ -713,7 +713,8 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       setL(dMon1, surfOp, 0,surfY,1); setL(dMon2, surfOp, 0,surfY,1);
       /* VEHICULOS: camion -> barco -> avion, entran y salen */
       var ci=seg(p,0.06,0.14), co=seg(p,0.30,0.38);
-      setL(dCam, ci*(1-co), lerp(-42,-16,ease(ci))+lerp(0,-44,ease(co)),0,1);
+      // translateY -11%: sube el camion a la ORILLA (el asset lo dibuja a media altura -> quedaba sobre el agua)
+      setL(dCam, ci*(1-co), lerp(-42,-16,ease(ci))+lerp(0,-44,ease(co)),-11,1);
       var wi=seg(p,0.14,0.22), wo=seg(p,0.32,0.40);
       setL(dWb,  wi*(1-wo), lerp(34,0,ease(wi))+lerp(0,44,ease(wo)),0,1);
       var ax=seg(p,0.22,0.42), aop=Math.min(seg(p,0.22,0.28), 1-seg(p,0.38,0.42));
