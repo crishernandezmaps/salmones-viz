@@ -692,11 +692,18 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
           dMar=g('ds-mar'), dCam=g('ds-camion'), dWb=g('ds-wellboat'), dAv=g('ds-avion'),
           dJ1=g('ds-jaula1'), dJ2=g('ds-jaula2'), dJ3=g('ds-jaula3'),
           dFondo=g('ds-fondo'), dBuzo=g('ds-fondobuzo');
-      /* DESCENSO DE CAMARA: la superficie sube (surfY) y se comprime; se pierde al profundizar */
-      var dive   = ease(seg(p,0.44,0.72));
-      var surfY  = lerp(0,-26,dive);
-      var surfOp = 1 - seg(p,0.72,0.82);
-      setL(dMar,  surfOp, 0,surfY,1);
+      /* DESCENSO DE CAMARA: la superficie sube (surfY) y se comprime; se pierde al profundizar.
+         El descenso arranca ANTES y sube MAS (-44%) que en movil (viewport ancho tiene menos
+         alto): asi las balsas suben a la linea de agua ANTES de que entre la jaula, y la jaula
+         cuelga DEBAJO sin superponerse (evita el "fantasma" de dos perspectivas). */
+      var dive   = ease(seg(p,0.40,0.66));
+      var surfY  = lerp(0,-44,dive);
+      var surfOp = 1 - seg(p,0.74,0.84);
+      // las BALSAS (vista aerea) se desvanecen al entrar la jaula submarina: evita el
+      // "fantasma" de dos perspectivas (aerea + lateral) superpuestas. Los CERROS/fiordos
+      // se quedan como marco superior (la jaula trae su propia linea de agua).
+      var marOp = surfOp * (1 - seg(p,0.48,0.56));
+      setL(dMar,  marOp, 0,surfY,1);
       setL(dFio2, surfOp, 0,surfY,1); setL(dFio1, surfOp, 0,surfY,1);
       setL(dMon1, surfOp, 0,surfY,1); setL(dMon2, surfOp, 0,surfY,1);
       /* VEHICULOS: camion -> barco -> avion, entran y salen */
@@ -707,10 +714,10 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       var ax=seg(p,0.22,0.42), aop=Math.min(seg(p,0.22,0.28), 1-seg(p,0.38,0.42));
       setL(dAv,  aop, lerp(-60,72,ax),0,1);
       /* JAULAS submarinas APILADAS (opacas, traen su linea de agua): jaula1 (llena) -> escape */
-      var cageY = lerp(0,-14,dive);
-      setL(dJ1, seg(p,0.50,0.58), 0, cageY, 1);
-      setL(dJ2, seg(p,0.60,0.66), 0, cageY, 1);
-      setL(dJ3, seg(p,0.68,0.74), 0, cageY, 1);
+      var cageY = lerp(0,-12,dive);
+      setL(dJ1, seg(p,0.54,0.62), 0, cageY, 1);   // entra cuando la superficie YA subio
+      setL(dJ2, seg(p,0.64,0.70), 0, cageY, 1);
+      setL(dJ3, seg(p,0.72,0.78), 0, cageY, 1);
       /* FONDO contaminado (fade en su lugar) -> buzo */
       setL(dFondo, seg(p,0.76,0.86)*(1-seg(p,0.90,0.95)), 0, 0, 1);
       setL(dBuzo,  seg(p,0.90,0.96), 0, 0, 1);
