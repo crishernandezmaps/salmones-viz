@@ -40,13 +40,13 @@ Ver `.claude/infra.md` (local). Resumen: editar `wordpress/post-standalone.html`
 ## Correcciones de cris (lista 2026-07-13)
 
 ### Mapa 2 (?embed=conflicto)
-- [HECHO parcial] Quitar huincha roja del nombre de empresa: HECHO (se removio el header rojo).
-  PENDIENTE del pedido: (a) ubicar el nombre A LA IZQUIERDA del "Centro NNNNN" (hoy va ARRIBA);
-  (b) mostrar SOLO el HOLDING, no el titular (hoy `grupo_empresarial` trae "TITULAR - HOLDING (pais)").
-- [HECHO parcial] Recuadro de capas como simbologia (sin activar/desactivar): HECHO.
-  PENDIENTE del pedido: el circulo rojo debe decir EXACTAMENTE "centros con solicitud de
-  relocalizacion y procedimiento sancionatorio" (hoy dice "Centros sancionados por sobreproduccion (36)").
+- [HECHO] Quitar huincha roja del nombre de empresa; el HOLDING (solo el grupo, sin titular) va A LA
+  IZQUIERDA del "Centro NNNNN" (misma fila), en rojo, bajo la paginacion. Falta validar el layout en
+  movil (2 columnas puede apretar).
+- [HECHO] Recuadro de capas como simbologia (sin activar/desactivar). Circulo rojo: "Centros con
+  solicitud de relocalizacion y procedimiento sancionatorio (36)".
 - [HECHO] Preview por defecto con mas zoom out (inicial 7/6.2).
+- [HECHO] Movil: ficha en 2 columnas + fuente menor para evitar scroll.
 - [POR HACER] Incluir el Excel del mapa, con casos destacados para iniciar la navegacion (si se puede).
   Aclarar con cris que significa: ¿arrancar la navegacion en ciertos centros destacados en vez del
   primero por orden? ¿publicar el Excel como descarga?
