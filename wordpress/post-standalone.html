@@ -714,13 +714,13 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       var ax=seg(p,0.22,0.42), aop=Math.min(seg(p,0.22,0.28), 1-seg(p,0.38,0.42));
       setL(dAv,  aop, lerp(-60,72,ax),0,1);
       /* JAULAS submarinas APILADAS (opacas, traen su linea de agua): jaula1 (llena) -> escape */
-      var cageY = lerp(0,-12,dive);
-      // jaula1 EMERGE del fondo: arranca abajo (+55%) y SUBE de a poco mientras aparece, ya
-      // desde ~p0.42 (cuando aun se ven las balsas) -> "de a poco subiendo" desde la profundidad.
-      var j1rise = ease(seg(p,0.42,0.62));
-      setL(dJ1, seg(p,0.44,0.60), 0, cageY + lerp(55,0,j1rise), 1);
-      setL(dJ2, seg(p,0.62,0.68), 0, cageY, 1);
-      setL(dJ3, seg(p,0.70,0.76), 0, cageY, 1);
+      // jaula1 EMERGE del fondo: arranca abajo (+55%) y sube de a poco desde ~p0.42, pero
+      // OPACA (fade-in rapido 0.42-0.47) -> su cuerpo CUBRE las balsas mientras sube (no
+      // translucida). Descansa en translateY 0 (llena el frame) -> NO deja franja abajo.
+      var j1rise = ease(seg(p,0.42,0.60));
+      setL(dJ1, seg(p,0.42,0.47), 0, lerp(55,0,j1rise), 1);
+      setL(dJ2, seg(p,0.62,0.68), 0, 0, 1);
+      setL(dJ3, seg(p,0.70,0.76), 0, 0, 1);
       /* FONDO contaminado (fade en su lugar) -> buzo */
       setL(dFondo, seg(p,0.76,0.86)*(1-seg(p,0.90,0.95)), 0, 0, 1);
       setL(dBuzo,  seg(p,0.90,0.96), 0, 0, 1);
