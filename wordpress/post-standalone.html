@@ -260,7 +260,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <!-- linterna del buzo (copiada del movil #m1-luz): glow sobre la mano/haz del buzo -->
       <div id="ds-luz" style="position:absolute;inset:0;opacity:0;pointer-events:none;mix-blend-mode:screen;z-index:45;background:radial-gradient(circle at 50% 60%, rgba(255,251,228,1) 0%, rgba(255,244,190,0.85) 3%, rgba(255,238,170,0.35) 8%, rgba(0,0,0,0) 16%), radial-gradient(ellipse 22% 26% at 54% 72%, rgba(255,236,172,0.34) 0%, rgba(255,232,160,0.10) 48%, rgba(0,0,0,0) 78%);"></div>
       <!-- destello final: la linterna del buzo apunta al espectador antes del negro -->
-      <div id="ds-flash" style="position:absolute;inset:0;opacity:0;pointer-events:none;z-index:48;transform:scale(0.2);will-change:opacity,transform;background:radial-gradient(circle at 50% 60%, rgba(255,251,230,0.95) 0%, rgba(255,246,200,0.8) 18%, rgba(255,238,170,0.35) 42%, rgba(0,0,0,0) 68%);"></div>
+      <div id="ds-flash" style="position:absolute;inset:0;opacity:0;pointer-events:none;z-index:48;transform:scale(0.2);will-change:opacity,transform;background:radial-gradient(circle at 50% 60%, rgba(255,252,235,1) 0%, rgba(255,245,200,0.85) 6%, rgba(255,238,170,0.35) 14%, rgba(255,238,170,0.08) 26%, rgba(0,0,0,0) 45%);"></div>
     </div>
 
     <!-- ESCRITORIO HIBRIDO - TRAMO B (submarino): frames de la disenadora (descenso->cutaway->jaula->escape->fondo->buzo) -->
@@ -736,7 +736,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       // DESTELLO FINAL: el haz de la linterna se vuelve hacia el espectador y crece
       // hasta llenar la pantalla; persiste sobre el negro y se apaga al cierre
       var dFlash=g('ds-flash');
-      if(dFlash){ var fl=ease(seg(p,0.88,0.94)); dFlash.style.opacity = Math.min(fl, 1-seg(p,0.96,0.995)); dFlash.style.transform='scale('+lerp(0.2,3,fl)+')'; }
+      if(dFlash){ var fl=ease(seg(p,0.88,0.94)); dFlash.style.opacity = Math.min(fl, 1-seg(p,0.96,0.995)); dFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
       var fdepth=seg(p,0.70,0.92), fbright=lerp(1.4,0.85,ease(fdepth));
       if(dFondo) dFondo.style.filter="brightness("+fbright+")";
       if(dBuzo)  dBuzo.style.filter ="brightness("+fbright+")";
