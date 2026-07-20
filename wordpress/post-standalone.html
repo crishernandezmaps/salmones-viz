@@ -721,31 +721,33 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       // OPACA (fade-in rapido 0.42-0.47) -> su cuerpo CUBRE las balsas mientras sube (no
       // translucida). Descansa en translateY 0 (llena el frame) -> NO deja franja abajo.
       var j1rise = ease(seg(p,0.42,0.60));
-      // las jaulas se DESVANECEN al entrar el fondo contaminado (transicion despejada,
-      // como en movil): el asset del buzo es transparente arriba y se veia la jaula detras
-      var jOut = 1 - seg(p,0.74,0.82);
-      setL(dJ1, seg(p,0.42,0.47)*jOut, 0, lerp(55,0,j1rise), 1);
-      setL(dJ2, seg(p,0.58,0.64)*jOut, 0, 0, 1);
-      setL(dJ3, seg(p,0.66,0.72)*jOut, 0, 0, 1);
+      // ESCAPE con HOLD largo: jaula3 entra 0.64-0.70 y se queda hasta ~0.78. Luego las
+      // jaulas SUBEN (jUp, descenso de camara) mientras se desvanecen (jOut) y RECIEN
+      // despues entra el fondo desde abajo -> escape y fondo no se pisan (feedback cris).
+      var jOut = 1 - seg(p,0.78,0.85);
+      var jUp = lerp(0,-16,ease(seg(p,0.76,0.86)));
+      setL(dJ1, seg(p,0.42,0.47)*jOut, 0, lerp(55,0,j1rise)+jUp, 1);
+      setL(dJ2, seg(p,0.58,0.64)*jOut, 0, jUp, 1);
+      setL(dJ3, seg(p,0.64,0.70)*jOut, 0, jUp, 1);
       /* FONDO contaminado (fade en su lugar) -> buzo. Adelantados para que el buzo llegue
          PLENO temprano (~0.88) y se vea un buen rato con la linterna ANTES del fundido a negro. */
-      setL(dFondo, seg(p,0.70,0.80)*(1-seg(p,0.82,0.88)), 0, 0, 1);
-      setL(dBuzo,  seg(p,0.82,0.88), 0, 0, 1);
+      setL(dFondo, seg(p,0.82,0.90)*(1-seg(p,0.905,0.94)), 0, lerp(26,0,ease(seg(p,0.82,0.92))), 1);
+      setL(dBuzo,  seg(p,0.905,0.94), 0, 0, 1);
       // LINTERNA del buzo (copiada del movil): enciende con el buzo y se mantiene
-      if(dLuz) dLuz.style.opacity = seg(p,0.83,0.88);
+      if(dLuz) dLuz.style.opacity = seg(p,0.91,0.95);
       // DESTELLO FINAL: el haz de la linterna se vuelve hacia el espectador y crece
       // hasta llenar la pantalla; persiste sobre el negro y se apaga al cierre
       var dFlash=g('ds-flash');
-      if(dFlash){ var fl=ease(seg(p,0.88,0.94)); dFlash.style.opacity = Math.min(fl, 1-seg(p,0.96,0.995)); dFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
-      var fdepth=seg(p,0.70,0.92), fbright=lerp(1.4,0.85,ease(fdepth));
+      if(dFlash){ var fl=ease(seg(p,0.93,0.97)); dFlash.style.opacity = Math.min(fl, 1-seg(p,0.98,0.998)); dFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
+      var fdepth=seg(p,0.82,0.96), fbright=lerp(1.4,0.85,ease(fdepth));
       if(dFondo) dFondo.style.filter="brightness("+fbright+")";
       if(dBuzo)  dBuzo.style.filter ="brightness("+fbright+")";
       /* el cielo lo pone sv-sky-d; oscurecimiento por profundidad + fundido a NEGRO al final */
       if(bgSurface) bgSurface.style.opacity = 0;
       if(bgDeep) bgDeep.style.opacity = 0;
-      if(dark) dark.style.opacity = seg(p,0.78,0.98);
+      if(dark) dark.style.opacity = seg(p,0.84,0.99);
       // el buzo se ve un par de scrolls (0.88-0.94) y RECIEN despues la escena se va a negro
-      var blackO=g('sv-black'); if(blackO) blackO.style.opacity = seg(p,0.94,1.0);
+      var blackO=g('sv-black'); if(blackO) blackO.style.opacity = seg(p,0.965,1.0);
       /* ── TEXTOS ── */
       if(hero){ hero.style.opacity = 1-seg(p,0.02,0.08); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.02,0.08))+'px)'; }
       if(cue) cue.style.opacity = 1-seg(p,0.03,0.09);
@@ -753,7 +755,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       var bd=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
       bd(beat1,0.14,0.20,0.40,0.46);
       bd(beat2,0.56,0.62,0.70,0.76);
-      bd(beat3,0.86,0.92,0.97,0.995);
+      bd(beat3,0.92,0.96,0.985,0.998);
     }
 
     // ESCRITORIO OFICIAL (hibrido): muestra la superficie-capas (.sv-frame-ds) + los frames
@@ -771,7 +773,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
-    var SCREENS = isMobileIntro ? 13 : (useJunio ? 13 : 6);  // escritorio parallax: 16 (mas lento/contemplativo)
+    var SCREENS = isMobileIntro ? 13 : (useJunio ? 15 : 6);  // escritorio parallax: 16 (mas lento/contemplativo)
     // Alto del escenario = el viewport visible mas GRANDE visto (solo crece, nunca encoge).
     // En movil la barra de URL colapsa al scrollear y el viewport CRECE; si el escenario
     // solo crece, nunca queda corto (sin franja blanca abajo) ni oscila (sin tiriton).
