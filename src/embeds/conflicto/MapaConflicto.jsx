@@ -384,11 +384,13 @@ export default function MapaConflicto() {
       })
 
       // Ranking por CENTRO (los 36 sancionados). Se recorre uno por uno con Anterior/Siguiente.
-      // Orden: por region, luego titular, luego codigo -> agrupa visualmente por zona/empresa.
+      // Los CASOS DESTACADOS (Excel v3, filas amarillas) van primero: inician la navegacion.
+      // Luego por region, titular, codigo -> agrupa visualmente por zona/empresa.
       const centroRanking = spResp
         .filter(sp => sp.codigo_centro)
         .slice()
         .sort((a, b) =>
+          (b.destacado ? 1 : 0) - (a.destacado ? 1 : 0) ||
           String(a.region || '').localeCompare(String(b.region || '')) ||
           String(a.titular || '').localeCompare(String(b.titular || '')) ||
           String(a.codigo_centro).localeCompare(String(b.codigo_centro)))
