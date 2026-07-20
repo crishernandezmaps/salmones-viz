@@ -721,17 +721,17 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       // OPACA (fade-in rapido 0.42-0.47) -> su cuerpo CUBRE las balsas mientras sube (no
       // translucida). Descansa en translateY 0 (llena el frame) -> NO deja franja abajo.
       var j1rise = ease(seg(p,0.42,0.60));
-      // ESCAPE con HOLD largo: jaula3 entra 0.64-0.70 y se queda hasta ~0.78. Luego las
-      // jaulas SUBEN (jUp, descenso de camara) mientras se desvanecen (jOut) y RECIEN
-      // despues entra el fondo desde abajo -> escape y fondo no se pisan (feedback cris).
+      // ESCAPE con HOLD largo: jaula3 entra 0.64-0.70 y se queda hasta ~0.78; luego las
+      // jaulas se FUNDEN quietas en translateY 0 (moverlas deja una franja de otro tono
+      // bajo su borde -> leccion v23) y el fondo entra despues, tambien fundido en su
+      // lugar (sin translate: el barrido mostraba el borde superior del lecho, leccion movil).
       var jOut = 1 - seg(p,0.78,0.85);
-      var jUp = lerp(0,-16,ease(seg(p,0.76,0.86)));
-      setL(dJ1, seg(p,0.42,0.47)*jOut, 0, lerp(55,0,j1rise)+jUp, 1);
-      setL(dJ2, seg(p,0.58,0.64)*jOut, 0, jUp, 1);
-      setL(dJ3, seg(p,0.64,0.70)*jOut, 0, jUp, 1);
+      setL(dJ1, seg(p,0.42,0.47)*jOut, 0, lerp(55,0,j1rise), 1);
+      setL(dJ2, seg(p,0.58,0.64)*jOut, 0, 0, 1);
+      setL(dJ3, seg(p,0.64,0.70)*jOut, 0, 0, 1);
       /* FONDO contaminado (fade en su lugar) -> buzo. Adelantados para que el buzo llegue
          PLENO temprano (~0.88) y se vea un buen rato con la linterna ANTES del fundido a negro. */
-      setL(dFondo, seg(p,0.82,0.90)*(1-seg(p,0.905,0.94)), 0, lerp(26,0,ease(seg(p,0.82,0.92))), 1);
+      setL(dFondo, seg(p,0.84,0.90)*(1-seg(p,0.905,0.94)), 0, 0, 1);
       setL(dBuzo,  seg(p,0.905,0.94), 0, 0, 1);
       // LINTERNA del buzo (copiada del movil): enciende con el buzo y se mantiene
       if(dLuz) dLuz.style.opacity = seg(p,0.91,0.95);
