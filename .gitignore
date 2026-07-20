@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# memoria/manifiestos de Claude (nunca versionar)
+.claude/
