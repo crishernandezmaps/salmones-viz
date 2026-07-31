@@ -735,16 +735,21 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       // jaulas se FUNDEN quietas en translateY 0 (moverlas deja una franja de otro tono
       // bajo su borde -> leccion v23) y el fondo entra despues, tambien fundido en su
       // lugar (sin translate: el barrido mostraba el borde superior del lecho, leccion movil).
-      var jOut = 1 - seg(p,0.688,0.73);
-      setL(dJ1, seg(p,0.371,0.415)*jOut, 0, lerp(55,0,j1rise), 1);
-      setL(dJ2, seg(p,0.512,0.565)*jOut, 0, 0, 1);
-      setL(dJ3, seg(p,0.565,0.618)*jOut, 0, 0, 1);
-      /* COLA FINAL (frames 11-15): cada frame solo hace FADE-IN y queda opaco; el
-         siguiente lo cubre (fondos identicos entre 12-15) -> el cruce se lee como
-         "solo cambia el buzo", sin fantasmas y sin trasladar full-frames (regla dura). */
-      /* c11 entra RECIEN cuando la superficie termino de irse (surfOp llega a 0 en 0.741):
-         solaparlos superponia montanas + 3 jaulas semitransparentes (visto en QA). */
-      setL(c11, seg(p,0.745,0.78), 0, 0, 1);
+      /* DESCENSO CONTINUO al fondo (feedback de cris: ni vacio de agua ni doble jaula):
+         la escena del escape SUBE (jup) mientras c11 sube desde abajo y la cubre.
+         Mover las jaulas aqui NO deja franja (leccion v23) porque la banda que
+         descubren bajo su borde queda SIEMPRE tapada por c11, que viene subiendo
+         opaco encima (c11y + |jup| se mantiene < 100 en todo el tramo). */
+      var jup = lerp(0,-55, ease(seg(p,0.70,0.78)));
+      var jOut = 1 - seg(p,0.72,0.78);
+      setL(dJ1, seg(p,0.371,0.415)*jOut, 0, lerp(55,0,j1rise)+jup, 1);
+      setL(dJ2, seg(p,0.512,0.565)*jOut, 0, jup, 1);
+      setL(dJ3, seg(p,0.565,0.618)*jOut, 0, jup, 1);
+      /* COLA FINAL (frames 11-15): c11 llega por translate; 12-15 solo hacen FADE-IN
+         y quedan opacos, el siguiente cubre al anterior (fondos identicos) -> el
+         cruce se lee como "solo cambia el buzo", sin fantasmas. */
+      var c11y = lerp(85,0, ease(seg(p,0.70,0.78)));
+      setL(c11, seg(p,0.70,0.73), 0, c11y, 1);
       setL(c12, seg(p,0.805,0.835), 0, 0, 1);
       setL(c13, seg(p,0.86,0.885), 0, 0, 1);
       setL(c14, seg(p,0.905,0.93), 0, 0, 1);
