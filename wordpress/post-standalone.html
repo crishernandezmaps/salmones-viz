@@ -259,6 +259,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
            11 cruce jaula->fondo, 12 fondo contaminado, 13 buzo lejos, 14 buzo iluminando
            las redes, 15 buzo cerca. Fondos identicos entre 12-15 -> cada frame solo hace
            FADE-IN y queda opaco (el siguiente lo cubre): sin fantasmas, sin translate. -->
+      <img id="ds-cola11b" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola11b.webp" alt="" style="opacity:0">
       <img id="ds-cola11" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola11.webp" alt="" style="opacity:0">
       <img id="ds-cola12" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola12.webp" alt="" style="opacity:0">
       <img id="ds-cola13" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola13.webp" alt="" style="opacity:0">
@@ -700,7 +701,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       var dMon2=g('ds-montana2'), dMon1=g('ds-montana1'), dFio1=g('ds-fiordo1'), dFio2=g('ds-fiordo2'),
           dMar=g('ds-mar'), dCam=g('ds-camion'), dWb=g('ds-wellboat'), dAv=g('ds-avion'),
           dJ1=g('ds-jaula1'), dJ2=g('ds-jaula2'), dJ3=g('ds-jaula3'),
-          c11=g('ds-cola11'), c12=g('ds-cola12'), c13=g('ds-cola13'),
+          c11b=g('ds-cola11b'), c11=g('ds-cola11'), c12=g('ds-cola12'), c13=g('ds-cola13'),
           c14=g('ds-cola14'), c15=g('ds-cola15'), dLuz=g('ds-luz');
       /* DESCENSO DE CAMARA: la superficie sube (surfY) y se comprime; se pierde al profundizar.
          El descenso arranca ANTES y sube MAS (-44%) que en movil (viewport ancho tiene menos
@@ -735,23 +736,25 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       // jaulas se FUNDEN quietas en translateY 0 (moverlas deja una franja de otro tono
       // bajo su borde -> leccion v23) y el fondo entra despues, tambien fundido en su
       // lugar (sin translate: el barrido mostraba el borde superior del lecho, leccion movil).
-      /* DESCENSO CONTINUO al fondo (feedback de cris: ni vacio de agua ni doble jaula):
-         la escena del escape SUBE (jup) mientras c11 sube desde abajo y la cubre.
-         Mover las jaulas aqui NO deja franja (leccion v23) porque la banda que
-         descubren bajo su borde queda SIEMPRE tapada por c11, que viene subiendo
-         opaco encima (c11y + |jup| se mantiene < 100 en todo el tramo). */
-      var jup = lerp(0,-55, ease(seg(p,0.70,0.78)));
-      var jOut = 1 - seg(p,0.72,0.78);
-      setL(dJ1, seg(p,0.371,0.415)*jOut, 0, lerp(55,0,j1rise)+jup, 1);
-      setL(dJ2, seg(p,0.512,0.565)*jOut, 0, jup, 1);
-      setL(dJ3, seg(p,0.565,0.618)*jOut, 0, jup, 1);
-      /* COLA FINAL (frames 11-15): c11 llega por translate; 12-15 solo hacen FADE-IN
-         y quedan opacos, el siguiente cubre al anterior (fondos identicos) -> el
-         cruce se lee como "solo cambia el buzo", sin fantasmas. */
-      var c11y = lerp(85,0, ease(seg(p,0.70,0.78)));
-      setL(c11, seg(p,0.70,0.73), 0, c11y, 1);
-      setL(c12, seg(p,0.805,0.835), 0, 0, 1);
-      setL(c13, seg(p,0.86,0.885), 0, 0, 1);
+      /* DESCENSO CONTINUO al fondo, mecanismo del MOVIL (feedback de cris: subir el
+         frame 11 completo duplicaba la jaula y dejaba costura): lo que sube desde
+         abajo es c11b = SOLO agua + fondo marino (tope transparente difuminado,
+         sin jaula) sobre la escena del escape, que se queda QUIETA (v23). Al posarse,
+         el frame 11 COMPLETO se funde quieto encima: el fondo coincide pixel a pixel
+         (invisible) y la unica diferencia es la jaula, que se cruza en su lugar. */
+      /* la escena vieja se va ANTES de que c11 traiga su jaula (si no, conviven la
+         jaula nueva arriba y la linea de agua de la vieja al medio) */
+      var jOut = 1 - seg(p,0.75,0.80);
+      setL(dJ1, seg(p,0.371,0.415)*jOut, 0, lerp(55,0,j1rise), 1);
+      setL(dJ2, seg(p,0.512,0.565)*jOut, 0, 0, 1);
+      setL(dJ3, seg(p,0.565,0.618)*jOut, 0, 0, 1);
+      setL(c11b, seg(p,0.70,0.72), 0, lerp(60,0, ease(seg(p,0.70,0.78))), 1);
+      /* COLA FINAL (frames 11-15): 12-15 solo hacen FADE-IN y quedan opacos, el
+         siguiente cubre al anterior (fondos identicos) -> el cruce se lee como
+         "solo cambia el buzo", sin fantasmas. */
+      setL(c11, seg(p,0.78,0.83), 0, 0, 1);
+      setL(c12, seg(p,0.835,0.865), 0, 0, 1);
+      setL(c13, seg(p,0.875,0.90), 0, 0, 1);
       setL(c14, seg(p,0.905,0.93), 0, 0, 1);
       setL(c15, seg(p,0.945,0.965), 0, 0, 1);
       // LINTERNA: enciende con el frame 14 (haz sobre las redes) y se mantiene
