@@ -255,8 +255,15 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <img id="ds-jaula1"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-jaula1.webp" alt="" style="opacity:0">
       <img id="ds-jaula2"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-jaula2.webp" alt="" style="opacity:0">
       <img id="ds-jaula3"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-jaula3.webp" alt="" style="opacity:0">
-      <img id="ds-fondo"      class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fondo-mar.webp" alt="" style="opacity:0">
-      <img id="ds-fondobuzo"  class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fondo-mar-buzo.webp" alt="" style="opacity:0">
+      <!-- COLA FINAL (frames 11-15 de la disenadora, entrega "final/intro_desktop"):
+           11 cruce jaula->fondo, 12 fondo contaminado, 13 buzo lejos, 14 buzo iluminando
+           las redes, 15 buzo cerca. Fondos identicos entre 12-15 -> cada frame solo hace
+           FADE-IN y queda opaco (el siguiente lo cubre): sin fantasmas, sin translate. -->
+      <img id="ds-cola11" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola11.webp" alt="" style="opacity:0">
+      <img id="ds-cola12" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola12.webp" alt="" style="opacity:0">
+      <img id="ds-cola13" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola13.webp" alt="" style="opacity:0">
+      <img id="ds-cola14" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola14.webp" alt="" style="opacity:0">
+      <img id="ds-cola15" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola15.webp" alt="" style="opacity:0">
       <!-- linterna del buzo (copiada del movil #m1-luz): glow sobre la mano/haz del buzo -->
       <div id="ds-luz" style="position:absolute;inset:0;opacity:0;pointer-events:none;mix-blend-mode:screen;z-index:45;background:radial-gradient(circle at 50% 60%, rgba(255,251,228,1) 0%, rgba(255,244,190,0.85) 3%, rgba(255,238,170,0.35) 8%, rgba(0,0,0,0) 16%), radial-gradient(ellipse 22% 26% at 54% 72%, rgba(255,236,172,0.34) 0%, rgba(255,232,160,0.10) 48%, rgba(0,0,0,0) 78%);"></div>
       <!-- destello final: la linterna del buzo apunta al espectador antes del negro -->
@@ -693,69 +700,73 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       var dMon2=g('ds-montana2'), dMon1=g('ds-montana1'), dFio1=g('ds-fiordo1'), dFio2=g('ds-fiordo2'),
           dMar=g('ds-mar'), dCam=g('ds-camion'), dWb=g('ds-wellboat'), dAv=g('ds-avion'),
           dJ1=g('ds-jaula1'), dJ2=g('ds-jaula2'), dJ3=g('ds-jaula3'),
-          dFondo=g('ds-fondo'), dBuzo=g('ds-fondobuzo'), dLuz=g('ds-luz');
+          c11=g('ds-cola11'), c12=g('ds-cola12'), c13=g('ds-cola13'),
+          c14=g('ds-cola14'), c15=g('ds-cola15'), dLuz=g('ds-luz');
       /* DESCENSO DE CAMARA: la superficie sube (surfY) y se comprime; se pierde al profundizar.
          El descenso arranca ANTES y sube MAS (-44%) que en movil (viewport ancho tiene menos
          alto): asi las balsas suben a la linea de agua ANTES de que entre la jaula, y la jaula
          cuelga DEBAJO sin superponerse (evita el "fantasma" de dos perspectivas). */
-      var dive   = ease(seg(p,0.40,0.66));
+      /* Breakpoints de la CABECERA reescalados x15/17 (SCREENS 15->17): mismos scrolls
+         que v30 para todo lo previo al escape; las 2 pantallas extra van a la COLA. */
+      var dive   = ease(seg(p,0.353,0.582));
       var surfY  = lerp(0,-44,dive);
-      var surfOp = 1 - seg(p,0.74,0.84);
+      var surfOp = 1 - seg(p,0.653,0.741);
       // las BALSAS (vista aerea) se desvanecen al entrar la jaula submarina: evita el
       // "fantasma" de dos perspectivas (aerea + lateral) superpuestas. Los CERROS/fiordos
       // se quedan como marco superior (la jaula trae su propia linea de agua).
-      var marOp = surfOp * (1 - seg(p,0.50,0.60));
+      var marOp = surfOp * (1 - seg(p,0.441,0.529));
       setL(dMar,  marOp, 0,surfY,1);
       setL(dFio2, surfOp, 0,surfY,1); setL(dFio1, surfOp, 0,surfY,1);
       setL(dMon1, surfOp, 0,surfY,1); setL(dMon2, surfOp, 0,surfY,1);
       /* VEHICULOS: camion -> barco -> avion, entran y salen */
-      var ci=seg(p,0.04,0.11), co=seg(p,0.30,0.38);
+      var ci=seg(p,0.035,0.097), co=seg(p,0.265,0.335);
       // translateY -11%: sube el camion a la ORILLA (el asset lo dibuja a media altura -> quedaba sobre el agua)
       setL(dCam, ci*(1-co), lerp(-42,-16,ease(ci))+lerp(0,-44,ease(co)),-11,1);
-      var wi=seg(p,0.14,0.22), wo=seg(p,0.32,0.40);
+      var wi=seg(p,0.124,0.194), wo=seg(p,0.282,0.353);
       setL(dWb,  wi*(1-wo), lerp(34,0,ease(wi))+lerp(0,44,ease(wo)),0,1);
-      var ax=seg(p,0.22,0.42), aop=Math.min(seg(p,0.22,0.28), 1-seg(p,0.38,0.42));
+      var ax=seg(p,0.194,0.371), aop=Math.min(seg(p,0.194,0.247), 1-seg(p,0.335,0.371));
       setL(dAv,  aop, lerp(-60,72,ax),0,1);
       /* JAULAS submarinas APILADAS (opacas, traen su linea de agua): jaula1 (llena) -> escape */
       // jaula1 EMERGE del fondo: arranca abajo (+55%) y sube de a poco desde ~p0.42, pero
       // OPACA (fade-in rapido 0.42-0.47) -> su cuerpo CUBRE las balsas mientras sube (no
       // translucida). Descansa en translateY 0 (llena el frame) -> NO deja franja abajo.
-      var j1rise = ease(seg(p,0.42,0.60));
+      var j1rise = ease(seg(p,0.371,0.529));
       // ESCAPE con HOLD largo: jaula3 entra 0.64-0.70 y se queda hasta ~0.78; luego las
       // jaulas se FUNDEN quietas en translateY 0 (moverlas deja una franja de otro tono
       // bajo su borde -> leccion v23) y el fondo entra despues, tambien fundido en su
       // lugar (sin translate: el barrido mostraba el borde superior del lecho, leccion movil).
-      var jOut = 1 - seg(p,0.78,0.85);
-      setL(dJ1, seg(p,0.42,0.47)*jOut, 0, lerp(55,0,j1rise), 1);
-      setL(dJ2, seg(p,0.58,0.64)*jOut, 0, 0, 1);
-      setL(dJ3, seg(p,0.64,0.70)*jOut, 0, 0, 1);
-      /* FONDO contaminado (fade en su lugar) -> buzo. Adelantados para que el buzo llegue
-         PLENO temprano (~0.88) y se vea un buen rato con la linterna ANTES del fundido a negro. */
-      setL(dFondo, seg(p,0.84,0.90)*(1-seg(p,0.905,0.94)), 0, 0, 1);
-      setL(dBuzo,  seg(p,0.905,0.94), 0, 0, 1);
-      // LINTERNA del buzo (copiada del movil): enciende con el buzo y se mantiene
-      if(dLuz) dLuz.style.opacity = seg(p,0.91,0.95);
+      var jOut = 1 - seg(p,0.688,0.73);
+      setL(dJ1, seg(p,0.371,0.415)*jOut, 0, lerp(55,0,j1rise), 1);
+      setL(dJ2, seg(p,0.512,0.565)*jOut, 0, 0, 1);
+      setL(dJ3, seg(p,0.565,0.618)*jOut, 0, 0, 1);
+      /* COLA FINAL (frames 11-15): cada frame solo hace FADE-IN y queda opaco; el
+         siguiente lo cubre (fondos identicos entre 12-15) -> el cruce se lee como
+         "solo cambia el buzo", sin fantasmas y sin trasladar full-frames (regla dura). */
+      setL(c11, seg(p,0.695,0.735), 0, 0, 1);
+      setL(c12, seg(p,0.775,0.81), 0, 0, 1);
+      setL(c13, seg(p,0.845,0.875), 0, 0, 1);
+      setL(c14, seg(p,0.90,0.925), 0, 0, 1);
+      setL(c15, seg(p,0.945,0.965), 0, 0, 1);
+      // LINTERNA: enciende con el frame 14 (haz sobre las redes) y se mantiene
+      if(dLuz) dLuz.style.opacity = seg(p,0.905,0.94);
       // DESTELLO FINAL: el haz de la linterna se vuelve hacia el espectador y crece
       // hasta llenar la pantalla; persiste sobre el negro y se apaga al cierre
       var dFlash=g('ds-flash');
-      if(dFlash){ var fl=ease(seg(p,0.93,0.97)); dFlash.style.opacity = Math.min(fl, 1-seg(p,0.98,0.998)); dFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
-      var fdepth=seg(p,0.82,0.96), fbright=lerp(1.4,0.85,ease(fdepth));
-      if(dFondo) dFondo.style.filter="brightness("+fbright+")";
-      if(dBuzo)  dBuzo.style.filter ="brightness("+fbright+")";
+      if(dFlash){ var fl=ease(seg(p,0.965,0.985)); dFlash.style.opacity = Math.min(fl, 1-seg(p,0.988,0.998)); dFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
       /* el cielo lo pone sv-sky-d; oscurecimiento por profundidad + fundido a NEGRO al final */
       if(bgSurface) bgSurface.style.opacity = 0;
       if(bgDeep) bgDeep.style.opacity = 0;
-      if(dark) dark.style.opacity = seg(p,0.84,0.99);
-      // el buzo se ve un par de scrolls (0.88-0.94) y RECIEN despues la escena se va a negro
-      var blackO=g('sv-black'); if(blackO) blackO.style.opacity = seg(p,0.965,1.0);
+      if(dark) dark.style.opacity = seg(p,0.78,0.99);
+      // el buzo se ve varios scrolls (13-15) y RECIEN despues la escena se va a negro
+      var blackO=g('sv-black'); if(blackO) blackO.style.opacity = seg(p,0.975,1.0);
       /* ── TEXTOS ── */
-      if(hero){ hero.style.opacity = 1-seg(p,0.02,0.08); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.02,0.08))+'px)'; }
-      if(cue) cue.style.opacity = 1-seg(p,0.03,0.09);
-      if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
+      if(hero){ hero.style.opacity = 1-seg(p,0.018,0.071); hero.style.transform='translateY('+lerp(0,-30,seg(p,0.018,0.071))+'px)'; }
+      if(cue) cue.style.opacity = 1-seg(p,0.026,0.079);
+      if(scrim) scrim.style.opacity = 1-seg(p,0.124,0.212);
       var bd=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      bd(beat1,0.14,0.20,0.40,0.46);
-      bd(beat2,0.56,0.62,0.70,0.76);
-      bd(beat3,0.92,0.96,0.985,0.998);
+      bd(beat1,0.124,0.176,0.353,0.406);
+      bd(beat2,0.494,0.547,0.618,0.671);
+      bd(beat3,0.93,0.965,0.985,0.998);
     }
 
     // ESCRITORIO OFICIAL (hibrido): muestra la superficie-capas (.sv-frame-ds) + los frames
@@ -773,7 +784,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
-    var SCREENS = isMobileIntro ? 13 : (useJunio ? 15 : 6);  // escritorio parallax: 16 (mas lento/contemplativo)
+    var SCREENS = isMobileIntro ? 13 : (useJunio ? 17 : 6);  // escritorio parallax: 17 (cola con frames 11-15)
     // Alto del escenario = el viewport visible mas GRANDE visto (solo crece, nunca encoge).
     // En movil la barra de URL colapsa al scrollear y el viewport CRECE; si el escenario
     // solo crece, nunca queda corto (sin franja blanca abajo) ni oscila (sin tiriton).
