@@ -1,23 +1,24 @@
 # TODO — Salmones Viz
 
-_Actualizado 2026-07-31._
+_Actualizado 2026-08-14._
 
 ## Estado
 
 - **Intro movil (post 70, slug `salmones-movil-vN`)**: aprobada, iterando detalles. NO tocar
   `renderMobile()` ni `.sv-m`.
 - **Intro de ESCRITORIO = PARALLAX POR CAPAS + COLA con FRAMES FINALES** (`renderDesktopParallax`,
-  capas `d1-*`, ids `ds-*`). Post 70 slug **`salmones-movil-v31`** (2026-07-31). Rollback intro
-  vieja: `?introd=old`; cola v30 exacta: `git show 736eef1~1:wordpress/post-standalone.html`.
-  - La disenadora entrego los **frames finales 11-15** (fondo contaminado + aproximacion del
-    buzo en 3 poses). En Pages: `d1-cola11..15.webp` + `d1-cola11b.webp` (frame 11 con el tope
-    transparente difuminado: solo agua+lecho, sin jaula).
+  capas `d1-*`, ids `ds-*`). Post 70 slug **`salmones-movil-v34`** (2026-08-14) — **APROBADA POR
+  CRIS para escritorio**. Rollback intro vieja: `?introd=old`; cola v31 exacta: commit `a4077c7`.
+  - Frames finales 11-15 de la disenadora en Pages: `d1-cola11..15.webp` + `d1-cola11b.webp`
+    (frame 11 con tope alfa: solo agua+lecho) + **`d1-cola13s/14s/15s.webp` (beats del buzo
+    SIN jaula, parche de agua 2026-08-14; los originales con jaula quedan como rollback)**.
   - `SCREENS=17`; breakpoints de la cabecera remapeados x15/17 (mismos scrolls que v30 hasta
     el escape); las 2 pantallas extra van a la cola.
-  - Cola: escape HOLD hasta 0.70 -> `c11b` (agua+lecho) SUBE 0.70-0.78 sobre la escena quieta ->
-    escape se funde 0.75-0.80 -> frame 11 completo se funde QUIETO 0.78-0.83 (el lecho coincide
-    pixel a pixel; solo aparece su jaula) -> c12 0.835 -> c13 buzo lejos 0.875 -> c14 buzo
-    iluminando redes 0.905 (+luz) -> c15 buzo cerca 0.945 -> flash 0.965 -> negro 0.975-1.0.
+  - Cola v34: escape HOLD hasta 0.70 -> `c11b` (agua+lecho, ANTES de las jaulas en el DOM)
+    SUBE 0.70-0.78 por DETRAS de la jaula del escape, que queda visible -> jaula se funde
+    quieta 0.75-0.80 -> frame 11 completo QUIETO 0.78-0.83 -> c12 (con su jaula al tope,
+    saliendo) 0.835 -> c13s buzo lejos 0.875 -> c14s buzo iluminando redes 0.905 (+luz) ->
+    c15s buzo cerca 0.945 -> flash 0.965 -> negro 0.975-1.0. Del 13 en adelante NO hay jaula.
   - Capas viejas `ds-fondo`/`ds-fondobuzo` fuera del DOM (assets `d1-fondo-mar*` huerfanos en
     Pages, limpiables).
 - **Mapa 2 (`?embed=conflicto`)**: reconstruido desde `Desktop/Mapa  2.0.xlsx` (36 centros
@@ -27,11 +28,12 @@ _Actualizado 2026-07-31._
   Ficha nuevo formato, paginacion por centro, capa ECMPO quitada.
 
 ## Pendientes
-- Veredicto de cris/clienta al ritmo completo de la intro de escritorio v31 (subida del fondo,
-  beats del buzo, destello).
+- QA de la CLIENTA a la intro de escritorio v34 (cris ya la aprobo el 2026-08-14).
+- Opcional si cris lo pide: quitar tambien la jaula del frame 12 (mismo parche de agua).
 - QA del mapa 2 en navegador real: confirmar que la navegacion parte en los 5 destacados.
 - Limpieza post-QA: eliminar set viejo `of-*`/`render()` (rollback), el bloque DOM muerto
-  `.sv-frame-dq` del post, y los assets huerfanos de Pages (`d1-fondo-mar*.webp`).
+  `.sv-frame-dq` del post, y los assets huerfanos de Pages (`d1-fondo-mar*.webp`,
+  `d1-cola13/14/15.webp` originales con jaula).
 - Copy de la seccion del mapa nuevo (lo ajusta UDP).
 - Portadas: assets de la disenadora (no codigo).
 - Intro/mapas en produccion `cip.udp.cl` (UDP, NO tocar sin coordinar).
@@ -47,6 +49,11 @@ _Actualizado 2026-07-31._
 - **Cruces con frames completos**: lo que sube desde abajo NO debe traer una segunda copia de
   lo que ya esta en pantalla (subir el frame 11 completo duplicaba la jaula del escape). Se sube
   solo el contenido nuevo (recorte con alfa) y el frame completo se funde quieto al final.
+- **Los `d1-jaula*` son FULL-FRAME, no sprites** (traen su agua pintada; el alfa es solo el
+  cielo): PROHIBIDO trasladarlos o escalarlos — queda un rectangulo translucido con bordes
+  visibles (v32 fallida 2026-08-14). No existe asset de jaula aislada; si un frame trae la
+  jaula dibujada donde no debe, se parcha el asset (gradiente de agua por filas + mascara
+  difuminada; extender la mascara BAJO la base de la jaula o se filtra como linea punteada).
 - **Mapas**: QA SOLO en navegador real (WebGL no rinde headless NI en pestanas automatizadas —
   ahi el overlay "Cargando mapa..." eterno es falso negativo). Al renombrar variables en un
   componente, grep TODAS las refs (el build compila pero crashea en runtime).
@@ -81,3 +88,12 @@ Ver `.claude/infra.md` (local). Resumen: editar `wordpress/post-standalone.html`
   (`c11b`) mientras el escape sigue visible.
 - [HECHO] Cruce sin jaula duplicada ni costura (feedback en vivo): lo que sube no trae jaula;
   el frame completo se funde quieto al posarse.
+
+## Correcciones de cris — sesion 2026-08-14 (CERRADA en v34, APROBADA para escritorio)
+- [HECHO] El fondo ya no tapa la jaula del escape: `c11b` movido antes de las jaulas en el
+  DOM, sube por detras; la jaula se funde quieta despues (v33, "asi si!").
+- [FALLIDO->REVERTIDO] v32: subir/escalar las jaulas con translate+scale — los `d1-jaula*`
+  son full-frame y quedo un rectangulo con bordes visibles (gotcha documentado arriba).
+- [HECHO] En los beats del buzo (frames 13-15) la jaula desaparece por completo: assets
+  parcheados `d1-cola13s/14s/15s.webp` (la jaula venia dibujada en los frames). El frame 12
+  conserva la suya (pegada al tope, saliendo de cuadro).
