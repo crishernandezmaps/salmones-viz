@@ -251,6 +251,9 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <img id="ds-camion"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-camion.webp" alt="" style="opacity:0">
       <img id="ds-wellboat" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-wellboat.webp" alt="" style="opacity:0">
       <img id="ds-avion"    class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-avion.webp" alt="" style="opacity:0">
+      <!-- c11b (solo agua + lecho, tope alfa) va ANTES de las jaulas: sube por DETRAS
+           de la jaula del escape (feedback cris 2026-08-14: el fondo no debe taparla) -->
+      <img id="ds-cola11b" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola11b.webp" alt="" style="opacity:0">
       <!-- submarinas: se apilan OPACAS encima (traen su linea de agua + transparencia arriba) -->
       <img id="ds-jaula1"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-jaula1.webp" alt="" style="opacity:0">
       <img id="ds-jaula2"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-jaula2.webp" alt="" style="opacity:0">
@@ -259,7 +262,6 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
            11 cruce jaula->fondo, 12 fondo contaminado, 13 buzo lejos, 14 buzo iluminando
            las redes, 15 buzo cerca. Fondos identicos entre 12-15 -> cada frame solo hace
            FADE-IN y queda opaco (el siguiente lo cubre): sin fantasmas, sin translate. -->
-      <img id="ds-cola11b" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola11b.webp" alt="" style="opacity:0">
       <img id="ds-cola11" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola11.webp" alt="" style="opacity:0">
       <img id="ds-cola12" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola12.webp" alt="" style="opacity:0">
       <img id="ds-cola13" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola13.webp" alt="" style="opacity:0">
@@ -736,23 +738,27 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       // jaulas se FUNDEN quietas en translateY 0 (moverlas deja una franja de otro tono
       // bajo su borde -> leccion v23) y el fondo entra despues, tambien fundido en su
       // lugar (sin translate: el barrido mostraba el borde superior del lecho, leccion movil).
-      /* DESCENSO CONTINUO al fondo, mecanismo del MOVIL (feedback de cris: subir el
-         frame 11 completo duplicaba la jaula y dejaba costura): lo que sube desde
-         abajo es c11b = SOLO agua + fondo marino (tope transparente difuminado,
-         sin jaula) sobre la escena del escape, que se queda QUIETA (v23). Al posarse,
-         el frame 11 COMPLETO se funde quieto encima: el fondo coincide pixel a pixel
-         (invisible) y la unica diferencia es la jaula, que se cruza en su lugar. */
-      /* la escena vieja se va ANTES de que c11 traiga su jaula (si no, conviven la
-         jaula nueva arriba y la linea de agua de la vieja al medio) */
+      /* DESCENSO CONTINUO al fondo (feedback cris 2026-08-14): c11b (solo agua +
+         lecho, tope alfa, SIN jaula) sube por DETRAS de la jaula del escape (c11b
+         esta antes de las jaulas en el DOM). Mientras el fondo sube, la jaula
+         ASCIENDE en el encuadre y se achica levemente (la camara sigue bajando),
+         como en los frames 11-12 de la disenadora. La subida es moderada (-20%):
+         mas alla, la linea de agua del asset descubre cielo por arriba. El resto
+         del ascenso lo trae c11 (su jaula ya viene en el tercio superior), cuyo
+         fade-in se solapa con la salida de la vieja EN MOVIMIENTO (motion carry:
+         se lee como la misma jaula que siguio subiendo). */
+      var jRise  = ease(seg(p,0.72,0.79));
+      var jUpY   = lerp(0,-20,jRise);
+      var jScale = lerp(1,0.93,jRise);
       var jOut = 1 - seg(p,0.75,0.80);
-      setL(dJ1, seg(p,0.371,0.415)*jOut, 0, lerp(55,0,j1rise), 1);
-      setL(dJ2, seg(p,0.512,0.565)*jOut, 0, 0, 1);
-      setL(dJ3, seg(p,0.565,0.618)*jOut, 0, 0, 1);
+      setL(dJ1, seg(p,0.371,0.415)*jOut, 0, lerp(55,0,j1rise)+jUpY, jScale);
+      setL(dJ2, seg(p,0.512,0.565)*jOut, 0, jUpY, jScale);
+      setL(dJ3, seg(p,0.565,0.618)*jOut, 0, jUpY, jScale);
       setL(c11b, seg(p,0.70,0.72), 0, lerp(60,0, ease(seg(p,0.70,0.78))), 1);
       /* COLA FINAL (frames 11-15): 12-15 solo hacen FADE-IN y quedan opacos, el
          siguiente cubre al anterior (fondos identicos) -> el cruce se lee como
          "solo cambia el buzo", sin fantasmas. */
-      setL(c11, seg(p,0.78,0.83), 0, 0, 1);
+      setL(c11, seg(p,0.76,0.82), 0, 0, 1);
       setL(c12, seg(p,0.835,0.865), 0, 0, 1);
       setL(c13, seg(p,0.875,0.90), 0, 0, 1);
       setL(c14, seg(p,0.905,0.93), 0, 0, 1);
