@@ -43,11 +43,6 @@ const ICONS = {
   sobreproduccion:   { svg: makeSVG('#b71c1c', '#ffd600', 'diamond') },
 }
 
-function getCategory(hasDenuncia) {
-  if (hasDenuncia) return 'denuncia'
-  return 'normal'
-}
-
 /* ── Inset map with trapezoid connector ── */
 function InsetWithConnector({ mapRef, lng, lat }) {
   const containerRef = useRef(null)
@@ -176,12 +171,9 @@ function FichaPanel({ selected, ranking, rankIndex, onNavigate, onClose }) {
   const headerBg = hasSobreprod ? '#b71c1c' : '#3a9e9e'
   const inRanking = rankIndex >= 0
   const regionShort = (r) => !r ? '' : String(r).replace(/^REGI[ÓO]N DE\s+/i, '').replace(/\s+DEL GENERAL.*$/i, '').trim()
-  // Holding = grupo empresarial SIN el titular ("TITULAR - HOLDING (pais)" -> "HOLDING (pais)")
-  const holding = sp
-    ? (sp.titular && sp.grupo_empresarial && sp.grupo_empresarial.indexOf(sp.titular) === 0
-        ? sp.grupo_empresarial.slice(sp.titular.length).replace(/^\s*[-–]\s*/, '').trim()
-        : (sp.grupo_empresarial || ''))
-    : ''
+  // Holding: la columna "grupo empresarial" COMPLETA del Excel, sin resumir
+  // (feedback cris 2026-08-14: antes se recortaba el titular del inicio)
+  const holding = sp ? (sp.grupo_empresarial || sp.titular || '') : ''
 
   return (
     <div
@@ -398,8 +390,8 @@ export default function MapaConflicto() {
       rankingRef.current = centroRanking
       setRanking(centroRanking)
 
-      // Classify centros
-      const buckets = { normal: [], denuncia: [] }
+      // Los centros SIN ficha no llevan punto individual (solo alimentan el heatmap
+      // de densidad); los unicos puntos clickeables son los 36 con procedimiento.
       const centrosByCode = {}
       const spFeatures = []
 
@@ -408,9 +400,6 @@ export default function MapaConflicto() {
         centro.properties._lat = centro.geometry.coordinates[1]
         const code = String(parseInt(centro.properties.N_CODIGOCE))
         centrosByCode[code] = centro.properties
-
-        const hasDen = !!denMap[code]
-        buckets[getCategory(hasDen)].push(centro)
 
         // Collect features for sobreproduccion layer
         if (spCodes.has(code)) {
@@ -518,21 +507,6 @@ export default function MapaConflicto() {
         'circle-radius': ['interpolate', ['linear'], ['zoom'], 5, 3, 8, 5, 12, 8],
         'circle-stroke-width': ['interpolate', ['linear'], ['zoom'], 5, 1, 12, 2],
       }
-      const COLORS = {
-        normal:            { fill: '#5b9ea6', stroke: '#ffffff' },
-        denuncia:          { fill: '#5b9ea6', stroke: '#ffd600' },
-      }
-
-      for (const [cat, feats] of Object.entries(buckets)) {
-        mapRef.current.addSource('src-' + cat, { type: 'geojson', data: { type: 'FeatureCollection', features: feats } })
-        mapRef.current.addLayer({
-          id: 'layer-' + cat, type: 'circle', source: 'src-' + cat,
-          paint: { ...CIRCLE_STYLE, 'circle-color': COLORS[cat].fill, 'circle-stroke-color': COLORS[cat].stroke },
-        }, B)
-        mapRef.current.on('click', 'layer-' + cat, (e) => handleCentroClick(e.features[0].properties))
-        mapRef.current.on('mouseenter', 'layer-' + cat, () => { mapRef.current.getCanvas().style.cursor = 'pointer' })
-        mapRef.current.on('mouseleave', 'layer-' + cat, () => { mapRef.current.getCanvas().style.cursor = '' })
-      }
 
       // Sobreproduccion layer
       mapRef.current.addSource('src-sobreproduccion', { type: 'geojson', data: { type: 'FeatureCollection', features: spFeatures } })
@@ -595,9 +569,6 @@ export default function MapaConflicto() {
       const vis = next ? 'visible' : 'none'
       if (id === 'centros') {
         mapRef.current.setLayoutProperty('centros-heat', 'visibility', vis)
-        for (const cat of ['normal', 'denuncia']) {
-          if (mapRef.current.getLayer('layer-' + cat)) mapRef.current.setLayoutProperty('layer-' + cat, 'visibility', vis)
-        }
       } else if (id === 'snaspe') {
         mapRef.current.setLayoutProperty('snaspe-fill', 'visibility', vis)
         mapRef.current.setLayoutProperty('snaspe-outline', 'visibility', vis)
@@ -642,8 +613,8 @@ export default function MapaConflicto() {
           </button>
           <div className={(legendOpen ? 'block' : 'hidden') + ' mt-1 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm p-3 text-sm space-y-1.5 max-w-[80vw] md:max-w-none'}>
           <div className='flex items-center gap-2'>
-            <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: '#5b9ea6' }} />
-            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Centros salmoneros</span>
+            <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: 'radial-gradient(circle, rgba(180,40,40,0.75) 0%, rgba(217,64,64,0.25) 70%, rgba(217,64,64,0) 100%)' }} />
+            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Concentración de centros salmoneros</span>
           </div>
           <div className='flex items-center gap-2'>
             <span className='w-2.5 h-2.5 rounded shrink-0' style={{ background: 'rgba(58,158,158,0.4)', border: '1.5px solid #2a7a7a' }} />
