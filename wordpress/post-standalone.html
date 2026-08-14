@@ -738,27 +738,23 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       // jaulas se FUNDEN quietas en translateY 0 (moverlas deja una franja de otro tono
       // bajo su borde -> leccion v23) y el fondo entra despues, tambien fundido en su
       // lugar (sin translate: el barrido mostraba el borde superior del lecho, leccion movil).
-      /* DESCENSO CONTINUO al fondo (feedback cris 2026-08-14): c11b (solo agua +
-         lecho, tope alfa, SIN jaula) sube por DETRAS de la jaula del escape (c11b
-         esta antes de las jaulas en el DOM). Mientras el fondo sube, la jaula
-         ASCIENDE en el encuadre y se achica levemente (la camara sigue bajando),
-         como en los frames 11-12 de la disenadora. La subida es moderada (-20%):
-         mas alla, la linea de agua del asset descubre cielo por arriba. El resto
-         del ascenso lo trae c11 (su jaula ya viene en el tercio superior), cuyo
-         fade-in se solapa con la salida de la vieja EN MOVIMIENTO (motion carry:
-         se lee como la misma jaula que siguio subiendo). */
-      var jRise  = ease(seg(p,0.72,0.79));
-      var jUpY   = lerp(0,-20,jRise);
-      var jScale = lerp(1,0.93,jRise);
+      /* DESCENSO CONTINUO al fondo: c11b (solo agua + lecho, tope alfa, SIN jaula)
+         sube por DETRAS de la jaula del escape (c11b antes de las jaulas en el DOM);
+         la jaula NO se tapa mientras el fondo asciende. GOTCHA 2026-08-14: los assets
+         d1-jaula* son FULL-FRAME (traen su agua pintada) -> PROHIBIDO trasladarlos o
+         escalarlos (el borde del asset queda visible como rectangulo/costura). Todos
+         los cruces de full-frames son por OPACIDAD, quietos (leccion v23/v30). La
+         jaula se funde 0.75-0.80 revelando el lecho que llego por detras; c11 (su
+         jaula ya en el tercio superior) se funde despues. */
       var jOut = 1 - seg(p,0.75,0.80);
-      setL(dJ1, seg(p,0.371,0.415)*jOut, 0, lerp(55,0,j1rise)+jUpY, jScale);
-      setL(dJ2, seg(p,0.512,0.565)*jOut, 0, jUpY, jScale);
-      setL(dJ3, seg(p,0.565,0.618)*jOut, 0, jUpY, jScale);
+      setL(dJ1, seg(p,0.371,0.415)*jOut, 0, lerp(55,0,j1rise), 1);
+      setL(dJ2, seg(p,0.512,0.565)*jOut, 0, 0, 1);
+      setL(dJ3, seg(p,0.565,0.618)*jOut, 0, 0, 1);
       setL(c11b, seg(p,0.70,0.72), 0, lerp(60,0, ease(seg(p,0.70,0.78))), 1);
       /* COLA FINAL (frames 11-15): 12-15 solo hacen FADE-IN y quedan opacos, el
          siguiente cubre al anterior (fondos identicos) -> el cruce se lee como
          "solo cambia el buzo", sin fantasmas. */
-      setL(c11, seg(p,0.76,0.82), 0, 0, 1);
+      setL(c11, seg(p,0.78,0.83), 0, 0, 1);
       setL(c12, seg(p,0.835,0.865), 0, 0, 1);
       setL(c13, seg(p,0.875,0.90), 0, 0, 1);
       setL(c14, seg(p,0.905,0.93), 0, 0, 1);
