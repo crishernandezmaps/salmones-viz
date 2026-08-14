@@ -498,7 +498,10 @@ export default function MapaConflicto() {
             0, 'rgba(0,0,0,0)', 0.1, 'rgba(217,64,64,0.15)', 0.3, 'rgba(217,64,64,0.35)',
             0.5, 'rgba(200,50,50,0.5)', 0.7, 'rgba(180,40,40,0.65)',
             0.9, 'rgba(160,30,30,0.8)', 1, 'rgba(140,20,20,0.9)'],
-          'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7, 0.85, 10, 0.4, 13, 0],
+          // Solo VISTA GENERAL: plena en el zoom inicial (~7) y desaparece del todo al
+          // acercar (feedback cris 2026-08-14: sin puntos individuales, a zoom medio el
+          // heatmap se fragmentaba en manchas sueltas)
+          'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7.5, 0.85, 9, 0],
         },
       }, B)
 
