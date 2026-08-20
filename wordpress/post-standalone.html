@@ -88,7 +88,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 /* MOVIL (base): frame llena el ancho, centrado vertical (relleno cielo/agua arriba/abajo) */
 .sv-frame { position:absolute; left:0; top:50%; transform:translateY(-50%); width:100%; aspect-ratio:1664/2388; z-index:1; }
 /* ESCRITORIO: las capas llenan TODO el viewport (cover, borde a borde); ancla el encuadre al contenido */
-@media (min-width:768px) {
+@media (min-width:768px) and (orientation:landscape) {
   .sv-frame { top:0; transform:none; width:100%; height:100%; aspect-ratio:auto; }
   .sv-layer { object-position:center 40%; }
   #sv-jaulaLlena, #sv-jaulaEsc2, #sv-jaulaEsc3 { object-position:center 10% !important; }
@@ -197,7 +197,9 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 .sv-dark { position:absolute; inset:0; z-index:46; pointer-events:none; background:linear-gradient(180deg,rgba(2,11,18,0) 0%,rgba(2,11,18,0) 38%,rgba(2,11,18,0.5) 66%,rgba(2,11,18,0.97) 100%); opacity:0; will-change:opacity; }
 /* fundido a NEGRO uniforme al final del descenso (toda la escena: buzo + fondo) */
 .sv-black { position:absolute; inset:0; z-index:47; pointer-events:none; background:#000; opacity:0; will-change:opacity; }
-@media (max-width:767px){
+/* MISMO criterio que el JS (isMobileIntro): ancho de movil O viewport en vertical.
+   Si el JS elige la rama movil y este bloque no la muestra, la intro queda en blanco. */
+@media (max-width:767px), (orientation:portrait){
   .sv-frame.sv-frame-d { display:none; }
   .sv-frame-m { display:block; }
   /* Franjas del letterbox: cielo arriba / agua abajo (degradado limpio).
@@ -322,14 +324,22 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <img id="m1-camion"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-camion.webp" alt="" style="opacity:0">
       <img id="m1-avion"     class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-avion.webp" alt="" style="opacity:0">
       <img id="m1-jaula1"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula1.webp" alt="" style="opacity:0">
-      <img id="m1-jaula2"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula2.webp" alt="" style="opacity:0">
-      <img id="m1-jaula3"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula3.webp" alt="" style="opacity:0">
-      <img id="m1-fondo"     class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fondo.webp" alt="" style="opacity:0;object-position:center bottom">
-      <img id="m1-fondobuzo" class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fondobuzo.webp" alt="" style="opacity:0;object-position:center bottom">
-      <div id="m1-luz" style="position:absolute;inset:0;opacity:0;pointer-events:none;mix-blend-mode:screen;z-index:45;background:radial-gradient(circle at 47% 77%, rgba(255,251,228,1) 0%, rgba(255,244,190,0.85) 3%, rgba(255,238,170,0.35) 8%, rgba(0,0,0,0) 16%), radial-gradient(ellipse 20% 24% at 51% 87%, rgba(255,236,172,0.34) 0%, rgba(255,232,160,0.10) 48%, rgba(0,0,0,0) 78%);"></div>
+      <img id="m1-c8"       class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola8.webp" alt="" style="opacity:0">
+      <img id="m1-c9"       class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola9.webp" alt="" style="opacity:0">
+      <img id="m1-c10b"     class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola10b.webp" alt="" style="opacity:0">
+      <img id="m1-c10"      class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola10.webp" alt="" style="opacity:0">
+      <img id="m1-c11"      class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola11.webp" alt="" style="opacity:0">
+      <img id="m1-c12"      class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola12.webp" alt="" style="opacity:0">
+      <img id="m1-c13"      class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola13.webp" alt="" style="opacity:0">
+      <img id="m1-jaula2"    class="sv-layer sv-mold" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula2.webp" alt="" style="opacity:0">
+      <img id="m1-jaula3"    class="sv-layer sv-mold" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula3.webp" alt="" style="opacity:0">
+      <img id="m1-fondo"     class="sv-layer sv-mold" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fondo.webp" alt="" style="opacity:0;object-position:center bottom">
+      <img id="m1-fondobuzo" class="sv-layer sv-mold" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fondobuzo.webp" alt="" style="opacity:0;object-position:center bottom">
+      <div id="m1-luz" style="position:absolute;inset:0;opacity:0;pointer-events:none;mix-blend-mode:screen;z-index:45;background:radial-gradient(circle at 56% 72%, rgba(255,251,228,0.85) 0%, rgba(255,244,190,0.55) 2%, rgba(255,238,170,0.18) 6%, rgba(0,0,0,0) 12%), radial-gradient(ellipse 14% 16% at 58% 78%, rgba(255,236,172,0.20) 0%, rgba(255,232,160,0.06) 48%, rgba(0,0,0,0) 78%);"></div>
     </div>
     <div class="sv-dark" id="sv-dark"></div>
     <div class="sv-black" id="sv-black"></div>
+      <div id="m1-flash" style="position:absolute;inset:0;opacity:0;pointer-events:none;z-index:49;transform:scale(0.2);will-change:opacity,transform;background:radial-gradient(circle at 56% 72%, rgba(255,252,235,1) 0%, rgba(255,245,200,0.85) 6%, rgba(255,238,170,0.35) 14%, rgba(255,238,170,0.08) 26%, rgba(0,0,0,0) 45%);"></div>
     <div class="sv-scrim" id="sv-scrim"></div>
     <div class="sv-hero" id="sv-hero">
       <div class="sv-kicker">Universidad Diego Portales</div>
@@ -583,13 +593,28 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
         mMontana1=g('m1-montana1'), mMontana2=g('m1-montana2'),
         mCamion=g('m1-camion'), mWellboat=g('m1-wellboat'), mAvion=g('m1-avion'),
         mJaula1=g('m1-jaula1'), mJaula2=g('m1-jaula2'), mJaula3=g('m1-jaula3'),
-        mFondo=g('m1-fondo'), mFondoBuzo=g('m1-fondobuzo'), mLuz=g('m1-luz'), dark=g('sv-dark');
+        mFondo=g('m1-fondo'), mFondoBuzo=g('m1-fondobuzo'), mLuz=g('m1-luz'), dark=g('sv-dark'),
+        mC8=g('m1-c8'), mC9=g('m1-c9'), mC10b=g('m1-c10b'), mC10=g('m1-c10'),
+        mC11=g('m1-c11'), mC12=g('m1-c12'), mC13=g('m1-c13'), mFlash=g('m1-flash');
+    /* Que set de assets usar NO depende del ancho sino de la PROPORCION del viewport:
+       la intro es un dibujo con encuadre fijo. Los m1-* son 9:16 y los d1-* 16:9; en una
+       ventana alta y angosta (escritorio a media pantalla, tablet vertical) el set 16:9
+       se recortaba ~65% a los lados con object-fit:cover -> jaulas gigantes, vehiculos sin
+       recorrido y transiciones duplicadas. Regla: viewport mas alto que ancho -> set 9:16. */
     var isMobileIntro = window.matchMedia('(max-width:767px)').matches;
+    if (window.innerHeight >= window.innerWidth) { isMobileIntro = true; }  // = (orientation:portrait) del CSS
     // OFICIAL: en escritorio la intro nueva (secuencia armada, 13 frames dq-*) es la de por defecto.
     // Via de escape para comparar/rollback la vieja (of-*): ?introd=old. En movil nunca aplica.
     var useJunio = isMobileIntro ? false : (location.search.indexOf('introd=old') === -1);
     var introSel = isMobileIntro ? '.sv-m' : (useJunio ? '.sv-ds' : '.sv-d');
-    (function(){ var im=document.querySelectorAll(introSel); for(var i=0;i<im.length;i++){ var ds=im[i].getAttribute('data-src'); if(ds){ im[i].src=ds; } } })();
+    var loadSel = function(sel){ var im=document.querySelectorAll(sel); for(var i=0;i<im.length;i++){ var ds=im[i].getAttribute('data-src'); if(ds){ im[i].src=ds; } } };
+    loadSel(introSel);
+    /* movil: la COLA nueva (frames de la maqueta) se carga diferida al acercarse (no en la
+       carga inicial: son ~670 KB). Con ?introm=old se sirve la cola vieja (m1-fondo*). */
+    var useMovNew = (location.search.indexOf('introm=old') === -1);
+    if (isMobileIntro) { if (!useMovNew) { loadSel('.sv-mold'); } }
+    var mqDone = false;
+    var loadMQ = function(){ if(mqDone) return; mqDone = true; loadSel('.sv-mq'); };
     var setL = function(node,o,x,y,s){ if(!node) return; if(o!==null) node.style.opacity=o; node.style.transform='translate('+x+'%,'+y+'%) scale('+s+')'; };
 
     function render(p) {
@@ -635,7 +660,8 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       beat(beat3,0.90,0.94,0.98,0.995);
     }
 
-    function renderMobile(p) {
+    /* COLA VIEJA (jun-2026): se conserva para rollback con ?introm=old. */
+    function renderMobileOld(p) {
       /* SUPERFICIE persistente: fiordos + montanas + superficie quedan ANCLADOS
          arriba toda la secuencia (cutaway continuo de la disenadora). Las capas
          submarinas (jaula/fondo) son transparentes sobre la linea de agua y se
@@ -692,6 +718,69 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       beatM(beat1,0.14,0.20,0.40,0.46);
       beatM(beat2,0.56,0.62,0.66,0.72);
       beatM(beat3,0.84,0.90,0.97,0.995);
+    }
+
+    /* ── INTRO MOVIL v35 — CAMARA FIJA + COLA CON LOS FRAMES DE LA MAQUETA (jul-2026) ──
+       La entrega de julio (frames 8-13, 9:16) trae la VISTA COMPUESTA ya dibujada:
+       superficie arriba, jaulas al medio, lecho abajo, todo en el mismo encuadre. Por eso
+       se elimina el "descenso de camara" de v15 (surfY/cageY), que resolvia por codigo lo
+       mismo y desplazaba las capas ~15% -> no calzaba con los frames (doble linea de agua).
+       Verificado: sin descenso, la composicion por capas coincide con los frames 6 y 7.
+       Mecanismo de la cola = el aprobado en escritorio v34: full-frames OPACOS que se funden
+       QUIETOS, cada uno cubriendo al anterior. Los frames traen alfa solo en el cielo, asi
+       que PROHIBIDO trasladarlos o escalarlos (queda el borde a la vista). Unica capa que se
+       traslada: m1-c10b, recorte del lecho con tope alfa difuminado (su borde es un degradado). */
+    function renderMobile(p) {
+      if (p > 0.25) { loadMQ(); }
+      /* SUPERFICIE: fija, sin descenso. Las capas de la cola la cubren por completo. */
+      setL(mMar1, 1, 0,0,1);
+      setL(mFiordo2, 1, 0,0,1); setL(mFiordo1, 1, 0,0,1); setL(mFiordo1b, 1, 0,0,1);
+      setL(mMontana1, 1, 0,0,1); setL(mMontana2, 1, 0,0,1);
+      /* VEHICULOS: camion -> barco -> avion (entran y salen, sin cambios respecto de v15) */
+      var ci=seg(p,0.10,0.18), co=seg(p,0.40,0.48);
+      setL(mCamion, ci*(1-co), lerp(-28,0,ease(ci))+lerp(0,-44,ease(co)),0,1);
+      var wi=seg(p,0.22,0.30), wo=seg(p,0.42,0.50);
+      setL(mWellboat, wi*(1-wo), lerp(36,0,ease(wi))+lerp(0,44,ease(wo)),0,1);
+      var ax=seg(p,0.30,0.42), aop=Math.min(seg(p,0.30,0.34), 1-seg(p,0.38,0.42));
+      setL(mAvion, aop, lerp(-64,72,ax),0,1);
+      /* INMERSION Y ESCAPE (frames 7-9 de la maqueta): encuadre FIJO, los tres coinciden
+         (medido: del 8 al 9 el desplazamiento es 0 y el error 0.8) -> cruces por opacidad. */
+      /* DESCENSO DE CAMARA: entre los frames 9 y 10 la maqueta BAJA la camara 9.5% de la
+         altura (medido por correlacion al pixel: dy=760px de 8000, error residual 1.07 ->
+         alineados son la MISMA imagen). El tono NO cambia (brightness
+         optimo 0.99). Fundir 9 y 10 sin reproducir ese movimiento daba la doble jaula
+         fantasma. Se traslada la escena hacia arriba mientras el lecho sube desde abajo y
+         cubre la franja que queda libre; recien con ambos QUIETOS entra el frame 10. */
+      var camY = lerp(0,-9.5, ease(seg(p,0.71,0.79)));
+      setL(mJaula1, seg(p,0.48,0.56), 0,camY,1);   // frame 7: la jaula llena
+      setL(mC8,     seg(p,0.58,0.64), 0,camY,1);   // frame 8: los peces empiezan a salir
+      setL(mC9,     seg(p,0.66,0.71), 0,camY,1);   // frame 9: el escape, con la estela
+      /* el lecho contaminado sube desde abajo (tope alfa difuminado -> su borde no deja
+         costura) y llega QUIETO antes que termine el descenso, tapando la franja inferior */
+      setL(mC10b, seg(p,0.71,0.74), 0, lerp(55,0, ease(seg(p,0.71,0.78))), 1);
+      setL(mC10,  seg(p,0.80,0.84), 0,0,1);     // frame 10 completo, quieto: cruce imperceptible
+      setL(mC11,  seg(p,0.85,0.875), 0,0,1);
+      setL(mC12,  seg(p,0.89,0.915), 0,0,1);    // frame 12: el buzo enciende la linterna
+      setL(mC13,  seg(p,0.932,0.945), 0,0,1);   // frame 13: el buzo, mas cerca (cruce corto:
+                                                //   los dos buzos estan en distinta posicion)
+      /* LINTERNA: enciende con el buzo y se mantiene (el haz va dibujado en el frame; el glow
+         le suma el parpadeo). DESTELLO: el haz gira hacia el espectador y llena la pantalla. */
+      if(mLuz) mLuz.style.opacity = seg(p,0.89,0.92);
+      if(mFlash){ var fl=ease(seg(p,0.965,0.985)); mFlash.style.opacity = Math.min(fl, 1-seg(p,0.988,0.998)); mFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
+      /* relleno de franjas: superficie -> profundo */
+      if(bgDeep) bgDeep.style.opacity = seg(p,0.66,0.82);
+      if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.66,0.82);
+      /* profundidad + cierre a negro (los frames ya son oscuros: el velo entra tarde y suave) */
+      if(dark) dark.style.opacity = seg(p,0.945,0.995);
+      var blackM=g('sv-black'); if(blackM) blackM.style.opacity = seg(p,0.975,1.0);
+      /* TEXTOS */
+      if(hero){ hero.style.opacity = 1-seg(p,0.02,0.09); hero.style.transform='translateY('+lerp(0,-40,seg(p,0.02,0.09))+'px)'; }
+      if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
+      if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
+      var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
+      beatM(beat1,0.14,0.20,0.40,0.46);
+      beatM(beat2,0.56,0.62,0.68,0.74);
+      beatM(beat3,0.90,0.94,0.975,0.995);
     }
 
     /* ── INTRO ESCRITORIO OFICIAL — PARALLAX POR CAPAS (replica el mecanismo del MOVIL) ──
@@ -792,11 +881,11 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       if(_fds) _fds.style.display='block';
       // .sv-frame-dq (frames) ya NO se usa en el parallax por capas -> queda oculto
     }
-    var activeRender = isMobileIntro ? renderMobile : (useJunio ? renderDesktopParallax : render);
+    var activeRender = isMobileIntro ? (useMovNew ? renderMobile : renderMobileOld) : (useJunio ? renderDesktopParallax : render);
 
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
-    var SCREENS = isMobileIntro ? 13 : (useJunio ? 17 : 6);  // escritorio parallax: 17 (cola con frames 11-15)
+    var SCREENS = isMobileIntro ? (useMovNew ? 15 : 13) : (useJunio ? 17 : 6);  // movil v35: 15 (cola con frames 8-13); escritorio parallax: 17
     // Alto del escenario = el viewport visible mas GRANDE visto (solo crece, nunca encoge).
     // En movil la barra de URL colapsa al scrollear y el viewport CRECE; si el escenario
     // solo crece, nunca queda corto (sin franja blanca abajo) ni oscila (sin tiriton).
