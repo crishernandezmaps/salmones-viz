@@ -4,7 +4,7 @@ _Actualizado 2026-08-20._
 
 ## Estado
 
-- **Intro MOVIL v36 (2026-08-20, post 70 slug `salmones-movil-v36`)**: cola rehecha con los FRAMES de la maqueta de julio
+- **Intro MOVIL v39 (2026-08-20, post 70 slug `salmones-movil-v39`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
   (`final/intro_movil/SCROLL INTRO/8..13.png` -> `m1-cola8..13.webp` + `m1-cola10b.webp`).
   Antes eran dos imagenes sueltas de junio (`m1-fondo`/`m1-fondobuzo`, ahora `.sv-mold`).
   `SCREENS` movil 13 -> 16. Rollback: **`?introm=old`** (cola de junio intacta).
@@ -35,7 +35,18 @@ _Actualizado 2026-08-20._
        flotando bajo las balsas.
     3. **Buzo**: c12/c13 pasan de 0.017 a ~0.05 de scroll entre si (c12 0.885-0.91,
        c13 0.955-0.968); destello 0.978-0.991, negro 0.985-1.0.
-    4. **Glow en el FOCO real**: medido (48.7%, 65.4%) en el frame 12 y (61.8%, 66.1%) en el
+    4. **La JAULA EMERGE DEL FONDO** (v39, lo APROBADO): mismo mecanismo que escritorio
+       (`setL(dJ1, ..., lerp(55,0,j1rise))`). En movil NO se puede trasladar el frame 7 entero
+       (trae las montanas en el tercio superior: quedarian flotando bajo el agua), asi que sube
+       **`m1-sub7.webp`** (40 KB): la mitad submarina del frame 7, cortada JUSTO bajo la linea
+       de espuma (43.6%) y sobre la jaula del escape (44.8%) — ventana de 1 punto —, con el
+       tope en degradado alfa. Fade-in 0.50-0.545 + ascenso `lerp(45,0,ease(seg(0.50,0.645)))`.
+       Antes sube, **`m1-agua7.webp`** iguala el AGUA (0.44-0.52): el frame 7 no solo agrega la
+       jaula, tambien aclara toda la escena (de 128 a 165 de brillo lejos de la jaula), y sin
+       igualarla la capa que sube arrastra un escalon de tono en su borde.
+       DESCARTADOS en el camino: fundir el frame 7 (jaula translucida), revelarlo con mascara
+       (estatico + costura de tono a lo ancho de la pantalla) y la franja de luz `#m1-wipe`.
+    5. **Glow en el FOCO real**: medido (48.7%, 65.4%) en el frame 12 y (61.8%, 66.1%) en el
        13. Un % FIJO en CSS no sirve — `object-fit:cover` recorta distinto en cada viewport y
        el mismo % cae en otro punto del dibujo. `assetToStage()` mapea con la geometria real
        de cover (assets 1242x2208), el foco VIAJA del 12 al 13 durante el cruce (repintado
@@ -75,9 +86,30 @@ _Actualizado 2026-08-20._
   `sobreproduccion.json` e **inician la navegacion** (posiciones 1-5 + seleccion inicial).
   Ficha nuevo formato, paginacion por centro, capa ECMPO quitada.
 
+## Que intro se sirve (verificado el 2026-08-20 en el post en vivo)
+
+| Viewport | Rama | SCREENS | Assets |
+|---|---|---|---|
+| 1600x900 / 1440x900 / 1280x800 | ESCRITORIO | 17 | d1:17, m1:0 |
+| iPad horizontal 1180x820 | ESCRITORIO | 17 | d1:17, m1:0 |
+| iPhone horizontal 844x390 | ESCRITORIO | 17 | d1:17, m1:0 |
+| Ventana angosta 980x1600 | MOVIL | 16 | m1:19, d1:0 |
+| iPhone 390x844 / 430x932 | MOVIL | 16 | m1:19, d1:0 |
+| iPad vertical 820x1180 | MOVIL | 16 | m1:19, d1:0 |
+
+Cada rama carga SOLO sus assets. **La intro de escritorio quedo IDENTICA a la v34**: comparada
+pixel a pixel contra la captura de la v34 original a 1600x900, diferencia media **0.000** en
+p=0.30, 0.45 y 0.52.
+
+**GOTCHA DE QA (headless):** si queda una instancia de Chrome headless colgada, el script se
+conecta a ELLA por el puerto de depuracion y hereda SUS metricas -> el diagnostico reporta un
+viewport que no pediste (756x469) y la rama equivocada. `pkill -f "remote-debugging-port=922"`
+y borrar el `--user-data-dir` ANTES de cada corrida.
+
 ## Pendientes
 - QA de la CLIENTA a la intro de escritorio v34 (cris ya la aprobo el 2026-08-14).
-- QA de cris + la clienta a la intro MOVIL v35 en dispositivo real.
+- QA de la CLIENTA a la intro MOVIL v39 en dispositivo real (cris ya la aprobo el 2026-08-20).
+- Opcional: si se quiere que un TELEFONO en horizontal reciba igual la version movil (hoy recibe la de escritorio, correcto en encuadre pero descarga los assets 16:9), agregar una condicion de ancho.
 - Escritorio v34 NO se toco en v35 (verificado: identico a 1600x900, diferencia media 0.000
   en p=0.45; el residuo 0.16 en 0.30/0.52 son los vehiculos en movimiento).
 - Opcional si cris lo pide: quitar tambien la jaula del frame 12 (mismo parche de agua).
