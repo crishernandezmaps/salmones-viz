@@ -1,11 +1,37 @@
 # TODO — Salmones Viz
 
-_Actualizado 2026-08-14._
+_Actualizado 2026-08-20._
 
 ## Estado
 
-- **Intro movil (post 70, slug `salmones-movil-vN`)**: aprobada, iterando detalles. NO tocar
-  `renderMobile()` ni `.sv-m`.
+- **Intro MOVIL v35 (2026-08-20)**: cola rehecha con los FRAMES de la maqueta de julio
+  (`final/intro_movil/SCROLL INTRO/8..13.png` -> `m1-cola8..13.webp` + `m1-cola10b.webp`).
+  Antes eran dos imagenes sueltas de junio (`m1-fondo`/`m1-fondobuzo`, ahora `.sv-mold`).
+  `SCREENS` movil 13 -> 15. Rollback: **`?introm=old`** (cola de junio intacta).
+  - **FUERA el descenso por codigo de v15** (`surfY -20%` / `cageY -12%`): resolvia por JS lo
+    que la maqueta trae dibujado y desplazaba las capas ~15% -> no calzaban con los frames.
+    Medido: sin descenso, las capas coinciden con los frames 6 y 7 (error 4.7 y 3.2).
+  - **Descenso de camara REAL entre los frames 9 y 10: -9.5%** (correlacion al pixel,
+    dy=760 de 8000, error residual 1.07 -> alineados son la MISMA imagen; el tono NO cambia,
+    brightness optimo 0.99). Se reproduce con `camY` sobre jaula1/c8/c9 mientras `c10b`
+    (lecho, tope alfa difuminado) sube y cubre la franja inferior; el frame 10 completo entra
+    con todo QUIETO. Fundir 9 y 10 sin ese movimiento = jaula duplicada y escena lavada.
+  - Cola v35: j1 0.48-0.56 -> c8 0.58-0.64 -> c9 0.66-0.71 -> [camY 0.71-0.79 + c10b sube
+    0.71-0.78] -> c10 0.80-0.84 -> c11 0.85-0.875 -> c12 0.89-0.915 (+luz) -> c13 0.932-0.945
+    -> destello 0.965-0.985 -> negro 0.975-1.0.
+  - Glow `#m1-luz` reposicionado a 56%/72% y REDUCIDO (el haz va dibujado en los frames 12/13;
+    el glow solo aporta el parpadeo). `#m1-flash` va FUERA de `.sv-frame-m` (z-index local:
+    adentro quedaba bajo `.sv-dark`/`.sv-black` y el destello no se veia).
+  - La cola nueva carga DIFERIDA (`.sv-mq`, `loadMQ()` con p>0.25): ~670 KB fuera de la
+    carga inicial.
+- **Encuadre por PROPORCION, no por ancho (2026-08-20)**: `isMobileIntro` es
+  `max-width:767px` **O** `innerHeight >= innerWidth`, y el CSS usa el mismo criterio
+  (`@media (max-width:767px), (orientation:portrait)` + el bloque de escritorio con
+  `and (orientation:landscape)`). Motivo: en una ventana alta y angosta (~1000px de ancho)
+  se servian los `d1-*` 16:9 y `object-fit:cover` recortaba ~65% del ancho -> jaulas
+  gigantes, vehiculos sin recorrido, transiciones duplicadas (reporte de cris 2026-08-20).
+  **CSS y JS deben moverse JUNTOS**: si el JS elige la rama movil y el CSS no la muestra,
+  la intro queda en blanco.
 - **Intro de ESCRITORIO = PARALLAX POR CAPAS + COLA con FRAMES FINALES** (`renderDesktopParallax`,
   capas `d1-*`, ids `ds-*`). Post 70 slug **`salmones-movil-v34`** (2026-08-14) — **APROBADA POR
   CRIS para escritorio**. Rollback intro vieja: `?introd=old`; cola v31 exacta: commit `a4077c7`.
@@ -29,6 +55,9 @@ _Actualizado 2026-08-14._
 
 ## Pendientes
 - QA de la CLIENTA a la intro de escritorio v34 (cris ya la aprobo el 2026-08-14).
+- QA de cris + la clienta a la intro MOVIL v35 en dispositivo real.
+- Escritorio v34 NO se toco en v35 (verificado: identico a 1600x900, diferencia media 0.000
+  en p=0.45; el residuo 0.16 en 0.30/0.52 son los vehiculos en movimiento).
 - Opcional si cris lo pide: quitar tambien la jaula del frame 12 (mismo parche de agua).
 - QA del mapa 2 en navegador real: confirmar que la navegacion parte en los 5 destacados.
 - Limpieza post-QA: eliminar set viejo `of-*`/`render()` (rollback), el bloque DOM muerto
