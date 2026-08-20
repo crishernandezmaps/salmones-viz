@@ -324,6 +324,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <img id="m1-camion"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-camion.webp" alt="" style="opacity:0">
       <img id="m1-avion"     class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-avion.webp" alt="" style="opacity:0">
       <img id="m1-agua7"    class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-agua7.webp" alt="" style="opacity:0">
+      <img id="m1-sub7"     class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-sub7.webp" alt="" style="opacity:0">
       <img id="m1-jaula1"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula1.webp" alt="" style="opacity:0">
       <img id="m1-c8"       class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola8.webp" alt="" style="opacity:0">
       <img id="m1-c9"       class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola9.webp" alt="" style="opacity:0">
@@ -596,7 +597,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
         mJaula1=g('m1-jaula1'), mJaula2=g('m1-jaula2'), mJaula3=g('m1-jaula3'),
         mFondo=g('m1-fondo'), mFondoBuzo=g('m1-fondobuzo'), mLuz=g('m1-luz'), dark=g('sv-dark'),
         mC8=g('m1-c8'), mC9=g('m1-c9'), mC10b=g('m1-c10b'), mC10=g('m1-c10'),
-        mC11=g('m1-c11'), mC12=g('m1-c12'), mC13=g('m1-c13'), mFlash=g('m1-flash'), mAgua7=g('m1-agua7');
+        mC11=g('m1-c11'), mC12=g('m1-c12'), mC13=g('m1-c13'), mFlash=g('m1-flash'), mAgua7=g('m1-agua7'), mSub7=g('m1-sub7');
     /* Que set de assets usar NO depende del ancho sino de la PROPORCION del viewport:
        la intro es un dibujo con encuadre fijo. Los m1-* son 9:16 y los d1-* 16:9; en una
        ventana alta y angosta (escritorio a media pantalla, tablet vertical) el set 16:9
@@ -789,45 +790,43 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          optimo 0.99). Fundir 9 y 10 sin reproducir ese movimiento daba la doble jaula
          fantasma. Se traslada la escena hacia arriba mientras el lecho sube desde abajo y
          cubre la franja que queda libre; recien con ambos QUIETOS entra el frame 10. */
-      var camY = lerp(0,-9.5, ease(seg(p,0.755,0.82)));
+      var camY = lerp(0,-9.5, ease(seg(p,0.775,0.835)));
       /* La jaula NO se funde: se REVELA de arriba hacia abajo. Los frames 6 y 7 son
          identicos arriba del 40% (medido: diferencia 0.00) y solo difieren donde esta la
          jaula -> recortando por encima del 40% el revelado no deja costura, y se evita el
          fantasma translucido de la jaula flotando bajo las balsas (feedback cris). */
-      /* DOS PASOS, para que el frente NO deje una linea cruzando la pantalla:
-         (1) el AGUA del frame 7 entra primero. El frame 7 no solo agrega la jaula: aclara el
-             agua de toda la escena (medido lejos de la jaula, el brillo pasa de 128 a 165 en
-             la franja media). Cortar esa diferencia con una mascara dejaba un ESCALON DE TONO
-             a lo ancho de la pantalla — las dos lineas que marco cris. `m1-agua7` es el frame 7
-             con la jaula borrada, asi que se puede fundir entero: cambia el tono, sin jaula
-             translucida y sin costura.
-         (2) recien entonces baja el FRENTE que descubre la jaula. Como el fondo ya es el mismo
-             dibujo, el borde de la mascara no separa dos aguas distintas: no se ve linea. */
+      /* LA JAULA EMERGE DEL FONDO — mismo mecanismo que la intro de ESCRITORIO
+         (`renderDesktopParallax`: `setL(dJ1, ..., lerp(55,0,j1rise))`): arranca abajo y SUBE,
+         opaca. En movil no se puede trasladar el frame 7 entero (trae las montanas dibujadas
+         en el tercio superior: quedarian flotando bajo el agua), asi que sube `m1-sub7`, que
+         es la mitad submarina del frame 7 recortada JUSTO bajo la linea de espuma (43.6%) y
+         sobre la jaula del escape (44.8%), con el tope en degradado alfa -> su borde no deja
+         costura mientras sube.
+         Antes, `m1-agua7` (el frame 7 con la jaula borrada) iguala el AGUA: el frame 7 no solo
+         agrega la jaula, tambien aclara el agua de toda la escena (medido lejos de la jaula:
+         de 128 a 165 de brillo). Igualarla primero evita que la capa que sube arrastre un
+         escalon de tono en su borde. */
       setL(mAgua7, seg(p,0.44,0.52), 0,camY,1);
-      var rev = ease(seg(p,0.52,0.64));
-      var front = 34 + 70*rev;
-      if (mJaula1) {
-        var mk = 'linear-gradient(to bottom, #000 0%, #000 '+front.toFixed(2)+'%, rgba(0,0,0,0) '+(front+3).toFixed(2)+'%)';
-        mJaula1.style.webkitMaskImage = mk;
-        mJaula1.style.maskImage = mk;
-      }
-      setL(mJaula1, rev > 0 ? 1 : 0, 0,camY,1);    // frame 7 completo, revelado por el frente
-      if (mJaula1) { if (p > 0.70) { mJaula1.style.webkitMaskImage='none'; mJaula1.style.maskImage='none'; } }
-      setL(mC8,     seg(p,0.665,0.705), 0,camY,1);   // frame 8: los peces empiezan a salir
-      setL(mC9,     seg(p,0.72,0.745), 0,camY,1);  // frame 9: el escape, con la estela
+      var j7rise = ease(seg(p,0.50,0.645));
+      setL(mSub7, seg(p,0.50,0.545), 0, lerp(45,0,j7rise)+camY, 1);
+      // el frame 7 COMPLETO se funde quieto al final: deja el estado exacto antes del frame 8
+      // (agua7 + sub7 ya lo reconstruyen, asi que el cruce es invisible)
+      setL(mJaula1, seg(p,0.65,0.675), 0,camY,1);
+      setL(mC8,     seg(p,0.695,0.725), 0,camY,1);   // frame 8: los peces empiezan a salir
+      setL(mC9,     seg(p,0.74,0.765), 0,camY,1);  // frame 9: el escape, con la estela
       /* el lecho contaminado sube desde abajo (tope alfa difuminado -> su borde no deja
          costura) y llega QUIETO antes que termine el descenso, tapando la franja inferior */
-      setL(mC10b, seg(p,0.755,0.785), 0, lerp(55,0, ease(seg(p,0.755,0.815))), 1);
-      setL(mC10,  seg(p,0.83,0.862), 0,0,1);     // frame 10 completo, quieto: cruce imperceptible
-      setL(mC11,  seg(p,0.872,0.892), 0,0,1);
-      setL(mC12,  seg(p,0.90,0.922), 0,0,1);    // frame 12: el buzo enciende la linterna
+      setL(mC10b, seg(p,0.775,0.80), 0, lerp(55,0, ease(seg(p,0.775,0.83))), 1);
+      setL(mC10,  seg(p,0.845,0.872), 0,0,1);     // frame 10 completo, quieto: cruce imperceptible
+      setL(mC11,  seg(p,0.882,0.90), 0,0,1);
+      setL(mC12,  seg(p,0.908,0.928), 0,0,1);    // frame 12: el buzo enciende la linterna
       /* el buzo se acerca RECIEN despues de un tramo largo con el frame 12 (antes eran 0.017
          de scroll y "aparecia muy rapido el grande"): ahora son ~0.05, casi una pantalla */
       setL(mC13,  seg(p,0.955,0.968), 0,0,1);   // frame 13: el buzo, mas cerca (cruce corto:
                                                 //   los dos buzos estan en distinta posicion)
       /* LINTERNA: el glow se ancla al FOCO del frame vigente (12 -> 13), no a un % fijo */
       setGlow(seg(p,0.955,0.968));
-      if(mLuz) mLuz.style.opacity = seg(p,0.90,0.918);
+      if(mLuz) mLuz.style.opacity = seg(p,0.908,0.926);
       if(mFlash){ var fl=ease(seg(p,0.978,0.991)); mFlash.style.opacity = Math.min(fl, 1-seg(p,0.993,0.999)); mFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
       /* relleno de franjas: superficie -> profundo */
       if(bgDeep) bgDeep.style.opacity = seg(p,0.66,0.82);
@@ -841,7 +840,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
       var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
       beatM(beat1,0.14,0.20,0.40,0.46);
-      beatM(beat2,0.575,0.635,0.70,0.755);
+      beatM(beat2,0.585,0.645,0.72,0.775);
       beatM(beat3,0.885,0.925,0.978,0.995);
     }
 
