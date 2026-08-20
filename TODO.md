@@ -4,10 +4,10 @@ _Actualizado 2026-08-20._
 
 ## Estado
 
-- **Intro MOVIL v35 (2026-08-20)**: cola rehecha con los FRAMES de la maqueta de julio
+- **Intro MOVIL v36 (2026-08-20, post 70 slug `salmones-movil-v36`)**: cola rehecha con los FRAMES de la maqueta de julio
   (`final/intro_movil/SCROLL INTRO/8..13.png` -> `m1-cola8..13.webp` + `m1-cola10b.webp`).
   Antes eran dos imagenes sueltas de junio (`m1-fondo`/`m1-fondobuzo`, ahora `.sv-mold`).
-  `SCREENS` movil 13 -> 15. Rollback: **`?introm=old`** (cola de junio intacta).
+  `SCREENS` movil 13 -> 16. Rollback: **`?introm=old`** (cola de junio intacta).
   - **FUERA el descenso por codigo de v15** (`surfY -20%` / `cageY -12%`): resolvia por JS lo
     que la maqueta trae dibujado y desplazaba las capas ~15% -> no calzaban con los frames.
     Medido: sin descenso, las capas coinciden con los frames 6 y 7 (error 4.7 y 3.2).
@@ -24,6 +24,23 @@ _Actualizado 2026-08-20._
     adentro quedaba bajo `.sv-dark`/`.sv-black` y el destello no se veia).
   - La cola nueva carga DIFERIDA (`.sv-mq`, `loadMQ()` con p>0.25): ~670 KB fuera de la
     carga inicial.
+  - **v36 (feedback de cris sobre la v35), los cuatro medidos antes de tocar:**
+    1. **`m1-wellboat` va DETRAS de `m1-fiordo2`** en el DOM y emerge desde el cerro derecho
+       (ese asset cubre 37-98% de la banda del barco a partir de x 80%). Antes iba delante con
+       un recorrido de +36% y navegaba POR ENCIMA de la tierra. Recorrido corto (+15%). La
+       posicion final NO se toca: el asset coincide exacto con el frame 3 (bbox identico).
+    2. **La jaula (frame 7) se REVELA, no se funde**: frames 6 y 7 son IDENTICOS arriba del
+       40% (diferencia 0.00) -> mascara `linear-gradient` con borde difuminado que baja del
+       38% al 100%; se limpia al entrar el frame 8. Antes el fade la dejaba translucida
+       flotando bajo las balsas.
+    3. **Buzo**: c12/c13 pasan de 0.017 a ~0.05 de scroll entre si (c12 0.885-0.91,
+       c13 0.955-0.968); destello 0.978-0.991, negro 0.985-1.0.
+    4. **Glow en el FOCO real**: medido (48.7%, 65.4%) en el frame 12 y (61.8%, 66.1%) en el
+       13. Un % FIJO en CSS no sirve — `object-fit:cover` recorta distinto en cada viewport y
+       el mismo % cae en otro punto del dibujo. `assetToStage()` mapea con la geometria real
+       de cover (assets 1242x2208), el foco VIAJA del 12 al 13 durante el cruce (repintado
+       por pasos, no por frame) y se repinta en `sizeIntro()` al cambiar el tamano. El
+       destello nace del mismo punto.
 - **Encuadre por PROPORCION, no por ancho (2026-08-20)**: `isMobileIntro` es
   `max-width:767px` **O** `innerHeight >= innerWidth`, y el CSS usa el mismo criterio
   (`@media (max-width:767px), (orientation:portrait)` + el bloque de escritorio con
@@ -47,6 +64,11 @@ _Actualizado 2026-08-20._
     c15s buzo cerca 0.945 -> flash 0.965 -> negro 0.975-1.0. Del 13 en adelante NO hay jaula.
   - Capas viejas `ds-fondo`/`ds-fondobuzo` fuera del DOM (assets `d1-fondo-mar*` huerfanos en
     Pages, limpiables).
+- **Mapa 2: capa "Concentracion de centros salmoneros" (heatmap) APAGADA el 2026-08-20**
+  (pedido de cris). Esta **comentada, no borrada**, en tres puntos de `MapaConflicto.jsx`: el
+  bloque `// ── Heatmap ──` (source `all-centros` + layer `centros-heat`), la linea de
+  `centros-heat` en `toggleLayer` y su entrada en la leyenda. Para reactivarla, descomentar
+  los tres. Verificado en el bundle: 0 ocurrencias de `centros-heat`/`heatmap`/`Concentraci`.
 - **Mapa 2 (`?embed=conflicto`)**: reconstruido desde `Desktop/Mapa  2.0.xlsx` (36 centros
   sancionados); desde 2026-07-20 los **5 casos destacados** de `Desktop/Mapa v3 13.07.26.xlsx`
   (filas amarillas: 102833, 110818, 104040, 110259, 110228) van `destacado:true` en
