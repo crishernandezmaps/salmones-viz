@@ -159,6 +159,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 .story-vignettes__item--sage { background:var(--story-color-sage) !important; }
 
 /* Credits */
+.story-draft-note { max-width:760px; margin:32px auto 0; padding:16px 20px; border:1px dashed #b08a5a; border-radius:6px; background:#fdf6ea; color:#6b4f2a; font-size:14px; line-height:1.55; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; }
 .story-credits { background:var(--story-color-deep); color:rgba(255,255,255,0.7); padding:clamp(3.5rem,9vh,5.5rem) clamp(1.5rem,5vw,3rem); width:100% !important; }
 .story-credits__inner { max-width:var(--story-max-text); margin:0 auto; padding:0 clamp(1.4rem,5vw,2rem); }
 .story-credits .story-kicker { font-family:var(--story-font-heading); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:3.5px; color:var(--story-color-teal); margin:0 0 0.9rem; }
@@ -356,6 +357,15 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 </section>
 <!-- /wp:html -->
 
+<!-- ============================================================== -->
+<!-- AVISO DE MAQUETA — BORRAR ESTE BLOQUE COMPLETO ANTES DE PUBLICAR -->
+<!-- ============================================================== -->
+<!-- wp:html -->
+<div class="story-draft-note">
+  <strong>Maqueta con textos provisionales.</strong> Todo el texto de este articulo es de relleno: sirve para ver la diagramacion con la extension real del reportaje. Cada bloque esta marcado en el editor con un comentario (TEXTO PROVISIONAL, TITULAR PROVISIONAL, CITA PROVISIONAL) y las cifras por confirmar aparecen como <b>XX</b>. Al reemplazar los textos, borrar tambien este aviso.
+</div>
+<!-- /wp:html -->
+
 <!-- wp:html -->
 <section class="story-data">
   <div class="story-data__grid">
@@ -367,18 +377,28 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 </section>
 <!-- /wp:html -->
 
+<!-- TEXTO PROVISIONAL: reemplazar por el texto final del reportaje -->
 <!-- wp:group {"className":"story-text story-text--dropcap scroll-fade"} -->
 <div class="wp-block-group story-text story-text--dropcap scroll-fade">
 <!-- wp:paragraph -->
-<p>Desde mediados de la decada de 1980, la industria salmonera en Chile ha experimentado un crecimiento sin precedentes. Lo que comenzo como un punado de concesiones en la Region de Los Lagos se ha expandido hasta convertirse en una de las principales industrias exportadoras del pais, con mas de 1.300 centros de cultivo distribuidos en tres regiones del sur de Chile.</p>
+<p>En algun punto de los canales del sur, una estructura de jaulas flota amarrada al fondo. Desde el aire parece un tablero geometrico sobre el agua quieta. Bajo la superficie, en cambio, hay cientos de miles de salmones girando en circulos dentro de una malla que baja varios metros hacia la oscuridad. Escenas como esta se repiten mas de mil veces a lo largo de tres regiones, y llevan cuatro decadas multiplicandose.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Chile es hoy el segundo mayor productor de salmon del mundo, solo detras de Noruega. Pero esta expansion no ha estado exenta de conflictos: denuncias ambientales, sobreproduccion sistematica y operaciones dentro de areas marinas protegidas han marcado el camino de una industria que mueve miles de millones de dolares al ano.</p>
+<p>Desde mediados de la decada de 1980, la industria salmonera en Chile ha experimentado un crecimiento sin precedentes. Lo que comenzo como un punado de concesiones en la Region de Los Lagos se ha expandido hasta convertirse en una de las principales industrias exportadoras del pais, con 1.346 centros de cultivo distribuidos entre Los Lagos, Aysen y Magallanes.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Chile es hoy el segundo mayor productor de salmon del mundo, solo detras de Noruega. Pero esa expansion no ha estado exenta de conflictos: denuncias ambientales, procesos por producir por sobre lo autorizado y operaciones en el borde mismo de las areas protegidas han marcado el camino de una industria que exporta por miles de millones de dolares al ano.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Este reportaje reconstruye ese avance a partir de los registros publicos de los organismos que fiscalizan la actividad. Los mapas que acompanan el texto permiten recorrer, concesion por concesion, donde se instalo la industria, que figuras de proteccion quedaron a su lado y que ocurrio cuando la produccion supero los limites que el propio Estado habia autorizado.</p>
 <!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
+<!-- IMAGENES PROVISIONALES -->
 <!-- wp:columns {"className":"story-vignettes"} -->
 <div class="wp-block-columns story-vignettes">
 <!-- wp:column {"className":"story-vignettes__item story-vignettes__item--white scroll-fade-left"} -->
@@ -399,6 +419,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 </div>
 <!-- /wp:columns -->
 
+<!-- TITULAR PROVISIONAL -->
 <!-- wp:group {"className":"story-heading scroll-fade"} -->
 <div class="wp-block-group story-heading scroll-fade">
 <!-- wp:paragraph {"className":"story-kicker"} -->
@@ -415,36 +436,79 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 </div>
 <!-- /wp:group -->
 
+<!-- TEXTO PROVISIONAL: reemplazar por el texto final del reportaje -->
+<!-- wp:group {"className":"story-text scroll-fade"} -->
+<div class="wp-block-group story-text scroll-fade">
+<!-- wp:paragraph -->
+<p>La primera concesion salmonera del sur de Chile se otorgo cuando la actividad todavia era una apuesta incierta. Cuatro decadas despues, el mapa de los canales patagonicos esta cubierto por un entramado de poligonos que avanza de norte a sur siguiendo el mismo patron: primero Los Lagos, despues Aysen y, en los ultimos anos, Magallanes.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>El mapa que sigue permite seguir ese avance ano a ano. Cada punto que aparece corresponde a una concesion otorgada, y el ritmo con que se encienden en la pantalla es tambien el ritmo con que la industria fue ocupando el borde costero del sur.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
 <!-- wp:html -->
 <section class="story-viz">
   <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=timeline&v=10" width="100%" height="100%" frameborder="0" loading="lazy" allowfullscreen title="Timeline"></iframe>
 </section>
 <!-- /wp:html -->
 
+<!-- TEXTO PROVISIONAL: reemplazar por el texto final del reportaje -->
 <!-- wp:group {"className":"story-text scroll-fade"} -->
 <div class="wp-block-group story-text scroll-fade">
 <!-- wp:paragraph -->
-<p>Los datos revelan periodos de expansion particularmente intensos. En la Region de Los Lagos, el numero de concesiones se multiplico significativamente durante la decada de 1990 y principios de los 2000. Aysen, en tanto, experimento su mayor crecimiento a partir del ano 2000, cuando la industria comenzo a buscar nuevas aguas tras la saturacion de Los Lagos.</p>
+<p>Los datos revelan periodos de expansion particularmente intensos. En la Region de Los Lagos, el numero de concesiones se multiplico durante la decada de 1990 y los primeros anos de los 2000, hasta que la saturacion de los fiordos interiores y la crisis sanitaria del virus ISA obligaron a la industria a mirar mas al sur.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>Magallanes representa la frontera mas reciente de expansion. Aunque su crecimiento ha sido mas gradual, la region ha visto un aumento sostenido de concesiones en la ultima decada, generando nuevos debates sobre el equilibrio entre desarrollo economico y proteccion ambiental en zonas pristinas.</p>
+<p>Aysen experimento su mayor crecimiento a partir del ano 2000. La region ofrecia aguas mas frias, canales poco intervenidos y una fiscalizacion que debia cubrir un territorio inmenso con recursos acotados. En pocos anos concentro XX centros de cultivo, buena parte de ellos en zonas de dificil acceso.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Magallanes representa la frontera mas reciente. Aunque su crecimiento ha sido mas gradual, la region ha recibido una atencion creciente por parte de la industria, que ve en sus canales el ultimo espacio disponible para seguir expandiendose. Es tambien donde las figuras de proteccion cubren una mayor proporcion del territorio, lo que anticipa el conflicto que recorre el resto de este reportaje.</p>
 <!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
-<!-- wp:group {"className":"story-heading story-heading--dark scroll-fade"} -->
-<div class="wp-block-group story-heading story-heading--dark scroll-fade">
+<!-- CITA PROVISIONAL: reemplazar por una cita real del reportaje -->
+<!-- wp:group {"className":"story-quote scroll-fade"} -->
+<div class="wp-block-group story-quote scroll-fade">
+<!-- wp:quote -->
+<blockquote class="wp-block-quote"><!-- wp:paragraph -->
+<p>Aqui va una cita textual de la fuente entrevistada: un investigador, un funcionario del servicio fiscalizador o un dirigente de la comunidad afectada. Conviene que sea una frase corta y con voz propia, no una explicacion tecnica.</p>
+<!-- /wp:paragraph --><cite>Nombre de la fuente, cargo</cite></blockquote>
+<!-- /wp:quote -->
+</div>
+<!-- /wp:group -->
+
+<!-- TITULAR PROVISIONAL -->
+<!-- wp:group {"className":"story-heading scroll-fade"} -->
+<div class="wp-block-group story-heading scroll-fade">
 <!-- wp:paragraph {"className":"story-kicker"} -->
 <p class="story-kicker">Capitulo 2</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:heading -->
-<h2 class="wp-block-heading">Salmones en zonas protegidas</h2>
+<h2 class="wp-block-heading">Donde la industria toca lo protegido</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"story-subtitle"} -->
-<p class="story-subtitle">Concesiones activas dentro de areas marinas protegidas, denuncias y procesos sancionatorios.</p>
+<p class="story-subtitle">Concesiones activas junto a areas marinas protegidas, denuncias y procesos sancionatorios.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- TEXTO PROVISIONAL: reemplazar por el texto final del reportaje -->
+<!-- wp:group {"className":"story-text scroll-fade"} -->
+<div class="wp-block-group story-text scroll-fade">
+<!-- wp:paragraph -->
+<p>El borde costero del sur de Chile no es un espacio vacio. Sobre el mismo territorio conviven las concesiones de la industria, las areas marinas protegidas creadas por el Estado, los parques y reservas del sistema SNASPE y los espacios costeros marinos de pueblos originarios. En el papel, cada figura responde a una logica distinta. En el mapa, se superponen.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Al cruzar los registros geoespaciales del servicio de pesca con la cartografia de areas protegidas del Ministerio del Medio Ambiente, aparecen concesiones activas dentro o inmediatamente adyacentes a zonas que deberian estar resguardadas. El siguiente mapa permite recorrer esos casos uno por uno.</p>
 <!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
@@ -455,28 +519,35 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 </section>
 <!-- /wp:html -->
 
+<!-- TEXTO PROVISIONAL: reemplazar por el texto final del reportaje -->
+<!-- wp:group {"className":"story-text scroll-fade"} -->
+<div class="wp-block-group story-text scroll-fade">
+<!-- wp:paragraph -->
+<p>Los procesos sancionatorios por producir mas toneladas de salmon que las autorizadas son especialmente relevantes cuando ocurren cerca de una figura de proteccion. El exceso de biomasa en el agua se traduce en mayor carga organica sobre el fondo marino, mas uso de antibioticos y un riesgo mas alto de escapes, tres efectos que no se detienen en el limite administrativo de la concesion.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>De los centros revisados, XX registran procesos abiertos por este motivo y XX acumulan mas de una infraccion en el periodo analizado. En los casos destacados del mapa, la diferencia entre lo autorizado y lo producido alcanzo las XX toneladas, sin que ello implicara la suspension de las operaciones.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>El patron que emerge no es el de un incidente aislado. Los casos se distribuyen a lo largo de las tres regiones y se repiten en distintas empresas del sector, lo que sugiere un problema estructural antes que una sucesion de excepciones.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- CITA PROVISIONAL: reemplazar por una cita real del reportaje -->
 <!-- wp:group {"className":"story-quote scroll-fade"} -->
 <div class="wp-block-group story-quote scroll-fade">
 <!-- wp:quote -->
 <blockquote class="wp-block-quote"><!-- wp:paragraph -->
-<p>Al cruzar datos geoespaciales de SERNAPESCA con las areas marinas protegidas, se identificaron concesiones activas dentro de zonas que deberian estar resguardadas.</p>
-<!-- /wp:paragraph --><cite>Investigacion UDP-Tremen, 2026</cite></blockquote>
+<p>Segunda cita del reportaje. Puede ser la respuesta de la empresa o del organismo fiscalizador a los hallazgos descritos mas arriba, para equilibrar la voz de la investigacion con la de los actores aludidos.</p>
+<!-- /wp:paragraph --><cite>Nombre de la fuente, cargo</cite></blockquote>
 <!-- /wp:quote -->
 </div>
 <!-- /wp:group -->
 
-<!-- wp:group {"className":"story-text scroll-fade"} -->
-<div class="wp-block-group story-text scroll-fade">
-<!-- wp:paragraph -->
-<p>Los procesos sancionatorios por sobreproduccion — donde los centros producen mas toneladas de salmon de las autorizadas — son particularmente preocupantes cuando ocurren dentro o cerca de areas protegidas. El exceso de biomasa genera mayor contaminacion organica, uso de antibioticos y riesgo de escape de ejemplares, todos factores que impactan directamente los ecosistemas marinos.</p>
-<!-- /wp:paragraph -->
-
-<!-- wp:paragraph -->
-<p>El mapa de conflicto permite recorrer las concesiones que se superponen con figuras de proteccion y las que registran denuncias o sobreproduccion, revelando que estos casos no son aislados sino un patron presente en distintas zonas del sur.</p>
-<!-- /wp:paragraph -->
-</div>
-<!-- /wp:group -->
-
+<!-- TITULAR PROVISIONAL -->
 <!-- wp:group {"className":"story-heading scroll-fade"} -->
 <div class="wp-block-group story-heading scroll-fade">
 <!-- wp:paragraph {"className":"story-kicker"} -->
@@ -484,47 +555,99 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 <!-- /wp:paragraph -->
 
 <!-- wp:heading -->
-<h2 class="wp-block-heading">Cerca de las areas protegidas</h2>
+<h2 class="wp-block-heading">Producir por sobre el limite</h2>
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"className":"story-subtitle"} -->
-<p class="story-subtitle">Los centros de cultivo frente a los parques y reservas del Estado (SNASPE).</p>
+<p class="story-subtitle">Que ocurre cuando un centro supera la biomasa autorizada y como responde la fiscalizacion.</p>
 <!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
-
+<!-- TEXTO PROVISIONAL: reemplazar por el texto final del reportaje -->
 <!-- wp:group {"className":"story-text scroll-fade"} -->
 <div class="wp-block-group story-text scroll-fade">
 <!-- wp:paragraph -->
-<p>Mas alla de las areas marinas, muchos centros operan en las inmediaciones de parques nacionales y reservas del Estado. La industria llega hasta el borde mismo de los ecosistemas resguardados por el Sistema Nacional de Areas Silvestres Protegidas (SNASPE).</p>
+<p>La autorizacion de un centro de cultivo fija un tope de biomasa: la cantidad maxima de salmones que puede mantener en el agua al mismo tiempo. Ese numero no es arbitrario. Se calcula a partir de la capacidad del cuerpo de agua para asimilar los desechos que genera la produccion sin perder oxigeno ni alterar el fondo marino de forma irreversible.</p>
 <!-- /wp:paragraph -->
 
 <!-- wp:paragraph -->
-<p>La cercania entre concesiones y zonas protegidas plantea preguntas sobre los limites del crecimiento de la industria en la Patagonia, donde la frontera de expansion sigue avanzando hacia el sur.</p>
+<p>Cuando ese tope se supera, la consecuencia no es inmediata ni visible desde la superficie. El sedimento bajo las jaulas se satura de materia organica, el oxigeno disminuye y la vida del fondo se reduce a las especies capaces de tolerar esas condiciones. Recuperar un fondo degradado puede tomar anos, incluso despues de que el centro deja de operar.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Aqui corresponde relatar el caso concreto que ancla el capitulo: que centro, que empresa, cuanto produjo por sobre lo autorizado, en que fecha, que resolvio el procedimiento sancionatorio y en cuanto tiempo. Es el punto del reportaje donde la cifra general se vuelve una historia con nombre.</p>
 <!-- /wp:paragraph -->
 </div>
 <!-- /wp:group -->
 
+<!-- IMAGENES PROVISIONALES -->
 <!-- wp:columns {"className":"story-vignettes"} -->
 <div class="wp-block-columns story-vignettes">
-<!-- wp:column {"className":"story-vignettes__item story-vignettes__item--sage scroll-fade-left"} -->
-<div class="wp-block-column story-vignettes__item story-vignettes__item--sage scroll-fade-left">
+<!-- wp:column {"className":"story-vignettes__item story-vignettes__item--white scroll-fade-left"} -->
+<div class="wp-block-column story-vignettes__item story-vignettes__item--white scroll-fade-left">
 <!-- wp:image {"sizeSlug":"full"} -->
-<figure class="wp-block-image size-full"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/Extra_03.webp" alt="Linea de procesamiento de salmon"/></figure>
+<figure class="wp-block-image size-full"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/Extra_03.webp" alt="Faena en un centro de cultivo"/></figure>
 <!-- /wp:image -->
 </div>
 <!-- /wp:column -->
 
-<!-- wp:column {"className":"story-vignettes__item story-vignettes__item--white scroll-fade-right"} -->
-<div class="wp-block-column story-vignettes__item story-vignettes__item--white scroll-fade-right">
+<!-- wp:column {"className":"story-vignettes__item story-vignettes__item--sage scroll-fade-right"} -->
+<div class="wp-block-column story-vignettes__item story-vignettes__item--sage scroll-fade-right">
 <!-- wp:image {"sizeSlug":"full"} -->
-<figure class="wp-block-image size-full"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/Extra_04.webp" alt="Sashimi de salmon"/></figure>
+<figure class="wp-block-image size-full"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/Extra_04.webp" alt="Transporte de la produccion"/></figure>
 <!-- /wp:image -->
 </div>
 <!-- /wp:column -->
 </div>
 <!-- /wp:columns -->
+
+<!-- TITULAR PROVISIONAL -->
+<!-- wp:group {"className":"story-heading scroll-fade"} -->
+<div class="wp-block-group story-heading scroll-fade">
+<!-- wp:paragraph {"className":"story-kicker"} -->
+<p class="story-kicker">Capitulo 4</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading -->
+<h2 class="wp-block-heading">La frontera sur</h2>
+<!-- /wp:heading -->
+
+<!-- wp:paragraph {"className":"story-subtitle"} -->
+<p class="story-subtitle">Los centros de cultivo frente a los parques y reservas del Estado.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- TEXTO PROVISIONAL: reemplazar por el texto final del reportaje -->
+<!-- wp:group {"className":"story-text scroll-fade"} -->
+<div class="wp-block-group story-text scroll-fade">
+<!-- wp:paragraph -->
+<p>Mas alla de las areas marinas, muchos centros operan en las inmediaciones de parques nacionales y reservas del Estado. La industria llega hasta el borde mismo de los ecosistemas resguardados por el Sistema Nacional de Areas Silvestres Protegidas, en zonas donde la unica presencia humana permanente suele ser la de las propias instalaciones de cultivo.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>La cercania plantea una pregunta que el marco regulatorio no resuelve del todo: hasta donde puede crecer una actividad productiva junto a un area creada precisamente para excluir la intervencion. En la practica, el limite de un parque termina donde empieza el agua, y es en el agua donde opera la salmonicultura.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>En este capitulo corresponde incorporar la voz de quienes habitan esas zonas: comunidades costeras, pueblos originarios con espacios marinos reconocidos, operadores turisticos y trabajadores de la propia industria, cuya subsistencia depende de la actividad que el reportaje examina.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
+
+<!-- TEXTO PROVISIONAL: reemplazar por el texto final del reportaje -->
+<!-- wp:group {"className":"story-text scroll-fade"} -->
+<div class="wp-block-group story-text scroll-fade">
+<!-- wp:paragraph -->
+<p>Cuatro decadas despues de la primera concesion, la discusion ya no es si la industria salmonera transformo el sur de Chile, sino que parte de esa transformacion es reversible. Los mapas de este reportaje muestran el resultado acumulado de miles de decisiones administrativas tomadas de a una, cada una razonable en su momento y con un efecto conjunto que ninguna evaluo por separado.</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:paragraph -->
+<p>Parrafo de cierre: la frase con que el reportaje deja al lector. Puede retomar la escena inicial de las jaulas flotando en el canal o proyectar lo que viene, segun decida el equipo periodistico.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
 
 <!-- wp:html -->
 <section class="story-credits">
