@@ -317,10 +317,10 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <img id="m1-mar1"      class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-mar1.webp" alt="">
       <img id="m1-montana2"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-montana2.webp" alt="">
       <img id="m1-montana1"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-montana1.webp" alt="">
+      <img id="m1-wellboat"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-wellboat.webp" alt="" style="opacity:0">
       <img id="m1-fiordo2"   class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fiordo2.webp" alt="">
       <img id="m1-fiordo1"   class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fiordo1.webp" alt="">
       <img id="m1-fiordo1b"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fiordo1b.webp" alt="">
-      <img id="m1-wellboat"  class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-wellboat.webp" alt="" style="opacity:0">
       <img id="m1-camion"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-camion.webp" alt="" style="opacity:0">
       <img id="m1-avion"     class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-avion.webp" alt="" style="opacity:0">
       <img id="m1-jaula1"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula1.webp" alt="" style="opacity:0">
@@ -335,11 +335,11 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <img id="m1-jaula3"    class="sv-layer sv-mold" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula3.webp" alt="" style="opacity:0">
       <img id="m1-fondo"     class="sv-layer sv-mold" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fondo.webp" alt="" style="opacity:0;object-position:center bottom">
       <img id="m1-fondobuzo" class="sv-layer sv-mold" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-fondobuzo.webp" alt="" style="opacity:0;object-position:center bottom">
-      <div id="m1-luz" style="position:absolute;inset:0;opacity:0;pointer-events:none;mix-blend-mode:screen;z-index:45;background:radial-gradient(circle at 56% 72%, rgba(255,251,228,0.85) 0%, rgba(255,244,190,0.55) 2%, rgba(255,238,170,0.18) 6%, rgba(0,0,0,0) 12%), radial-gradient(ellipse 14% 16% at 58% 78%, rgba(255,236,172,0.20) 0%, rgba(255,232,160,0.06) 48%, rgba(0,0,0,0) 78%);"></div>
+      <div id="m1-luz" style="position:absolute;inset:0;opacity:0;pointer-events:none;mix-blend-mode:screen;z-index:45;"></div>
     </div>
     <div class="sv-dark" id="sv-dark"></div>
     <div class="sv-black" id="sv-black"></div>
-      <div id="m1-flash" style="position:absolute;inset:0;opacity:0;pointer-events:none;z-index:49;transform:scale(0.2);will-change:opacity,transform;background:radial-gradient(circle at 56% 72%, rgba(255,252,235,1) 0%, rgba(255,245,200,0.85) 6%, rgba(255,238,170,0.35) 14%, rgba(255,238,170,0.08) 26%, rgba(0,0,0,0) 45%);"></div>
+    <div id="m1-flash" style="position:absolute;inset:0;opacity:0;pointer-events:none;z-index:49;transform:scale(0.2);will-change:opacity,transform;"></div>
     <div class="sv-scrim" id="sv-scrim"></div>
     <div class="sv-hero" id="sv-hero">
       <div class="sv-kicker">Universidad Diego Portales</div>
@@ -680,8 +680,13 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       /* VEHICULOS: camion -> barco -> avion */
       var ci=seg(p,0.10,0.18), co=seg(p,0.40,0.48);
       setL(mCamion, ci*(1-co), lerp(-28,0,ease(ci))+lerp(0,-44,ease(co)),0,1);
-      var wi=seg(p,0.22,0.30), wo=seg(p,0.42,0.50);
-      setL(mWellboat, wi*(1-wo), lerp(36,0,ease(wi))+lerp(0,44,ease(wo)),0,1);
+      /* WELLBOAT: va DETRAS de los fiordos en el DOM y emerge desde el cerro derecho, que
+         lo cubre mientras entra (Fiordo_2 tapa 37-98% de esa banda a partir de x 80%). Antes
+         iba delante y con un recorrido de +36%: cruzaba navegando POR ENCIMA de la tierra.
+         Recorrido corto y entrada mas larga: la maqueta lo deja en translate 0 (verificado:
+         el asset coincide exacto con el frame 3). */
+      var wi=seg(p,0.20,0.33), wo=seg(p,0.44,0.52);
+      setL(mWellboat, Math.min(1,wi*1.6)*(1-wo), lerp(15,0,ease(wi))+lerp(0,17,ease(wo)),0,1);
       var ax=seg(p,0.30,0.42), aop=Math.min(seg(p,0.30,0.34), 1-seg(p,0.38,0.42));
       setL(mAvion, aop, lerp(-64,72,ax),0,1);
       /* JAULA QUE SE LLENA: vacia -> llenandose -> llena */
@@ -730,6 +735,38 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
        QUIETOS, cada uno cubriendo al anterior. Los frames traen alfa solo en el cielo, asi
        que PROHIBIDO trasladarlos o escalarlos (queda el borde a la vista). Unica capa que se
        traslada: m1-c10b, recorte del lecho con tope alfa difuminado (su borde es un degradado). */
+    /* ── FOCO DE LA LINTERNA ────────────────────────────────────────────────────
+       El haz va dibujado en los frames 12 y 13, en posiciones distintas y medidas sobre
+       el asset: (48.7%, 65.4%) y (61.8%, 66.1%). Un porcentaje FIJO en CSS no sirve:
+       object-fit:cover recorta distinto segun el viewport, asi que el mismo % cae en otro
+       punto del dibujo (por eso el glow quedaba corrido respecto del foco). Se mapea por JS
+       con la geometria real de cover y se recalcula solo al cambiar de beat o de tamano. */
+    var MOV_AW = 1242, MOV_AH = 2208;                    // tamano de los assets m1-*
+    var FOCOS = [ [48.7, 65.4], [61.8, 66.1] ];          // frame 12, frame 13
+    function assetToStage(fx, fy) {
+      var W = stage ? stage.offsetWidth : window.innerWidth;
+      var H = stage ? stage.offsetHeight : window.innerHeight;
+      var sc = Math.max(W/MOV_AW, H/MOV_AH);             // cover
+      var dw = MOV_AW*sc, dh = MOV_AH*sc;
+      return { x:(fx/100*dw - (dw-W)/2)/W*100, y:(fy/100*dh - (dh-H)/2)/H*100, r:dw*0.055 };
+    }
+    /* el foco VIAJA del frame 12 al 13 durante el cruce (saltar de golpe se notaba);
+       se repinta por pasos, no por frame */
+    var glowIdx = -1;
+    function paintGlow(t) {
+      if (!mLuz) return;
+      var q = assetToStage(lerp(FOCOS[0][0],FOCOS[1][0],t), lerp(FOCOS[0][1],FOCOS[1][1],t));
+      var cx = q.x.toFixed(1)+'% '+q.y.toFixed(1)+'%';
+      mLuz.style.background =
+        'radial-gradient(circle '+Math.round(q.r)+'px at '+cx+', rgba(255,251,228,0.9) 0%, rgba(255,244,190,0.5) 14%, rgba(255,238,170,0.16) 42%, rgba(0,0,0,0) 100%)';
+      var mf = g('m1-flash');
+      if (mf) {
+        mf.style.background =
+          'radial-gradient(circle '+Math.round(q.r*3.2)+'px at '+cx+', rgba(255,252,235,1) 0%, rgba(255,245,200,0.85) 16%, rgba(255,238,170,0.35) 38%, rgba(255,238,170,0.08) 62%, rgba(0,0,0,0) 100%)';
+      }
+    }
+    function setGlow(t) { var st = Math.round(t*12); if (st === glowIdx) return; glowIdx = st; paintGlow(st/12); }
+
     function renderMobile(p) {
       if (p > 0.25) { loadMQ(); }
       /* SUPERFICIE: fija, sin descenso. Las capas de la cola la cubren por completo. */
@@ -752,27 +789,42 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          fantasma. Se traslada la escena hacia arriba mientras el lecho sube desde abajo y
          cubre la franja que queda libre; recien con ambos QUIETOS entra el frame 10. */
       var camY = lerp(0,-9.5, ease(seg(p,0.71,0.79)));
-      setL(mJaula1, seg(p,0.48,0.56), 0,camY,1);   // frame 7: la jaula llena
-      setL(mC8,     seg(p,0.58,0.64), 0,camY,1);   // frame 8: los peces empiezan a salir
-      setL(mC9,     seg(p,0.66,0.71), 0,camY,1);   // frame 9: el escape, con la estela
+      /* La jaula NO se funde: se REVELA de arriba hacia abajo. Los frames 6 y 7 son
+         identicos arriba del 40% (medido: diferencia 0.00) y solo difieren donde esta la
+         jaula -> recortando por encima del 40% el revelado no deja costura, y se evita el
+         fantasma translucido de la jaula flotando bajo las balsas (feedback cris). */
+      var rev = ease(seg(p,0.48,0.60));
+      if (mJaula1) {
+        // borde DIFUMINADO (no un corte recto): el agua se aclara y la jaula aparece
+        var cut = (38 + 62*rev).toFixed(2), fade = (38 + 62*rev + 7).toFixed(2);
+        var mk = 'linear-gradient(to bottom, #000 0%, #000 '+cut+'%, rgba(0,0,0,0) '+fade+'%)';
+        mJaula1.style.webkitMaskImage = mk;
+        mJaula1.style.maskImage = mk;
+      }
+      setL(mJaula1, rev > 0 ? 1 : 0, 0,camY,1);    // frame 7: la jaula llena
+      if (mJaula1) { if (p > 0.67) { mJaula1.style.webkitMaskImage='none'; mJaula1.style.maskImage='none'; } }
+      setL(mC8,     seg(p,0.62,0.67), 0,camY,1);   // frame 8: los peces empiezan a salir
+      setL(mC9,     seg(p,0.685,0.71), 0,camY,1);  // frame 9: el escape, con la estela
       /* el lecho contaminado sube desde abajo (tope alfa difuminado -> su borde no deja
          costura) y llega QUIETO antes que termine el descenso, tapando la franja inferior */
       setL(mC10b, seg(p,0.71,0.74), 0, lerp(55,0, ease(seg(p,0.71,0.78))), 1);
       setL(mC10,  seg(p,0.80,0.84), 0,0,1);     // frame 10 completo, quieto: cruce imperceptible
       setL(mC11,  seg(p,0.85,0.875), 0,0,1);
-      setL(mC12,  seg(p,0.89,0.915), 0,0,1);    // frame 12: el buzo enciende la linterna
-      setL(mC13,  seg(p,0.932,0.945), 0,0,1);   // frame 13: el buzo, mas cerca (cruce corto:
+      setL(mC12,  seg(p,0.885,0.91), 0,0,1);    // frame 12: el buzo enciende la linterna
+      /* el buzo se acerca RECIEN despues de un tramo largo con el frame 12 (antes eran 0.017
+         de scroll y "aparecia muy rapido el grande"): ahora son ~0.05, casi una pantalla */
+      setL(mC13,  seg(p,0.955,0.968), 0,0,1);   // frame 13: el buzo, mas cerca (cruce corto:
                                                 //   los dos buzos estan en distinta posicion)
-      /* LINTERNA: enciende con el buzo y se mantiene (el haz va dibujado en el frame; el glow
-         le suma el parpadeo). DESTELLO: el haz gira hacia el espectador y llena la pantalla. */
-      if(mLuz) mLuz.style.opacity = seg(p,0.89,0.92);
-      if(mFlash){ var fl=ease(seg(p,0.965,0.985)); mFlash.style.opacity = Math.min(fl, 1-seg(p,0.988,0.998)); mFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
+      /* LINTERNA: el glow se ancla al FOCO del frame vigente (12 -> 13), no a un % fijo */
+      setGlow(seg(p,0.955,0.968));
+      if(mLuz) mLuz.style.opacity = seg(p,0.885,0.905);
+      if(mFlash){ var fl=ease(seg(p,0.978,0.991)); mFlash.style.opacity = Math.min(fl, 1-seg(p,0.993,0.999)); mFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
       /* relleno de franjas: superficie -> profundo */
       if(bgDeep) bgDeep.style.opacity = seg(p,0.66,0.82);
       if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.66,0.82);
       /* profundidad + cierre a negro (los frames ya son oscuros: el velo entra tarde y suave) */
-      if(dark) dark.style.opacity = seg(p,0.945,0.995);
-      var blackM=g('sv-black'); if(blackM) blackM.style.opacity = seg(p,0.975,1.0);
+      if(dark) dark.style.opacity = seg(p,0.962,0.997);
+      var blackM=g('sv-black'); if(blackM) blackM.style.opacity = seg(p,0.985,1.0);
       /* TEXTOS */
       if(hero){ hero.style.opacity = 1-seg(p,0.02,0.09); hero.style.transform='translateY('+lerp(0,-40,seg(p,0.02,0.09))+'px)'; }
       if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
@@ -780,7 +832,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
       beatM(beat1,0.14,0.20,0.40,0.46);
       beatM(beat2,0.56,0.62,0.68,0.74);
-      beatM(beat3,0.90,0.94,0.975,0.995);
+      beatM(beat3,0.885,0.925,0.978,0.995);
     }
 
     /* ── INTRO ESCRITORIO OFICIAL — PARALLAX POR CAPAS (replica el mecanismo del MOVIL) ──
@@ -885,7 +937,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
-    var SCREENS = isMobileIntro ? (useMovNew ? 15 : 13) : (useJunio ? 17 : 6);  // movil v35: 15 (cola con frames 8-13); escritorio parallax: 17
+    var SCREENS = isMobileIntro ? (useMovNew ? 16 : 13) : (useJunio ? 17 : 6);  // movil v35: 15 (cola con frames 8-13); escritorio parallax: 17
     // Alto del escenario = el viewport visible mas GRANDE visto (solo crece, nunca encoge).
     // En movil la barra de URL colapsa al scrollear y el viewport CRECE; si el escenario
     // solo crece, nunca queda corto (sin franja blanca abajo) ni oscila (sin tiriton).
@@ -897,6 +949,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       maxH = h;
       if (stage) stage.style.height = maxH + 'px';
       intro.style.height = Math.round(maxH * SCREENS) + 'px';
+      if (glowIdx >= 0) { paintGlow(glowIdx/12); }   // la geometria de cover cambio
     }
 
     var ticking=false;

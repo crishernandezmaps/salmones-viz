@@ -487,23 +487,27 @@ export default function MapaConflicto() {
       mapRef.current.addLayer({ id: 'amp-outline', type: 'line', source: 'amp', paint: { 'line-color': '#2a7a7a', 'line-width': 1.5 } }, B)
 
 
-      // ── Heatmap ──
-      mapRef.current.addSource('all-centros', { type: 'geojson', data: centrosResp })
-      mapRef.current.addLayer({
-        id: 'centros-heat', type: 'heatmap', source: 'all-centros',
-        paint: {
-          'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 4, 0.6, 8, 1.5, 12, 2],
-          'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 14, 8, 22, 12, 30],
-          'heatmap-color': ['interpolate', ['linear'], ['heatmap-density'],
-            0, 'rgba(0,0,0,0)', 0.1, 'rgba(217,64,64,0.15)', 0.3, 'rgba(217,64,64,0.35)',
-            0.5, 'rgba(200,50,50,0.5)', 0.7, 'rgba(180,40,40,0.65)',
-            0.9, 'rgba(160,30,30,0.8)', 1, 'rgba(140,20,20,0.9)'],
-          // Solo VISTA GENERAL: plena en el zoom inicial (~7) y desaparece del todo al
-          // acercar (feedback cris 2026-08-14: sin puntos individuales, a zoom medio el
-          // heatmap se fragmentaba en manchas sueltas)
-          'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7.5, 0.85, 9, 0],
-        },
-      }, B)
+      /* ── Heatmap: APAGADO el 2026-08-20 a pedido de cris (se comenta, no se borra).
+         Para reactivarlo: descomentar este bloque, la linea de 'centros-heat' en
+         toggleLayer y la entrada de la leyenda 'Concentracion de centros salmoneros'.
+         // ── Heatmap ──
+         mapRef.current.addSource('all-centros', { type: 'geojson', data: centrosResp })
+         mapRef.current.addLayer({
+         id: 'centros-heat', type: 'heatmap', source: 'all-centros',
+         paint: {
+         'heatmap-intensity': ['interpolate', ['linear'], ['zoom'], 4, 0.6, 8, 1.5, 12, 2],
+         'heatmap-radius': ['interpolate', ['linear'], ['zoom'], 4, 14, 8, 22, 12, 30],
+         'heatmap-color': ['interpolate', ['linear'], ['heatmap-density'],
+         0, 'rgba(0,0,0,0)', 0.1, 'rgba(217,64,64,0.15)', 0.3, 'rgba(217,64,64,0.35)',
+         0.5, 'rgba(200,50,50,0.5)', 0.7, 'rgba(180,40,40,0.65)',
+         0.9, 'rgba(160,30,30,0.8)', 1, 'rgba(140,20,20,0.9)'],
+         // Solo VISTA GENERAL: plena en el zoom inicial (~7) y desaparece del todo al
+         // acercar (feedback cris 2026-08-14: sin puntos individuales, a zoom medio el
+         // heatmap se fragmentaba en manchas sueltas)
+         'heatmap-opacity': ['interpolate', ['linear'], ['zoom'], 7.5, 0.85, 9, 0],
+         },
+         }, B)
+      */
 
       // ── Circle layers — all before labels ──
       const CIRCLE_STYLE = {
@@ -571,7 +575,8 @@ export default function MapaConflicto() {
     if (mapRef.current && loaded) {
       const vis = next ? 'visible' : 'none'
       if (id === 'centros') {
-        mapRef.current.setLayoutProperty('centros-heat', 'visibility', vis)
+        // heatmap apagado (2026-08-20): la capa 'centros-heat' no se crea
+        // mapRef.current.setLayoutProperty('centros-heat', 'visibility', vis)
       } else if (id === 'snaspe') {
         mapRef.current.setLayoutProperty('snaspe-fill', 'visibility', vis)
         mapRef.current.setLayoutProperty('snaspe-outline', 'visibility', vis)
@@ -615,10 +620,13 @@ export default function MapaConflicto() {
             <span className='text-[#1b3a4b]/40 text-[9px]'>{legendOpen ? '▾' : '▸'}</span>
           </button>
           <div className={(legendOpen ? 'block' : 'hidden') + ' mt-1 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm p-3 text-sm space-y-1.5 max-w-[80vw] md:max-w-none'}>
+          {/* Concentracion de centros salmoneros — capa apagada el 2026-08-20 (pedido de cris).
+              Descomentar junto con el bloque del heatmap para volver a mostrarla.
           <div className='flex items-center gap-2'>
             <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: 'radial-gradient(circle, rgba(180,40,40,0.75) 0%, rgba(217,64,64,0.25) 70%, rgba(217,64,64,0) 100%)' }} />
-            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Concentración de centros salmoneros</span>
+            <span className='text-[#1b3a4b]/80 text-xs font-medium'>Concentracion de centros salmoneros</span>
           </div>
+          */}
           <div className='flex items-center gap-2'>
             <span className='w-2.5 h-2.5 rounded shrink-0' style={{ background: 'rgba(58,158,158,0.4)', border: '1.5px solid #2a7a7a' }} />
             <span className='text-[#1b3a4b]/80 text-xs font-medium'>Áreas marinas protegidas</span>
