@@ -776,11 +776,11 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       setL(mFiordo2, 1, 0,0,1); setL(mFiordo1, 1, 0,0,1); setL(mFiordo1b, 1, 0,0,1);
       setL(mMontana1, 1, 0,0,1); setL(mMontana2, 1, 0,0,1);
       /* VEHICULOS: camion -> barco -> avion (entran y salen, sin cambios respecto de v15) */
-      var ci=seg(p,0.10,0.18), co=seg(p,0.40,0.48);
+      var ci=seg(p,0.0889,0.16), co=seg(p,0.3556,0.4267);
       setL(mCamion, ci*(1-co), lerp(-28,0,ease(ci))+lerp(0,-44,ease(co)),0,1);
-      var wi=seg(p,0.22,0.30), wo=seg(p,0.42,0.50);
+      var wi=seg(p,0.1956,0.2667), wo=seg(p,0.3733,0.4444);
       setL(mWellboat, wi*(1-wo), lerp(36,0,ease(wi))+lerp(0,44,ease(wo)),0,1);
-      var ax=seg(p,0.30,0.42), aop=Math.min(seg(p,0.30,0.34), 1-seg(p,0.38,0.42));
+      var ax=seg(p,0.2667,0.3733), aop=Math.min(seg(p,0.2667,0.3022), 1-seg(p,0.3378,0.3733));
       setL(mAvion, aop, lerp(-64,72,ax),0,1);
       /* INMERSION Y ESCAPE (frames 7-9 de la maqueta): encuadre FIJO, los tres coinciden
          (medido: del 8 al 9 el desplazamiento es 0 y el error 0.8) -> cruces por opacidad. */
@@ -790,7 +790,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          optimo 0.99). Fundir 9 y 10 sin reproducir ese movimiento daba la doble jaula
          fantasma. Se traslada la escena hacia arriba mientras el lecho sube desde abajo y
          cubre la franja que queda libre; recien con ambos QUIETOS entra el frame 10. */
-      var camY = lerp(0,-9.5, ease(seg(p,0.775,0.835)));
+      var camY = lerp(0,-9.5, ease(seg(p,0.6889,0.7422)));
       /* La jaula NO se funde: se REVELA de arriba hacia abajo. Los frames 6 y 7 son
          identicos arriba del 40% (medido: diferencia 0.00) y solo difieren donde esta la
          jaula -> recortando por encima del 40% el revelado no deja costura, y se evita el
@@ -806,42 +806,44 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          agrega la jaula, tambien aclara el agua de toda la escena (medido lejos de la jaula:
          de 128 a 165 de brillo). Igualarla primero evita que la capa que sube arrastre un
          escalon de tono en su borde. */
-      setL(mAgua7, seg(p,0.44,0.52), 0,camY,1);
-      var j7rise = ease(seg(p,0.50,0.645));
-      setL(mSub7, seg(p,0.50,0.545), 0, lerp(45,0,j7rise)+camY, 1);
+      setL(mAgua7, seg(p,0.3911,0.4622), 0,camY,1);
+      var j7rise = ease(seg(p,0.4444,0.5733));
+      setL(mSub7, seg(p,0.4444,0.4844), 0, lerp(45,0,j7rise)+camY, 1);
       // el frame 7 COMPLETO se funde quieto al final: deja el estado exacto antes del frame 8
       // (agua7 + sub7 ya lo reconstruyen, asi que el cruce es invisible)
-      setL(mJaula1, seg(p,0.65,0.675), 0,camY,1);
-      setL(mC8,     seg(p,0.695,0.725), 0,camY,1);   // frame 8: los peces empiezan a salir
-      setL(mC9,     seg(p,0.74,0.765), 0,camY,1);  // frame 9: el escape, con la estela
+      setL(mJaula1, seg(p,0.5778,0.6), 0,camY,1);
+      setL(mC8,     seg(p,0.6178,0.6444), 0,camY,1);   // frame 8: los peces empiezan a salir
+      setL(mC9,     seg(p,0.6578,0.68), 0,camY,1);  // frame 9: el escape, con la estela
       /* el lecho contaminado sube desde abajo (tope alfa difuminado -> su borde no deja
          costura) y llega QUIETO antes que termine el descenso, tapando la franja inferior */
-      setL(mC10b, seg(p,0.775,0.80), 0, lerp(55,0, ease(seg(p,0.775,0.83))), 1);
-      setL(mC10,  seg(p,0.845,0.872), 0,0,1);     // frame 10 completo, quieto: cruce imperceptible
-      setL(mC11,  seg(p,0.882,0.90), 0,0,1);
-      setL(mC12,  seg(p,0.908,0.928), 0,0,1);    // frame 12: el buzo enciende la linterna
-      /* el buzo se acerca RECIEN despues de un tramo largo con el frame 12 (antes eran 0.017
-         de scroll y "aparecia muy rapido el grande"): ahora son ~0.05, casi una pantalla */
-      setL(mC13,  seg(p,0.955,0.968), 0,0,1);   // frame 13: el buzo, mas cerca (cruce corto:
+      setL(mC10b, seg(p,0.6889,0.7111), 0, lerp(55,0, ease(seg(p,0.6889,0.7378))), 1);
+      setL(mC10,  seg(p,0.7511,0.7751), 0,0,1);     // frame 10 completo, quieto: cruce imperceptible
+      setL(mC11,  seg(p,0.784,0.8), 0,0,1);
+      setL(mC12,  seg(p,0.8071,0.8249), 0,0,1);    // frame 12: el buzo enciende la linterna
+      /* el buzo se acerca RECIEN despues de un tramo LARGO con el frame 12: ~1.7 pantallas de
+         scroll (0.825 -> 0.92). En la v40 eran 0.43 y cris pidio "un par de scrolls mas"; para
+         darselos sin acelerar nada de lo anterior, SCREENS movil paso de 16 a 18 y todos los
+         breakpoints previos se reescalaron x16/18 (mismo scroll ABSOLUTO que la v40). */
+      setL(mC13,  seg(p,0.92,0.937), 0,0,1);      // frame 13: el buzo, mas cerca (cruce corto:
                                                 //   los dos buzos estan en distinta posicion)
       /* LINTERNA: el glow se ancla al FOCO del frame vigente (12 -> 13), no a un % fijo */
-      setGlow(seg(p,0.955,0.968));
-      if(mLuz) mLuz.style.opacity = seg(p,0.908,0.926);
-      if(mFlash){ var fl=ease(seg(p,0.978,0.991)); mFlash.style.opacity = Math.min(fl, 1-seg(p,0.993,0.999)); mFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
+      setGlow(seg(p,0.92,0.937));
+      if(mLuz) mLuz.style.opacity = seg(p,0.8071,0.8231);
+      if(mFlash){ var fl=ease(seg(p,0.968,0.984)); mFlash.style.opacity = Math.min(fl, 1-seg(p,0.988,0.997)); mFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
       /* relleno de franjas: superficie -> profundo */
-      if(bgDeep) bgDeep.style.opacity = seg(p,0.66,0.82);
-      if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.66,0.82);
+      if(bgDeep) bgDeep.style.opacity = seg(p,0.5867,0.7289);
+      if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.5867,0.7289);
       /* profundidad + cierre a negro (los frames ya son oscuros: el velo entra tarde y suave) */
-      if(dark) dark.style.opacity = seg(p,0.962,0.997);
-      var blackM=g('sv-black'); if(blackM) blackM.style.opacity = seg(p,0.985,1.0);
+      if(dark) dark.style.opacity = seg(p,0.95,0.99);
+      var blackM=g('sv-black'); if(blackM) blackM.style.opacity = seg(p,0.978,1.0);
       /* TEXTOS */
-      if(hero){ hero.style.opacity = 1-seg(p,0.02,0.09); hero.style.transform='translateY('+lerp(0,-40,seg(p,0.02,0.09))+'px)'; }
-      if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
-      if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
+      if(hero){ hero.style.opacity = 1-seg(p,0.0178,0.08); hero.style.transform='translateY('+lerp(0,-40,seg(p,0.0178,0.08))+'px)'; }
+      if(cue) cue.style.opacity = 1-seg(p,0.0444,0.1067);
+      if(scrim) scrim.style.opacity = 1-seg(p,0.1244,0.2133);
       var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      beatM(beat1,0.14,0.20,0.40,0.46);
-      beatM(beat2,0.585,0.645,0.72,0.775);
-      beatM(beat3,0.885,0.925,0.978,0.995);
+      beatM(beat1,0.1244,0.1778,0.3556,0.4089);
+      beatM(beat2,0.52,0.5733,0.64,0.6889);
+      beatM(beat3,0.7867,0.8222,0.958,0.985);
     }
 
     /* ── INTRO ESCRITORIO OFICIAL — PARALLAX POR CAPAS (replica el mecanismo del MOVIL) ──
@@ -946,7 +948,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
-    var SCREENS = isMobileIntro ? (useMovNew ? 16 : 13) : (useJunio ? 17 : 6);  // movil v35: 15 (cola con frames 8-13); escritorio parallax: 17
+    var SCREENS = isMobileIntro ? (useMovNew ? 18 : 13) : (useJunio ? 17 : 6);  // movil v41: 18 (las 2 pantallas extra van a la espera con el buzo); escritorio parallax: 17
     // Alto del escenario = el viewport visible mas GRANDE visto (solo crece, nunca encoge).
     // En movil la barra de URL colapsa al scrollear y el viewport CRECE; si el escenario
     // solo crece, nunca queda corto (sin franja blanca abajo) ni oscila (sin tiriton).
