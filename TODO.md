@@ -4,7 +4,7 @@ _Actualizado 2026-08-20._
 
 ## Estado
 
-- **Intro MOVIL v39 (2026-08-20, post 70 slug `salmones-movil-v39`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
+- **Intro MOVIL v39 (2026-08-20, post 70 slug `salmones-movil-v40`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
   (`final/intro_movil/SCROLL INTRO/8..13.png` -> `m1-cola8..13.webp` + `m1-cola10b.webp`).
   Antes eran dos imagenes sueltas de junio (`m1-fondo`/`m1-fondobuzo`, ahora `.sv-mold`).
   `SCREENS` movil 13 -> 16. Rollback: **`?introm=old`** (cola de junio intacta).
