@@ -4,10 +4,10 @@ _Actualizado 2026-08-20._
 
 ## Estado
 
-- **Intro MOVIL v39 (2026-08-20, post 70 slug `salmones-movil-v40`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
+- **Intro MOVIL v41 (2026-08-20, post 70 slug `salmones-movil-v41`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
   (`final/intro_movil/SCROLL INTRO/8..13.png` -> `m1-cola8..13.webp` + `m1-cola10b.webp`).
   Antes eran dos imagenes sueltas de junio (`m1-fondo`/`m1-fondobuzo`, ahora `.sv-mold`).
-  `SCREENS` movil 13 -> 16. Rollback: **`?introm=old`** (cola de junio intacta).
+  `SCREENS` movil 13 -> 16 -> **18** (v41). Rollback: **`?introm=old`** (cola de junio intacta).
   - **FUERA el descenso por codigo de v15** (`surfY -20%` / `cageY -12%`): resolvia por JS lo
     que la maqueta trae dibujado y desplazaba las capas ~15% -> no calzaban con los frames.
     Medido: sin descenso, las capas coinciden con los frames 6 y 7 (error 4.7 y 3.2).
@@ -46,7 +46,13 @@ _Actualizado 2026-08-20._
        igualarla la capa que sube arrastra un escalon de tono en su borde.
        DESCARTADOS en el camino: fundir el frame 7 (jaula translucida), revelarlo con mascara
        (estatico + costura de tono a lo ancho de la pantalla) y la franja de luz `#m1-wipe`.
-    5. **Glow en el FOCO real**: medido (48.7%, 65.4%) en el frame 12 y (61.8%, 66.1%) en el
+    5. **Ritmo del buzo (v41)**: del buzo pequeno al grande "pasaba muy rapido" (0.43
+       pantallas). `SCREENS` 16 -> 18 con TODOS los breakpoints previos reescalados x16/18
+       (mismo scroll ABSOLUTO que la v40; verificado: diferencia media 0.08/0.39/0.07 al
+       comparar capturas al mismo scroll). Las 2 pantallas extra van integras a la espera:
+       frame 12 completo en 0.825 -> frame 13 entra en 0.92 = **1.71 pantallas** con el buzo
+       pequeno; buzo grande 0.937-0.968; destello 0.968-0.984; negro 0.978-1.0.
+    6. **Glow en el FOCO real**: medido (48.7%, 65.4%) en el frame 12 y (61.8%, 66.1%) en el
        13. Un % FIJO en CSS no sirve — `object-fit:cover` recorta distinto en cada viewport y
        el mismo % cae en otro punto del dibujo. `assetToStage()` mapea con la geometria real
        de cover (assets 1242x2208), el foco VIAJA del 12 al 13 durante el cruce (repintado
@@ -93,9 +99,9 @@ _Actualizado 2026-08-20._
 | 1600x900 / 1440x900 / 1280x800 | ESCRITORIO | 17 | d1:17, m1:0 |
 | iPad horizontal 1180x820 | ESCRITORIO | 17 | d1:17, m1:0 |
 | iPhone horizontal 844x390 | ESCRITORIO | 17 | d1:17, m1:0 |
-| Ventana angosta 980x1600 | MOVIL | 16 | m1:19, d1:0 |
-| iPhone 390x844 / 430x932 | MOVIL | 16 | m1:19, d1:0 |
-| iPad vertical 820x1180 | MOVIL | 16 | m1:19, d1:0 |
+| Ventana angosta 980x1600 | MOVIL | 18 | m1:19, d1:0 |
+| iPhone 390x844 / 430x932 | MOVIL | 18 | m1:19, d1:0 |
+| iPad vertical 820x1180 | MOVIL | 18 | m1:19, d1:0 |
 
 Cada rama carga SOLO sus assets. **La intro de escritorio quedo IDENTICA a la v34**: comparada
 pixel a pixel contra la captura de la v34 original a 1600x900, diferencia media **0.000** en
