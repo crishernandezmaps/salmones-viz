@@ -324,6 +324,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <img id="m1-camion"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-camion.webp" alt="" style="opacity:0">
       <img id="m1-avion"     class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-avion.webp" alt="" style="opacity:0">
       <img id="m1-jaula1"    class="sv-layer sv-m" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-jaula1.webp" alt="" style="opacity:0">
+      <div id="m1-wipe" style="position:absolute;left:0;width:100%;height:9%;top:28%;opacity:0;pointer-events:none;z-index:20;mix-blend-mode:screen;will-change:top,opacity;background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(226,240,244,0.10) 38%, rgba(236,246,250,0.30) 62%, rgba(255,255,255,0) 100%);"></div>
       <img id="m1-c8"       class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola8.webp" alt="" style="opacity:0">
       <img id="m1-c9"       class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola9.webp" alt="" style="opacity:0">
       <img id="m1-c10b"     class="sv-layer sv-mq" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/m1-cola10b.webp" alt="" style="opacity:0">
@@ -595,7 +596,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
         mJaula1=g('m1-jaula1'), mJaula2=g('m1-jaula2'), mJaula3=g('m1-jaula3'),
         mFondo=g('m1-fondo'), mFondoBuzo=g('m1-fondobuzo'), mLuz=g('m1-luz'), dark=g('sv-dark'),
         mC8=g('m1-c8'), mC9=g('m1-c9'), mC10b=g('m1-c10b'), mC10=g('m1-c10'),
-        mC11=g('m1-c11'), mC12=g('m1-c12'), mC13=g('m1-c13'), mFlash=g('m1-flash');
+        mC11=g('m1-c11'), mC12=g('m1-c12'), mC13=g('m1-c13'), mFlash=g('m1-flash'), mWipe=g('m1-wipe');
     /* Que set de assets usar NO depende del ancho sino de la PROPORCION del viewport:
        la intro es un dibujo con encuadre fijo. Los m1-* son 9:16 y los d1-* 16:9; en una
        ventana alta y angosta (escritorio a media pantalla, tablet vertical) el set 16:9
@@ -793,16 +794,25 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          identicos arriba del 40% (medido: diferencia 0.00) y solo difieren donde esta la
          jaula -> recortando por encima del 40% el revelado no deja costura, y se evita el
          fantasma translucido de la jaula flotando bajo las balsas (feedback cris). */
-      var rev = ease(seg(p,0.48,0.60));
+      var rev = ease(seg(p,0.48,0.62));
+      /* El frente ARRANCA EN LA SUPERFICIE (28%) y BAJA hasta pasar el borde inferior. Antes
+         empezaba justo donde aparece la jaula y con un borde de 7%: se leia como la jaula
+         CRECIENDO hacia abajo (feedback cris). Ahora el borde es corto (2.5%) y una franja
+         visible (#m1-wipe) viaja con el, asi que lo que se percibe es la franja bajando y
+         dejando la jaula descubierta a su paso. Arriba del 40% los frames 6 y 7 son
+         identicos, asi que el tramo inicial del recorrido no altera nada. */
+      var front = 28 + 76*rev;
       if (mJaula1) {
-        // borde DIFUMINADO (no un corte recto): el agua se aclara y la jaula aparece
-        var cut = (38 + 62*rev).toFixed(2), fade = (38 + 62*rev + 7).toFixed(2);
-        var mk = 'linear-gradient(to bottom, #000 0%, #000 '+cut+'%, rgba(0,0,0,0) '+fade+'%)';
+        var mk = 'linear-gradient(to bottom, #000 0%, #000 '+front.toFixed(2)+'%, rgba(0,0,0,0) '+(front+2.5).toFixed(2)+'%)';
         mJaula1.style.webkitMaskImage = mk;
         mJaula1.style.maskImage = mk;
       }
+      if (mWipe) {
+        mWipe.style.top = (front-4.5).toFixed(2)+'%';
+        mWipe.style.opacity = (Math.min(seg(p,0.475,0.495), 1-seg(p,0.585,0.62))*0.95).toFixed(3);
+      }
       setL(mJaula1, rev > 0 ? 1 : 0, 0,camY,1);    // frame 7: la jaula llena
-      if (mJaula1) { if (p > 0.67) { mJaula1.style.webkitMaskImage='none'; mJaula1.style.maskImage='none'; } }
+      if (mJaula1) { if (p > 0.68) { mJaula1.style.webkitMaskImage='none'; mJaula1.style.maskImage='none'; } }
       setL(mC8,     seg(p,0.62,0.67), 0,camY,1);   // frame 8: los peces empiezan a salir
       setL(mC9,     seg(p,0.685,0.71), 0,camY,1);  // frame 9: el escape, con la estela
       /* el lecho contaminado sube desde abajo (tope alfa difuminado -> su borde no deja
