@@ -4,7 +4,7 @@ _Actualizado 2026-08-20._
 
 ## Estado
 
-- **Intro MOVIL v41 (2026-08-20, post 70 slug `salmones-movil-v46`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
+- **Intro MOVIL v46 (2026-08-20, post 70 slug `salmones-movil-v46`) — APROBADA POR CRIS (v39) e iterada hasta v46**: cola rehecha con los FRAMES de la maqueta de julio
   (`final/intro_movil/SCROLL INTRO/8..13.png` -> `m1-cola8..13.webp` + `m1-cola10b.webp`).
   Antes eran dos imagenes sueltas de junio (`m1-fondo`/`m1-fondobuzo`, ahora `.sv-mold`).
   `SCREENS` movil 13 -> 16 -> **18** (v41). Rollback: **`?introm=old`** (cola de junio intacta).
@@ -164,7 +164,11 @@ y borrar el `--user-data-dir` ANTES de cada corrida.
 
 ## Pendientes
 - QA de la CLIENTA a la intro de escritorio v34 (cris ya la aprobo el 2026-08-14).
-- QA de la CLIENTA a la intro MOVIL v39 en dispositivo real (cris ya la aprobo el 2026-08-20).
+- QA de la CLIENTA a la intro MOVIL v46 en dispositivo real (cris aprobo la v39 el 2026-08-20;
+  v40-v46 son iteraciones sobre esa base: ritmo del buzo, responsive en caliente, glow).
+- QA de cris a la v46: confirmar que el glow ya no "anda por todos lados" en su ventana.
+- Los periodistas UDP: reemplazar los TEXTOS PROVISIONALES del articulo (19 marcas en el
+  editor + 5 cifras XX + aviso visible que se borra al final).
 - Opcional: si se quiere que un TELEFONO en horizontal reciba igual la version movil (hoy recibe la de escritorio, correcto en encuadre pero descarga los assets 16:9), agregar una condicion de ancho.
 - Escritorio v34 NO se toco en v35 (verificado: identico a 1600x900, diferencia media 0.000
   en p=0.45; el residuo 0.16 en 0.30/0.52 son los vehiculos en movimiento).
