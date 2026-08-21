@@ -870,7 +870,12 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
        punto del dibujo (por eso el glow quedaba corrido respecto del foco). Se mapea por JS
        con la geometria real de cover y se recalcula solo al cambiar de beat o de tamano. */
     var MOV_AW = 1242, MOV_AH = 2208;                    // tamano de los assets m1-*
-    var FOCOS = [ [48.7, 65.4], [61.8, 66.1] ];          // frame 12, frame 13
+    /* Posicion de la LINTERNA en cada frame, no del punto mas brillante: medir el maximo de
+       brillo llevaba al HAZ proyectado (frame 12) y a las burbujas (frame 13), y el glow
+       quedaba flotando lejos de la mano del buzo. Estas coordenadas salen de mirar el asset
+       con grilla: frame 12 = linterna extendida hacia abajo-derecha; frame 13 = el buzo
+       apunta la linterna al frente (el disco claro sobre su pecho). */
+    var FOCOS = [ [50.0, 71.5], [57.0, 74.0] ];          // frame 12, frame 13
     function assetToStage(fx, fy) {
       var W = stage ? stage.offsetWidth : window.innerWidth;
       var H = stage ? stage.offsetHeight : window.innerHeight;
@@ -878,12 +883,13 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       var dw = MOV_AW*sc, dh = MOV_AH*sc;
       return { x:(fx/100*dw - (dw-W)/2)/W*100, y:(fy/100*dh - (dh-H)/2)/H*100, r:dw*0.055 };
     }
-    /* el foco VIAJA del frame 12 al 13 durante el cruce (saltar de golpe se notaba);
-       se repinta por pasos, no por frame */
+    /* El glow NO viaja entre los dos focos: interpolarlo dejaba una luz flotando en el agua,
+       lejos de los dos buzos, durante todo el cruce (feedback cris). Se apaga mientras cruzan
+       y reaparece YA POSADA en la linterna del frame siguiente. */
     var glowIdx = -1;
-    function paintGlow(t) {
+    function paintGlow(i) {
       if (!mLuz) return;
-      var q = assetToStage(lerp(FOCOS[0][0],FOCOS[1][0],t), lerp(FOCOS[0][1],FOCOS[1][1],t));
+      var q = assetToStage(FOCOS[i][0], FOCOS[i][1]);
       var cx = q.x.toFixed(1)+'% '+q.y.toFixed(1)+'%';
       mLuz.style.background =
         'radial-gradient(circle '+Math.round(q.r)+'px at '+cx+', rgba(255,251,228,0.9) 0%, rgba(255,244,190,0.5) 14%, rgba(255,238,170,0.16) 42%, rgba(0,0,0,0) 100%)';
@@ -893,7 +899,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
           'radial-gradient(circle '+Math.round(q.r*3.2)+'px at '+cx+', rgba(255,252,235,1) 0%, rgba(255,245,200,0.85) 16%, rgba(255,238,170,0.35) 38%, rgba(255,238,170,0.08) 62%, rgba(0,0,0,0) 100%)';
       }
     }
-    function setGlow(t) { var st = Math.round(t*12); if (st === glowIdx) return; glowIdx = st; paintGlow(st/12); }
+    function setGlow(i) { if (i === glowIdx) return; glowIdx = i; paintGlow(i); }
 
     function renderMobile(p) {
       if (p > 0.25) { loadMQ(); }
@@ -944,24 +950,27 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          costura) y llega QUIETO antes que termine el descenso, tapando la franja inferior */
       setL(mC10b, seg(p,0.6889,0.7111), 0, lerp(55,0, ease(seg(p,0.6889,0.7378))), 1);
       setL(mC10,  seg(p,0.7511,0.7751), 0,0,1);     // frame 10 completo, quieto: cruce imperceptible
-      setL(mC11,  seg(p,0.784,0.8), 0,0,1);
-      setL(mC12,  seg(p,0.8071,0.8249), 0,0,1);    // frame 12: el buzo enciende la linterna
+      setL(mC11,  seg(p,0.784,0.80), 0,0,1);     // frame 11: el buzo LEJANO, al fondo
+      setL(mC12,  seg(p,0.862,0.882), 0,0,1);    // frame 12: el buzo, cerca, con la linterna
       /* el buzo se acerca RECIEN despues de un tramo LARGO con el frame 12: ~1.7 pantallas de
          scroll (0.825 -> 0.92). En la v40 eran 0.43 y cris pidio "un par de scrolls mas"; para
          darselos sin acelerar nada de lo anterior, SCREENS movil paso de 16 a 18 y todos los
          breakpoints previos se reescalaron x16/18 (mismo scroll ABSOLUTO que la v40). */
-      setL(mC13,  seg(p,0.92,0.937), 0,0,1);      // frame 13: el buzo, mas cerca (cruce corto:
-                                                //   los dos buzos estan en distinta posicion)
+      setL(mC13,  seg(p,0.945,0.960), 0,0,1);    // frame 13: el buzo APUNTA LA LINTERNA AL FRENTE
       /* LINTERNA: el glow se ancla al FOCO del frame vigente (12 -> 13), no a un % fijo */
-      setGlow(seg(p,0.92,0.937));
-      if(mLuz) mLuz.style.opacity = seg(p,0.8071,0.8231);
-      if(mFlash){ var fl=ease(seg(p,0.968,0.984)); mFlash.style.opacity = Math.min(fl, 1-seg(p,0.988,0.997)); mFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
+      setGlow(p >= 0.9525 ? 1 : 0);              // salto en el punto medio del cruce, sin viajar
+      /* enciende con el frame 12 (el 11 tiene al buzo lejos y sin luz visible) y se APAGA
+         durante el cruce: mientras los dos buzos se funden no hay una linterna donde posarse */
+      var luzOn = seg(p,0.862,0.878);
+      var cruce = Math.min(seg(p,0.940,0.9525), 1-seg(p,0.9525,0.966));
+      if(mLuz) mLuz.style.opacity = luzOn*(1-cruce);
+      if(mFlash){ var fl=ease(seg(p,0.978,0.990)); mFlash.style.opacity = Math.min(fl, 1-seg(p,0.993,0.999)); mFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
       /* relleno de franjas: superficie -> profundo */
       if(bgDeep) bgDeep.style.opacity = seg(p,0.5867,0.7289);
       if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.5867,0.7289);
       /* profundidad + cierre a negro (los frames ya son oscuros: el velo entra tarde y suave) */
-      if(dark) dark.style.opacity = seg(p,0.95,0.99);
-      var blackM=g('sv-black'); if(blackM) blackM.style.opacity = seg(p,0.978,1.0);
+      if(dark) dark.style.opacity = seg(p,0.966,0.996);
+      var blackM=g('sv-black'); if(blackM) blackM.style.opacity = seg(p,0.986,1.0);
       /* TEXTOS */
       if(hero){ hero.style.opacity = 1-seg(p,0.0178,0.08); hero.style.transform='translateY('+lerp(0,-40,seg(p,0.0178,0.08))+'px)'; }
       if(cue) cue.style.opacity = 1-seg(p,0.0444,0.1067);
@@ -969,7 +978,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
       beatM(beat1,0.1244,0.1778,0.3556,0.4089);
       beatM(beat2,0.52,0.5733,0.64,0.6889);
-      beatM(beat3,0.7867,0.8222,0.958,0.985);
+      beatM(beat3,0.80,0.84,0.955,0.978);
     }
 
     /* ── INTRO ESCRITORIO OFICIAL — PARALLAX POR CAPAS (replica el mecanismo del MOVIL) ──
@@ -1092,7 +1101,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       maxH = h;
       if (stage) stage.style.height = maxH + 'px';
       intro.style.height = Math.round(maxH * SCREENS) + 'px';
-      if (glowIdx >= 0) { paintGlow(glowIdx/12); }   // la geometria de cover cambio
+      if (glowIdx >= 0) { paintGlow(glowIdx); }   // la geometria de cover cambio
     }
 
     var ticking=false;
