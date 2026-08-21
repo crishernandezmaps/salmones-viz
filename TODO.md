@@ -4,7 +4,7 @@ _Actualizado 2026-08-20._
 
 ## Estado
 
-- **Intro MOVIL v41 (2026-08-20, post 70 slug `salmones-movil-v41`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
+- **Intro MOVIL v41 (2026-08-20, post 70 slug `salmones-movil-v43`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
   (`final/intro_movil/SCROLL INTRO/8..13.png` -> `m1-cola8..13.webp` + `m1-cola10b.webp`).
   Antes eran dos imagenes sueltas de junio (`m1-fondo`/`m1-fondobuzo`, ahora `.sv-mold`).
   `SCREENS` movil 13 -> 16 -> **18** (v41). Rollback: **`?introm=old`** (cola de junio intacta).
@@ -93,6 +93,14 @@ _Actualizado 2026-08-20._
   Ficha nuevo formato, paginacion por centro, capa ECMPO quitada.
 
 ## Que intro se sirve (verificado el 2026-08-20 en el post en vivo)
+
+**El cambio de rama es EN CALIENTE** (v43): al rotar el telefono o redimensionar la ventana no
+hace falta refrescar. `revisarRama()` corre en el `resize`; si la rama cambio, carga los assets
+que faltan, cambia `activeRender` y `SCREENS`, resetea `glowIdx` y `maxH`, y reubica el scroll
+en el mismo punto de la narracion (la intro cambia de alto, 17 <-> 18 pantallas).
+GOTCHA: `mostrarEscritorio(on)` tambien tiene que OCULTAR — el `display` inline gana sobre el
+media query, asi que sin limpiarlo el bloque de escritorio queda encima de la intro movil.
+
 
 | Viewport | Rama | SCREENS | Assets |
 |---|---|---|---|
