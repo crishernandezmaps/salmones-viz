@@ -961,21 +961,26 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          scroll (0.825 -> 0.92). En la v40 eran 0.43 y cris pidio "un par de scrolls mas"; para
          darselos sin acelerar nada de lo anterior, SCREENS movil paso de 16 a 18 y todos los
          breakpoints previos se reescalaron x16/18 (mismo scroll ABSOLUTO que la v40). */
-      setL(mC13,  seg(p,0.945,0.960), 0,0,1);    // frame 13: el buzo APUNTA LA LINTERNA AL FRENTE
-      /* LINTERNA: el glow se ancla al FOCO del frame vigente (12 -> 13), no a un % fijo */
-      setGlow(p >= 0.9525 ? 1 : 0);              // salto en el punto medio del cruce, sin viajar
-      /* enciende con el frame 12 (el 11 tiene al buzo lejos y sin luz visible) y se APAGA
-         durante el cruce: mientras los dos buzos se funden no hay una linterna donde posarse */
-      var luzOn = seg(p,0.862,0.878);
-      var cruce = Math.min(seg(p,0.940,0.9525), 1-seg(p,0.9525,0.966));
-      if(mLuz) mLuz.style.opacity = luzOn*(1-cruce);
-      if(mFlash){ var fl=ease(seg(p,0.978,0.990)); mFlash.style.opacity = Math.min(fl, 1-seg(p,0.993,0.999)); mFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
+      setL(mC13,  seg(p,0.938,0.950), 0,0,1);    // frame 13: el buzo APUNTA LA LINTERNA AL FRENTE
+      /* LINTERNA — REGLA: el glow solo puede estar encendido cuando su frame esta 100% OPACO.
+         Encenderlo o reaparecer DURANTE un cross-fade lo deja flotando en el agua: el frame
+         dominante todavia es el anterior, cuya linterna esta en otra parte (o es el buzo
+         lejano, que no tiene luz visible). Fue la causa de "la luz cae del cielo" y "se posa
+         en cualquier lugar" (feedback cris). Por eso:
+         - entra EN SINCRONIA con el fade del frame 12 (luz y buzo se materializan juntos),
+         - se apaga ANTES de que el frame 13 empiece a fundirse (0.930-0.938 < 0.938),
+         - reaparece DESPUES de que el 13 quede opaco (0.953 > 0.950). */
+      setGlow(p >= 0.945 ? 1 : 0);               // salta con el glow APAGADO
+      var luzA = Math.min(seg(p,0.862,0.882), 1-seg(p,0.930,0.938));
+      var luzB = seg(p,0.953,0.961);
+      if(mLuz) mLuz.style.opacity = Math.max(luzA, luzB);
+      if(mFlash){ var fl=ease(seg(p,0.976,0.988)); mFlash.style.opacity = Math.min(fl, 1-seg(p,0.992,0.999)); mFlash.style.transform='scale('+lerp(0.25,1.6,fl)+')'; }
       /* relleno de franjas: superficie -> profundo */
       if(bgDeep) bgDeep.style.opacity = seg(p,0.5867,0.7289);
       if(bgSurface) bgSurface.style.opacity = 1-seg(p,0.5867,0.7289);
       /* profundidad + cierre a negro (los frames ya son oscuros: el velo entra tarde y suave) */
-      if(dark) dark.style.opacity = seg(p,0.966,0.996);
-      var blackM=g('sv-black'); if(blackM) blackM.style.opacity = seg(p,0.986,1.0);
+      if(dark) dark.style.opacity = seg(p,0.968,0.996);
+      var blackM=g('sv-black'); if(blackM) blackM.style.opacity = seg(p,0.985,1.0);
       /* TEXTOS */
       if(hero){ hero.style.opacity = 1-seg(p,0.0178,0.08); hero.style.transform='translateY('+lerp(0,-40,seg(p,0.0178,0.08))+'px)'; }
       if(cue) cue.style.opacity = 1-seg(p,0.0444,0.1067);
@@ -983,7 +988,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
       beatM(beat1,0.1244,0.1778,0.3556,0.4089);
       beatM(beat2,0.52,0.5733,0.64,0.6889);
-      beatM(beat3,0.80,0.84,0.955,0.978);
+      beatM(beat3,0.80,0.84,0.958,0.980);
     }
 
     /* Glow de ESCRITORIO: una posicion por frame, sin viajar entre ellas (mismo criterio que
@@ -1069,12 +1074,14 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       setL(c14, seg(p,0.905,0.93), 0, 0, 1);
       setL(c15, seg(p,0.945,0.965), 0, 0, 1);
       // LINTERNA: enciende con el frame 14 (haz sobre las redes) y se mantiene
-      /* enciende con el frame 14 y se APAGA durante el cruce al 15: mientras los dos buzos se
-         funden no hay una linterna donde posarse, y el glow quedaba huerfano en el agua */
-      setGlowD(p >= 0.9525 ? 1 : 0);
-      var luzOnD = seg(p,0.905,0.925);
-      var cruceD = Math.min(seg(p,0.940,0.9525), 1-seg(p,0.9525,0.968));
-      if(dLuz) dLuz.style.opacity = luzOnD*(1-cruceD);
+      /* LINTERNA — misma REGLA que en movil: el glow solo con su frame 100% opaco.
+         Entra en sincronia con el fade del frame 14 (0.905-0.93), se apaga antes de que el 15
+         empiece (0.932-0.938 < 0.945) y reaparece con el 15 ya opaco (0.966 > 0.965), justo
+         cuando nace el destello desde el mismo punto. */
+      setGlowD(p >= 0.95 ? 1 : 0);
+      var luzAD = Math.min(seg(p,0.905,0.93), 1-seg(p,0.932,0.938));
+      var luzBD = seg(p,0.966,0.973);
+      if(dLuz) dLuz.style.opacity = Math.max(luzAD, luzBD);
       // DESTELLO FINAL: el haz de la linterna se vuelve hacia el espectador y crece
       // hasta llenar la pantalla; persiste sobre el negro y se apaga al cierre
       var dFlash=g('ds-flash');
