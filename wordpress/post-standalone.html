@@ -271,9 +271,9 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <img id="ds-cola14" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola14s.webp" alt="" style="opacity:0">
       <img id="ds-cola15" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-cola15s.webp" alt="" style="opacity:0">
       <!-- linterna del buzo (copiada del movil #m1-luz): glow sobre la mano/haz del buzo -->
-      <div id="ds-luz" style="position:absolute;inset:0;opacity:0;pointer-events:none;mix-blend-mode:screen;z-index:45;background:radial-gradient(circle at 50% 60%, rgba(255,251,228,1) 0%, rgba(255,244,190,0.85) 3%, rgba(255,238,170,0.35) 8%, rgba(0,0,0,0) 16%), radial-gradient(ellipse 22% 26% at 54% 72%, rgba(255,236,172,0.34) 0%, rgba(255,232,160,0.10) 48%, rgba(0,0,0,0) 78%);"></div>
+      <div id="ds-luz" style="position:absolute;inset:0;opacity:0;pointer-events:none;mix-blend-mode:screen;z-index:45;"></div>
       <!-- destello final: la linterna del buzo apunta al espectador antes del negro -->
-      <div id="ds-flash" style="position:absolute;inset:0;opacity:0;pointer-events:none;z-index:48;transform:scale(0.2);will-change:opacity,transform;background:radial-gradient(circle at 50% 60%, rgba(255,252,235,1) 0%, rgba(255,245,200,0.85) 6%, rgba(255,238,170,0.35) 14%, rgba(255,238,170,0.08) 26%, rgba(0,0,0,0) 45%);"></div>
+      <div id="ds-flash" style="position:absolute;inset:0;opacity:0;pointer-events:none;z-index:48;transform:scale(0.2);will-change:opacity,transform;"></div>
     </div>
 
     <!-- ESCRITORIO HIBRIDO - TRAMO B (submarino): frames de la disenadora (descenso->cutaway->jaula->escape->fondo->buzo) -->
@@ -869,19 +869,24 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
        object-fit:cover recorta distinto segun el viewport, asi que el mismo % cae en otro
        punto del dibujo (por eso el glow quedaba corrido respecto del foco). Se mapea por JS
        con la geometria real de cover y se recalcula solo al cambiar de beat o de tamano. */
-    var MOV_AW = 1242, MOV_AH = 2208;                    // tamano de los assets m1-*
+    var MOV_AW = 1242, MOV_AH = 2208;                    // assets m1-* (movil, 9:16)
+    var DSK_AW = 2560, DSK_AH = 1440;                    // assets d1-* (escritorio, 16:9)
     /* Posicion de la LINTERNA en cada frame, no del punto mas brillante: medir el maximo de
        brillo llevaba al HAZ proyectado (frame 12) y a las burbujas (frame 13), y el glow
        quedaba flotando lejos de la mano del buzo. Estas coordenadas salen de mirar el asset
        con grilla: frame 12 = linterna extendida hacia abajo-derecha; frame 13 = el buzo
        apunta la linterna al frente (el disco claro sobre su pecho). */
-    var FOCOS = [ [50.0, 71.5], [57.0, 74.0] ];          // frame 12, frame 13
-    function assetToStage(fx, fy) {
+    var FOCOS = [ [50.0, 71.5], [57.0, 74.0] ];          // linterna en los frames 12 y 13 (movil)
+    /* Escritorio, misma idea: frame 14 = linterna en la mano extendida; frame 15 = el disco
+       de la linterna apuntando AL FRENTE. El CSS traia un unico gradiente fijo en 50%/60%,
+       que servia para el 14 y quedaba perdido en el 15 (feedback cris). */
+    var FOCOS_D = [ [51.0, 65.0], [57.5, 64.0] ];        // linterna en los frames 14 y 15
+    function assetToStage(fx, fy, aw, ah, rk) {
       var W = stage ? stage.offsetWidth : window.innerWidth;
       var H = stage ? stage.offsetHeight : window.innerHeight;
-      var sc = Math.max(W/MOV_AW, H/MOV_AH);             // cover
-      var dw = MOV_AW*sc, dh = MOV_AH*sc;
-      return { x:(fx/100*dw - (dw-W)/2)/W*100, y:(fy/100*dh - (dh-H)/2)/H*100, r:dw*0.055 };
+      var sc = Math.max(W/aw, H/ah);                     // cover
+      var dw = aw*sc, dh = ah*sc;
+      return { x:(fx/100*dw - (dw-W)/2)/W*100, y:(fy/100*dh - (dh-H)/2)/H*100, r:dw*rk };
     }
     /* El glow NO viaja entre los dos focos: interpolarlo dejaba una luz flotando en el agua,
        lejos de los dos buzos, durante todo el cruce (feedback cris). Se apaga mientras cruzan
@@ -889,7 +894,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
     var glowIdx = -1;
     function paintGlow(i) {
       if (!mLuz) return;
-      var q = assetToStage(FOCOS[i][0], FOCOS[i][1]);
+      var q = assetToStage(FOCOS[i][0], FOCOS[i][1], MOV_AW, MOV_AH, 0.055);
       var cx = q.x.toFixed(1)+'% '+q.y.toFixed(1)+'%';
       mLuz.style.background =
         'radial-gradient(circle '+Math.round(q.r)+'px at '+cx+', rgba(255,251,228,0.9) 0%, rgba(255,244,190,0.5) 14%, rgba(255,238,170,0.16) 42%, rgba(0,0,0,0) 100%)';
@@ -981,6 +986,23 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       beatM(beat3,0.80,0.84,0.955,0.978);
     }
 
+    /* Glow de ESCRITORIO: una posicion por frame, sin viajar entre ellas (mismo criterio que
+       en movil). Se apaga durante el cruce y reaparece ya posado en la linterna del frame nuevo. */
+    var glowIdxD = -1;
+    function paintGlowD(i) {
+      var dl = g('ds-luz'); if (!dl) return;
+      var q = assetToStage(FOCOS_D[i][0], FOCOS_D[i][1], DSK_AW, DSK_AH, 0.038);
+      var cx = q.x.toFixed(1)+'% '+q.y.toFixed(1)+'%';
+      dl.style.background =
+        'radial-gradient(circle '+Math.round(q.r)+'px at '+cx+', rgba(255,251,228,0.9) 0%, rgba(255,244,190,0.5) 14%, rgba(255,238,170,0.16) 42%, rgba(0,0,0,0) 100%)';
+      var df = g('ds-flash');
+      if (df) {
+        df.style.background =
+          'radial-gradient(circle '+Math.round(q.r*3.2)+'px at '+cx+', rgba(255,252,235,1) 0%, rgba(255,245,200,0.85) 16%, rgba(255,238,170,0.35) 38%, rgba(255,238,170,0.08) 62%, rgba(0,0,0,0) 100%)';
+      }
+    }
+    function setGlowD(i) { if (i === glowIdxD) return; glowIdxD = i; paintGlowD(i); }
+
     /* ── INTRO ESCRITORIO OFICIAL — PARALLAX POR CAPAS (replica el mecanismo del MOVIL) ──
        Descenso de camara continuo: la superficie (balsas+cerros) sube y se comprime; las
        jaulas submarinas suben y se APILAN opacas (cutaway: superficie arriba + jaulas
@@ -1047,7 +1069,12 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       setL(c14, seg(p,0.905,0.93), 0, 0, 1);
       setL(c15, seg(p,0.945,0.965), 0, 0, 1);
       // LINTERNA: enciende con el frame 14 (haz sobre las redes) y se mantiene
-      if(dLuz) dLuz.style.opacity = seg(p,0.905,0.94);
+      /* enciende con el frame 14 y se APAGA durante el cruce al 15: mientras los dos buzos se
+         funden no hay una linterna donde posarse, y el glow quedaba huerfano en el agua */
+      setGlowD(p >= 0.9525 ? 1 : 0);
+      var luzOnD = seg(p,0.905,0.925);
+      var cruceD = Math.min(seg(p,0.940,0.9525), 1-seg(p,0.9525,0.968));
+      if(dLuz) dLuz.style.opacity = luzOnD*(1-cruceD);
       // DESTELLO FINAL: el haz de la linterna se vuelve hacia el espectador y crece
       // hasta llenar la pantalla; persiste sobre el negro y se apaga al cierre
       var dFlash=g('ds-flash');
@@ -1102,6 +1129,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       if (stage) stage.style.height = maxH + 'px';
       intro.style.height = Math.round(maxH * SCREENS) + 'px';
       if (glowIdx >= 0) { paintGlow(glowIdx); }   // la geometria de cover cambio
+      if (glowIdxD >= 0) { paintGlowD(glowIdxD); }
     }
 
     var ticking=false;
