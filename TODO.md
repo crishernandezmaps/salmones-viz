@@ -4,7 +4,7 @@ _Actualizado 2026-08-20._
 
 ## Estado
 
-- **Intro MOVIL v41 (2026-08-20, post 70 slug `salmones-movil-v44`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
+- **Intro MOVIL v41 (2026-08-20, post 70 slug `salmones-movil-v45`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
   (`final/intro_movil/SCROLL INTRO/8..13.png` -> `m1-cola8..13.webp` + `m1-cola10b.webp`).
   Antes eran dos imagenes sueltas de junio (`m1-fondo`/`m1-fondobuzo`, ahora `.sv-mold`).
   `SCREENS` movil 13 -> 16 -> **18** (v41). Rollback: **`?introm=old`** (cola de junio intacta).
@@ -102,6 +102,24 @@ _Actualizado 2026-08-20._
   (filas amarillas: 102833, 110818, 104040, 110259, 110228) van `destacado:true` en
   `sobreproduccion.json` e **inician la navegacion** (posiciones 1-5 + seleccion inicial).
   Ficha nuevo formato, paginacion por centro, capa ECMPO quitada.
+
+## El GLOW de la linterna (las DOS ramas, v44-v45)
+
+Regla, valida para movil y escritorio: **el glow va SOLO en la linterna del frame vigente**.
+- **No interpolar** su posicion entre dos frames: durante el cruce queda una luz suelta flotando
+  en el agua. Salta de una a otra y se APAGA mientras los buzos se funden.
+- **No medir el foco con el pixel mas brillante**: cae en el HAZ proyectado o en las burbujas.
+  Mirar el asset con grilla.
+- Los porcentajes NO pueden ir fijos en el CSS: `object-fit:cover` recorta distinto en cada
+  viewport. `assetToStage(fx,fy,aw,ah,rk)` mapea con la geometria real y se repinta al
+  redimensionar. Movil = 1242x2208, escritorio = 2560x1440.
+
+| Rama | Frame | Foco (linterna) |
+|---|---|---|
+| Movil | 12 (linterna abajo-derecha) | (50.0, 71.5) |
+| Movil | 13 (apunta al frente) | (57.0, 74.0) |
+| Escritorio | 14 (mano extendida) | (51.0, 65.0) |
+| Escritorio | 15 (apunta al frente) | (57.5, 64.0) |
 
 ## Que intro se sirve (verificado el 2026-08-20 en el post en vivo)
 
