@@ -726,8 +726,11 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
        ventana alta y angosta (escritorio a media pantalla, tablet vertical) el set 16:9
        se recortaba ~65% a los lados con object-fit:cover -> jaulas gigantes, vehiculos sin
        recorrido y transiciones duplicadas. Regla: viewport mas alto que ancho -> set 9:16. */
-    var isMobileIntro = window.matchMedia('(max-width:767px)').matches;
-    if (window.innerHeight >= window.innerWidth) { isMobileIntro = true; }  // = (orientation:portrait) del CSS
+    function ramaMovil(){
+      if (window.matchMedia('(max-width:767px)').matches) { return true; }
+      return (window.innerHeight >= window.innerWidth);   // = (orientation:portrait) del CSS
+    }
+    var isMobileIntro = ramaMovil();
     // OFICIAL: en escritorio la intro nueva (secuencia armada, 13 frames dq-*) es la de por defecto.
     // Via de escape para comparar/rollback la vieja (of-*): ?introd=old. En movil nunca aplica.
     var useJunio = isMobileIntro ? false : (location.search.indexOf('introd=old') === -1);
@@ -1058,20 +1061,26 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 
     // ESCRITORIO OFICIAL (hibrido): muestra la superficie-capas (.sv-frame-ds) + los frames
     // (.sv-frame-dq); oculta la vieja (.sv-frame-d + sv-fondo). Con ?introd=old -> intro vieja.
-    if (useJunio) {
-      var _fd=intro.querySelector('.sv-frame-d'), _fdq=intro.querySelector('.sv-frame-dq'),
-          _fds=intro.querySelector('.sv-frame-ds'), _sf=g('sv-fondo'), _sky=g('sv-sky-d');
+    /* Muestra u oculta el bloque de ESCRITORIO (.sv-frame-ds + su cielo) y esconde la intro
+       vieja. Es funcion, no un bloque suelto: al rotar el dispositivo hay que rehacerlo, y el
+       display inline gana sobre el media query -> si no se limpia, el escritorio quedaria
+       visible encima de la intro movil. */
+    function mostrarEscritorio(on) {
+      var _fd=intro.querySelector('.sv-frame-d'), _fds=intro.querySelector('.sv-frame-ds'),
+          _sf=g('sv-fondo'), _sky=g('sv-sky-d');
       if(_fd) _fd.style.display='none';
       if(_sf) _sf.style.display='none';
-      if(_sky) _sky.style.display='block';
-      if(_fds) _fds.style.display='block';
+      if(_sky) _sky.style.display = on ? 'block' : 'none';
+      if(_fds) _fds.style.display = on ? 'block' : 'none';
       // .sv-frame-dq (frames) ya NO se usa en el parallax por capas -> queda oculto
     }
+    if (useJunio) { mostrarEscritorio(true); }
     var activeRender = isMobileIntro ? (useMovNew ? renderMobile : renderMobileOld) : (useJunio ? renderDesktopParallax : render);
 
     // Altura por JS en px = viewport real (vh/svh/dvh no son fiables en moviles:
     // dejaban una franja blanca abajo). stage = innerHeight; intro = innerHeight * SCREENS.
-    var SCREENS = isMobileIntro ? (useMovNew ? 18 : 13) : (useJunio ? 17 : 6);  // movil v41: 18 (las 2 pantallas extra van a la espera con el buzo); escritorio parallax: 17
+    function screensDe(mov, junio){ return mov ? (useMovNew ? 18 : 13) : (junio ? 17 : 6); }
+    var SCREENS = screensDe(isMobileIntro, useJunio);  // movil v41: 18 (las 2 pantallas extra van a la espera con el buzo); escritorio parallax: 17
     // Alto del escenario = el viewport visible mas GRANDE visto (solo crece, nunca encoge).
     // En movil la barra de URL colapsa al scrollear y el viewport CRECE; si el escenario
     // solo crece, nunca queda corto (sin franja blanca abajo) ni oscila (sin tiriton).
@@ -1097,11 +1106,49 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
         ticking=false;
       });
     }
+    /* CAMBIO DE RAMA EN CALIENTE (rotar el telefono / redimensionar la ventana).
+       El CSS es responsive por media query, pero el JS elegia motor, assets y SCREENS UNA
+       SOLA VEZ al cargar: al cruzar el umbral el CSS mostraba el contenedor de la otra rama
+       mientras el motor seguia animando la anterior, cuyas imagenes ni siquiera se habian
+       descargado -> intro rota hasta refrescar. Rotar el telefono cruza SIEMPRE el umbral,
+       asi que el caso es real, no solo de escritorio. */
+    function revisarRama(){
+      var mov = ramaMovil();
+      if (mov === isMobileIntro) { return false; }
+      isMobileIntro = mov;
+      useJunio = isMobileIntro ? false : (location.search.indexOf('introd=old') === -1);
+      introSel = isMobileIntro ? '.sv-m' : (useJunio ? '.sv-ds' : '.sv-d');
+      loadSel(introSel);                       // los assets de la rama nueva pueden no estar
+      if (isMobileIntro) {
+        if (useMovNew) { loadMQ(); } else { loadSel('.sv-mold'); }
+      }
+      mostrarEscritorio(!isMobileIntro ? useJunio : false);
+      activeRender = isMobileIntro ? (useMovNew ? renderMobile : renderMobileOld) : (useJunio ? renderDesktopParallax : render);
+      SCREENS = screensDe(isMobileIntro, useJunio);
+      glowIdx = -1;                            // el glow se repinta con la geometria nueva
+      maxH = 0;                                // la altura de la intro cambia con SCREENS
+      return true;
+    }
+    function progresoActual(){
+      var r=intro.getBoundingClientRect();
+      var t=intro.offsetHeight - (stage ? stage.offsetHeight : window.innerHeight);
+      if (t <= 0) { return 0; }
+      return clamp((-r.top)/t, 0, 1);
+    }
     function onResize(){
       // rotacion / resize real (cambia el ancho) -> resetear el maximo; cambio de altura
       // solo (barra de URL) -> NO resetear, dejar que sizeIntro crezca.
       if (window.innerWidth !== lastW) { lastW = window.innerWidth; maxH = 0; }
-      sizeIntro(); onScroll();
+      var p0 = progresoActual();
+      var cambio = revisarRama();
+      sizeIntro();
+      if (cambio) {
+        // la intro cambio de alto (SCREENS distinto): reubicar el scroll en el MISMO punto de
+        // la narracion, para que rotar el telefono no salte a otra parte de la secuencia
+        var t1 = intro.offsetHeight - (stage ? stage.offsetHeight : window.innerHeight);
+        window.scrollTo(0, Math.round(intro.offsetTop + p0*t1));
+      }
+      onScroll();
     }
     sizeIntro();
     window.addEventListener('scroll', onScroll, {passive:true});
