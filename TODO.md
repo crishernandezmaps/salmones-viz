@@ -4,7 +4,7 @@ _Actualizado 2026-08-20._
 
 ## Estado
 
-- **Intro MOVIL v41 (2026-08-20, post 70 slug `salmones-movil-v43`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
+- **Intro MOVIL v41 (2026-08-20, post 70 slug `salmones-movil-v44`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
   (`final/intro_movil/SCROLL INTRO/8..13.png` -> `m1-cola8..13.webp` + `m1-cola10b.webp`).
   Antes eran dos imagenes sueltas de junio (`m1-fondo`/`m1-fondobuzo`, ahora `.sv-mold`).
   `SCREENS` movil 13 -> 16 -> **18** (v41). Rollback: **`?introm=old`** (cola de junio intacta).
@@ -46,7 +46,18 @@ _Actualizado 2026-08-20._
        igualarla la capa que sube arrastra un escalon de tono en su borde.
        DESCARTADOS en el camino: fundir el frame 7 (jaula translucida), revelarlo con mascara
        (estatico + costura de tono a lo ancho de la pantalla) y la franja de luz `#m1-wipe`.
-    5. **Ritmo del buzo (v41)**: del buzo pequeno al grande "pasaba muy rapido" (0.43
+    5. **El GLOW va SOLO en la linterna (v44)**: (a) NO puede interpolar su posicion entre los
+       focos del frame 12 y el 13 — durante el cruce quedaba una luz suelta flotando en el agua
+       ("la luz que flota y se posa", feedback cris). Ahora se apaga mientras los buzos se
+       funden (0.940-0.966) y reaparece ya posada en la linterna del frame siguiente.
+       (b) El foco NO se mide buscando el pixel mas brillante: en el frame 12 ese maximo cae en
+       el HAZ proyectado y en el 13 en las burbujas. Medir MIRANDO el asset con grilla.
+       Valores buenos: frame 12 = **(50.0, 71.5)**, frame 13 = **(57.0, 74.0)**.
+    6. **Aire para cada beat del buzo (v44)**: el frame 11 (buzo LEJANO al fondo) se veia 0.13
+       pantallas antes de que lo tapara el 12. Reparto actual: frame 11 **1.12 pantallas** ->
+       frame 12 (cerca, con linterna) **1.13** -> frame 13 (apunta al frente) 0.32 -> destello
+       0.22 -> negro. Los tres beats del buzo son distintos y hay que dejar ver cada uno.
+    7. **Ritmo del buzo (v41)**: del buzo pequeno al grande "pasaba muy rapido" (0.43
        pantallas). `SCREENS` 16 -> 18 con TODOS los breakpoints previos reescalados x16/18
        (mismo scroll ABSOLUTO que la v40; verificado: diferencia media 0.08/0.39/0.07 al
        comparar capturas al mismo scroll). Las 2 pantallas extra van integras a la espera:
