@@ -4,7 +4,7 @@ _Actualizado 2026-08-20._
 
 ## Estado
 
-- **Intro MOVIL v41 (2026-08-20, post 70 slug `salmones-movil-v45`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
+- **Intro MOVIL v41 (2026-08-20, post 70 slug `salmones-movil-v46`) — APROBADA POR CRIS**: cola rehecha con los FRAMES de la maqueta de julio
   (`final/intro_movil/SCROLL INTRO/8..13.png` -> `m1-cola8..13.webp` + `m1-cola10b.webp`).
   Antes eran dos imagenes sueltas de junio (`m1-fondo`/`m1-fondobuzo`, ahora `.sv-mold`).
   `SCREENS` movil 13 -> 16 -> **18** (v41). Rollback: **`?introm=old`** (cola de junio intacta).
@@ -105,7 +105,13 @@ _Actualizado 2026-08-20._
 
 ## El GLOW de la linterna (las DOS ramas, v44-v45)
 
-Regla, valida para movil y escritorio: **el glow va SOLO en la linterna del frame vigente**.
+Regla, valida para movil y escritorio: **el glow va SOLO en la linterna del frame vigente,
+y SOLO mientras ese frame esta 100% OPACO** (v46). Encenderlo o reaparecer durante un
+cross-fade lo deja flotando en el agua: el frame dominante todavia es el anterior. Ciclo:
+entra en sincronia con el fade de su frame, se apaga ANTES de que el siguiente empiece a
+fundirse, reaparece DESPUES de que quede opaco, ya posado en su linterna. El bug del timing
+sobrevivio a DOS arreglos de posicion (v44 y v45): al depurar el glow, instrumentar
+opacidad+posicion por p (inspect.mjs), no solo mirar capturas.
 - **No interpolar** su posicion entre dos frames: durante el cruce queda una luz suelta flotando
   en el agua. Salta de una a otra y se APAGA mientras los buzos se funden.
 - **No medir el foco con el pixel mas brillante**: cae en el HAZ proyectado o en las burbujas.
@@ -120,6 +126,13 @@ Regla, valida para movil y escritorio: **el glow va SOLO en la linterna del fram
 | Movil | 13 (apunta al frente) | (57.0, 74.0) |
 | Escritorio | 14 (mano extendida) | (51.0, 65.0) |
 | Escritorio | 15 (apunta al frente) | (57.5, 64.0) |
+
+## Auditoria de fluidez (2026-08-20, barridos densos con diferencia entre capturas)
+Sin saltos NO intencionales en ninguna rama. Picos = transiciones de diseno: descenso de
+camara movil (17-18, repartido), disolucion de la jaula del escape en escritorio (41.7,
+0.85 pantallas, aprobada v34), destello+negro final. El cruce al frame 10 movil mide 0.6
+(imperceptible, el objetivo del diseno). Holds con subtitulo miden ~0: son deliberados.
+Metodo: sweep.mjs (una sesion de Chrome, N capturas) + diferencia media entre consecutivas.
 
 ## Que intro se sirve (verificado el 2026-08-20 en el post en vivo)
 
