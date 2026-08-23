@@ -1043,9 +1043,11 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          capa queda sola mientras la superficie sigue subiendo (cuadro 7: casi todo agua);
          recien entonces emerge la jaula llena. Cruce por opacidad, ambas capas con surfY. */
       var mar2in = ease(seg(p,0.371,0.43));
-      var marOp = surfOp * (1 - seg(p,0.46,0.535));
-      setL(dMar,  marOp * (1 - mar2in), 0,surfY,1);
-      setL(dMar2, marOp * mar2in, 0,surfY,1);
+      setL(dMar,  surfOp * (1 - mar2in), 0,surfY,1);
+      /* mar2 NO se apaga al entrar la jaula: en el cuadro 8 de la maqueta las jaulas de
+         superficie siguen sobre la linea de agua (la zona alta de d1-jaula1 es transparente
+         y las deja ver). Se va recien con el resto de la superficie (surfOp), al profundizar. */
+      setL(dMar2, surfOp * mar2in, 0,surfY,1);
       setL(dFio2, surfOp, 0,surfY,1); setL(dFio1, surfOp, 0,surfY,1);
       setL(dMon1, surfOp, 0,surfY,1); setL(dMon2, surfOp, 0,surfY,1);
       /* VEHICULOS: camion -> barco -> avion, entran y salen */
