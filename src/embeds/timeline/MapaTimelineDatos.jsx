@@ -315,7 +315,14 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
           {[0, 0.5, 1].map(f => (
             <line key={f} x1={cp.l} y1={cp.t + (1 - f) * ph} x2={CW - cp.r} y2={cp.t + (1 - f) * ph} stroke='rgba(27,58,75,0.12)' strokeWidth='0.5' />
           ))}
+          {/* Etiqueta del maximo del eje Y (706) oculta a pedido; restaurar con [0, 1]
           {[0, 1].map(f => (
+            <text key={f} x={cp.l - 3} y={cp.t + (1 - f) * ph + 3} fill='rgba(27,58,75,0.4)' fontSize='8' textAnchor='end'>
+              {Math.round(maxVal * f)}
+            </text>
+          ))}
+          */}
+          {[0].map(f => (
             <text key={f} x={cp.l - 3} y={cp.t + (1 - f) * ph + 3} fill='rgba(27,58,75,0.4)' fontSize='8' textAnchor='end'>
               {Math.round(maxVal * f)}
             </text>
