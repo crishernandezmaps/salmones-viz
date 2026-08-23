@@ -251,6 +251,8 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <img id="ds-fiordo1"  class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fiordo1.webp" alt="">
       <img id="ds-fiordo2"  class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-fiordo2.webp" alt="">
       <img id="ds-mar"      class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-mar-jaulas.webp" alt="">
+      <!-- cuadro 6 de la maqueta: las jaulas RETROCEDEN al horizonte antes de la inmersion -->
+      <img id="ds-mar2"     class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-mar-jaulas2.webp" alt="" style="opacity:0">
       <img id="ds-camion"   class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-camion.webp" alt="" style="opacity:0">
       <img id="ds-wellboat" class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-wellboat.webp" alt="" style="opacity:0">
       <img id="ds-avion"    class="sv-layer sv-ds" data-src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/d1-avion.webp" alt="" style="opacity:0">
@@ -1020,7 +1022,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
        Capas d1-* (bloque .sv-frame-ds). Mismo mecanismo que renderMobile (NO frames). */
     function renderDesktopParallax(p) {
       var dMon2=g('ds-montana2'), dMon1=g('ds-montana1'), dFio1=g('ds-fiordo1'), dFio2=g('ds-fiordo2'),
-          dMar=g('ds-mar'), dCam=g('ds-camion'), dWb=g('ds-wellboat'), dAv=g('ds-avion'),
+          dMar=g('ds-mar'), dMar2=g('ds-mar2'), dCam=g('ds-camion'), dWb=g('ds-wellboat'), dAv=g('ds-avion'),
           dJ1=g('ds-jaula1'), dJ2=g('ds-jaula2'), dJ3=g('ds-jaula3'),
           c11b=g('ds-cola11b'), c11=g('ds-cola11'), c12=g('ds-cola12'), c13=g('ds-cola13'),
           c14=g('ds-cola14'), c15=g('ds-cola15'), dLuz=g('ds-luz');
@@ -1036,8 +1038,14 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       // las BALSAS (vista aerea) se desvanecen al entrar la jaula submarina: evita el
       // "fantasma" de dos perspectivas (aerea + lateral) superpuestas. Los CERROS/fiordos
       // se quedan como marco superior (la jaula trae su propia linea de agua).
-      var marOp = surfOp * (1 - seg(p,0.441,0.529));
-      setL(dMar,  marOp, 0,surfY,1);
+      /* CUADROS 6-7 de la maqueta: antes se saltaba del 5 (jaulas cerca) al 8 (jaula llena).
+         Las jaulas cercanas cruzan a d1-mar-jaulas2 (jaulas al horizonte, cuadro 6) y esa
+         capa queda sola mientras la superficie sigue subiendo (cuadro 7: casi todo agua);
+         recien entonces emerge la jaula llena. Cruce por opacidad, ambas capas con surfY. */
+      var mar2in = ease(seg(p,0.371,0.43));
+      var marOp = surfOp * (1 - seg(p,0.46,0.535));
+      setL(dMar,  marOp * (1 - mar2in), 0,surfY,1);
+      setL(dMar2, marOp * mar2in, 0,surfY,1);
       setL(dFio2, surfOp, 0,surfY,1); setL(dFio1, surfOp, 0,surfY,1);
       setL(dMon1, surfOp, 0,surfY,1); setL(dMon2, surfOp, 0,surfY,1);
       /* VEHICULOS: camion -> barco -> avion, entran y salen */
@@ -1052,7 +1060,9 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       // jaula1 EMERGE del fondo: arranca abajo (+55%) y sube de a poco desde ~p0.42, pero
       // OPACA (fade-in rapido 0.42-0.47) -> su cuerpo CUBRE las balsas mientras sube (no
       // translucida). Descansa en translateY 0 (llena el frame) -> NO deja franja abajo.
-      var j1rise = ease(seg(p,0.371,0.529));
+      /* la jaula llena entra DESPUES de los cuadros 6-7 (antes: 0.371, pisaba el retroceso
+         de las jaulas); termina de subir ANTES de que jaula2 empiece a fundirse (0.512) */
+      var j1rise = ease(seg(p,0.44,0.51));
       // ESCAPE con HOLD largo: jaula3 entra 0.64-0.70 y se queda hasta ~0.78; luego las
       // jaulas se FUNDEN quietas en translateY 0 (moverlas deja una franja de otro tono
       // bajo su borde -> leccion v23) y el fondo entra despues, tambien fundido en su
@@ -1066,7 +1076,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          jaula se funde 0.75-0.80 revelando el lecho que llego por detras; c11 (su
          jaula ya en el tercio superior) se funde despues. */
       var jOut = 1 - seg(p,0.75,0.80);
-      setL(dJ1, seg(p,0.371,0.415)*jOut, 0, lerp(55,0,j1rise), 1);
+      setL(dJ1, seg(p,0.44,0.485)*jOut, 0, lerp(55,0,j1rise), 1);
       setL(dJ2, seg(p,0.512,0.565)*jOut, 0, 0, 1);
       setL(dJ3, seg(p,0.565,0.618)*jOut, 0, 0, 1);
       setL(c11b, seg(p,0.70,0.72), 0, lerp(60,0, ease(seg(p,0.70,0.78))), 1);
