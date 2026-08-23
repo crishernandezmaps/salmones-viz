@@ -1,8 +1,34 @@
 # TODO — Salmones Viz
 
-_Actualizado 2026-08-20._
+_Actualizado 2026-08-23._
 
 ## Estado
+
+- **Sesion 2026-08-23 (v47-v50, post 70 slug `salmones-movil-v50`) — "queda esta version
+  hasta nuevos comentarios" (cris):**
+  - **v47 — destello anclado al foco (AMBAS ramas, commit `82dfe40`):** la "luz que cae desde
+    arriba" que sobrevivio a v44-v46 no era el glow sino el DESTELLO: `m1-flash`/`ds-flash`
+    escalan 0.25->1.6 y sin transform-origin el nucleo del gradiente viaja desde el centro de
+    pantalla hasta el foco. `paintGlow`/`paintGlowD` fijan `transformOrigin = cx`.
+  - **v48 — cuadros 6-7 de la maqueta en la inmersion de ESCRITORIO (commit `32033dc`):**
+    antes saltaba del cuadro 5 (jaulas cerca) al 8 (jaula llena). `ds-mar` cruza a `ds-mar2`
+    (`d1-mar-jaulas2.webp`, asset que existia en Pages sin usar) en 0.371-0.43; la jaula llena
+    entra retrasada (fade 0.44-0.485, ascenso hasta 0.51, antes de jaula2 en 0.512).
+  - **v49 — jaulas superficiales persistentes (commit `82a27ff`):** mar2 sin fade-out propio,
+    atada a `surfOp` (se va con fiordos/montanas al profundizar, 0.653-0.741), como el
+    cuadro 8 de la maqueta.
+  - **v50 — descenso de camara REAL del escape al fondo (commit `f53b02a`):** las jaulas
+    suben `jY=lerp(0,-33.5,ease(seg(0.70,0.78)))` (recorrido medido por correlacion: 482px de
+    1440) en sincronia con el ascenso de c11b por detras; cruce a c11 corto (0.785-0.815) y
+    alineado al pixel (<=0.3%). MATIZ a la regla v32: las d1-jaula* SI pueden trasladarse
+    OPACAS con cobertura de tope-alfa subiendo por detras y final alineado.
+  - **Mapa timeline (`?embed=timeline`, commits `02d8e2f` + `c840f44`):** etiqueta 706 del
+    eje Y oculta (comentada, restaurar con `[0, 1]`) y leyenda nueva para las lineas
+    punteadas: "Anos de aceleracion en el otorgamiento de concesiones" (texto FIEL al calculo
+    de `elbowYears`; cris descarto "doble de la produccion" al ver que el dato no dice eso).
+  - **QA headless pre-deploy sin post en vivo:** el HTML del post es autocontenido -> se
+    envuelve en `<!doctype html>...<body>` y se captura por `file://` con `shot.mjs`
+    (CDP + WebSocket nativo node>=21, scrollTo por p). Permite comparar antes/despues.
 
 - **Intro MOVIL v46 (2026-08-20, post 70 slug `salmones-movil-v46`) — APROBADA POR CRIS (v39) e iterada hasta v46**: cola rehecha con los FRAMES de la maqueta de julio
   (`final/intro_movil/SCROLL INTRO/8..13.png` -> `m1-cola8..13.webp` + `m1-cola10b.webp`).
@@ -163,10 +189,9 @@ viewport que no pediste (756x469) y la rama equivocada. `pkill -f "remote-debugg
 y borrar el `--user-data-dir` ANTES de cada corrida.
 
 ## Pendientes
-- QA de la CLIENTA a la intro de escritorio v34 (cris ya la aprobo el 2026-08-14).
-- QA de la CLIENTA a la intro MOVIL v46 en dispositivo real (cris aprobo la v39 el 2026-08-20;
-  v40-v46 son iteraciones sobre esa base: ritmo del buzo, responsive en caliente, glow).
-- QA de cris a la v46: confirmar que el glow ya no "anda por todos lados" en su ventana.
+- QA de la CLIENTA a la intro v50 (escritorio y movil, dispositivo real). Cris ya reviso la
+  inmersion de escritorio y el destello el 2026-08-23 ("queda esta version hasta nuevos
+  comentarios").
 - Los periodistas UDP: reemplazar los TEXTOS PROVISIONALES del articulo (19 marcas en el
   editor + 5 cifras XX + aviso visible que se borra al final).
 - Opcional: si se quiere que un TELEFONO en horizontal reciba igual la version movil (hoy recibe la de escritorio, correcto en encuadre pero descarga los assets 16:9), agregar una condicion de ancho.

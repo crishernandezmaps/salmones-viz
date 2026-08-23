@@ -120,6 +120,16 @@ abrir `...?p=0.78`, capturar, y QUITARLO antes de desplegar.
 
 ---
 
+- **El destello (`*-flash`) escala ANCLADO al foco:** un overlay full-viewport con
+  radial-gradient que se escala SIN `transform-origin` desplaza su nucleo hacia el centro de
+  la pantalla ("la luz cae desde arriba", v47). `paintGlow`/`paintGlowD` fijan
+  `transformOrigin` en el mismo foco del gradiente. Al tocar glow/destello, revisar SIEMPRE
+  las dos ramas.
+- **Matiz al "PROHIBIDO trasladar d1-jaula*" (v32):** la prohibicion es trasladarlas
+  translucidas o sin cobertura. SI pueden viajar OPACAS con una capa de tope-alfa subiendo
+  por detras que cubra la franja inferior, terminando ALINEADAS con el frame de destino antes
+  del cross-fade (v50: descenso al fondo, recorrido -33.5% medido por correlacion de franjas).
+
 ## QA con capturas (Chrome headless)
 
 ```bash
@@ -133,6 +143,13 @@ CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 ```
 Nota: el headless de escritorio NO emula bien el viewport movil (innerWidth
 queda en ~580); para movil real, abrir en navegador.
+
+Variante 2026-08-23 (sin tocar rutas de assets): el post es autocontenido (assets absolutos
+a Pages), asi que basta envolverlo en `<!doctype html><html><head>...</head><body>` +
+`</body></html>` y abrirlo por `file://`. Con CDP (script `shot.mjs`: node>=21, WebSocket
+nativo, `Page.captureScreenshot`) se hace scroll a cualquier p con
+`y = intro.offsetTop + p*(intro.offsetHeight - stage.offsetHeight)` — sirve para comparar
+ANTES/DESPUES sin desplegar. Matar Chrome colgado antes: `pkill -f "remote-debugging-port=92"`.
 
 ---
 
