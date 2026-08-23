@@ -1077,15 +1077,24 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
          los cruces de full-frames son por OPACIDAD, quietos (leccion v23/v30). La
          jaula se funde 0.75-0.80 revelando el lecho que llego por detras; c11 (su
          jaula ya en el tercio superior) se funde despues. */
-      var jOut = 1 - seg(p,0.75,0.80);
-      setL(dJ1, seg(p,0.44,0.485)*jOut, 0, lerp(55,0,j1rise), 1);
-      setL(dJ2, seg(p,0.512,0.565)*jOut, 0, 0, 1);
-      setL(dJ3, seg(p,0.565,0.618)*jOut, 0, 0, 1);
+      /* DESCENSO DE CAMARA REAL hacia el fondo (antes: la jaula se fundia quieta y
+         reaparecia 33.5% mas arriba en c11 -> salto con fantasma doble). Medido por
+         correlacion de franjas: la jaula de d1-cola11 esta 482px de 1440 (33.5%) mas
+         arriba que en d1-jaula3. Las jaulas viajan hacia arriba OPACAS mientras c11b
+         (lecho, tope alfa) sube por detras cubriendo la franja inferior — mismo
+         mecanismo que el descenso movil (camY + c10b). El cruce a c11 va al FINAL,
+         quieto y con la jaula ya alineada. */
+      var camD = ease(seg(p,0.70,0.78));
+      var jY = lerp(0,-33.5,camD);
+      var jOut = 1 - seg(p,0.785,0.815);
+      setL(dJ1, seg(p,0.44,0.485)*jOut, 0, lerp(55,0,j1rise)+jY, 1);
+      setL(dJ2, seg(p,0.512,0.565)*jOut, 0, jY, 1);
+      setL(dJ3, seg(p,0.565,0.618)*jOut, 0, jY, 1);
       setL(c11b, seg(p,0.70,0.72), 0, lerp(60,0, ease(seg(p,0.70,0.78))), 1);
       /* COLA FINAL (frames 11-15): 12-15 solo hacen FADE-IN y quedan opacos, el
          siguiente cubre al anterior (fondos identicos) -> el cruce se lee como
          "solo cambia el buzo", sin fantasmas. */
-      setL(c11, seg(p,0.78,0.83), 0, 0, 1);
+      setL(c11, seg(p,0.785,0.815), 0, 0, 1);   // cruce CORTO: los peces difieren entre dibujos (mismo compromiso que los buzos)
       setL(c12, seg(p,0.835,0.865), 0, 0, 1);
       setL(c13, seg(p,0.875,0.90), 0, 0, 1);
       setL(c14, seg(p,0.905,0.93), 0, 0, 1);
