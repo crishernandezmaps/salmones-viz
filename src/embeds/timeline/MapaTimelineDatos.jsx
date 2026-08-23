@@ -298,9 +298,13 @@ function RegionMap({ region, visibleCentros, centrosWithYear, currentYear, globa
       {/* Desktop: Line chart + count — bottom overlay */}
       <div className='absolute bottom-2 left-2 right-2 bg-white/70 backdrop-blur-sm rounded-lg px-2 py-1.5 z-10 hidden md:block'>
         <div className='flex items-center justify-between mb-1'>
-          <div className='flex gap-2 text-[10px] items-center'>
-            <span className='w-1.5 h-1.5 rounded-full' style={{ background: '#e07b39' }} />
+          <div className='flex gap-2 text-[10px] items-center flex-wrap'>
+            <span className='w-1.5 h-1.5 rounded-full shrink-0' style={{ background: '#e07b39' }} />
             <span className='text-[#1b3a4b]/60'>Concesión de Salmones</span>
+            <svg width='14' height='8' className='shrink-0'>
+              <line x1='0' y1='4' x2='14' y2='4' stroke='#d94040' strokeWidth='1.2' strokeDasharray='2,2' />
+            </svg>
+            <span className='text-[#1b3a4b]/60'>Años de aceleración en el otorgamiento de concesiones</span>
           </div>
           <div className='flex items-center gap-2'>
             {growthLabel && (
