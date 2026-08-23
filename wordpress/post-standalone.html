@@ -902,6 +902,9 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       if (mf) {
         mf.style.background =
           'radial-gradient(circle '+Math.round(q.r*3.2)+'px at '+cx+', rgba(255,252,235,1) 0%, rgba(255,245,200,0.85) 16%, rgba(255,238,170,0.35) 38%, rgba(255,238,170,0.08) 62%, rgba(0,0,0,0) 100%)';
+        /* el destello ESCALA: sin origin en el foco, scale() lo arrastra hacia el centro de
+           la pantalla y el nucleo "cae desde arriba" hasta posarse en la linterna */
+        mf.style.transformOrigin = cx;
       }
     }
     function setGlow(i) { if (i === glowIdx) return; glowIdx = i; paintGlow(i); }
@@ -1004,6 +1007,8 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       if (df) {
         df.style.background =
           'radial-gradient(circle '+Math.round(q.r*3.2)+'px at '+cx+', rgba(255,252,235,1) 0%, rgba(255,245,200,0.85) 16%, rgba(255,238,170,0.35) 38%, rgba(255,238,170,0.08) 62%, rgba(0,0,0,0) 100%)';
+        /* mismo arreglo que en movil: el destello escala anclado al foco de la linterna */
+        df.style.transformOrigin = cx;
       }
     }
     function setGlowD(i) { if (i === glowIdxD) return; glowIdxD = i; paintGlowD(i); }
