@@ -4,6 +4,9 @@ const EmbedTimeline = lazy(() => import('./embeds/timeline/EmbedTimeline'))
 const EmbedConflicto = lazy(() => import('./embeds/conflicto/EmbedConflicto'))
 const EmbedRelocalizaciones = lazy(() => import('./embeds/relocalizaciones/EmbedRelocalizaciones'))
 const EmbedRelocalizacionesAP = lazy(() => import('./embeds/relocalizaciones-ap/EmbedRelocalizacionesAP'))
+const EmbedConcesiones = lazy(() => import('./embeds/concesiones-empresa/EmbedConcesiones'))
+const EmbedSolicitudes = lazy(() => import('./embeds/solicitudes-reloc/EmbedSolicitudes'))
+const EmbedFusionErasmo = lazy(() => import('./embeds/fusion-erasmo/EmbedFusionErasmo'))
 const ArticuloPreview = lazy(() => import('./preview/ArticuloPreview'))
 
 const EMBEDS = {
@@ -12,6 +15,9 @@ const EMBEDS = {
   capas: EmbedRelocalizaciones,
   relocalizaciones: EmbedRelocalizaciones,
   'relocalizaciones-ap': EmbedRelocalizacionesAP,
+  concesiones: EmbedConcesiones,
+  solicitudes: EmbedSolicitudes,
+  fusion: EmbedFusionErasmo,
 }
 
 const PREVIEWS = {
