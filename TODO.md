@@ -1,8 +1,42 @@
 # TODO — Salmones Viz
 
-_Actualizado 2026-08-23._
+_Actualizado 2026-09-03._
 
 ## Estado
+
+- **Sesion 2026-09-03 — CLIENTA APRUEBA LA INTRO v50 + 5 embeds nuevos + luz del buzo al pixel (v52):**
+  - **Intro APROBADA por la clienta** ("ya dio el OK"). Luego dos devoluciones de cris por el
+    glow de la linterna -> **v51/v52** (commits `fa3cf02`, `ac0454e`): los 4 focos medidos
+    AL PIXEL sobre los assets (webp recortado y ampliado 4x, NO sobre screenshots).
+    Vigentes: movil f12 (52.0,76.0) / f13 (58.0,75.1); escritorio f14 (52.1,66.5) /
+    f15 (57.9,63.5). Post 70 slug `salmones-movil-v52`.
+  - **5 embeds nuevos** desde los prototipos de `animacion/` (Gemini del equipo UDP):
+    - `?embed=concesiones` — pictograma peces (1 pez = 20), commit `8f41276`.
+    - `?embed=solicitudes` — barras 177 solicitudes 2010-jun 2026, mismo commit.
+    - `?embed=fusion` — caso Cooke (Huillines 1 + Exploradores -> Erasmo 7): satelite Esri
+      (reemplaza tiles Google sin licencia) + **deslinde REAL** del PN Laguna San Rafael
+      (OSM 4647128 -> `data/pn_laguna_san_rafael.geojson`; Huillines 1 queda DENTRO).
+    - `?embed=solicitudes-mapa` — universo 198 solicitudes, centros de ORIGEN, naranja =
+      con fusion (130) / teal = individuales (94); `scripts/build_solicitudes_reloc.mjs`,
+      commit `7093f52`.
+    - `?embed=viajes` — arcos 3D deck.gl rojo(parte)->verde(llega), mapa girable (pitch 45),
+      dropdown por holding, viaje animado con SALMON nadador orientado al destino, ficha
+      fija abajo-izquierda (no popup anclado: tapaba puntos), encuadre al maximo zoom del
+      viaje; `scripts/build_viajes_reloc.py` parsea el xlsx (columna DMS del sector de
+      destino que relocalizaciones.json no trae) -> `data/viajes_reloc.json` (190
+      solicitudes, 272 trayectos). Commits `81fde9b`, `908e208`, `f6d6faf`, `8ea9978`.
+  - **PENDIENTES de datos (confirmar con UDP antes de publicar):** (1) titulo "1.346
+    concesiones" del pictograma = conteo de CENTROS (concesiones son 1.351 geo / 3.172
+    tabular); (2) 177 (prototipo) vs 198 filas en relocalizaciones.json, datos a dic-2025
+    no jun-2026; (3) destino en viajes = sector SOLICITADO (en tramite), declarado en
+    leyenda; (4) el caso Erasmo NO esta en el dataset de solicitudes (ya otorgado,
+    res. 2023) — por eso se pudo animar con final.
+  - **PENDIENTE QA dispositivo real**: `fusion` y `viajes` (deck.gl no rinde headless);
+    los graficos si pasaron QA visual headless (desktop + movil).
+  - **Incidente VPS**: disco 100% (83 GB de tmp*.gpkg de GDAL en /tmp, de otros proyectos)
+    -> MySQL bloqueado -> WP 504. Cris libero espacio; MySQL se destapo solo. RECURRENTE
+    (ya paso el 26-ago): falta cron de purga de /tmp y revisar builds grandes del home.
+
 
 - **Sesion 2026-08-23 (v47-v50, post 70 slug `salmones-movil-v50`) — "queda esta version
   hasta nuevos comentarios" (cris):**
