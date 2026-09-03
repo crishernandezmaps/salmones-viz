@@ -878,11 +878,11 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
        quedaba flotando lejos de la mano del buzo. Estas coordenadas salen de mirar el asset
        con grilla: frame 12 = linterna extendida hacia abajo-derecha; frame 13 = el buzo
        apunta la linterna al frente (el disco claro sobre su pecho). */
-    var FOCOS = [ [54.2, 74.9], [57.0, 74.0] ];          // linterna en los frames 12 y 13 (movil)
+    var FOCOS = [ [52.0, 76.0], [58.0, 75.1] ];          // linterna en los frames 12 y 13 (movil)
     /* Escritorio, misma idea: frame 14 = linterna en la mano extendida; frame 15 = el disco
        de la linterna apuntando AL FRENTE. El CSS traia un unico gradiente fijo en 50%/60%,
        que servia para el 14 y quedaba perdido en el 15 (feedback cris). */
-    var FOCOS_D = [ [51.0, 65.0], [57.5, 64.0] ];        // linterna en los frames 14 y 15
+    var FOCOS_D = [ [52.1, 66.5], [57.9, 63.5] ];        // linterna en los frames 14 y 15
     function assetToStage(fx, fy, aw, ah, rk) {
       var W = stage ? stage.offsetWidth : window.innerWidth;
       var H = stage ? stage.offsetHeight : window.innerHeight;
