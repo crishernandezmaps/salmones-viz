@@ -7,6 +7,7 @@ const EmbedRelocalizacionesAP = lazy(() => import('./embeds/relocalizaciones-ap/
 const EmbedConcesiones = lazy(() => import('./embeds/concesiones-empresa/EmbedConcesiones'))
 const EmbedSolicitudes = lazy(() => import('./embeds/solicitudes-reloc/EmbedSolicitudes'))
 const EmbedFusionErasmo = lazy(() => import('./embeds/fusion-erasmo/EmbedFusionErasmo'))
+const EmbedSolicitudesMapa = lazy(() => import('./embeds/solicitudes-mapa/EmbedSolicitudesMapa'))
 const ArticuloPreview = lazy(() => import('./preview/ArticuloPreview'))
 
 const EMBEDS = {
@@ -18,6 +19,7 @@ const EMBEDS = {
   concesiones: EmbedConcesiones,
   solicitudes: EmbedSolicitudes,
   fusion: EmbedFusionErasmo,
+  'solicitudes-mapa': EmbedSolicitudesMapa,
 }
 
 const PREVIEWS = {
