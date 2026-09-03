@@ -3,7 +3,9 @@
 Mapa 3D de arcos (deck.gl `ArcLayer` sobre MapLibre): cada solicitud de relocalización
 se dibuja como un arco que **parte en rojo** desde el centro de origen y **llega en
 verde** al sector de destino solicitado. El mapa se puede **girar e inclinar**
-(Ctrl + arrastrar / dos dedos). Al hacer clic en un arco se reproduce el **viaje**
+(Ctrl + arrastrar / dos dedos). El panel trae un **dropdown agrupado por holding**
+("centros · fecha") para elegir una solicitud sin cazar el arco con el cursor; al
+elegirla —o al hacer clic directo en un arco— se reproduce el **viaje**
 al estilo del caso Erasmo 7 (`?embed=fusion`): la cámara encuadra la solicitud, los
 centros de origen se desplazan hasta el destino y al llegar aparece un marcador
 pulsante con el detalle (holding, centros, fecha, tipo, estado, superficie).

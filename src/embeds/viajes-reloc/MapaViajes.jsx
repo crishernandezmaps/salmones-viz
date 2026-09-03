@@ -70,6 +70,7 @@ export default function MapaViajes() {
   const [sel, setSel] = useState(null)          // viaje seleccionado
   const [fase, setFase] = useState('todos')     // todos | playing | done
   const [meta, setMeta] = useState(null)
+  const [grupos, setGrupos] = useState([])      // [holding, viajes[]] para el dropdown
   faseRef.current = fase
 
   const buildLayers = (selId) => {
@@ -224,6 +225,19 @@ export default function MapaViajes() {
       datosRef.current = { conArco, arcos }
       setMeta({ ...data.meta })
 
+      // agrupar por holding para el dropdown, ordenado alfabeticamente y por fecha
+      const porHolding = new Map()
+      for (const v of conArco) {
+        const h = v.holding || v.titular || 'SIN HOLDING'
+        if (!porHolding.has(h)) porHolding.set(h, [])
+        porHolding.get(h).push(v)
+      }
+      setGrupos(
+        [...porHolding.entries()]
+          .sort((a, b) => a[0].localeCompare(b[0]))
+          .map(([h, vs]) => [h, vs.sort((a, b) => String(a.fecha).localeCompare(String(b.fecha)))])
+      )
+
       const b = new maplibregl.LngLatBounds()
       arcos.forEach(a => { b.extend(a.origen); b.extend(a.destino) })
       boundsTodosRef.current = b
@@ -277,9 +291,33 @@ export default function MapaViajes() {
           <span className='text-[#1b3a4b]/80 text-xs font-medium'>Llega: sector de destino solicitado</span>
         </div>
 
+        {loaded && (
+          <select
+            value={sel ? sel.id : ''}
+            disabled={fase === 'playing'}
+            onChange={(e) => {
+              const v = datosRef.current.conArco.find(x => x.id === Number(e.target.value))
+              if (v) animarViaje(v)
+              else verTodos()
+            }}
+            className='mt-2.5 w-full text-[11px] font-medium text-[#1b3a4b] bg-white border border-[#1b3a4b]/25 rounded-md px-2 py-1.5 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed'
+          >
+            <option value=''>Elige un centro para ver su viaje...</option>
+            {grupos.map(([holding, vs]) => (
+              <optgroup key={holding} label={holding}>
+                {vs.map(v => (
+                  <option key={v.id} value={v.id}>
+                    {v.centros.join(' + ')} · {fmtFecha(v.fecha)}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+        )}
+
         {!sel && (
           <p className='text-[10px] text-[#1b3a4b]/55 mt-2 leading-tight'>
-            Haz clic en un arco para reproducir su viaje. Gira e inclina el mapa con Ctrl + arrastrar (dos dedos en móvil).
+            O haz clic directo en un arco. Gira e inclina el mapa con Ctrl + arrastrar (dos dedos en móvil).
           </p>
         )}
 
