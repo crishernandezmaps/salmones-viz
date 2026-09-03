@@ -153,7 +153,9 @@ export default function MapaViajes() {
     const b = new maplibregl.LngLatBounds()
     viaje.origenes.forEach(o => b.extend(o.coord))
     b.extend(viaje.destino)
-    map.fitBounds(b, { padding: { top: 70, bottom: 70, left: 70, right: 70 }, maxZoom: 11, duration: 1600 })
+    // Maximo zoom que muestre el viaje completo: sin tope bajo, con aire extra
+    // arriba para que la parabola del arco (y el panel) no se corten en pitch 45
+    map.fitBounds(b, { padding: { top: 150, bottom: 70, left: 80, right: 80 }, maxZoom: 14, duration: 1600 })
 
     timeoutRef.current = setTimeout(() => {
       const movers = viaje.origenes.map(o => ({
