@@ -25,25 +25,27 @@ const lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]
 const easeInOut = t => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t)
 const DURACION_VIAJE = 5500
 
-function popupHTML(v) {
-  return `<div style="font-family:system-ui,sans-serif;max-width:250px;line-height:1.35">
-    <div style="font-weight:700;color:#1b3a4b;font-size:13px">${esc(v.holding || v.titular)}</div>
-    <div style="font-size:11px;color:#1b3a4b;margin-top:4px">
-      Centro${v.centros.length > 1 ? 's' : ''} ${v.centros.map(esc).join(', ')}
-      <span style="color:${VERDE_CSS};font-weight:700">&rarr; sector solicitado</span>
-    </div>
-    <div style="font-size:11px;color:#1b3a4b;opacity:.75;margin-top:4px">${fmtFecha(v.fecha)} &middot; ${esc(v.tipo)}</div>
-    ${v.superficie_ha ? `<div style="font-size:11px;color:#1b3a4b;opacity:.75">${esc(v.superficie_ha)} ha solicitadas</div>` : ''}
-    <div style="font-size:10px;color:#1b3a4b;opacity:.6;margin-top:4px">${esc(v.estado)}</div>
-  </div>`
+const fmtHa = (v) => {
+  const n = Number(v)
+  return Number.isFinite(n) ? n.toLocaleString('es-CL', { maximumFractionDigits: 2 }) : esc(v)
 }
 
-function crearMarcadorMovil(codigo) {
+// Salmon que viaja: mismo pez del pictograma (mira a la izquierda), con nado
+// ondulante; .vj-rot se rota por codigo para apuntar al destino
+function crearSalmonMovil(codigo) {
   const el = document.createElement('div')
   el.innerHTML = `
-    <div style="display:flex;align-items:center;width:max-content">
-      <div style="width:11px;height:11px;border-radius:50%;background:${ROJO_CSS};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45);flex-shrink:0"></div>
-      <div class="vj-label" style="margin-left:5px;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:700;background:#fff;color:${ROJO_CSS};border:1px solid ${ROJO_CSS};box-shadow:0 1px 3px rgba(0,0,0,.3);white-space:nowrap;transition:opacity .1s linear">${codigo}</div>
+    <div style="display:flex;flex-direction:column;align-items:center;width:max-content">
+      <div class="vj-rot" style="will-change:transform">
+        <div class="vj-swim">
+          <svg width="30" height="15" viewBox="0 0 100 50" style="color:${ROJO_CSS};fill:currentColor;display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))">
+            <rect x="5" y="12" width="70" height="26" rx="13" />
+            <polygon points="65,25 95,12 95,38" />
+            <circle cx="20" cy="21" r="3.5" fill="white" />
+          </svg>
+        </div>
+      </div>
+      <div class="vj-label" style="margin-top:2px;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:700;background:#fff;color:${ROJO_CSS};border:1px solid ${ROJO_CSS};box-shadow:0 1px 3px rgba(0,0,0,.3);white-space:nowrap;transition:opacity .1s linear">${codigo}</div>
     </div>`
   return el
 }
@@ -61,7 +63,6 @@ export default function MapaViajes() {
   const datosRef = useRef(null)
   const boundsTodosRef = useRef(null)
   const markersRef = useRef([])
-  const popupRef = useRef(null)
   const rafRef = useRef(null)
   const timeoutRef = useRef(null)
   const faseRef = useRef('todos')
@@ -135,7 +136,6 @@ export default function MapaViajes() {
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
     markersRef.current.forEach(m => m.remove())
     markersRef.current = []
-    if (popupRef.current) { popupRef.current.remove(); popupRef.current = null }
   }
 
   const clickViaje = (viaje) => {
@@ -158,11 +158,20 @@ export default function MapaViajes() {
     map.fitBounds(b, { padding: { top: 150, bottom: 70, left: 80, right: 80 }, maxZoom: 14, duration: 1600 })
 
     timeoutRef.current = setTimeout(() => {
-      const movers = viaje.origenes.map(o => ({
-        marker: new maplibregl.Marker({ element: crearMarcadorMovil(o.codigo), anchor: 'left', offset: [-7, 0] })
-          .setLngLat(o.coord).addTo(map),
-        desde: o.coord,
-      }))
+      const movers = viaje.origenes.map(o => {
+        const el = crearSalmonMovil(o.codigo)
+        const marker = new maplibregl.Marker({ element: el, anchor: 'center', offset: [0, -4] })
+          .setLngLat(o.coord).addTo(map)
+        // orientar el salmon hacia el destino (trayecto recto -> angulo fijo);
+        // el pez base mira a la izquierda, por eso el +180
+        const s1 = map.project(o.coord)
+        const s2 = map.project(viaje.destino)
+        const ang = (s2.x - s1.x || s2.y - s1.y)
+          ? Math.atan2(s2.y - s1.y, s2.x - s1.x) * 180 / Math.PI + 180
+          : 0
+        el.querySelector('.vj-rot').style.transform = `rotate(${ang}deg)`
+        return { marker, desde: o.coord }
+      })
       markersRef.current = movers.map(m => m.marker)
 
       let start = null
@@ -182,8 +191,6 @@ export default function MapaViajes() {
           const llegada = new maplibregl.Marker({ element: crearMarcadorLlegada() })
             .setLngLat(viaje.destino).addTo(map)
           markersRef.current = [llegada]
-          popupRef.current = new maplibregl.Popup({ closeOnClick: false, maxWidth: '270px', offset: 16 })
-            .setLngLat(viaje.destino).setHTML(popupHTML(viaje)).addTo(map)
           setFase('done')
           return
         }
@@ -274,6 +281,11 @@ export default function MapaViajes() {
           100% { box-shadow: 0 0 0 0 rgba(46,125,50,0); }
         }
         .vj-pulse { animation: vj-pulse-green 2s infinite; }
+        @keyframes vj-swim {
+          0%, 100% { transform: rotate(-7deg) translateY(-1px); }
+          50% { transform: rotate(7deg) translateY(1px); }
+        }
+        .vj-swim { animation: vj-swim .45s ease-in-out infinite; transform-origin: 70% 50%; }
       `}</style>
       <div ref={containerRef} style={{ position: 'absolute', inset: 0 }} />
 
@@ -325,13 +337,9 @@ export default function MapaViajes() {
 
         {sel && (
           <div className='mt-2 pt-2 border-t border-[#1b3a4b]/10'>
-            <p className='text-[11px] font-bold text-[#1b3a4b] leading-tight'>{sel.holding || sel.titular}</p>
-            <p className='text-[10px] text-[#1b3a4b]/70 mt-0.5'>
-              {sel.centros.join(' + ')} <span style={{ color: VERDE_CSS, fontWeight: 700 }}>→ destino</span> &middot; {fmtFecha(sel.fecha)}
-            </p>
-            {fase === 'playing' && <p className='text-[10px] font-bold text-[#c65a1e] mt-1.5'>Viaje en curso...</p>}
+            {fase === 'playing' && <p className='text-[10px] font-bold text-[#c65a1e]'>Viaje en curso...</p>}
             {fase === 'done' && (
-              <div className='flex gap-2 mt-2'>
+              <div className='flex gap-2'>
                 <button onClick={() => animarViaje(sel)}
                   className='text-[10px] font-bold px-2.5 py-1.5 rounded-md text-white cursor-pointer' style={{ background: '#35637f' }}>
                   Repetir viaje
@@ -352,6 +360,23 @@ export default function MapaViajes() {
           </p>
         )}
       </div>
+
+      {/* Ficha del viaje: fija abajo a la izquierda desde que parte el viaje,
+          para no tapar origen, destino ni el salmon que viaja */}
+      {sel && fase !== 'todos' && (
+        <div className='absolute bottom-8 left-3 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg p-3 z-10 max-w-[280px]'>
+          <p className='text-[13px] font-bold text-[#1b3a4b] leading-tight'>{sel.holding || sel.titular}</p>
+          <p className='text-[11px] text-[#1b3a4b] mt-1'>
+            Centro{sel.centros.length > 1 ? 's' : ''} {sel.centros.join(', ')}{' '}
+            <span style={{ color: VERDE_CSS, fontWeight: 700 }}>→ sector solicitado</span>
+          </p>
+          <p className='text-[11px] text-[#1b3a4b]/75 mt-1'>{fmtFecha(sel.fecha)} &middot; {sel.tipo}</p>
+          {sel.superficie_ha && (
+            <p className='text-[11px] text-[#1b3a4b]/75'>{fmtHa(sel.superficie_ha)} ha solicitadas</p>
+          )}
+          <p className='text-[10px] text-[#1b3a4b]/60 mt-1 leading-tight'>{sel.estado}</p>
+        </div>
+      )}
 
       <MapSpinner show={!loaded} />
     </div>
