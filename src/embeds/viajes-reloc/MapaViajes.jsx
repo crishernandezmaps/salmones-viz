@@ -1,0 +1,319 @@
+import { useEffect, useRef, useState } from 'react'
+import maplibregl from 'maplibre-gl'
+import { MapboxOverlay } from '@deck.gl/mapbox'
+import { ArcLayer, ScatterplotLayer } from '@deck.gl/layers'
+import MapSpinner from '../../shared/MapSpinner'
+import { MAP_STYLE } from '../../shared/constants'
+
+const BASE = import.meta.env.BASE_URL
+
+const ROJO = [217, 64, 64]      // parte (origen)
+const VERDE = [46, 125, 50]     // llega (destino solicitado)
+const ROJO_CSS = '#d94040'
+const VERDE_CSS = '#2e7d32'
+
+const esc = (v) => (v == null ? '' : String(v).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])))
+
+const fmtFecha = (f) => {
+  if (!f) return 'sin fecha'
+  const [y, m] = String(f).split('-')
+  const meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic']
+  return m ? `${meses[parseInt(m, 10) - 1]} ${y}` : f
+}
+
+const lerp = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]
+const easeInOut = t => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t)
+const DURACION_VIAJE = 5500
+
+function popupHTML(v) {
+  return `<div style="font-family:system-ui,sans-serif;max-width:250px;line-height:1.35">
+    <div style="font-weight:700;color:#1b3a4b;font-size:13px">${esc(v.holding || v.titular)}</div>
+    <div style="font-size:11px;color:#1b3a4b;margin-top:4px">
+      Centro${v.centros.length > 1 ? 's' : ''} ${v.centros.map(esc).join(', ')}
+      <span style="color:${VERDE_CSS};font-weight:700">&rarr; sector solicitado</span>
+    </div>
+    <div style="font-size:11px;color:#1b3a4b;opacity:.75;margin-top:4px">${fmtFecha(v.fecha)} &middot; ${esc(v.tipo)}</div>
+    ${v.superficie_ha ? `<div style="font-size:11px;color:#1b3a4b;opacity:.75">${esc(v.superficie_ha)} ha solicitadas</div>` : ''}
+    <div style="font-size:10px;color:#1b3a4b;opacity:.6;margin-top:4px">${esc(v.estado)}</div>
+  </div>`
+}
+
+function crearMarcadorMovil(codigo) {
+  const el = document.createElement('div')
+  el.innerHTML = `
+    <div style="display:flex;align-items:center;width:max-content">
+      <div style="width:11px;height:11px;border-radius:50%;background:${ROJO_CSS};border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.45);flex-shrink:0"></div>
+      <div class="vj-label" style="margin-left:5px;padding:1px 5px;border-radius:4px;font-size:10px;font-weight:700;background:#fff;color:${ROJO_CSS};border:1px solid ${ROJO_CSS};box-shadow:0 1px 3px rgba(0,0,0,.3);white-space:nowrap;transition:opacity .1s linear">${codigo}</div>
+    </div>`
+  return el
+}
+
+function crearMarcadorLlegada() {
+  const el = document.createElement('div')
+  el.innerHTML = `<div class="vj-pulse" style="width:20px;height:20px;border-radius:50%;background:${VERDE_CSS};border:3px solid #fff;box-shadow:0 0 14px 4px rgba(46,125,50,.6)"></div>`
+  return el
+}
+
+export default function MapaViajes() {
+  const containerRef = useRef(null)
+  const mapRef = useRef(null)
+  const overlayRef = useRef(null)
+  const datosRef = useRef(null)
+  const boundsTodosRef = useRef(null)
+  const markersRef = useRef([])
+  const popupRef = useRef(null)
+  const rafRef = useRef(null)
+  const timeoutRef = useRef(null)
+  const faseRef = useRef('todos')
+
+  const [loaded, setLoaded] = useState(false)
+  const [sel, setSel] = useState(null)          // viaje seleccionado
+  const [fase, setFase] = useState('todos')     // todos | playing | done
+  const [meta, setMeta] = useState(null)
+  faseRef.current = fase
+
+  const buildLayers = (selId) => {
+    const { arcos, conArco } = datosRef.current
+    const dim = selId != null
+    const alphaArc = (d) => (dim && d.viaje.id !== selId ? 28 : 235)
+    const alphaPt = (d, id) => (dim && id !== selId ? 30 : 210)
+    return [
+      new ArcLayer({
+        id: 'arcos',
+        data: arcos,
+        getSourcePosition: d => d.origen,
+        getTargetPosition: d => d.destino,
+        getSourceColor: d => [...ROJO, alphaArc(d)],
+        getTargetColor: d => [...VERDE, alphaArc(d)],
+        getWidth: d => (dim && d.viaje.id === selId ? 3.5 : 2),
+        widthUnits: 'pixels',
+        getHeight: 0.7,
+        pickable: true,
+        autoHighlight: !dim,
+        highlightColor: [255, 170, 40, 255],
+        onClick: ({ object }) => object && clickViaje(object.viaje),
+        updateTriggers: { getSourceColor: selId, getTargetColor: selId, getWidth: selId },
+      }),
+      new ScatterplotLayer({
+        id: 'origenes',
+        data: arcos,
+        getPosition: d => d.origen,
+        getFillColor: d => [...ROJO, alphaPt(d, d.viaje.id)],
+        radiusMinPixels: 3,
+        radiusMaxPixels: 6,
+        stroked: true,
+        getLineColor: [255, 255, 255, 200],
+        lineWidthMinPixels: 1,
+        pickable: true,
+        onClick: ({ object }) => object && clickViaje(object.viaje),
+        updateTriggers: { getFillColor: selId },
+      }),
+      new ScatterplotLayer({
+        id: 'destinos',
+        data: conArco,
+        getPosition: d => d.destino,
+        getFillColor: d => [...VERDE, alphaPt(d, d.id)],
+        radiusMinPixels: 3.5,
+        radiusMaxPixels: 7,
+        stroked: true,
+        getLineColor: [255, 255, 255, 200],
+        lineWidthMinPixels: 1,
+        pickable: true,
+        onClick: ({ object }) => object && clickViaje(object),
+        updateTriggers: { getFillColor: selId },
+      }),
+    ]
+  }
+
+  const refreshLayers = (selId) => {
+    overlayRef.current.setProps({ layers: buildLayers(selId) })
+  }
+
+  const limpiarAnimacion = () => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    markersRef.current.forEach(m => m.remove())
+    markersRef.current = []
+    if (popupRef.current) { popupRef.current.remove(); popupRef.current = null }
+  }
+
+  const clickViaje = (viaje) => {
+    if (faseRef.current === 'playing') return
+    animarViaje(viaje)
+  }
+
+  const animarViaje = (viaje) => {
+    const map = mapRef.current
+    limpiarAnimacion()
+    setSel(viaje)
+    setFase('playing')
+    refreshLayers(viaje.id)
+
+    const b = new maplibregl.LngLatBounds()
+    viaje.origenes.forEach(o => b.extend(o.coord))
+    b.extend(viaje.destino)
+    map.fitBounds(b, { padding: { top: 70, bottom: 70, left: 70, right: 70 }, maxZoom: 11, duration: 1600 })
+
+    timeoutRef.current = setTimeout(() => {
+      const movers = viaje.origenes.map(o => ({
+        marker: new maplibregl.Marker({ element: crearMarcadorMovil(o.codigo), anchor: 'left', offset: [-7, 0] })
+          .setLngLat(o.coord).addTo(map),
+        desde: o.coord,
+      }))
+      markersRef.current = movers.map(m => m.marker)
+
+      let start = null
+      const paso = (ts) => {
+        if (!mapRef.current) return
+        if (start == null) start = ts
+        const t = Math.min(1, (ts - start) / DURACION_VIAJE)
+        const e = easeInOut(t)
+        movers.forEach(m => m.marker.setLngLat(lerp(m.desde, viaje.destino, e)))
+        const op = e > 0.75 ? Math.max(0, 1 - (e - 0.75) / 0.2) : 1
+        movers.forEach(m => {
+          const label = m.marker.getElement().querySelector('.vj-label')
+          if (label) label.style.opacity = op
+        })
+        if (t >= 1) {
+          markersRef.current.forEach(m => m.remove())
+          const llegada = new maplibregl.Marker({ element: crearMarcadorLlegada() })
+            .setLngLat(viaje.destino).addTo(map)
+          markersRef.current = [llegada]
+          popupRef.current = new maplibregl.Popup({ closeOnClick: false, maxWidth: '270px', offset: 16 })
+            .setLngLat(viaje.destino).setHTML(popupHTML(viaje)).addTo(map)
+          setFase('done')
+          return
+        }
+        rafRef.current = requestAnimationFrame(paso)
+      }
+      rafRef.current = requestAnimationFrame(paso)
+    }, 1750)
+  }
+
+  const verTodos = () => {
+    if (faseRef.current === 'playing') return
+    limpiarAnimacion()
+    setSel(null)
+    setFase('todos')
+    refreshLayers(null)
+    mapRef.current.fitBounds(boundsTodosRef.current, { padding: 60, duration: 1500 })
+  }
+
+  useEffect(() => {
+    if (mapRef.current) return
+    const map = new maplibregl.Map({
+      container: containerRef.current,
+      style: MAP_STYLE,
+      center: [-73.3, -46.5],
+      zoom: 5,
+      pitch: 45,
+      bearing: -12,
+      attributionControl: false,
+      cooperativeGestures: true,
+      locale: { 'CooperativeGesturesHandler.MobileHelpText': 'Usa dos dedos para mover el mapa', 'CooperativeGesturesHandler.WindowsHelpText': 'Usa Ctrl + scroll para acercar', 'CooperativeGesturesHandler.MacHelpText': 'Usa Cmd + scroll para acercar' },
+    })
+    mapRef.current = map
+    map.addControl(new maplibregl.NavigationControl({ showCompass: true, visualizePitch: true }), 'top-right')
+    map.scrollZoom.disable()
+    map.touchZoomRotate.enableRotation()
+
+    map.on('load', async () => {
+      const data = await fetch(BASE + 'data/viajes_reloc.json').then(r => r.json())
+      const conArco = data.viajes.filter(v => v.origenes.length > 0)
+      const arcos = conArco.flatMap(v => v.origenes.map(o => ({ viaje: v, origen: o.coord, destino: v.destino })))
+      datosRef.current = { conArco, arcos }
+      setMeta({ ...data.meta })
+
+      const b = new maplibregl.LngLatBounds()
+      arcos.forEach(a => { b.extend(a.origen); b.extend(a.destino) })
+      boundsTodosRef.current = b
+
+      overlayRef.current = new MapboxOverlay({
+        layers: buildLayers(null),
+        getTooltip: ({ object }) => {
+          if (!object || faseRef.current !== 'todos') return null
+          const v = object.viaje || object
+          return { text: `${v.holding || v.titular}\n${v.centros.join(', ')} → sector solicitado` }
+        },
+      })
+      map.addControl(overlayRef.current)
+
+      map.fitBounds(b, { padding: 60, duration: 0 })
+      setLoaded(true)
+    })
+
+    return () => {
+      limpiarAnimacion()
+      map.remove()
+      mapRef.current = null
+    }
+  }, [])
+
+  return (
+    <div style={{ position: 'absolute', inset: 0 }}>
+      <style>{`
+        @keyframes vj-pulse-green {
+          0% { box-shadow: 0 0 0 0 rgba(46,125,50,.7); }
+          70% { box-shadow: 0 0 0 18px rgba(46,125,50,0); }
+          100% { box-shadow: 0 0 0 0 rgba(46,125,50,0); }
+        }
+        .vj-pulse { animation: vj-pulse-green 2s infinite; }
+      `}</style>
+      <div ref={containerRef} style={{ position: 'absolute', inset: 0 }} />
+
+      <div className='absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-lg shadow-sm p-3 z-10 max-w-[290px]'>
+        <p className='text-[11px] font-bold uppercase tracking-wider text-[#1b3a4b] leading-tight'>Viajes de relocalización</p>
+        {meta && (
+          <p className='text-[10px] text-[#1b3a4b]/60 mt-0.5 mb-2'>
+            {meta.con_arco} solicitudes &middot; {meta.arcos} trayectos &middot; 2010&ndash;2025
+          </p>
+        )}
+        <div className='flex items-center gap-2 mb-1'>
+          <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: ROJO_CSS }} />
+          <span className='text-[#1b3a4b]/80 text-xs font-medium'>Parte: centro de origen</span>
+        </div>
+        <div className='flex items-center gap-2'>
+          <span className='w-2.5 h-2.5 rounded-full shrink-0' style={{ background: VERDE_CSS }} />
+          <span className='text-[#1b3a4b]/80 text-xs font-medium'>Llega: sector de destino solicitado</span>
+        </div>
+
+        {!sel && (
+          <p className='text-[10px] text-[#1b3a4b]/55 mt-2 leading-tight'>
+            Haz clic en un arco para reproducir su viaje. Gira e inclina el mapa con Ctrl + arrastrar (dos dedos en móvil).
+          </p>
+        )}
+
+        {sel && (
+          <div className='mt-2 pt-2 border-t border-[#1b3a4b]/10'>
+            <p className='text-[11px] font-bold text-[#1b3a4b] leading-tight'>{sel.holding || sel.titular}</p>
+            <p className='text-[10px] text-[#1b3a4b]/70 mt-0.5'>
+              {sel.centros.join(' + ')} <span style={{ color: VERDE_CSS, fontWeight: 700 }}>→ destino</span> &middot; {fmtFecha(sel.fecha)}
+            </p>
+            {fase === 'playing' && <p className='text-[10px] font-bold text-[#c65a1e] mt-1.5'>Viaje en curso...</p>}
+            {fase === 'done' && (
+              <div className='flex gap-2 mt-2'>
+                <button onClick={() => animarViaje(sel)}
+                  className='text-[10px] font-bold px-2.5 py-1.5 rounded-md text-white cursor-pointer' style={{ background: '#35637f' }}>
+                  Repetir viaje
+                </button>
+                <button onClick={verTodos}
+                  className='text-[10px] font-bold px-2.5 py-1.5 rounded-md cursor-pointer border border-[#1b3a4b]/25 text-[#1b3a4b]/75 bg-white'>
+                  Ver todos
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {meta && !sel && (
+          <p className='text-[9px] text-[#1b3a4b]/45 mt-2 leading-tight'>
+            Destino = centroide del sector solicitado a Subpesca (trámites en curso, no siempre otorgados).
+            {' '}{meta.sin_destino} solicitudes sin coordenada de destino y {meta.origenes_sin_coord} centros de origen sin coordenada oficial no se muestran.
+          </p>
+        )}
+      </div>
+
+      <MapSpinner show={!loaded} />
+    </div>
+  )
+}

@@ -8,6 +8,7 @@ const EmbedConcesiones = lazy(() => import('./embeds/concesiones-empresa/EmbedCo
 const EmbedSolicitudes = lazy(() => import('./embeds/solicitudes-reloc/EmbedSolicitudes'))
 const EmbedFusionErasmo = lazy(() => import('./embeds/fusion-erasmo/EmbedFusionErasmo'))
 const EmbedSolicitudesMapa = lazy(() => import('./embeds/solicitudes-mapa/EmbedSolicitudesMapa'))
+const EmbedViajes = lazy(() => import('./embeds/viajes-reloc/EmbedViajes'))
 const ArticuloPreview = lazy(() => import('./preview/ArticuloPreview'))
 
 const EMBEDS = {
@@ -20,6 +21,7 @@ const EMBEDS = {
   solicitudes: EmbedSolicitudes,
   fusion: EmbedFusionErasmo,
   'solicitudes-mapa': EmbedSolicitudesMapa,
+  viajes: EmbedViajes,
 }
 
 const PREVIEWS = {
