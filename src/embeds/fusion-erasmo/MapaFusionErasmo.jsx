@@ -268,7 +268,7 @@ export default function MapaFusionErasmo() {
     }, 3200)
   }
 
-  const estadoTexto = { idle: 'Reproducir recorrido', playing: 'Fusión en proceso...', done: 'Volver a ver' }[fase]
+  const estadoTexto = { idle: 'Reproducir recorrido', playing: 'En proceso', done: 'Volver a ver' }[fase]
   const btnColor = { idle: { background: C.hui, color: C.crema }, playing: { background: C.mist, color: C.dark, cursor: 'not-allowed' }, done: { background: C.accent, color: C.dark } }[fase]
 
   return (
