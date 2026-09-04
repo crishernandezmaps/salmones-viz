@@ -4,6 +4,19 @@ import MapSpinner from '../../shared/MapSpinner'
 
 const BASE = import.meta.env.BASE_URL
 
+/* ── Detecta viewport movil de forma reactiva (orientacion / resize del iframe) ── */
+function useIsMobile(bp = 768) {
+  const [m, setM] = useState(() => typeof window !== 'undefined' && window.innerWidth < bp)
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${bp - 1}px)`)
+    const on = () => setM(mq.matches)
+    on()
+    mq.addEventListener('change', on)
+    return () => mq.removeEventListener('change', on)
+  }, [bp])
+  return m
+}
+
 // Coordenadas [lng, lat]
 const HUILLINES = [-73.592667, -46.322778]    // centro 110225 (extinguido)
 const EXPLORADORES = [-73.53, -46.303333]     // centro 110295 (extinguido)
@@ -90,6 +103,8 @@ export default function MapaFusionErasmo() {
   const mapRef = useRef(null)
   const [loaded, setLoaded] = useState(false)
   const [fase, setFase] = useState('idle') // idle | playing | done
+  const isMobile = useIsMobile()
+  const [panelOpen, setPanelOpen] = useState(() => typeof window === 'undefined' || window.innerWidth >= 768)
 
   const markersRef = useRef({ hui: null, exp: null, era: null })
   const popupRef = useRef(null)
@@ -244,6 +259,7 @@ export default function MapaFusionErasmo() {
     if (!loaded || fase === 'playing') return
     if (fase === 'done') { reiniciar(); return }
     setFase('playing')
+    if (isMobile) setPanelOpen(false) // en movil la tarjeta se pliega para despejar el mapa durante el recorrido
     const map = mapRef.current
     map.flyTo({ center: mid(HUILLINES, EXPLORADORES), zoom: ZOOM_TRAVESIA, duration: 3000, essential: true })
     timeoutRef.current = setTimeout(() => {
@@ -268,15 +284,20 @@ export default function MapaFusionErasmo() {
       `}</style>
       <div ref={containerRef} style={{ position: 'absolute', inset: 0 }} />
 
-      {/* Panel de informacion */}
-      <div className='absolute top-3 left-3 md:top-5 md:left-5 w-[calc(100%-24px)] max-w-[300px] rounded-xl p-3.5 z-10 shadow-2xl border-2'
+      {/* Panel de informacion — en movil parte plegado y solo muestra titulo + control */}
+      <div className='absolute top-3 left-3 md:top-5 md:left-5 w-[calc(100%-24px)] max-w-[240px] md:max-w-[300px] rounded-xl p-2.5 md:p-3.5 z-10 shadow-2xl border-2'
         style={{ background: 'rgba(234,233,233,.95)', backdropFilter: 'blur(6px)', borderColor: C.mist }}>
-        <h1 className='text-[15px] font-bold leading-tight mb-0.5' style={{ color: C.dark }}>
-          Fusión y relocalización de Huillines 1 y Exploradores
-        </h1>
-        <p className='text-[11px] font-semibold mb-3' style={{ color: C.hui }}>Cooke Aquaculture Chile S.A.</p>
+        <button onClick={() => setPanelOpen(o => !o)} className='w-full flex items-start justify-between gap-2 text-left cursor-pointer'>
+          <h1 className='text-[13px] md:text-[15px] font-bold leading-tight' style={{ color: C.dark }}>
+            Fusión y relocalización de Huillines 1 y Exploradores
+          </h1>
+          <span className='text-[10px] mt-0.5 shrink-0' style={{ color: C.hui }}>{panelOpen ? '▾' : '▸'}</span>
+        </button>
 
-        <div className='space-y-1.5 mb-3 text-xs'>
+        <div className={panelOpen ? 'block' : 'hidden'}>
+        <p className='text-[11px] font-semibold mt-0.5 mb-3' style={{ color: C.hui }}>Cooke Aquaculture Chile S.A.</p>
+
+        <div className='space-y-1.5 text-xs'>
           <div className='flex items-center p-1.5 rounded-lg border transition-opacity duration-500'
             style={{ background: 'rgba(152,185,190,.3)', borderColor: C.mist, opacity: fase === 'done' ? 0.5 : 1 }}>
             <span className='w-2.5 h-2.5 rounded-full mr-2 shrink-0 border' style={{ background: C.hui, borderColor: C.crema }} />
@@ -302,14 +323,15 @@ export default function MapaFusionErasmo() {
             <span className='text-[10px] leading-tight' style={{ color: C.dark }}>Deslinde del Parque Nacional Laguna San Rafael</span>
           </div>
         </div>
+        </div>
 
-        {/* Control de reproduccion */}
-        <div className='flex justify-center border-t-2 pt-2.5' style={{ borderColor: 'rgba(152,185,190,.5)' }}>
+        {/* Control de reproduccion — siempre visible, aunque el panel este plegado */}
+        <div className='flex justify-center border-t-2 mt-2 pt-2 md:mt-3 md:pt-2.5' style={{ borderColor: 'rgba(152,185,190,.5)' }}>
           <button
             onClick={onControl}
             disabled={fase === 'playing'}
             title={estadoTexto}
-            className='w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105'
+            className='w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-105'
             style={{ ...btnColor, border: `3px solid ${C.crema}`, boxShadow: '0 4px 6px rgba(68,40,5,.3)', cursor: fase === 'playing' ? 'not-allowed' : 'pointer' }}
           >
             {fase === 'idle' && (
