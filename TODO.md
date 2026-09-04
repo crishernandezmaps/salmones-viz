@@ -1,8 +1,22 @@
 # TODO — Salmones Viz
 
-_Actualizado 2026-09-03._
+_Actualizado 2026-09-04._
 
 ## Estado
+
+- **Sesion 2026-09-04 — tarjeta del embed `fusion` responsive en movil (commit `690e321`):**
+  - En iframes moviles la tarjeta cubria gran parte del mapa. Se replico el patron de
+    `MapaConflicto` (hook `useIsMobile` + panel plegable): bajo 768px la tarjeta parte
+    PLEGADA (solo titulo + boton de reproduccion, ~20% de la pantalla), la leyenda se
+    despliega con el chevron, y al iniciar el recorrido se pliega sola para despejar el
+    mapa. Escritorio sin cambios (abierta por defecto). Patron a reusar si otra tarjeta
+    de embed estorba en movil.
+  - QA: build OK + headless CDP (viewport 390x780 y 1440x900, `/tmp/qa-salmones/shot_fusion.mjs`);
+    deploy verificado en Pages (clase nueva presente en el CSS publicado). Cris lo abrio
+    en Brave movil real: mapa satelital y animacion funcionan -> el QA de dispositivo real
+    de `fusion` queda cubierto; **sigue pendiente el de `viajes`** (deck.gl).
+  - Ojo: el run de Actions de este push demoro varios minutos en arrancar; ante un
+    "esta igual" del cliente, revisar `gh run list` antes de diagnosticar el codigo.
 
 - **Sesion 2026-09-03 — CLIENTA APRUEBA LA INTRO v50 + 5 embeds nuevos + luz del buzo al pixel (v52):**
   - **Intro APROBADA por la clienta** ("ya dio el OK"). Luego dos devoluciones de cris por el
