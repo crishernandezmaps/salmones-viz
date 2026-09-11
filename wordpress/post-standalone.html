@@ -1,4 +1,27 @@
 <!-- wp:html -->
+<!-- ######################################################################
+     ARTICULO "ASI NADAN LOS SALMONES EN CHILE"
+     Guia rapida para editar este post. Buscar (Ctrl+F / Cmd+F) las marcas.
+     ----------------------------------------------------------------------
+     QUE SE PUEDE EDITAR Y DONDE:
+
+       "BLOQUE EDITABLE 1"  -> las 5 cajas de texto sobre la animacion inicial
+       "BLOQUE EDITABLE 2"  -> los textos del cuerpo del reportaje
+       "BLOQUE EDITABLE 3"  -> las 3 tarjetas del final (otros reportajes)
+       "PORTADA"            -> volanta, titulo y bajada de la apertura
+       "CREDITOS"           -> metodologia y autoria del cierre
+       "TEXTO PROVISIONAL"  -> cada texto de relleno que falta reemplazar
+
+     QUE NO HAY QUE TOCAR:
+       - El bloque de ESTILOS de mas abajo (todo el diseno del articulo).
+       - El bloque de CODIGO del final (mueve la animacion de apertura).
+       - Los id que empiezan con sv- (sv-box1, sv-stage, etc.).
+       - Los <iframe> de los mapas: son visualizaciones que viven aparte.
+
+     REGLA IMPORTANTE: dentro del bloque de CODIGO no puede aparecer NUNCA el signo
+     ampersand. WordPress lo reescribe al guardar y la animacion deja de
+     funcionar por completo, en escritorio y en telefono.
+     ###################################################################### -->
 <!--
   ============================================================================
   UDP — "Asi nadan los salmones en Chile"  ·  POST SCROLLYTELLING (post ID 47)
@@ -72,6 +95,32 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 .wp-block-group:has(> .wp-block-post-content) { padding-top:0 !important; margin-top:0 !important; }
 .entry-content { margin-top:0 !important; padding-top:0 !important; }
 
+/* ====== SIN HUINCHAS: cierre INFERIOR ======
+   Espejo de las reglas de arriba. Sin esto el tema deja una franja de su color
+   entre el final del articulo y el pie de pagina. */
+html, body { margin-bottom:0 !important; padding-bottom:0 !important; }
+.wp-site-blocks { margin-bottom:0 !important; padding-bottom:0 !important; }
+.wp-site-blocks > main, main.is-layout-constrained { margin-bottom:0 !important; padding-bottom:0 !important; }
+.wp-block-group:has(> .wp-block-post-content) { padding-bottom:0 !important; margin-bottom:0 !important; }
+.entry-content { margin-bottom:0 !important; padding-bottom:0 !important; }
+.entry-content > *:last-child, .wp-block-post-content > *:last-child { margin-bottom:0 !important; }
+.story-wrap { margin-bottom:0 !important; padding-bottom:0 !important; }
+.story-wrap > *:last-child { margin-bottom:0 !important; }
+
+/* ====== SIN HUINCHAS: temas CLASICOS (grid tipo Bootstrap) ======
+   Algunos temas (p.ej. el de cip.udp.cl) meten el contenido dentro de
+   .container > .row > .col-*, que fijan ancho, padding y float. Se neutralizan
+   SOLO los contenedores que contienen el articulo, para no descuadrar el resto
+   del sitio (cabecera, menu, pie).
+   OJO: aqui overflow va a VISIBLE. Nunca hidden/clip: mata el position:sticky. */
+.container:has(.story-wrap), .row:has(.story-wrap), [class*="col-"]:has(.story-wrap),
+#content:has(.story-wrap), .site-content:has(.story-wrap), .content-area:has(.story-wrap),
+.page-content:has(.story-wrap), article:has(.story-wrap) {
+  width:100% !important; max-width:none !important; flex:0 0 100% !important;
+  float:none !important; margin:0 !important; padding:0 !important;
+  overflow:visible !important; border:0 !important;
+}
+
 /* ====== Neutralizar constructores visuales (Elementor y similares) ======
    Si el post se arma con Elementor, sus contenedores (.e-con / .e-con-inner)
    aplican padding vertical y max-width propios: eso mete una huincha blanca
@@ -122,6 +171,40 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 .sv-cue { position:absolute; left:0; right:0; bottom:26px; text-align:center; z-index:50; font-family:var(--story-font-ui); font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#fff; opacity:0.85; will-change:opacity; }
 .sv-cue span { display:block; font-size:20px; margin-top:6px; animation:svBob 1.6s ease-in-out infinite; }
 @keyframes svBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+/* ====== REPORTAJES EN PROFUNDIDAD (cards del cierre) ====== */
+.story-more { background:#eceff3; padding:64px 24px 72px; margin:0 !important; }
+.story-more__title { font-family:var(--story-font-heading) !important; font-size:clamp(1.5rem,3.4vw,2.3rem) !important; font-weight:800 !important; letter-spacing:0.5px; text-transform:uppercase; color:#2e3d52 !important; text-align:center !important; margin:0 0 42px !important; padding:0 !important; }
+.story-more__grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; max-width:1180px; margin:0 auto !important; }
+.story-wrap .story-more__card { display:block; background:#f7f8fa; border:1px solid #dfe3e8; padding:14px 14px 22px !important; margin:0 !important; text-decoration:none !important; color:inherit !important; transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+.story-wrap .story-more__card:hover { transform:translateY(-4px); box-shadow:0 12px 30px rgba(46,61,82,0.16); border-color:#c4ccd6; }
+.story-more__img { display:block; width:100%; aspect-ratio:1/1; background:#fff; overflow:hidden; margin-bottom:20px; }
+.story-more__img img { display:block; width:100%; height:100%; object-fit:cover; margin:0 !important; }
+.story-wrap .story-more__card h3 { font-family:var(--story-font-heading) !important; font-size:1.18rem !important; font-weight:800 !important; line-height:1.25 !important; color:#2e3d52 !important; margin:0 0 12px !important; padding:0 18px !important; text-align:left !important; }
+.story-wrap .story-more__card p { font-family:var(--story-font-heading) !important; font-size:1rem !important; line-height:1.5 !important; color:#4a5568 !important; margin:0 !important; padding:0 18px !important; text-align:left !important; max-width:none !important; }
+@media (max-width:900px){
+  .story-more__grid { grid-template-columns:1fr; gap:22px; max-width:520px; }
+  .story-more { padding:48px 18px 56px; }
+  .story-more__title { margin:0 0 30px !important; }
+}
+/* ====== CAJAS DE TEXTO DE LA INTRO (maqueta del cliente, sep-2026) ======
+   Geometria medida AL PIXEL sobre las capturas: caja centrada, ancho 63% del
+   viewport (left/right 18.5%), anclada arriba. En movil se ensancha a 88%
+   (left/right 6%) porque 63% en un telefono deja la linea ilegible.
+   Reemplazan a los .sv-beat (las frases sueltas sobre fondo oscuro). */
+/* Centrada VERTICALMENTE en la pantalla: se estira de tope a tope y el contenido
+   se alinea al medio con flex. Sin transform, para no arriesgar el sticky. */
+.sv-box { position:absolute; left:18.5%; right:18.5%; top:0; bottom:0; display:flex; align-items:center; justify-content:center; z-index:45; opacity:0; will-change:opacity; pointer-events:none; }
+.story-wrap .sv-box .sv-box__in { width:100%; background:rgba(195,195,195,0.55) !important; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px); padding:22px 28px !important; margin:0 !important; border-radius:2px; box-shadow:0 6px 26px rgba(7,22,34,0.22); }
+.story-wrap .sv-box h3 { font-family:var(--story-font-heading) !important; font-size:clamp(0.95rem,1.45vw,1.08rem) !important; font-weight:700 !important; letter-spacing:0.5px; color:#0d1b2a !important; margin:0 0 14px !important; padding:0 !important; text-align:center !important; text-transform:none !important; }
+.story-wrap .sv-box p { font-family:var(--story-font-body) !important; font-size:clamp(0.86rem,1.12vw,1.0rem) !important; line-height:1.5 !important; color:#0d1b2a !important; margin:0 0 10px !important; padding:0 !important; text-align:center !important; max-width:none !important; }
+.story-wrap .sv-box p:last-child { margin-bottom:0 !important; }
+.story-wrap .sv-box .sv-box__prov { display:block; margin-top:12px !important; font-family:var(--story-font-ui) !important; font-size:11px !important; letter-spacing:1.5px; text-transform:uppercase; color:#8a4b00 !important; opacity:0.9; }
+@media (max-width:767px){
+  .sv-box { left:6%; right:6%; }
+  .story-wrap .sv-box .sv-box__in { padding:16px 18px !important; }
+  .story-wrap .sv-box h3 { font-size:0.95rem !important; margin:0 0 10px !important; }
+  .story-wrap .sv-box p { font-size:0.86rem !important; line-height:1.45 !important; }
+}
 .sv-beat { position:absolute; left:0; right:0; bottom:12%; z-index:40; padding:0 18px; text-align:center; will-change:opacity; }
 .story-wrap .sv-beat p { display:block; max-width:460px; margin:0 auto !important; background:rgba(7,22,34,0.62); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); color:#fff !important; font-family:var(--story-font-body) !important; font-size:clamp(1rem,4.2vw,1.2rem) !important; line-height:1.5 !important; padding:13px 19px; border-radius:6px; }
 
@@ -355,14 +438,55 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
     <div class="sv-black" id="sv-black"></div>
     <div id="m1-flash" style="position:absolute;inset:0;opacity:0;pointer-events:none;z-index:49;transform:scale(0.2);will-change:opacity,transform;"></div>
     <div class="sv-scrim" id="sv-scrim"></div>
+    <!-- ==================================================================
+         PORTADA de la animacion: volanta, titulo y bajada del reportaje.
+         Se editan los tres textos de abajo. No tocar el id ni las clases.
+         ================================================================== -->
     <div class="sv-hero" id="sv-hero">
       <div class="sv-kicker">Universidad Diego Portales</div>
       <h1>Asi nadan los salmones en Chile</h1>
       <div class="sv-sub">Cuatro decadas de una industria que transformo los mares del sur</div>
     </div>
-    <div class="sv-beat" id="sv-beat1"><p>Miles de jaulas flotan en los fiordos del sur.</p></div>
-    <div class="sv-beat" id="sv-beat2"><p>Bajo la superficie, millones de salmones hacinados.</p></div>
-    <div class="sv-beat" id="sv-beat3"><p>Al exceder la produccion, los peces escapan y el fondo se degrada.</p></div>
+    <!-- ==================================================================
+         BLOQUE EDITABLE 1 de 3  -  CAJAS DE TEXTO DE LA INTRO (animacion)
+         ------------------------------------------------------------------
+         Son las 5 cajas grises que aparecen sobre la animacion de apertura,
+         una por escena. De cada una se edita:
+           - EL TITULO  -> el texto dentro de <h3>...</h3>  ("Bloque 1", etc.)
+           - EL TEXTO   -> los parrafos <p>...</p>. Se pueden agregar o quitar
+                           parrafos dentro de la misma caja.
+         NO tocar los id (sv-box1 ... sv-box5): el codigo de la animacion los
+         usa para saber cuando mostrar y ocultar cada caja.
+         Si un texto queda muy largo, la caja crece y puede tapar la escena:
+         conviene mantenerlos del largo que tienen hoy.
+         Los rotulos "Bloque N" son PROVISIONALES (vienen de la maqueta).
+         ================================================================== -->
+    <div class="sv-box" id="sv-box1"><div class="sv-box__in">
+      <h3>Bloque 1</h3>
+      <p>El primer trimestre de 2026, las exportaciones totales en Chile cayeron en un 4,6%. Pero en el sur mas austral el panorama fue otro. En la Region de Los Lagos, las exportaciones crecieron en un 13,8% gracias al salmon. Lo mismo ocurrio en Aysen, con un aumento de un 16% gracias al mismo producto. En Magallanes, donde hay menos concesiones acuicolas, las exportaciones totales cayeron en un 0,5% por la baja en envios de productos quimicos y material de transporte, pero fue compensado por exportaciones de salmon.</p>
+    </div></div>
+    <div class="sv-box" id="sv-box2"><div class="sv-box__in">
+      <h3>Bloque 2</h3>
+      <p>El 2025 fue un ano record en las exportaciones de salmon, con mas de 107 millones de dolares. Solo lo supero el cobre, con 55.200 millones de dolares.</p>
+      <p>Segun estimaciones de los principales gremios salmoneros, la industria genera mas de 45.000 empleos directos. En 2024, de acuerdo con SalmonChile, la industria genero cerca de 86.000 trabajos en toda la cadena productiva. Entre los empresarios destacan que el salmon es la proteina animal que emite menos huella de carbono, que utilizan menos porciones de tierra, y que aprovecha mas la porcion comestible, en comparacion al sector ganadero.</p>
+    </div></div>
+    <div class="sv-box" id="sv-box3"><div class="sv-box__in">
+      <h3>Bloque 3</h3>
+      <p>Sin embargo, los gremios consideran que la industria esta estancada. Estados Unidos, principal mercado del salmon chileno, subio los aranceles (...). Tambien acusan que la legislacion y regulacion chilena es engorrosa, lo que les dificultaria expandirse a nuevas aguas.</p>
+      <p>Asimismo, las empresas mas grandes enfrentan procesos por faltas ambientales, penales, comerciales (...)</p>
+    </div></div>
+    <!-- TEXTO PROVISIONAL: el bloque 4 venia VACIO en la maqueta del cliente -->
+    <div class="sv-box" id="sv-box4"><div class="sv-box__in">
+      <h3>Bloque 4</h3>
+      <p>Texto pendiente de entrega. Este parrafo ocupa el largo aproximado que tendra el bloque 4 para que el encuadre de la escena calce, y se reemplaza cuando llegue el contenido definitivo.</p>
+      <span class="sv-box__prov">Texto provisional</span>
+    </div></div>
+    <!-- TEXTO PROVISIONAL: el bloque 5 venia VACIO en la maqueta del cliente -->
+    <div class="sv-box" id="sv-box5"><div class="sv-box__in">
+      <h3>Bloque 5</h3>
+      <p>Texto pendiente de entrega. Este parrafo ocupa el largo aproximado que tendra el bloque 5 para que el encuadre de la escena calce, y se reemplaza cuando llegue el contenido definitivo.</p>
+      <span class="sv-box__prov">Texto provisional</span>
+    </div></div>
     <div class="sv-cue" id="sv-cue">Desliza<span>&#8595;</span></div>
   </div>
 </section>
@@ -388,7 +512,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 </section>
 <!-- /wp:html -->
 
-<!-- TEXTO PROVISIONAL: reemplazar por el texto final del reportaje -->
+<!-- BLOQUE EDITABLE 2 - TEXTO DEL REPORTAJE | TEXTO PROVISIONAL: reemplazar por el texto final -->
 <!-- wp:group {"className":"story-text story-text--dropcap scroll-fade"} -->
 <div class="wp-block-group story-text story-text--dropcap scroll-fade">
 <!-- wp:paragraph -->
@@ -661,6 +785,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 <!-- /wp:group -->
 
 <!-- wp:html -->
+<!-- CREDITOS: metodologia, autoria y fecha. Editar los textos de adentro. -->
 <section class="story-credits">
   <div class="story-credits__inner">
     <p class="story-kicker">Metodologia</p>
@@ -669,6 +794,54 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       <div><h4>Investigacion</h4><p>Centro de Investigacion Periodistica UDP</p></div>
       <div><h4>Visualizaciones</h4><p>Tremen</p></div>
     </div>
+  </div>
+</section>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<!-- ==================================================================
+     BLOQUE EDITABLE 3 de 3  -  CARDS DEL CIERRE ("Reportajes en profundidad")
+     ------------------------------------------------------------------
+     Para cada una de las 3 tarjetas se edita:
+       1. EL ENLACE  -> el href="#" del <a>. Poner ahi la direccion del
+          reportaje. Se abre en pestana nueva (target="_blank"): no tocar.
+       2. LA IMAGEN  -> el src del <img>. Las imagenes viven en GitHub Pages,
+          en .../salmones-viz/scroll-assets/. Deben ser CUADRADAS.
+       3. EL TITULO  -> el texto dentro de <h3>...</h3>
+       4. LA BAJADA  -> el texto dentro de <p>...</p>
+     Para agregar una cuarta tarjeta: copiar un bloque <a>...</a> completo.
+     Para quitar una: borrar su bloque <a>...</a> completo.
+     PENDIENTE HOY: faltan las URLs. Los titulos son PROVISIONALES (vienen del
+     nombre del archivo de cada ilustracion) y las bajadas tambien.
+     ================================================================== -->
+<section class="story-more">
+
+  <!-- EDITABLE: titulo de la seccion -->
+  <h2 class="story-more__title">Reportajes en profundidad</h2>
+
+  <div class="story-more__grid">
+
+    <!-- ---------- TARJETA 1 ---------- -->
+    <a class="story-more__card" href="#" target="_blank" rel="noopener noreferrer" data-url-pendiente="1">
+      <span class="story-more__img"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/card-lobby.webp" alt="Ilustracion del reportaje sobre lobby"></span>
+      <h3>Lobby</h3>
+      <p>TITULO Y BAJADA PROVISIONALES. Este texto se reemplaza por la bajada real del reportaje sobre lobby, con la extension aproximada que se ve aqui.</p>
+    </a>
+
+    <!-- ---------- TARJETA 2 ---------- -->
+    <a class="story-more__card" href="#" target="_blank" rel="noopener noreferrer" data-url-pendiente="1">
+      <span class="story-more__img"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/card-bancos.webp" alt="Ilustracion del reportaje sobre bancos"></span>
+      <h3>Bancos</h3>
+      <p>TITULO Y BAJADA PROVISIONALES. Este texto se reemplaza por la bajada real del reportaje sobre bancos, con la extension aproximada que se ve aqui.</p>
+    </a>
+
+    <!-- ---------- TARJETA 3 ---------- -->
+    <a class="story-more__card" href="#" target="_blank" rel="noopener noreferrer" data-url-pendiente="1">
+      <span class="story-more__img"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/card-reloc.webp" alt="Ilustracion del reportaje sobre relocalizaciones"></span>
+      <h3>Relocalizaciones</h3>
+      <p>TITULO Y BAJADA PROVISIONALES. Este texto se reemplaza por la bajada real del reportaje sobre relocalizaciones, con la extension aproximada que se ve aqui.</p>
+    </a>
+
   </div>
 </section>
 <!-- /wp:html -->
@@ -724,6 +897,7 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
         jaulaLlena=g('sv-jaulaLlena'), jaulaEsc2=g('sv-jaulaEsc2'), jaulaEsc3=g('sv-jaulaEsc3'),
         fondo=g('sv-fondo'),
         hero=g('sv-hero'), beat1=g('sv-beat1'), beat2=g('sv-beat2'), beat3=g('sv-beat3'),
+        box1=g('sv-box1'), box2=g('sv-box2'), box3=g('sv-box3'), box4=g('sv-box4'), box5=g('sv-box5'),
         cue=g('sv-cue'), scrim=g('sv-scrim'), bgDeep=g('sv-bgDeep'), bgSurface=g('sv-bgSurface');
     var mMar1=g('m1-mar1'), mFiordo1=g('m1-fiordo1'), mFiordo1b=g('m1-fiordo1b'), mFiordo2=g('m1-fiordo2'),
         mMontana1=g('m1-montana1'), mMontana2=g('m1-montana2'),
@@ -794,9 +968,12 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
       if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
       var beat=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      beat(beat1,0.16,0.22,0.44,0.50);
-      beat(beat2,0.74,0.80,0.86,0.90);
-      beat(beat3,0.90,0.94,0.98,0.995);
+      /* cajas tambien en la rama vieja: si no, con ?introd=old quedarian invisibles */
+      beat(box1,0.16,0.22,0.36,0.42);
+      beat(box2,0.44,0.50,0.60,0.65);
+      beat(box3,0.68,0.73,0.80,0.84);
+      beat(box4,0.845,0.875,0.905,0.925);
+      beat(box5,0.93,0.95,0.975,0.99);
     }
 
     /* COLA VIEJA (jun-2026): se conserva para rollback con ?introm=old. */
@@ -859,9 +1036,12 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
       if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
       var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      beatM(beat1,0.14,0.20,0.40,0.46);
-      beatM(beat2,0.56,0.62,0.66,0.72);
-      beatM(beat3,0.84,0.90,0.97,0.995);
+      /* cajas tambien en la rama vieja: si no, con ?introm=old quedarian invisibles */
+      beatM(box1,0.14,0.20,0.34,0.39);
+      beatM(box2,0.42,0.48,0.58,0.63);
+      beatM(box3,0.66,0.71,0.78,0.82);
+      beatM(box4,0.83,0.86,0.90,0.92);
+      beatM(box5,0.925,0.945,0.975,0.99);
     }
 
     /* ── INTRO MOVIL v35 — CAMARA FIJA + COLA CON LOS FRAMES DE LA MAQUETA (jul-2026) ──
@@ -1000,9 +1180,14 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       if(cue) cue.style.opacity = 1-seg(p,0.0444,0.1067);
       if(scrim) scrim.style.opacity = 1-seg(p,0.1244,0.2133);
       var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      beatM(beat1,0.1244,0.1778,0.3556,0.4089);
-      beatM(beat2,0.52,0.5733,0.64,0.6889);
-      beatM(beat3,0.80,0.84,0.958,0.980);
+      /* CAJAS en la rama MOVIL: mismos hitos que en escritorio, reescalados a los
+         breakpoints de esta secuencia (18 pantallas). La caja 5 sale ANTES de 0.938
+         para no tapar el momento de la linterna. */
+      beatM(box1,0.130,0.190,0.330,0.370);
+      beatM(box2,0.395,0.430,0.500,0.540);
+      beatM(box3,0.620,0.660,0.720,0.750);
+      beatM(box4,0.775,0.800,0.835,0.855);
+      beatM(box5,0.875,0.900,0.925,0.935);
     }
 
     /* Glow de ESCRITORIO: una posicion por frame, sin viajar entre ellas (mismo criterio que
@@ -1132,9 +1317,14 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
       if(cue) cue.style.opacity = 1-seg(p,0.026,0.079);
       if(scrim) scrim.style.opacity = 1-seg(p,0.124,0.212);
       var bd=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      bd(beat1,0.124,0.176,0.353,0.406);
-      bd(beat2,0.494,0.547,0.618,0.671);
-      bd(beat3,0.93,0.965,0.985,0.998);
+      /* CAJAS (maqueta sep-2026), ancladas a la escena que muestra cada captura:
+         1 vehiculos (camion/barco/avion) | 2 superficie con jaulas | 3 escape |
+         4 fondo | 5 fondo con buzo. La cola 0.96-1 queda libre para la linterna. */
+      bd(box1,0.150,0.195,0.300,0.340);
+      bd(box2,0.375,0.408,0.462,0.492);
+      bd(box3,0.600,0.640,0.700,0.730);
+      bd(box4,0.790,0.820,0.855,0.875);
+      bd(box5,0.885,0.910,0.940,0.955);
     }
 
     // ESCRITORIO OFICIAL (hibrido): muestra la superficie-capas (.sv-frame-ds) + los frames
