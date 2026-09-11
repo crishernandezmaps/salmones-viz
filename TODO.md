@@ -1,8 +1,45 @@
 # TODO — Salmones Viz
 
-_Actualizado 2026-09-04._
+_Actualizado 2026-09-11._
 
 ## Estado
+
+- **Sesion 2026-09-11 — entregable para el cliente, prueba con Elementor y un hallazgo de infra:**
+  - **ENTREGABLE listo** en `1_CLIENTS/UDP/entrega_articulo/` (fuera del repo): el HTML del
+    articulo en `.html` + `.txt` identicos (el `.txt` para que se abra en texto plano),
+    `1-COMO-SUBIR-EL-ARTICULO.txt` (para quien lo pega, paso a paso incluido como abrir y
+    copiar el archivo), `2-COMO-EDITAR-LOS-TEXTOS.txt` (para la edicion periodistica, sin
+    una linea de codigo) y `LEEME-interno.txt` (origen, MD5, estado).
+  - **El post usa BLOQUES NATIVOS de WordPress.** De sus 70 bloques, 32 son `wp:paragraph`
+    limpios, 4 `wp:heading`, 2 `wp:quote`, 4 `wp:image` y solo 8 son `wp:html` (intro, mapas,
+    CSS, script). O sea: la clienta **si** puede editar el texto en el editor visual haciendo
+    clic. La advertencia vieja de "nunca usar el editor visual" solo aplica **durante la
+    subida** y a los bloques "HTML personalizado".
+  - **Prueba con Elementor (post 161 `test-salmones-subida-001`):** el `position:sticky` de la
+    intro **SOBREVIVE** a Elementor (verificado en telefono real, la animacion corre). Pero el
+    contenedor "boxed" (`.e-con > .e-con-inner`) mete una **huincha blanca arriba** y margenes
+    laterales, porque aplica `padding-block-start` y `max-width` sobre un articulo full-bleed.
+  - **FIX aplicado en `wordpress/post-standalone.html`:** regla CSS que neutraliza las
+    variables de Elementor (`--content-width`, `--container-max-width`, `--padding-*`) y las
+    propiedades directas de `.e-con`, `.e-con-inner`, `.elementor-section`,
+    `.elementor-container` y `.elementor-widget-container`. Va en el bloque de resets del tema.
+    **NO incluye `overflow` a proposito**: eso romperia el sticky. Validado: 0 ampersands en el
+    script, 70 bloques balanceados, sin bytes no-ASCII nuevos.
+    Backup: `wordpress/post-standalone.html.bak-antes-elementor` (no versionado).
+  - **HALLAZGO DE INFRA (sin aclarar):** `salmoneswp.tremen.tech` **se sirve desde otra VPS**
+    (la de box), no desde la que tiene el repo. Prueba: `?p=161` da **200** en box y **404** en
+    la VPS del repo. Consecuencia: el deploy del post por `wp-cli` en la VPS del repo
+    **actualiza la copia que nadie ve**, y en box ese comando ni siquiera corre (el contenedor
+    no tiene wp-cli) -> la via es la REST API. Detalle en `.claude/infra.md` del proyecto.
+  - **Pendientes que deja esta sesion:**
+    - Aclarar con cris por que el WordPress quedo en dos VPS y cual es la definitiva.
+    - Aplicar el fix al post 161 (repegar el HTML nuevo, o dejar el contenedor de Elementor en
+      Full Width + padding 0 desde la interfaz).
+    - Decidir si se sigue con Elementor. Cuesta el pipeline de deploy (el contenido pasa a vivir
+      en la meta `_elementor_data`, no en `post_content`) y la portabilidad a cip.udp.cl (el
+      destino necesitaria el plugin). Alternativas mas baratas: editor de bloques con la vista
+      previa al lado, o que la clienta entregue los textos en un documento y se vuelquen.
+    - El articulo sigue incrustando **solo 2 de los 8 embeds** (`timeline` y `conflicto`).
 
 - **Sesion 2026-09-04 — tarjeta del embed `fusion` responsive en movil (commit `690e321`):**
   - En iframes moviles la tarjeta cubria gran parte del mapa. Se replico el patron de

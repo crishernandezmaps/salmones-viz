@@ -72,6 +72,15 @@ html, body { margin-top:0 !important; padding-top:0 !important; }
 .wp-block-group:has(> .wp-block-post-content) { padding-top:0 !important; margin-top:0 !important; }
 .entry-content { margin-top:0 !important; padding-top:0 !important; }
 
+/* ====== Neutralizar constructores visuales (Elementor y similares) ======
+   Si el post se arma con Elementor, sus contenedores (.e-con / .e-con-inner)
+   aplican padding vertical y max-width propios: eso mete una huincha blanca
+   arriba y margenes laterales sobre el articulo, que es full-bleed.
+   Se neutralizan tanto las variables como las propiedades directas.
+   OJO: NO agregar overflow en estas reglas -> rompe el position:sticky de la intro. */
+.elementor .e-con { --content-width:100% !important; --container-max-width:100% !important; --container-default-padding-top:0 !important; --container-default-padding-bottom:0 !important; --container-default-padding-left:0 !important; --container-default-padding-right:0 !important; --padding-top:0 !important; --padding-bottom:0 !important; --padding-left:0 !important; --padding-right:0 !important; --margin-top:0 !important; --margin-bottom:0 !important; }
+.elementor, .elementor .e-con, .elementor .e-con-inner, .elementor .elementor-section, .elementor .elementor-container, .elementor .elementor-widget-container, .elementor .elementor-widget-text-editor { padding:0 !important; margin:0 !important; max-width:none !important; width:100% !important; border:0 !important; }
+
 /* Full-bleed: rompe cualquier max-width / padding del tema padre */
 .story-wrap { width:100vw !important; max-width:none !important; margin-left:calc(-50vw + 50%) !important; margin-right:0 !important; padding:0 !important; position:relative; }
 .story-wrap > * { max-width:none !important; padding-left:0 !important; padding-right:0 !important; }
