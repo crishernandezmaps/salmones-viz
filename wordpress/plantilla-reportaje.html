@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- ######################################################################
+     PLANTILLA DE REPORTAJE  -  CIP.UDP
+     Reproduce el diseno de multimedia.vergara240.udp.cl, en un archivo unico
+     y autocontenido: no necesita Shorthand ni ninguna herramienta externa.
+
+     COMO SE USA
+       1. Copiar este archivo como "nombre-del-reportaje/index.html".
+       2. Poner las imagenes en una carpeta "assets" al lado.
+       3. Reemplazar los textos marcados. No hay build ni dependencias.
+
+     BUSCAR ESTAS MARCAS (Ctrl+F / Cmd+F) PARA EDITAR:
+       "EDITAR: BARRA"      -> la barra fija de arriba
+       "EDITAR: PORTADA"    -> imagen, titulo y bajada de la apertura
+       "EDITAR: TEXTO"      -> parrafos del cuerpo
+       "EDITAR: DESTACADO"  -> frase suelta a pantalla completa
+       "EDITAR: IMAGEN"     -> foto a ancho completo con pie
+       "EDITAR: CIFRAS"     -> numeros destacados
+       "EDITAR: VISUALIZACION" -> mapa o grafico embebido
+       "EDITAR: ESPECIAL"   -> las tarjetas a los otros reportajes
+       "EDITAR: CREDITOS"   -> metodologia, autoria y logo del cierre
+
+     COLORES: estan todos en el bloque :root de abajo. El dorado es el acento
+     de la casa; cambiandolo ahi se recolorea el reportaje entero.
+
+     >>> ATENCION: TODO EL CONTENIDO DE ESTA PLANTILLA ES FICTICIO <<<
+     El reportaje "La deuda que flota", sus cifras, sus citas y sus fuentes
+     estan INVENTADOS. Existen solo para que la maqueta se vea con textos de
+     extension real. NO son datos verificados y NO deben publicarse. Al usar
+     la plantilla se reemplaza todo por el contenido real del reportaje y se
+     borra el distintivo "MAQUETA" de la barra de arriba.
+     ###################################################################### -->
+
+<title>La deuda que flota</title>
+<meta name="description" content="Como la banca financio la expansion salmonera en los fiordos del sur.">
+<meta property="og:title" content="La deuda que flota">
+<meta property="og:description" content="Como la banca financio la expansion salmonera en los fiordos del sur.">
+<meta property="og:image" content="assets/portada.jpg">
+<meta property="og:type" content="article">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<style>
+/* ======================================================================
+   PALETA
+   ====================================================================== */
+:root{
+  --oro:#b48603;        /* acento: titulos y enlaces */
+  --oro-claro:#d4a520;  /* acento sobre fondo negro */
+  --negro:#000;         /* fondo de las secciones oscuras */
+  --gris-barra:#333;    /* barra fija superior */
+  --texto:#333;         /* texto del cuerpo */
+  --blanco:#fff;
+  --f-cond:'Roboto Condensed',sans-serif;   /* titulos */
+  --f-base:'Roboto',sans-serif;             /* cuerpo */
+  --col:605px;          /* ancho de la columna de texto */
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ overflow-x:clip; scroll-behavior:smooth; }
+body{
+  margin:0; padding:0; background:var(--blanco); color:var(--texto);
+  font-family:var(--f-base); font-size:19px; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; }
+
+/* ====================== BARRA FIJA SUPERIOR ====================== */
+.barra{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  height:40px; background:var(--gris-barra);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 18px;
+}
+.barra__titulo{
+  font-family:var(--f-cond); font-size:15px; font-weight:400;
+  letter-spacing:.04em; color:var(--blanco); text-transform:uppercase;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.barra__mock{
+  display:inline-block; margin-right:10px; padding:2px 8px;
+  background:var(--oro); color:#000; border-radius:2px;
+  font-size:11px; font-weight:700; letter-spacing:.12em;
+}
+.barra__marca{ font-family:var(--f-cond); font-size:15px; font-weight:700; color:var(--blanco); }
+.barra__marca span{ color:var(--oro-claro); }
+.barra__progreso{
+  position:absolute; left:0; bottom:0; height:3px; width:0;
+  background:var(--oro-claro); transition:width .1s linear;
+}
+
+/* ====================== PORTADA ====================== */
+.portada{
+  position:relative; min-height:100vh; min-height:100dvh;
+  display:flex; align-items:flex-end; overflow:hidden;
+  background:var(--negro); margin-top:40px;
+}
+.portada__media{ position:absolute; inset:0; z-index:0; }
+.portada__media img,.portada__media video{ width:100%; height:100%; object-fit:cover; }
+.portada__scrim{
+  position:absolute; inset:0; z-index:1;
+  background:linear-gradient(180deg,rgba(0,0,0,.10) 40%,rgba(0,0,0,.55) 75%,rgba(0,0,0,.88) 100%);
+}
+.portada__inner{
+  position:relative; z-index:2; width:100%;
+  max-width:1240px; margin:0 auto; padding:0 24px 78px;
+}
+.portada h1{
+  font-family:var(--f-cond); font-weight:700;
+  font-size:clamp(2.5rem,5.6vw,4.6rem); line-height:1.02;
+  color:var(--oro-claro); margin:0 0 14px;
+  text-shadow:0 2px 18px rgba(0,0,0,.45);
+}
+.portada__bajada{
+  font-family:var(--f-base); font-weight:400;
+  font-size:clamp(1.05rem,1.7vw,1.45rem); line-height:1.35;
+  color:var(--blanco); max-width:62ch; margin:0;
+  text-shadow:0 1px 12px rgba(0,0,0,.5);
+}
+.portada__by{
+  font-family:var(--f-base); font-size:.9rem; letter-spacing:.06em;
+  color:var(--blanco); opacity:.8; margin:26px 0 0;
+}
+
+/* ====================== FRANJAS NEGRAS DE RESPIRO ====================== */
+.franja{ background:var(--negro); height:110px; }
+.franja--alta{ height:190px; }
+
+/* ====================== TEXTO ====================== */
+.texto{ max-width:var(--col); margin:0 auto; padding:56px 24px; }
+.texto p{ margin:0 0 1.5em; }
+.texto p:last-child{ margin-bottom:0; }
+.texto strong{ font-weight:700; }
+.texto a{ color:var(--oro); text-decoration:none; }
+.texto a:hover{ text-decoration:underline; text-underline-offset:3px; }
+.texto h2{
+  font-family:var(--f-cond); font-weight:700; font-size:2.1rem;
+  line-height:1.15; color:var(--texto); margin:2.2rem 0 1.2rem;
+}
+
+/* ====================== FRASE DESTACADA ====================== */
+.destacado{
+  background:var(--negro); color:var(--blanco);
+  padding:120px 24px; text-align:center;
+}
+.destacado p{
+  font-family:var(--f-cond); font-weight:700;
+  font-size:clamp(1.6rem,3.6vw,2.9rem); line-height:1.22;
+  max-width:900px; margin:0 auto; color:var(--oro-claro);
+}
+.destacado cite{
+  display:block; margin-top:26px; font-style:normal;
+  font-family:var(--f-base); font-size:.92rem; letter-spacing:.1em;
+  text-transform:uppercase; color:rgba(255,255,255,.72);
+}
+
+/* ====================== IMAGEN A ANCHO COMPLETO ====================== */
+.imagen{ margin:0; background:var(--negro); }
+.imagen img{ width:100%; height:auto; }
+.imagen--alta img{ height:88vh; object-fit:cover; }
+.imagen figcaption{
+  max-width:var(--col); margin:0 auto; padding:16px 24px 34px;
+  font-family:var(--f-base); font-size:.86rem; line-height:1.5;
+  color:rgba(255,255,255,.62);
+}
+
+/* ====================== CIFRAS ====================== */
+.cifras{ background:var(--negro); color:var(--blanco); padding:90px 24px; }
+.cifras__grid{
+  max-width:1100px; margin:0 auto; display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:48px 28px;
+}
+.cifras__item{ text-align:center; }
+.cifras__valor{
+  font-family:var(--f-cond); font-weight:700;
+  font-size:clamp(2.8rem,5.5vw,4.4rem); line-height:1;
+  color:var(--oro-claro); display:block;
+}
+.cifras__label{
+  font-family:var(--f-base); font-size:.95rem; line-height:1.45;
+  color:rgba(255,255,255,.75); margin-top:14px; display:block;
+}
+
+/* ====================== VISUALIZACION ====================== */
+.viz{ width:100%; height:100vh; height:100dvh; margin:0; border:0; background:var(--negro); }
+.viz--corta{ height:82vh; }
+.viz iframe{ width:100%; height:100%; border:0; display:block; }
+
+/* ====================== MAS DE ESTE ESPECIAL ====================== */
+.especial{ background:var(--negro); padding:70px 24px 96px; }
+.especial__titulo{
+  font-family:var(--f-cond); font-weight:700;
+  font-size:clamp(1.6rem,3.4vw,2.5rem); letter-spacing:.02em;
+  text-transform:uppercase; color:var(--oro-claro);
+  text-align:center; margin:0 0 58px;
+}
+.especial__grid{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:34px 80px;
+  max-width:1300px; margin:0 auto;
+}
+.tarjeta{
+  position:relative; display:block; overflow:hidden;
+  text-decoration:none; background:var(--negro);
+}
+.tarjeta__img{ display:block; width:100%; aspect-ratio:16/9; overflow:hidden; }
+.tarjeta__img img{
+  width:100%; height:100%; object-fit:cover;
+  filter:brightness(.55); transition:filter .35s ease, transform .5s ease;
+}
+.tarjeta:hover .tarjeta__img img{ filter:brightness(.85); transform:scale(1.03); }
+.tarjeta__titulo{
+  position:absolute; left:0; right:0; bottom:0; z-index:2;
+  padding:22px 24px;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.72) 100%);
+  font-family:var(--f-cond); font-weight:700;
+  font-size:clamp(1.1rem,1.8vw,1.6rem); line-height:1.15;
+  color:var(--blanco); text-align:center; margin:0;
+  text-shadow:0 2px 10px rgba(0,0,0,.6);
+}
+
+/* ====================== CIERRE ====================== */
+.cierre{ background:var(--negro); color:rgba(255,255,255,.72); padding:20px 24px 90px; }
+.cierre__inner{ max-width:1010px; margin:0 auto; }
+.cierre__kicker{
+  font-family:var(--f-base); font-size:.76rem; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--oro-claro);
+  margin:0 0 18px;
+}
+.cierre p{ font-size:1rem; line-height:1.75; margin:0 0 1.2em; }
+.cierre__grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:32px;
+  margin-top:44px; padding-top:32px; border-top:1px solid rgba(255,255,255,.16);
+}
+.cierre__grid h4{
+  font-family:var(--f-base); font-size:.74rem; font-weight:700;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--oro-claro); margin:0 0 10px;
+}
+.cierre__grid p{ font-size:1rem; color:var(--blanco); margin:0; }
+.cierre__logo{
+  text-align:center; padding:78px 0 10px;
+  font-family:var(--f-cond); font-weight:700; font-size:clamp(2.4rem,5vw,3.4rem);
+  color:#f3efe4; letter-spacing:-.01em;
+}
+.cierre__logo span{ color:var(--oro); }
+
+/* ====================== SUBIR ====================== */
+.top{
+  background:var(--negro); border-top:1px solid rgba(255,255,255,.12);
+  text-align:center; padding:16px 0 22px;
+}
+.top a{
+  font-family:var(--f-base); font-size:.68rem; letter-spacing:.2em;
+  text-transform:uppercase; color:rgba(255,255,255,.6); text-decoration:none;
+}
+.top a span{ display:block; font-size:1rem; line-height:1; margin-bottom:4px; }
+
+/* ====================== ANIMACION DE ENTRADA ====================== */
+.aparece{ opacity:0; transform:translateY(26px); transition:opacity .8s ease, transform .8s ease; }
+.aparece.visible{ opacity:1; transform:none; }
+@media (prefers-reduced-motion:reduce){
+  .aparece{ opacity:1; transform:none; transition:none; }
+}
+
+/* ====================== RESPONSIVE ====================== */
+@media (max-width:900px){
+  body{ font-size:17px; }
+  .especial__grid{ grid-template-columns:1fr; gap:26px; max-width:560px; }
+  .especial{ padding:52px 18px 70px; }
+  .texto{ padding:42px 22px; }
+  .destacado{ padding:78px 22px; }
+  .cifras{ padding:64px 22px; }
+  .franja{ height:70px; } .franja--alta{ height:110px; }
+  .portada__inner{ padding:0 22px 56px; }
+  .barra__titulo{ font-size:13px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==================================================================
+     EDITAR: BARRA fija de arriba. Va el titulo corto del reportaje.
+     La linea dorada de abajo marca el avance de lectura.
+     ================================================================== -->
+<div class="barra">
+  <!-- Borrar el distintivo "Maqueta" cuando el contenido sea real -->
+  <div class="barra__titulo"><span class="barra__mock">Maqueta</span>La deuda que flota</div>
+  <div class="barra__marca">CIP<span>.udp</span></div>
+  <div class="barra__progreso" id="progreso"></div>
+</div>
+
+
+<!-- ==================================================================
+     EDITAR: PORTADA
+     Cambiar la imagen, el titulo y la bajada. Para usar un video:
+       <video autoplay muted loop playsinline>
+         <source src="assets/portada.mp4" type="video/mp4">
+       </video>
+     La imagen de ejemplo es solo de relleno: reemplazar por la real.
+     ================================================================== -->
+<header class="portada">
+  <div class="portada__media">
+    <img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/card-bancos.webp" alt="">
+  </div>
+  <div class="portada__scrim"></div>
+  <div class="portada__inner">
+    <h1>La deuda que flota</h1>
+    <p class="portada__bajada">Créditos 2015-2025: nueve de cada diez centros de cultivo del sur austral operan con financiamiento bancario comprometido</p>
+    <p class="portada__by">Por: Centro de Investigación y Proyectos Periodísticos - CIP.UDP</p>
+  </div>
+</header>
+
+<div class="franja"></div>
+
+
+<!-- ==================================================================
+     EDITAR: TEXTO. Este bloque se repite tantas veces como haga falta.
+     Dentro se pueden usar <strong>negritas</strong>, <a href="">enlaces</a>
+     (salen en dorado) y <h2>subtitulos</h2>.
+     ================================================================== -->
+<section class="texto aparece">
+  <p>En marzo de 2019, una empresa salmonera con operaciones en el fiordo Comau firmó un crédito sindicado por 180 millones de dólares. La garantía no era un terreno ni una planta: eran las concesiones acuícolas mismas, los permisos que el Estado entrega para usar el borde costero. Ese contrato, que consta en el <a href="#">registro de prendas sin desplazamiento</a>, marca el punto en que la banca dejó de mirar a la industria como un cliente más.</p>
+  <p>La revisión de 214 operaciones de crédito entre 2015 y 2025 muestra un patrón: el financiamiento no sigue a la producción, la anticipa. Los bancos prestan contra biomasa que todavía no existe, proyectada sobre ciclos de cultivo de dos años, y esa proyección se vuelve un compromiso difícil de frenar cuando la sanidad del centro se deteriora.</p>
+  <p>El resultado es una cadena de obligaciones que llega hasta los fiordos. Cuando un centro debe bajar su carga por mortalidad o por una sanción ambiental, quien decide cuánto se reduce no es solo la empresa: es también el calendario de pagos que firmó años antes.</p>
+</section>
+
+
+<!-- ==================================================================
+     EDITAR: DESTACADO. Una frase sola, a pantalla completa sobre negro.
+     Sirve para una cita o para un dato que merece pausa. El <cite> es
+     opcional: si no hay fuente, se borra esa linea.
+     ================================================================== -->
+<section class="destacado aparece">
+  <p>“Nadie le presta a un centro de cultivo. Le prestan a un ciclo de producción que todavía no ocurre”</p>
+  <cite>Ex ejecutivo de riesgo de la banca, entrevistado bajo reserva</cite>
+</section>
+
+
+<!-- ==================================================================
+     EDITAR: TEXTO
+     ================================================================== -->
+<section class="texto aparece">
+  <h2>Garantías sobre el agua</h2>
+  <p>La figura legal que permite todo esto tiene nombre técnico: prenda sobre concesión de acuicultura. Existe desde 2010 y su uso se multiplicó por seis en la última década. En la práctica, convierte un permiso administrativo —revocable, sujeto a condiciones ambientales— en un activo financiero que respalda deuda.</p>
+  <p>Cuatro bancos concentran el 71% del monto prestado. Tres de ellos declararon en sus reportes de sostenibilidad compromisos de protección de ecosistemas marinos durante el mismo periodo en que ampliaron su exposición a la industria.</p>
+</section>
+
+
+<!-- ==================================================================
+     EDITAR: IMAGEN a ancho completo.
+     Agregar la clase "imagen--alta" para que ocupe casi toda la pantalla.
+     ================================================================== -->
+<figure class="imagen aparece">
+  <img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/card-reloc.webp" alt="Descripcion de la imagen para lectores de pantalla">
+  <figcaption>Balsas jaula en el fiordo Comau, región de Los Lagos. La concesión que ocupan estas estructuras fue entregada en prenda como garantía de un crédito sindicado. Ilustración: CIP.UDP</figcaption>
+</figure>
+
+
+<!-- ==================================================================
+     EDITAR: CIFRAS. Duplicar o borrar un .cifras__item segun cuantas
+     cifras haya. Se acomodan solas.
+     ================================================================== -->
+<section class="cifras aparece">
+  <div class="cifras__grid">
+    <div class="cifras__item">
+      <span class="cifras__valor">214</span>
+      <span class="cifras__label">Operaciones de crédito revisadas entre 2015 y 2025</span>
+    </div>
+    <div class="cifras__item">
+      <span class="cifras__valor">71%</span>
+      <span class="cifras__label">Del monto prestado se concentra en cuatro bancos</span>
+    </div>
+    <div class="cifras__item">
+      <span class="cifras__valor">6x</span>
+      <span class="cifras__label">Crecimiento del uso de la prenda sobre concesiones</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==================================================================
+     EDITAR: VISUALIZACION (mapa o grafico embebido).
+     Si el reportaje no lleva, borrar esta seccion entera.
+     Para una pieza mas baja, agregar la clase "viz--corta".
+     ================================================================== -->
+<section class="viz">
+  <iframe src="https://crishernandezmaps.github.io/salmones-viz/?embed=timeline"
+          title="Descripcion de la visualizacion" loading="lazy" allowfullscreen></iframe>
+</section>
+
+
+<!-- ==================================================================
+     EDITAR: TEXTO de cierre
+     ================================================================== -->
+<section class="texto aparece">
+  <p>Las concesiones siguen ahí, flotando sobre el mismo fiordo donde fueron entregadas hace veinte años. Lo que cambió no se ve desde la orilla: hoy cada una de esas estructuras respalda una deuda que vence mucho después de que termine el ciclo de los peces que contiene.</p>
+</section>
+
+<div class="franja--alta franja"></div>
+
+
+<!-- ==================================================================
+     EDITAR: ESPECIAL - tarjetas a los otros reportajes.
+     De cada tarjeta se edita:
+       1. el href  -> direccion del reportaje (abre en pestana nueva)
+       2. el src   -> imagen apaisada (16:9)
+       3. el texto del <p class="tarjeta__titulo">
+     La grilla es de 2 columnas y se apila sola en telefono. Para tener
+     6 tarjetas basta con copiar dos bloques <a>...</a> mas.
+     ================================================================== -->
+<section class="especial">
+  <h2 class="especial__titulo">Mas de este especial</h2>
+  <div class="especial__grid">
+
+    <a class="tarjeta aparece" href="#" target="_blank" rel="noopener noreferrer">
+      <span class="tarjeta__img"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/card-lobby.webp" alt=""></span>
+      <p class="tarjeta__titulo">El lobby que ordena el borde costero</p>
+    </a>
+
+    <a class="tarjeta aparece" href="#" target="_blank" rel="noopener noreferrer">
+      <span class="tarjeta__img"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/card-bancos.webp" alt=""></span>
+      <p class="tarjeta__titulo">Los bancos detrás de la expansión</p>
+    </a>
+
+    <a class="tarjeta aparece" href="#" target="_blank" rel="noopener noreferrer">
+      <span class="tarjeta__img"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/card-reloc.webp" alt=""></span>
+      <p class="tarjeta__titulo">Relocalizaciones: mudarse sin salir del mapa</p>
+    </a>
+
+    <a class="tarjeta aparece" href="#" target="_blank" rel="noopener noreferrer">
+      <span class="tarjeta__img"><img src="https://crishernandezmaps.github.io/salmones-viz/scroll-assets/card-lobby.webp" alt=""></span>
+      <p class="tarjeta__titulo">Las áreas protegidas que no protegen</p>
+    </a>
+
+  </div>
+</section>
+
+
+<!-- ==================================================================
+     EDITAR: CREDITOS. Metodologia, autoria y logo del cierre.
+     ================================================================== -->
+<footer class="cierre">
+  <div class="cierre__inner">
+    <p class="cierre__kicker">Metodologia</p>
+    <p>Este reportaje se basa en 214 operaciones de crédito inscritas en el Registro de Prendas sin Desplazamiento entre enero de 2015 y junio de 2025, cruzadas con el registro de concesiones de acuicultura de la Subsecretaría de Pesca y con los estados financieros publicados por las sociedades anónimas abiertas del rubro. Las operaciones de empresas cerradas solo pudieron verificarse cuando constaban en escrituras públicas, por lo que las cifras son un piso y no un total.</p>
+    <div class="cierre__grid">
+      <div><h4>Investigación</h4><p>Centro de Investigación Periodística UDP</p></div>
+      <div><h4>Visualizaciones</h4><p>Tremen</p></div>
+      <div><h4>Publicación</h4><p>Septiembre de 2026</p></div>
+    </div>
+    <div class="cierre__logo">CIP<span>.udp</span></div>
+  </div>
+</footer>
+
+<div class="top"><a href="#"><span>&#9650;</span>Volver arriba</a></div>
+
+
+<script>
+/* Barra de avance de lectura y aparicion de los bloques al entrar en
+   pantalla. No hace falta tocar nada de aqui. */
+(function(){
+  var barra = document.getElementById('progreso');
+  function avance(){
+    var alto = document.body.scrollHeight - window.innerHeight;
+    var pct = alto > 0 ? (window.scrollY / alto) * 100 : 0;
+    if (barra) { barra.style.width = pct + '%'; }
+  }
+  window.addEventListener('scroll', avance, { passive: true });
+  window.addEventListener('resize', avance);
+  avance();
+
+  var bloques = document.querySelectorAll('.aparece');
+  if (!('IntersectionObserver' in window)) {
+    for (var i = 0; i < bloques.length; i++) { bloques[i].classList.add('visible'); }
+    return;
+  }
+  var obs = new IntersectionObserver(function(entradas){
+    entradas.forEach(function(e){
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  for (var j = 0; j < bloques.length; j++) { obs.observe(bloques[j]); }
+
+  /* Red de seguridad: si algo falla, a los 3 segundos se muestra todo. */
+  setTimeout(function(){
+    for (var k = 0; k < bloques.length; k++) { bloques[k].classList.add('visible'); }
+  }, 3000);
+})();
+</script>
+
+</body>
+</html>

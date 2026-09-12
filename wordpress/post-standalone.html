@@ -194,11 +194,19 @@ html, body { margin-bottom:0 !important; padding-bottom:0 !important; }
 /* Centrada VERTICALMENTE en la pantalla: se estira de tope a tope y el contenido
    se alinea al medio con flex. Sin transform, para no arriesgar el sticky. */
 .sv-box { position:absolute; left:18.5%; right:18.5%; top:0; bottom:0; display:flex; align-items:center; justify-content:center; z-index:45; opacity:0; will-change:opacity; pointer-events:none; }
-.story-wrap .sv-box .sv-box__in { width:100%; background:rgba(195,195,195,0.55) !important; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px); padding:22px 28px !important; margin:0 !important; border-radius:2px; box-shadow:0 6px 26px rgba(7,22,34,0.22); }
-.story-wrap .sv-box h3 { font-family:var(--story-font-heading) !important; font-size:clamp(0.95rem,1.45vw,1.08rem) !important; font-weight:700 !important; letter-spacing:0.5px; color:#0d1b2a !important; margin:0 0 14px !important; padding:0 !important; text-align:center !important; text-transform:none !important; }
-.story-wrap .sv-box p { font-family:var(--story-font-body) !important; font-size:clamp(0.86rem,1.12vw,1.0rem) !important; line-height:1.5 !important; color:#0d1b2a !important; margin:0 0 10px !important; padding:0 !important; text-align:center !important; max-width:none !important; }
+.story-wrap .sv-box .sv-box__in { width:100%; background:rgba(195,195,195,0.72) !important; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px); padding:26px 34px !important; margin:0 !important; border-radius:2px; box-shadow:0 6px 26px rgba(7,22,34,0.22); }
+.story-wrap .sv-box h3 { font-family:var(--story-font-heading) !important; font-size:clamp(1.05rem,1.5vw,1.85rem) !important; font-weight:700 !important; letter-spacing:0.5px; color:#0d1b2a !important; margin:0 0 14px !important; padding:0 !important; text-align:center !important; text-transform:none !important; }
+.story-wrap .sv-box p { font-family:var(--story-font-body) !important; font-size:clamp(0.92rem,1.2vw,1.5rem) !important; line-height:1.55 !important; color:#0d1b2a !important; margin:0 0 10px !important; padding:0 !important; text-align:center !important; max-width:none !important; }
 .story-wrap .sv-box p:last-child { margin-bottom:0 !important; }
 .story-wrap .sv-box .sv-box__prov { display:block; margin-top:12px !important; font-family:var(--story-font-ui) !important; font-size:11px !important; letter-spacing:1.5px; text-transform:uppercase; color:#8a4b00 !important; opacity:0.9; }
+/* Pantallas grandes (16 pulgadas o mas): la caja se acota en ancho para que la
+   linea no quede kilometrica, y la tipografia sube. */
+@media (min-width:1600px){
+  .sv-box { left:0; right:0; }
+  .story-wrap .sv-box .sv-box__in { max-width:1180px; margin:0 auto !important; padding:32px 44px !important; }
+  .story-wrap .sv-box h3 { font-size:2rem !important; margin:0 0 18px !important; }
+  .story-wrap .sv-box p { font-size:1.6rem !important; line-height:1.55 !important; }
+}
 @media (max-width:767px){
   .sv-box { left:6%; right:6%; }
   .story-wrap .sv-box .sv-box__in { padding:16px 18px !important; }
@@ -485,6 +493,24 @@ html, body { margin-bottom:0 !important; padding-bottom:0 !important; }
     <div class="sv-box" id="sv-box5"><div class="sv-box__in">
       <h3>Bloque 5</h3>
       <p>Texto pendiente de entrega. Este parrafo ocupa el largo aproximado que tendra el bloque 5 para que el encuadre de la escena calce, y se reemplaza cuando llegue el contenido definitivo.</p>
+      <span class="sv-box__prov">Texto provisional</span>
+    </div></div>
+    <!-- TEXTO PROVISIONAL: caja 6, pendiente de entrega -->
+    <div class="sv-box" id="sv-box6"><div class="sv-box__in">
+      <h3>Bloque 6</h3>
+      <p>Texto pendiente de entrega. Este parrafo ocupa el largo aproximado que tendra el bloque 6 para que el encuadre de la escena calce, y se reemplaza cuando llegue el contenido definitivo.</p>
+      <span class="sv-box__prov">Texto provisional</span>
+    </div></div>
+    <!-- TEXTO PROVISIONAL: caja 7, pendiente de entrega -->
+    <div class="sv-box" id="sv-box7"><div class="sv-box__in">
+      <h3>Bloque 7</h3>
+      <p>Texto pendiente de entrega. Este parrafo ocupa el largo aproximado que tendra el bloque 7 para que el encuadre de la escena calce, y se reemplaza cuando llegue el contenido definitivo.</p>
+      <span class="sv-box__prov">Texto provisional</span>
+    </div></div>
+    <!-- TEXTO PROVISIONAL: caja 8, pendiente de entrega -->
+    <div class="sv-box" id="sv-box8"><div class="sv-box__in">
+      <h3>Bloque 8</h3>
+      <p>Texto pendiente de entrega. Este parrafo ocupa el largo aproximado que tendra el bloque 8 para que el encuadre de la escena calce, y se reemplaza cuando llegue el contenido definitivo.</p>
       <span class="sv-box__prov">Texto provisional</span>
     </div></div>
     <div class="sv-cue" id="sv-cue">Desliza<span>&#8595;</span></div>
@@ -785,20 +811,6 @@ html, body { margin-bottom:0 !important; padding-bottom:0 !important; }
 <!-- /wp:group -->
 
 <!-- wp:html -->
-<!-- CREDITOS: metodologia, autoria y fecha. Editar los textos de adentro. -->
-<section class="story-credits">
-  <div class="story-credits__inner">
-    <p class="story-kicker">Metodologia</p>
-    <p>Este reportaje se basa en datos publicos de SERNAPESCA (centros de cultivo), Subsecretaria de Pesca (concesiones y relocalizaciones), Ministerio del Medio Ambiente (areas marinas protegidas) y Superintendencia del Medio Ambiente (denuncias y procesos sancionatorios). Los datos fueron procesados y cruzados geoespacialmente.</p>
-    <div class="story-credits__grid">
-      <div><h4>Investigacion</h4><p>Centro de Investigacion Periodistica UDP</p></div>
-      <div><h4>Visualizaciones</h4><p>Tremen</p></div>
-    </div>
-  </div>
-</section>
-<!-- /wp:html -->
-
-<!-- wp:html -->
 <!-- ==================================================================
      BLOQUE EDITABLE 3 de 3  -  CARDS DEL CIERRE ("Reportajes en profundidad")
      ------------------------------------------------------------------
@@ -842,6 +854,20 @@ html, body { margin-bottom:0 !important; padding-bottom:0 !important; }
       <p>TITULO Y BAJADA PROVISIONALES. Este texto se reemplaza por la bajada real del reportaje sobre relocalizaciones, con la extension aproximada que se ve aqui.</p>
     </a>
 
+  </div>
+</section>
+<!-- /wp:html -->
+
+<!-- wp:html -->
+<!-- CREDITOS: metodologia, autoria y fecha. Editar los textos de adentro. -->
+<section class="story-credits">
+  <div class="story-credits__inner">
+    <p class="story-kicker">Metodologia</p>
+    <p>Este reportaje se basa en datos publicos de SERNAPESCA (centros de cultivo), Subsecretaria de Pesca (concesiones y relocalizaciones), Ministerio del Medio Ambiente (areas marinas protegidas) y Superintendencia del Medio Ambiente (denuncias y procesos sancionatorios). Los datos fueron procesados y cruzados geoespacialmente.</p>
+    <div class="story-credits__grid">
+      <div><h4>Investigacion</h4><p>Centro de Investigacion Periodistica UDP</p></div>
+      <div><h4>Visualizaciones</h4><p>Tremen</p></div>
+    </div>
   </div>
 </section>
 <!-- /wp:html -->
@@ -897,7 +923,8 @@ html, body { margin-bottom:0 !important; padding-bottom:0 !important; }
         jaulaLlena=g('sv-jaulaLlena'), jaulaEsc2=g('sv-jaulaEsc2'), jaulaEsc3=g('sv-jaulaEsc3'),
         fondo=g('sv-fondo'),
         hero=g('sv-hero'), beat1=g('sv-beat1'), beat2=g('sv-beat2'), beat3=g('sv-beat3'),
-        box1=g('sv-box1'), box2=g('sv-box2'), box3=g('sv-box3'), box4=g('sv-box4'), box5=g('sv-box5'),
+        box1=g('sv-box1'), box2=g('sv-box2'), box3=g('sv-box3'), box4=g('sv-box4'), box5=g('sv-box5')
+        box6=g('sv-box6'), box7=g('sv-box7'), box8=g('sv-box8'),
         cue=g('sv-cue'), scrim=g('sv-scrim'), bgDeep=g('sv-bgDeep'), bgSurface=g('sv-bgSurface');
     var mMar1=g('m1-mar1'), mFiordo1=g('m1-fiordo1'), mFiordo1b=g('m1-fiordo1b'), mFiordo2=g('m1-fiordo2'),
         mMontana1=g('m1-montana1'), mMontana2=g('m1-montana2'),
@@ -968,12 +995,15 @@ html, body { margin-bottom:0 !important; padding-bottom:0 !important; }
       if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
       if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
       var beat=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      /* cajas tambien en la rama vieja: si no, con ?introd=old quedarian invisibles */
-      beat(box1,0.16,0.22,0.36,0.42);
-      beat(box2,0.44,0.50,0.60,0.65);
-      beat(box3,0.68,0.73,0.80,0.84);
-      beat(box4,0.845,0.875,0.905,0.925);
-      beat(box5,0.93,0.95,0.975,0.99);
+      /* 8 cajas tambien en la rama vieja (?introd=old): si no, quedan invisibles. */
+      beat(box1,0.140,0.175,0.205,0.235);
+      beat(box2,0.250,0.285,0.315,0.345);
+      beat(box3,0.360,0.390,0.420,0.445);
+      beat(box4,0.460,0.490,0.520,0.545);
+      beat(box5,0.560,0.590,0.620,0.645);
+      beat(box6,0.660,0.690,0.720,0.745);
+      beat(box7,0.760,0.790,0.820,0.845);
+      beat(box8,0.860,0.885,0.920,0.940);
     }
 
     /* COLA VIEJA (jun-2026): se conserva para rollback con ?introm=old. */
@@ -1036,12 +1066,15 @@ html, body { margin-bottom:0 !important; padding-bottom:0 !important; }
       if(cue) cue.style.opacity = 1-seg(p,0.05,0.12);
       if(scrim) scrim.style.opacity = 1-seg(p,0.14,0.24);
       var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      /* cajas tambien en la rama vieja: si no, con ?introm=old quedarian invisibles */
-      beatM(box1,0.14,0.20,0.34,0.39);
-      beatM(box2,0.42,0.48,0.58,0.63);
-      beatM(box3,0.66,0.71,0.78,0.82);
-      beatM(box4,0.83,0.86,0.90,0.92);
-      beatM(box5,0.925,0.945,0.975,0.99);
+      /* 8 cajas tambien en la rama vieja (?introm=old): si no, quedan invisibles. */
+      beatM(box1,0.120,0.160,0.190,0.220);
+      beatM(box2,0.235,0.270,0.300,0.330);
+      beatM(box3,0.345,0.375,0.405,0.430);
+      beatM(box4,0.445,0.475,0.505,0.530);
+      beatM(box5,0.545,0.575,0.605,0.630);
+      beatM(box6,0.645,0.675,0.705,0.730);
+      beatM(box7,0.745,0.775,0.805,0.830);
+      beatM(box8,0.845,0.870,0.905,0.930);
     }
 
     /* ── INTRO MOVIL v35 — CAMARA FIJA + COLA CON LOS FRAMES DE LA MAQUETA (jul-2026) ──
@@ -1180,14 +1213,15 @@ html, body { margin-bottom:0 !important; padding-bottom:0 !important; }
       if(cue) cue.style.opacity = 1-seg(p,0.0444,0.1067);
       if(scrim) scrim.style.opacity = 1-seg(p,0.1244,0.2133);
       var beatM=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      /* CAJAS en la rama MOVIL: mismos hitos que en escritorio, reescalados a los
-         breakpoints de esta secuencia (18 pantallas). La caja 5 sale ANTES de 0.938
-         para no tapar el momento de la linterna. */
-      beatM(box1,0.130,0.190,0.330,0.370);
-      beatM(box2,0.395,0.430,0.500,0.540);
-      beatM(box3,0.620,0.660,0.720,0.750);
-      beatM(box4,0.775,0.800,0.835,0.855);
-      beatM(box5,0.875,0.900,0.925,0.935);
+      /* 8 CAJAS - movil. La ultima sale antes de 0.938 para no tapar la linterna. */
+      beatM(box1,0.100,0.140,0.175,0.200);
+      beatM(box2,0.215,0.250,0.285,0.315);
+      beatM(box3,0.330,0.360,0.395,0.420);
+      beatM(box4,0.440,0.470,0.505,0.530);
+      beatM(box5,0.550,0.580,0.610,0.635);
+      beatM(box6,0.650,0.680,0.710,0.735);
+      beatM(box7,0.750,0.780,0.812,0.835);
+      beatM(box8,0.850,0.875,0.905,0.925);
     }
 
     /* Glow de ESCRITORIO: una posicion por frame, sin viajar entre ellas (mismo criterio que
@@ -1317,14 +1351,15 @@ html, body { margin-bottom:0 !important; padding-bottom:0 !important; }
       if(cue) cue.style.opacity = 1-seg(p,0.026,0.079);
       if(scrim) scrim.style.opacity = 1-seg(p,0.124,0.212);
       var bd=function(n,a,b,c,d){ if(n) n.style.opacity = Math.min(seg(p,a,b), 1-seg(p,c,d)); };
-      /* CAJAS (maqueta sep-2026), ancladas a la escena que muestra cada captura:
-         1 vehiculos (camion/barco/avion) | 2 superficie con jaulas | 3 escape |
-         4 fondo | 5 fondo con buzo. La cola 0.96-1 queda libre para la linterna. */
-      bd(box1,0.150,0.195,0.300,0.340);
-      bd(box2,0.375,0.408,0.462,0.492);
-      bd(box3,0.600,0.640,0.700,0.730);
-      bd(box4,0.790,0.820,0.855,0.875);
-      bd(box5,0.885,0.910,0.940,0.955);
+      /* 8 CAJAS - escritorio. Una por escena; la cola 0.94-1 queda libre para la linterna. */
+      bd(box1,0.105,0.140,0.175,0.205);
+      bd(box2,0.225,0.255,0.290,0.320);
+      bd(box3,0.340,0.370,0.400,0.425);
+      bd(box4,0.440,0.470,0.500,0.525);
+      bd(box5,0.540,0.570,0.600,0.625);
+      bd(box6,0.640,0.670,0.700,0.725);
+      bd(box7,0.745,0.775,0.810,0.835);
+      bd(box8,0.855,0.880,0.915,0.935);
     }
 
     // ESCRITORIO OFICIAL (hibrido): muestra la superficie-capas (.sv-frame-ds) + los frames

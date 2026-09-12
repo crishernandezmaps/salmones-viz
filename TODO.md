@@ -1,8 +1,55 @@
 # TODO — Salmones Viz
 
-_Actualizado 2026-09-11._
+_Actualizado 2026-09-11 (cierre)._
 
 ## Estado
+
+- **Sesion 2026-09-11 (tarde) - texto sobre la intro, cierre navegable y plantilla nueva:**
+  - **8 CAJAS DE TEXTO sobre la animacion** (`.sv-box`), que REEMPLAZAN a los antiguos
+    `.sv-beat`. Geometria medida al pixel sobre las capturas del cliente: centradas,
+    ancho 63% en escritorio y 88% en movil, **centradas verticalmente** (`top:0;bottom:0`
+    + flex, sin `transform`), fondo gris `rgba(195,195,195,0.72)`.
+    **Conectadas a las CUATRO ramas del motor.** Si solo se conectan a las vigentes, al
+    caer en una de respaldo (`?introd=old` / `?introm=old`) quedan invisibles para
+    siempre y parece que el HTML "no trae las cajas". Ya nos paso.
+  - **Tipografia en pantallas grandes:** el tope del `clamp` era 1rem (16px en un monitor
+    de 27"). Ahora escala a 1.5rem y sobre 1600px hay media query propio (1.6rem, titulo
+    2rem) que ademas acota la caja a 1180px para que la linea no quede kilometrica.
+  - **CARDS DE CIERRE con ilustraciones:** las 3 portadas (lobby, bancos, reloc) se
+    optimizaron a webp 900x900 (de ~900 KB a ~45 KB) y estan en `public/scroll-assets/`,
+    servidas desde Pages. Recorte **1:1** porque las ilustraciones son cuadradas.
+    Titulos PROVISIONALES (salen del nombre del archivo) y **faltan las URLs**.
+  - **Orden del cierre:** cuerpo -> cards -> creditos (la metodologia va DESPUES).
+  - **CSS sin huinchas:** habia reglas para el espacio superior pero ninguna para el
+    inferior; se agrego el espejo. Mas un bloque para temas **clasicos con grid
+    Bootstrap** (`.container`/`.row`/`.col-*` via `:has`), el caso de cip.udp.cl.
+    Fuerza `overflow:visible`, nunca hidden: lo contrario mata el sticky.
+  - **Comentarios guia en el post:** mapa inicial de bloques editables
+    ("BLOQUE EDITABLE 1/2/3", "PORTADA", "CREDITOS") y explicacion por zona, para que
+    quien edite ubique donde tocar sin leer el codigo entero.
+  - **PLANTILLA NUEVA `wordpress/plantilla-reportaje.html`** (~23 KB, autocontenida):
+    reproduce el diseno de `multimedia.vergara240.udp.cl` (hecho con **Shorthand**) sin
+    depender de esa herramienta. Sirve para construir los reportajes a los que apuntan
+    las cards. El diseno se copio **mirando el sitio renderizado**, no leyendo su CSS:
+    los colores reales estaban en las clases `...ColorCustom-*`, no en la paleta
+    generica de Shorthand. Barra fija 40px `#333`, portada con titulo dorado `#d4a520`,
+    cuerpo en columna de 605px (Roboto 19px/1.7), "Mas de este especial" en grilla 2x2
+    con el titulo superpuesto sobre la imagen, cierre con logo CIP.udp.
+    **Su contenido de ejemplo es FICTICIO** y va marcado por partida doble (aviso en el
+    codigo + distintivo "Maqueta" en la barra): no debe publicarse tal cual.
+  - **Trampa de verificacion que costo un diagnostico en falso:** contar los ampersands
+    del `<script>` con `awk '/<script/,/<\/script>/'` da falso positivo si un comentario
+    menciona la etiqueta en texto. Hay que extraer el script con regex. Corolario: no
+    escribir `<script>` ni `<style>` literales dentro de los comentarios del post.
+  - **Pendientes que deja esta sesion:**
+    - Las 3 URLs de los reportajes (los `href` siguen en `#`), y las bajadas y titulos
+      definitivos de las cards.
+    - Textos de las cajas 4 a 8 de la intro (hoy provisionales).
+    - La cifra del bloque 2: "mas de 107 millones de dolares" contra "el cobre con
+      55.200 millones" no cuadra. Confirmar con UDP antes de publicar.
+    - QA en dispositivo real de las 8 cajas: son grandes y el contraste del gris sobre
+      las escenas claras (superficie, vehiculos) es el punto a mirar.
+    - Sigue sin aclararse por que el WordPress publico vive en otra VPS.
 
 - **Sesion 2026-09-11 — entregable para el cliente, prueba con Elementor y un hallazgo de infra:**
   - **ENTREGABLE listo** en `1_CLIENTS/UDP/entrega_articulo/` (fuera del repo): el HTML del
