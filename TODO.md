@@ -1,8 +1,31 @@
 # TODO — Salmones Viz
 
-_Actualizado 2026-09-11 (cierre)._
+_Actualizado 2026-10-14._
 
 ## Estado
+
+- **Sesion 2026-10-14 - deploy pendiente del post 70 y mudanza del codigo a box:**
+  - **Post 70 ACTUALIZADO en el WordPress publico** (box): ya muestra las 8 cajas de la
+    intro y las cards de cierre. El deploy del 13-sep habia quedado a medias. Antes de
+    aplicarlo se verifico que nadie hubiera editado el post desde el 03-sep (md5 igual
+    al backup, sin revisiones posteriores). El contenido guardado tiene el mismo md5 que
+    `wordpress/post-standalone.html` de `d57baa3`. Rollback: revision del 03-sep en
+    wp-admin o el backup `entrega_articulo/post70.box.bak-2026-09-13.html`.
+  - **Via de deploy del post:** PHP dentro del contenedor (`wp-load.php` +
+    `kses_remove_filters()` + `wp_update_post` con `wp_slash`). No requiere credenciales.
+    wp-cli no existe en ese contenedor.
+  - **Aclarado el misterio de las dos VPS:** la definitiva es box. El WordPress de la otra
+    VPS se detuvo (~12-oct) al optimizar espacio. **El codigo tambien se mudo a box**,
+    con deploy key propia; el clon anterior queda solo como respaldo. Rutas en
+    `.claude/infra.md` (no versionado).
+  - **Pendientes que deja esta sesion:**
+    - Revision en dispositivo real de las 8 cajas ya publicadas (movil y escritorio).
+    - Retirar el clon viejo y su deploy key "VPS Tremen" cuando el ciclo commit/push
+      desde box este probado (este commit es la primera prueba).
+    - Borrar copias huerfanas `/var/www/salmones_viz` (740 MB c/u, marzo-2026, ningun
+      nginx las sirve) en ambas VPS. El disco de box esta al 91%.
+    - Siguen abiertos los de la sesion 2026-09-11 (URLs de las cards, textos de cajas
+      4-8, cifra del bloque 2) y el QA de `viajes`.
 
 - **Sesion 2026-09-11 (tarde) - texto sobre la intro, cierre navegable y plantilla nueva:**
   - **8 CAJAS DE TEXTO sobre la animacion** (`.sv-box`), que REEMPLAZAN a los antiguos
