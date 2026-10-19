@@ -1,8 +1,28 @@
 # TODO — Salmones Viz
 
-_Actualizado 2026-10-14._
+_Actualizado 2026-10-19._
 
 ## Estado
+
+- **Sesion 2026-10-14 al 19 - acceso a produccion (cip.udp.cl) y cierre de la mudanza:**
+  - **Subida a cip.udp.cl BLOQUEADA por la VPN de UDP.** Se accede por SSL-VPN
+    (`vpn1.udp.cl:10443`, ticket Mesa de Ayuda 70221495). Diagnostico: red, puerto,
+    certificado y Mac estan bien; el gateway **rechaza la autenticacion** tanto con
+    FortiClient como con `openfortivpn` ("Could not authenticate to gateway"). Es la
+    cuenta o la clave, del lado de UDP. El gateway usa el certificado de fabrica de
+    Fortinet (por eso FortiClient lo marca como no confiable).
+  - **`salmones.tremen.tech` se mantiene unas semanas mas** (decision 2026-10-14). Lo sirve
+    box desde `/var/www/salmones_viz` (build de marzo). No es huerfano: no borrar.
+    Revisar su retiro desde el 2026-11-11.
+  - **Pendientes que deja esta sesion:**
+    - Probar la clave VPN en el portal web `https://vpn1.udp.cl:10443`; si falla, pedir a
+      Mesa de Ayuda revisar o resetear la cuenta `extvpn.chernandezm`.
+    - Con la VPN arriba: definir como se sube el post a cip.udp.cl (alla no hay acceso
+      al contenedor; probablemente editor de bloques).
+    - Retiro del clon anterior en la otra VPS + su deploy key "VPS Tremen": respaldo hecho,
+      borrado pendiente (lo ejecuta cris).
+    - Revision en dispositivo real de las 8 cajas (en escritorio 1440 px las 8 aparecen;
+      movil y contraste sin revisar).
 
 - **Sesion 2026-10-14 - deploy pendiente del post 70 y mudanza del codigo a box:**
   - **Post 70 ACTUALIZADO en el WordPress publico** (box): ya muestra las 8 cajas de la
